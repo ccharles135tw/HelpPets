@@ -929,6 +929,12 @@ a {
             padding: 7px 12px;
             background: #EAA636;
         }
+/*        .card-product__imgOverlay td button {
+            border: 0;
+            border-radius: 0;
+            padding: 7px 12px;
+            background: #EAA636;
+        }*/
 
             .card-product__imgOverlay li button i, .card-product__imgOverlay li button span {
                 font-size: 15px;

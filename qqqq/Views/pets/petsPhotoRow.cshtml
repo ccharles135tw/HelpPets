@@ -1,0 +1,35 @@
+﻿
+@model IEnumerable<qqqq.ViewModels.CProductShow>
+
+@{
+    ViewData["Title"] = "petsList";
+}
+<table class="table ">
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+        <tr class="align-center">
+
+            <td>
+                <img src="/Images/@item.Photos.FirstOrDefault()?.PictureName" width="120" height="120" />
+
+            </td>
+            <td>
+                <h4>名稱: @Html.DisplayFor(modelItem => item.ProductName)</h4>
+            </td>
+            <td>
+                <h5>品種: @Html.DisplayFor(modelItem => item.SubCategoryName)</h5>
+            </td>
+            <td>
+                <h4>簡介:  @Html.DisplayFor(modelItem => item.Description) </h4>
+            </td>
+            <td>
+                <button id="addToCart" class="btn btn-warning">加入評估</button>
+                <button id="addToCart" class="btn btn-warning">加入佇列</button>
+            </td>
+        </tr>
+
+        }
+    </tbody>
+</table>
