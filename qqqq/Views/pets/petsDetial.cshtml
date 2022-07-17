@@ -1,0 +1,186 @@
+﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+    <div class="container text-center pt-5 pb-3">
+        <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
+    </div>
+</div>
+@model IEnumerable<qqqq.ViewModels.CSubCategoryPet>
+
+@{
+    ViewData["Title"] = "petsDetial";
+}
+
+<h1>petsDetial</h1>
+
+<div class="container text-center col-md-6 col-sm-12">
+    <div class="float-left">
+        <img id="prodImg" width="400" height="400" src="~/img/pic2.jpg"/>
+    </div>
+    <br />
+    <div class=" col-md-12 col-sm-12 row list-group-item-primary">
+    </div>
+</div>
+<hr />
+<div class="container text-center col-md-6 col-sm-12">
+    <div class=" text-center">
+        <form>
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">種類:狗</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">品種:牧羊犬</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">性別:公</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">體型:中</label>
+                </h5>
+            </div>
+            <div class="form-group ">
+                <h5>
+                    <label class="control-label">毛色:黑</label>
+                </h5>
+            </div>
+            <div class="form-group ">
+                <h5>
+                    <label class="control-label">結紮:否</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">年齡層:幼年</label>
+                </h5>
+            </div>
+
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">最低活動空間:12坪</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">所在城市:台北市</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">基本開銷費用約:4萬元/年</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">每周陪伴時間:20小時</label>
+                </h5>
+            </div>
+            <div class="form-group">
+                <h5>
+                    <label class="control-label">簡介:家有一狗,如有一狗</label>
+                </h5>
+            </div>
+            <br />
+            <div class="form-group">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                    我要評估領養
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">領養須知</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="text-align:left">
+                                <p>本人願遵守以下約定：</p>
+                                <p> 1. 認養人需年滿 20 歲，未滿 20 歲者需經法定代理人同意並出示同意書。</p>
+                                <p>
+                                    2. 依法辦理犬隻寵物登記、晶片植入及絕育等事項（貓咪無強制需入晶片，但需於母貓 6 個月公貓 8
+                                    個月大時施予結紮手術）。
+                                </p>
+                                <p>
+                                    3. 無論何時都以人道方式對待認養之動物，並提供認養動物適當之食物、乾淨之飲水、適當之運動空
+                                    間、不可長期將動物關在籠中或栓綁在狹小之空間飼養，否則視為虐待動物。
+                                </p>
+                                <p>
+                                    4. 定期幫牠進行預防注射、狂犬病疫苗、驅蟲及健康檢查。
+                                </p>
+                                <p>
+                                    5. 當牠受傷或罹病時，必請獸醫師給予醫療。
+                                </p>
+                                <p>
+                                    6. 妥善照管牠，防止其無故侵害他人之生命、身體、自由、財產或安寧。
+                                </p>
+                                <p>
+                                    7. 不隨便放縱牠於戶外，出入公共場所或公眾得出入之場所時必由 14 歲以上之人伴同，並採取適當
+                                    之防衛措施，如繫鍊、提籃等，始得攜出戶外。
+                                </p>
+                                <p>
+                                    8. 若因任何原因無法續養，本人需為牠找到新的認養家庭，絕不棄養認養的動物。
+                                </p>
+                                <p>
+                                    9. 當牠轉讓、遺失或死亡時，依法辦理。
+                                </p>
+                                <p>
+                                    10. 本人遵守動物保護法及有關單位對家畜衛生管理之相關規定。
+                                </p>
+                                <p>
+                                    11. 認養人如有違反以上認養規定者，依動物保護法及相關規定辦理，如有訴訟問題時可以此切結書以
+                                    適當的法律途徑解決,。
+                                </p>
+                                <p>12. 本愛心認養切結書一式影本執於認養人，正本執於校犬管理單位。</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
+                                <button type="button" class="btn btn-primary">@Html.ActionLink("我可以做到", "petsAdopt", "pets")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success">@Html.ActionLink("返回列表", "petsList", null)</button>
+            </div>
+        </form>
+    </div>
+    <br /><br />
+    <div>
+        <div><h2>評論</h2></div>
+        <hr />
+        <div>
+            <div class="text-left row"><img src="~/Images/02.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">陳X中</h5></div>
+            <div class="text-left row"><img src="~/Images/1s.jpg" width="110" height="25" class="col-3 " />  2022/05/15</div>
+            <div class="text-left row"><p><h4 class="text">Duck不必買</h4></p></div>
+            <div></div>
+        </div>
+        <hr />
+        <div>
+            <div class="text-left row"><img src="~/Images/11.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔡X文</h5></div>
+            <div class="text-left row"><img src="~/Images/3s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
+            <div class="text-left row"><p><h4 class="text">台灣不缺貨</h4></p></div>
+            <div></div>
+        </div>
+        <hr />
+        <div>
+            <div class="text-left row"><img src="~/Images/06.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔣X安</h5></div>
+            <div class="text-left row"><img src="~/Images/4s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
+            <div class="text-left row"><p><h4 class="text">改名會比較好賣</h4></p></div>
+            <div></div>
+        </div>
+        <hr />
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

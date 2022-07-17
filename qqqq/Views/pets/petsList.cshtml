@@ -15,92 +15,125 @@
 <div class="filter-bar d-flex flex-wrap align-items-center text-center">
     <div class="text-center ">
 
-        <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
+        種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
             <option value="1">狗</option>
             <option value="1">貓</option>
         </select>
     </div>
     <div>
-        <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-            <option value="1">米克斯</option>
-            <option value="1">貴賓</option>
-            <option value="1">哈士奇</option>
-            <option value="1">馬爾濟斯</option>
-            <option value="1">米格魯</option>
-            <option value="1">英國短毛</option>
-            <option value="1">藍貓</option>
-            <option value="1">豹貓</option>
+        性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+            <option value="1">不限</option>
+            <option value="1">公</option>
+            <option value="1">母</option>
         </select>
-    </div>
-    <div>
-        <div class="input-group filter-bar-search">
-            <input type="text" placeholder="輸入關鍵字">
-            @*<div class="input-group-append">*@
-            <button type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+            <option value="1">不限</option>
+            <option value="1">大</option>
+            <option value="1">中</option>
+            <option value="1">小</option>
+        </select>
 
-            @*</div>*@
-        </div>
     </div>
-
+    @using (Html.BeginForm())
+    {
+        @:關鍵字 @Html.TextBox("txtkeyword")
+        <input type="submit" value="查詢" />
+    }
 
     <div class="sorting mr-auto">
         <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
         <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
     </div>
-</div>
+    <div style="justify-content:flex-end;">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            寵物配對
+        </button>
 
-<div class="row col-12">
-    <div class="col-md-3 alert col-sm-12 alert-light row">
-        <div class="col-1"></div>
-        <div class="col-11 sidebar-categories">
-            <h2 class="head" style="text-align: center; letter-spacing:50px;font-size:30px">分類</h2>
-            <ul class="card-product__title">
-                <li>
-                    <h4>狗</h4>
-                    <ul class="single-search-product-wrapper">
-                        <li>
-                            <h5>狗品種</h5>
-                            <ul class="child">
-                                <li><input class="pixel-radio" type="radio" name="brand"/>哈士奇</li>
-                                <li><input class="pixel-radio" type="radio" name="brand"/>米格魯</li>
-                            </ul>
-                        </li>
-                        
-                    </ul>
-                </li>
-                <li>
-                    <h4>貓</h4>
-                    <ul class="single-search-product-wrapper">
-                        <li>
-                            <h5>貓品種</h5>
-                            <ul class="child">
-                                <li><input class="pixel-radio" type="radio" name="brand">豹貓</li>
-                                <li><input class="pixel-radio" type="radio" name="brand">藍貓</li>
-                            </ul>
-                        </li>
-                      
-                    </ul>
-                </li>
-            </ul>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="display:flex;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+
+                            種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
+                                <option value="1">狗</option>
+                                <option value="1">貓</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">公</option>
+                                <option value="1">母</option>
+                            </select>
+                        </div>
+                        <div>
+                            品種: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">瑪爾濟斯</option>
+                                <option value="1">英國短毛</option>
+                                <option value="1">法國鬥牛犬</option>
+                            </select>
+                        </div>
+                        <div>
+                            毛色: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">黑</option>
+                                <option value="1">黃</option>
+                                <option value="1">白</option>
+                            </select>
+                        </div>
+                        <div>
+                            結紮: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div>
+                        <div>
+                            體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">大</option>
+                                <option value="1">中</option>
+                                <option value="1">小</option>
+                            </select>
+                        </div>
+                        <div>
+                            年齡層: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">幼年</option>
+                                <option value="1">成年</option>
+                            </select>
+                        </div>
+                        <div>
+                            區域: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                <option value="1">不限</option>
+                                <option value="1">台北</option>
+                                <option value="1">高雄</option>
+                                <option value="1">台中</option>
+                            </select>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">@Html.ActionLink("開始配對", "petsMatch", "pets")</button>
+                </div>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-8" id="divAlert">
-    </div>
-    <div class="col-1 ">
-        <ul class="navbar-dark list-unstyled float-right " style="position:fixed">
-            <li>
-                <button class="btn btn-secondary border-0"  style="width: 100%; background: rgba(244,126,1,0.8); "
-                        data-container="body" data-toggle="popover" data-placement="right"
-                        data-content="右側的 Popover 中的一些内容">
-                    <i class="fa-solid fa-list-alt">佇列</i>
-                </button><br />
-            </li>
-            <li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right"><i class="fa-solid fa-star">評估</i></button><br /></li>
-            <li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="回到頂端"><i class="fa-solid fa-circle-arrow-up">TOP</i></button><br /></li>
-        </ul>
 
 
-    </div>
+<div class="col-4 w-100" id="divAlert">
 </div>
 
 @section scripts{

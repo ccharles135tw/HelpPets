@@ -75,6 +75,7 @@ namespace prjHomeLess.ViewModel
             get { return _prod.SubCategory.Category.CategoryName; }
             set { _prod.SubCategory.Category.CategoryName = value; }
         }
+        public List<Photo> Photos { get; set; }
 
     }
 }

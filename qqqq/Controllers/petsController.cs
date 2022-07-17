@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using prjHomeLess.ViewModel;
 using qqqq.Models;
@@ -6,6 +7,7 @@ using qqqq.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace qqqq.Controllers
@@ -20,16 +22,21 @@ namespace qqqq.Controllers
         }
         public IActionResult petsList()
         {
+            //string keyword = Request.Form["keyword"];
+            //IEnumerable<CProductShow> data = null;
+            //if (string.IsNullOrEmpty(keyword))
+            //{
+            //   data = from t in db.Products
+            //           select t;
+            //}
+
             return View();
         }
-        public IActionResult pets()
+        public IActionResult petsDetial()
         {
             return View();
         }
-        public IActionResult showpets()
-        {
-            return View();
-        }
+
         public IActionResult petsPhoto()
         {
             我救浪Context db = new 我救浪Context();
@@ -60,6 +67,14 @@ namespace qqqq.Controllers
             }
             return PartialView(list);
         }
-    }
+        public IActionResult petsAdopt()
+        {
+            return View();
+        }
+        public IActionResult petsMatch()
+        {
+            return View();
+        }
+    }   
 }
 
