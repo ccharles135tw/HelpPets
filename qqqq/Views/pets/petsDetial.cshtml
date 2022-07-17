@@ -1,6 +1,6 @@
 ﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
+        <h1 class="display-4 text-white animated slideInDown mb-3">寵物詳細資料</h1>
     </div>
 </div>
 @model IEnumerable<qqqq.ViewModels.CSubCategoryPet>
@@ -8,87 +8,81 @@
 @{
     ViewData["Title"] = "petsDetial";
 }
-
-<h1>petsDetial</h1>
-
 <div class="container text-center col-md-6 col-sm-12">
-    <div class="float-left">
-        <img id="prodImg" width="400" height="400" src="~/img/pic2.jpg"/>
-    </div>
-    <br />
-    <div class=" col-md-12 col-sm-12 row list-group-item-primary">
-    </div>
-</div>
-<hr />
-<div class="container text-center col-md-6 col-sm-12">
-    <div class=" text-center">
-        <form>
-            <div class="text-danger"></div>
-            <div class="form-group">
+    <div>
+        <form class="text-left" style="display: flex; align-items: center">
+            <div style="flex:none;">
+                <img id="prodImg" width="400" height="400" src="~/img/pic2.jpg" />
+            </div>
+            <div style="flex:none;text-align:left;margin-left:10px;">
+                <hr />
                 <h5>
                     <label class="control-label">種類:狗</label>
                 </h5>
-            </div>
-            <div class="form-group">
+                <hr />
+
                 <h5>
                     <label class="control-label">品種:牧羊犬</label>
                 </h5>
-            </div>
-            <div class="form-group">
+                <hr />
+
                 <h5>
                     <label class="control-label">性別:公</label>
                 </h5>
-            </div>
-            <div class="form-group">
+                <hr />
+
                 <h5>
                     <label class="control-label">體型:中</label>
                 </h5>
-            </div>
-            <div class="form-group ">
+                <hr />
+
                 <h5>
                     <label class="control-label">毛色:黑</label>
                 </h5>
-            </div>
-            <div class="form-group ">
+
+                <hr />
                 <h5>
                     <label class="control-label">結紮:否</label>
                 </h5>
-            </div>
-            <div class="form-group">
+                <hr />
+
                 <h5>
                     <label class="control-label">年齡層:幼年</label>
                 </h5>
-            </div>
 
-            <div class="form-group">
+                <hr />
                 <h5>
                     <label class="control-label">最低活動空間:12坪</label>
                 </h5>
-            </div>
-            <div class="form-group">
+
+                <hr />
                 <h5>
                     <label class="control-label">所在城市:台北市</label>
                 </h5>
-            </div>
-            <div class="form-group">
+
+                <hr />
                 <h5>
                     <label class="control-label">基本開銷費用約:4萬元/年</label>
                 </h5>
-            </div>
-            <div class="form-group">
+
+                <hr />
                 <h5>
                     <label class="control-label">每周陪伴時間:20小時</label>
                 </h5>
-            </div>
-            <div class="form-group">
+
+                <hr />
                 <h5>
                     <label class="control-label">簡介:家有一狗,如有一狗</label>
                 </h5>
+
+                <hr />
             </div>
-            <br />
+        </form>
+
+        <div class="m-2">
             <div class="form-group">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
                     我要評估領養
                 </button>
 
@@ -148,12 +142,11 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-success">@Html.ActionLink("返回列表", "petsList", null)</button>
+                <button class="btn btn-success m-1">@Html.ActionLink("返回列表", "petsList", null)</button>
             </div>
-        </form>
+        </div>
     </div>
-    <br /><br />
-    <div>
+    <div class="m-5">
         <div><h2>評論</h2></div>
         <hr />
         <div>
@@ -164,16 +157,17 @@
         </div>
         <hr />
         <div>
-            <div class="text-left row"><img src="~/Images/11.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔡X文</h5></div>
+            <div class="text-left row"><img src="~/Images/11.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔡X文</h5></div>x
             <div class="text-left row"><img src="~/Images/3s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
             <div class="text-left row"><p><h4 class="text">台灣不缺貨</h4></p></div>
             <div></div>
         </div>
         <hr />
         <div>
-            <div class="text-left row"><img src="~/Images/06.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔣X安</h5></div>
-            <div class="text-left row"><img src="~/Images/4s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
-            <div class="text-left row"><p><h4 class="text">改名會比較好賣</h4></p></div>
+            <div class="text-left row"><img src="~/Images/06.png" width="40" height="40" class="col-md-1 col-auto " />
+            <h5 class="col-md-2 col-auto">蔣X安</h5></div>
+            <div class="text-center row"><p><h4 class="text">改名會比較好賣</h4></p></div>
+            <div class="text-center row"><img src="~/Images/4s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
             <div></div>
         </div>
         <hr />
