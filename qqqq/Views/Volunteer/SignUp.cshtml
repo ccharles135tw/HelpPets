@@ -1,10 +1,6 @@
-﻿
-@{
-    ViewData["Title"] = "SignUp";
-}
-<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
+﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
-        <h2 class="display-4 text-white animated slideInDown mb-3">志工</h2>
+        <h2 class="display-4 text-white animated slideInDown mb-3">您選擇的志工活動為 @Model.Title</h2>
     </div>
 </div>
 <!-- Spinner Start -->
@@ -12,35 +8,37 @@
     <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
-<section class="section-margin--small mb-5">
-    <div id="Info">
-        <table style="width:100%">
-            <thead>
-                <tr>
-                    <th id="title" style="font-size: 64px; width: 100%;" colspan="2">您選擇的志工活動為 @Model.Title </th>
-                </tr>
-            </thead>
-            <tbody class="VInfotbody">
-                <tr>
-                    <td><img src="~/img/volunteer/@Model.ActivityPhoto" style="float:left;" /></td>
-                    <td rowspan="4"><div id="datepicker"></div></td>
-                </tr>
-                <tr>
-                    <td>服務時間 : @Model.StartDate ~ @Model.EndDate</td>
-                </tr>
-                <tr>
-                    <td>需求人數 : @Model.PeopleInNeed/@Model.PeopleInNeed</td>
-                </tr>
-                <tr>
-                    <td>工作內容 : @Model.Description</td>
-                </tr>
-            </tbody>
-        </table>
-        <div id="container" style="width:100%">
+<div class="container">
+    <section class="section-margin--small mb-5">
+        <div id="Info">
+            <table style="width:100%">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody class="VInfotbody">
+                    <tr>
+                        <td><img src="~/img/volunteer/@Model.ActivityPhoto" style="float:left;" /></td>
+                        <td rowspan="4"><div id="datepicker">請選擇可服務日期及時段</div></td>
+                    </tr>
+                    <tr>
+                        <td>服務時間 : @Model.StartDate ~ @Model.EndDate</td>
+                    </tr>
+                    <tr>
+                        <td>需求人數 : @Model.PeopleInNeed/@Model.PeopleInNeed</td>
+                    </tr>
+                    <tr>
+                        <td>工作內容 : @Model.Description</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br /><br />
+            <div id="container" style="width:100%">
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" @*role="dialog"*@="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -75,12 +73,14 @@
     </div>
     @section Scripts{
         <script>
-            let addCnt = 0;
-            let addTable = 0;
 
+
+            
+            let addCnt = 0;
+            let addTable = 1;
+            
             //datepicker
             $(function () {
-                //中文化
                 $.datepicker.regional['zh-TW'] = {
                     dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
                     dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
@@ -95,51 +95,99 @@
                 $("#datepicker").datepicker({
                     onSelect: (date) => {
                         selectDate(new Date(date));
-                    }
+                    },
+                    dateFormat: "yy/mm/dd",
+                    minDate: new Date().getDate +1
                 }).css("font-size", "1.3em");
-
+                
             });
             //開modal
+            let editTarget = "";
+            let flag = true;
             function selectDate(date) {
-
                 let container = $("#container");
                 $("#AllowDate").text(`參加日期 : ${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`);
                 $("#myModal").modal("show");
-
                 $(".confirm").click(() => {
                     let htmlString = "";
-                    htmlString = "<h3>活動一</h3><button type='button' class='btn btn-primary'><i class='bi bi-pencil-square'></i>修改</button> <button type='button' class='btn btn-primary'><i class='bi bi-trash'></i>刪除</button><table class='table table-striped activity_table'><thead class='thead-light'><tr><th>日期</th><th>時間</th><th>姓名</th><th>電話</th><th>信箱</th><th>地址</th></tr></thead><tbody>";
-                    //console.log($(".friend").length);
-                    //$.each($(".friend"), (key, value) => {
-                    //    $.each(value.querySelectorAll("input"), (x, item) => {
-                    //        console.log(item.id +"=" + item.value)
-                    //    })
-                    //})
-                    let checkedTime = $("input[name=time]:checked").val();
-                    htmlString += `<tr><td>${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</td><td>${checkedTime}</td><td>${$("#MemberName").text()}</td><td>${$("#MemberPhone").text()}</td><td>${$("#MemberEmail").text()}</td><td>${$("#MemberAddress").text()}</td></tr>`
+                    htmlString = `<div><h3 style="float:left;">${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</h3><button type='button' class='btn btn-primary edit bi bi-toggle-off' style="margin-left:10px;" id="edit${addTable}">修改</button> <button type='button' class='btn btn-primary delete bi bi-trash' id="del${addTable}">刪除</button><table class='table table-striped activity_table' id="tb${addTable}"><thead class='thead-light'><tr><th>時段</th><th>姓名</th><th>電話</th><th>信箱</th><th>地址</th></tr></thead><tbody></div>`;
 
-                    //console.log($("input[name=time]:checked").val());
-                    if ($(".friend").length != 0) {
-                        htmlString += `<tr><td>${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</td><td>${checkedTime}</td>`
+                    let checkedTime = $("input[name=time]:checked").val();
+                    htmlString += `<tr><td id="time${addTable}">${checkedTime}</td><td id="name${addTable}">${$("#MemberName").text()}</td><td id="phone${addTable}">${$("#MemberPhone").text()}</td><td id="email${addTable}">${$("#MemberEmail").text()}</td><td id="address${addTable}">${$("#MemberAddress").text()}</td></tr>`
+
+                    if (addCnt != 0) {
+                        htmlString += `<tr><td id="friend1time${addTable}">${checkedTime}</td>`
                         $.each($(".friend input"), (x, item) => {
                             if (x == 4) {
-                                htmlString += `</tr><tr><td>${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</td><td>${checkedTime}</td>`
+                                htmlString += `</tr><tr><td id="friend2time${addTable}">${checkedTime}</td>`
                             }
-                            htmlString += `<td>${item.value}</td>`;
-                            //console.log(item.id + "=" + item.value)
-
+                            htmlString += `<td id="${item.id}${addTable}">${item.value}</td>`;
                         })
                     }
 
-                    htmlString += `</tr></tbody></table>`;
+                    htmlString += `</tr></tbody></table><br />`;
                     container.append(htmlString);
-
-                    console.log(htmlString)
-                    addCnt = 0;
-                    addTable++;
+                    
+                    //移除事件
                     $(".confirm").off("click");
+                    $(".edit").off('click');
+                    $(".delete").off('click');
+
                     $("#myModal").modal("hide");
                     $(".friend").remove();
+
+                    //edit,delete
+                    $(".edit").click((event) => {
+                        let id = event.target.id.replace(/[^0-9]/ig, "");
+                        if (flag && editTarget == "") {
+                            editTarget = event.target.id;
+                            $(`#${event.target.id}`).text("儲存");
+                            $(`#${event.target.id}`).removeClass("bi-toggle-off");
+                            $(`#${event.target.id}`).addClass("bi-toggle-on");
+                            flag = false;
+                            
+                            $.each($(`#tb${id} td`), (x, item) => {
+                                if (x == 0) {
+                                    item.innerHTML = `<select id='editTime${id}'><option id="fullDay" value="全天">全天</option><option id="morning" value="上午(0900-1200)">上午(0900-1200)</option><option id="afternoon" value="下午(1400-1700)">下午(1400-1700)</option></select>`;
+                                    $(`#editTime${id} option[value="${checkedTime}"]`).attr("selected","selected");
+                                } else if (x == 1 || x == 5 || x == 10) {
+                                    return;
+                                } else {
+                                    item.setAttribute("contenteditable", "true");
+                                }
+                            })
+                            $(`#editTime${id} `).change(() => {
+                                $(`#friend1time${id}`).text($(`#editTime${id} :selected`).text());
+                                $(`#friend2time${id}`).text($(`#editTime${id} :selected`).text());
+                            })
+                        } else if (!flag && editTarget == event.target.id) {
+                            $(`#editTime${id} `).off("change");
+                            $(`#${event.target.id}`).text("修改");
+                            $(`#${event.target.id}`).removeClass("bi-toggle-on");
+                            $(`#${event.target.id}`).addClass("bi-toggle-off");
+                            flag = true;
+                            $.each($(`#tb${id} td`), (x, item) => {
+                                if (x == 0) {
+                                    item.innerText = $(`#editTime${id} :selected`).text();
+                                } else if (x == 1 || x == 5 || x == 10) {
+                                    return;
+                                } else {
+                                    item.setAttribute("contenteditable", "false");
+                                }
+                            })
+                            editTarget = "";
+                        } else {
+                            confirm("尚有修改未完成。")
+                        }
+                    })
+                    
+                    $(".delete").click((event) => {
+                        event.target.parentNode.remove();
+                        addTable--;
+                    })
+
+                    addCnt = 0;
+                    addTable++;
                 });
             }
             //關modal
@@ -154,10 +202,10 @@
                 if (addCnt > 2)
                     return confirm('同行人員限制為兩人。')
                 $("#memberInfo").append(`<div class="friend${addCnt} friend"><hr />人員${addCnt}<td><button type='button' class='btn removeBtn${addCnt}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button></td><br />
-                                                姓 名 : <input type="text" id="friend${addCnt}Name" placeholder="人員${addCnt}姓名" value=""/><br />
-                                                連絡電話 :   <input type="text" id="friend${addCnt}Phone" placeholder="電話" value=""/><br />
-                                                電子信箱 :   <input type="text" id="friend${addCnt}Email" placeholder="電子信箱" value=""/><br />
-                                                住 址 :   <input type="text" id="friend${addCnt}Address" placeholder="住址" value=""/><br /></div>`)
+                                                        姓 名 : <input type="text" id="friend${addCnt}Name" placeholder="人員${addCnt}姓名" value=""/><br />
+                                                        連絡電話 :   <input type="text" id="friend${addCnt}Phone" placeholder="電話" value=""/><br />
+                                                        電子信箱 :   <input type="text" id="friend${addCnt}Email" placeholder="電子信箱" value=""/><br />
+                                                        住 址 :   <input type="text" id="friend${addCnt}Address" placeholder="住址" value=""/><br /></div>`)
                 $(".removeBtn1").click(() => {
                     addCnt--;
                     if (addCnt < 0) {
@@ -173,7 +221,7 @@
                     $("div .friend2").empty();
                 })
             })
-
+            
         </script>
 
     }

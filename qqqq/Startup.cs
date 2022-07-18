@@ -51,8 +51,9 @@ namespace qqqq
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=homepage}/{action=enterpage}/{id?}");
-            });
+                    //pattern: "{controller=homepage}/{action=enterpage}/{id?}");
+                    pattern: "{controller=Volunteer}/{action=Index}/{id?}");
+        });
         }
     }
 }

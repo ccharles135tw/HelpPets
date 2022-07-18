@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
 }
-
 <div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../img/head-5.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h2 class="display-4 text-white animated slideInDown mb-3">志工</h2>
@@ -30,19 +29,50 @@
                     <form method="post" enctype="application/x-www-form-urlencoded">
                         <div class="head" style="background-color: burlywood; border-radius: 8px 8px 0 0; ">志工服務搜尋</div>
                         <ul class="main-categories search_checkbox">
+                            @*@{
+                                    List<int> list = new List<int>();
+                                    foreach (var i in Model)
+                                    {
+                                        if (list.Contains(i.ActivityCategoryID)) continue;
+                                        <li class="filter-list"><input class="pixel-checkbox" type="checkbox" id="activity_@(i.ActivityCategoryID)" name="act"><label for="activity_@(i.ActivityCategoryID)">@i.ActivityCategoryName</label><br /></li>
+                                        list.Add(i.ActivityCategoryID);
+                                    }
+                                }*@
                         </ul>
                         @*<div class="head" style="background-color: burlywood; border-radius: 8px 8px 0 0; ">服務時間搜尋</div>
-                        <ul class="main-categories">
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_allday" name="allday"><label for="radio_allday">全天</label><br /></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_morning" name="morning"><label for="radio_morning">上午(0900-1200)</label><br /></li>
-                            <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_after" name="after"><label for="radio_after">下午(1400-1700)</label><br /></li>
-                        </ul>
-                        <input class="btn btn-primary rounded-pill py-3 px-5" style="color:#FFFFFF;background:#EAA636;margin:10px 80px" type="submit" value="搜尋" />*@
+                            <ul class="main-categories">
+                                <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_allday" name="allday"><label for="radio_allday">全天</label><br /></li>
+                                <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_morning" name="morning"><label for="radio_morning">上午(0900-1200)</label><br /></li>
+                                <li class="filter-list"><input class="pixel-radio" type="radio" id="radio_after" name="after"><label for="radio_after">下午(1400-1700)</label><br /></li>
+                            </ul>
+                            <input class="btn btn-primary rounded-pill py-3 px-5" style="color:#FFFFFF;background:#EAA636;margin:10px 80px" type="submit" value="搜尋" />*@
                     </form>
+                    <button id="clearMatch">清除搜尋條件</button>
                 </div>
             </div>
 
             <div class="col-xl-9 col-lg-8 col-md-7" id="li_start">
+                @*@foreach (var i in Model)
+                    {
+                     <div class="v_div"  >
+                        <div class="v_pic_div" style="height: 220px; padding-right: 30px; float: left; width: 33%; ">
+                            <img src="~/img/volunteer/@i.ActivityPhoto" style=" height: 220px; width: 250px;" />
+                        </div>
+                        <div class="v_des_div" style="width:80%;height:220px;">
+
+                            @Html.ActionLink($"{ i.Title}", "Info", "Volunteer", new { id = i.ActivityID }, new { @class = "ActivityTitle" })<br />
+                            <div>服務時間 : @i.StartDate ~ @i.EndDate</div>
+                            <div>服務類別 : @i.ActivityCategoryName</div>
+                            <div>需求人數 : @i.PeopleInNeed 人</div>
+                            <div>工作內容 : @i.Description</div>
+                            @using (@Html.BeginForm("SignUp", "Volunteer", new { id = i.ActivityID }, FormMethod.Post))
+                            {
+                                <input class="btn btn-primary rounded-pill py-2 px-4" style="color: #FFFFFF; background: #EAA636;" type="submit" value="報名" />
+                            }
+                        </div>
+                        <hr />
+                     </div>
+                    }*@
             </div>
         </div>
     </div>
@@ -56,7 +86,6 @@
     <script>
         //datepiker
         let selectedDate = null;
-        console.log(selectedDate)
         $.datepicker.regional['zh-TW'] = {
             dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
             dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
@@ -72,12 +101,96 @@
                 dateFormat : "yy-mm-dd",
                 onSelect: (date) => {
                     selectedDate = date;
-                    console.log(selectedDate)
-                }
-            }).css("font-size", "1.05em");
+                    load();
+                },
+                minDate: new Date().getDate + 1,
+            }).css({ "font-size":"1.7vh"});
         });
         $(".ActivityTitle").css({ "font-size": "28px", "color": "cadetblue" });
-
         
+        //Search
+        let keystring = "";
+        let arr = [];
+        async function loadCheckBox() {
+            let response = await fetch('@Url.Content("~/Volunteer/loadCheckBox")');
+            let datas = await response.json();
+            let str = "";
+            datas.forEach(item => {
+                str += `<li class="filter-list"><input class="pixel-checkbox" type="checkbox" id="activity_${item.activityCategoryId}" class="searchcbx" name="clean"><label for="activity_${item.activityCategoryId}">${item.categoryName}</label><br /></li>`;
+
+            });
+            $(".search_checkbox").append(str);
+            //checkbox 值
+            $("form :checkbox").change((event) => {
+                let act_id = parseInt(event.target.id.replace(/[^0-9]/ig, ""))
+                if (arr.includes(act_id)) {
+                    arr.splice(jQuery.inArray(act_id, arr), 1);
+                    load();
+                    return;
+                }
+                arr.push(act_id);
+                load();
+            })
+            //read關鍵字
+            $("#searchtext").keyup(() => {
+                keystring = $("#searchtext").val()
+                load();
+            })
+            
+        };
+
+        //傳讀寫
+        function load() {
+            $.post('@Url.Content("~/Volunteer/loadList")', { intarr: arr, date: selectedDate, keyString: keystring }, (result) => {
+                $("#li_start").html("");
+                let str = "";
+                if (result.length == 0) {
+                    str = `<h2>無符合項目。</h2>`
+                } else {
+                    result.forEach(item => {
+                        str += `<div class="v_div" style="height:200px;">
+	                            <div class="v_pic_div">
+		                            <img src="../img/volunteer/${item.activityPhoto}" style="width:33%;height:200px;padding-right:30px; float:left;" />
+	                            </div>
+                                <div class="v_des_div"  style="width:80%;height:200px;">
+                                    <h4>${item.title}</h4>
+		                            <div>服務時間 : ${item.startDate} ~ ${item.endDate}</div>
+		                            <div>服務類別 : ${item.activityCategoryName}</div>
+		                            <div>需求人數 : ${item.peopleInNeed} 人</div>
+                                    <div>工作內容 : ${item.description}</div>
+                                    <form action="/Volunteer/SignUp/${item.activityID}" method="post">
+                                        <input class="btn btn-primary rounded-pill py-2 px-4" style="color:#FFFFFF;background:#EAA636;margin-top:5px;" type="submit" value="報名" />
+                                    </form>
+                                </div>
+                            </div><hr />`;
+                    });
+                }
+                $("#li_start").append(str);
+            });
+        }
+
+        //clearMatch
+        $("#clearMatch").click(() => {
+            selectedDate = null;
+            arr = [];
+            keystring = "";
+            $("#searchtext").val("");
+            $("#datepicker").remove();
+            $(".sidebar-categories").prepend('<div id="datepicker"></div>')
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                onSelect: (date) => {
+                    selectedDate = date;
+                    load();
+                },
+                minDate: new Date().getDate + 1,
+            }).css({ "font-size": "1.7vh" });
+            $("input[type=checkbox]").prop("checked",false)
+            load();
+        })
+
+        //init
+        loadCheckBox();
+        load();
     </script>
 }
