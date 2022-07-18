@@ -14,7 +14,9 @@ namespace qqqq.Controllers
     {
         public IActionResult shopping()
         {
-            return View();
+            var db = new 我救浪Context();
+           List<Category> list=  db.Categories.Where(p=>p.IsPet==false).ToList();
+            return View(list);
         }
         public IActionResult shoppingRow()
         {
@@ -71,15 +73,15 @@ namespace qqqq.Controllers
             Product Prod = (new 我救浪Context()).Products.FirstOrDefault(p => p.ProductId == vModel.CartId);
             Cprod.product = Prod;
             Cprod.Photos = (new 我救浪Context()).Photos.Where(p => p.ProductId == Prod.ProductId).ToList();
-            CShoppingCart item = new CShoppingCart()
-            {
-                CartId = vModel.CartId,
-                CartName = Prod.ProductName,
-                CartPhoto = Cprod.Photos[0].PictureName,
-                CartCount = vModel.CartCount,
-                CartPrice = (decimal)Prod.Price
-            };
-            list.Add(item);
+            //CShoppingCart item = new CShoppingCart()
+            //{
+            //    CartId = vModel.CartId,
+            //    CartName = Prod.ProductName,
+            //    CartPhoto = Cprod.Photos[0].PictureName,
+            //    CartCount = vModel.CartCount,
+            //    CartPrice = (decimal)Prod.Price
+            //};
+            list.Add(vModel);
             jsonCart = JsonSerializer.Serialize(list);
             HttpContext.Session.SetString(
                 CDictionary.SK_購物車商品列表, jsonCart);

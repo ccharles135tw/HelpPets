@@ -61,13 +61,23 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                   
-                    <tr class="align-center">
 
-                        <td>
-                            <img src="/Images/@item.Photos.FirstOrDefault()?.PictureName" width="120" height="120" />
 
-                        </td>
+
+<tr class="align-center">
+
+    <td>
+        @{ if (item.Photos.Count == 0)
+            {
+            <img src="/Images/notfound.jpg" width="120" height="120" />
+            }
+            else
+            {
+        <img src="/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="120" height="120" />
+                }
+            }
+
+    </td>
                         <td>
                             <h4> @Html.DisplayFor(modelItem => item.ProductName)</h4>
                         </td>
