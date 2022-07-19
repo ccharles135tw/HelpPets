@@ -33,15 +33,17 @@
         .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 300px;
-            height: 200px;
+            width: 400px;
+            height: 300px;
         }
 
             .swiper-slide img {
                 display: block;
                 width: 100%;
             }
-
+        #addToList {
+            background-color: #734226;
+        }
         #alert1 {
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
@@ -52,48 +54,48 @@
          <div class="swiper mySwiper">
              <div class="swiper-wrapper">
                  <div class="swiper-slide">
-                     <button id="addToList">
+                     <button id="addToList" style="background-color: #734226">
                          <img src="~/img/pic1.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
                  <div class="swiper-slide">
                      <button id="addToList">
                          <img src="~/img/pic2.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
                  <div class="swiper-slide">
                      <button id="addToList">
                          <img src="~/img/pic3.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
                  <div class="swiper-slide">
                      <button id="addToList">
                          <img src="~/img/pic4.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
                  <div class="swiper-slide">
                      <button id="addToList">
                          <img src="~/img/pic5.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
                  <div class="swiper-slide">
                      <button id="addToList">
                          <img src="~/img/pic6.jpg" />
-                         <i class="fa-solid fa-list-alt">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
                      </button>
                  </div>
               </div>
          </div>
 
-         <div class="form-group" >
+         <div class="form-group m-3" >
              <div style="display:flex;justify-content:center;align-items:center;">
                  <!-- Button trigger modal --> 
-                 <button class="btn btn-success" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">@Html.ActionLink("維持原條件", "petsList", null)</button>
+                 <button class="btn btn-success " onclick="alertlist1()" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">@Html.ActionLink("維持原條件", "petsList", null)</button>
                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                          style="flex:none;width:120px;margin:10px;align-items:center;justify-content:center">調整清單</button>
                      <!-- Modal -->
@@ -192,6 +194,13 @@
                 '您已更新條件',
                 'success'
             )
+        }
+        function alertlist1() {
+            Swal.fire(
+                '保存原條件,將自動轉回寵物頁面'
+            ), setTimeout(function () {
+                location.href = "/homepage/homepage"
+            }, 2000)
         }
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",

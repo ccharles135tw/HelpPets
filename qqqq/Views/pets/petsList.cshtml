@@ -13,14 +13,12 @@
 <!-- Start Filter Bar -->
 
 <div class="filter-bar d-flex flex-wrap align-items-center text-center">
-    <div class="text-center ">
+    <div class="text-center m-2 ">
 
         種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
             <option value="1">狗</option>
             <option value="1">貓</option>
         </select>
-    </div>
-    <div>
         性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
             <option value="1">不限</option>
             <option value="1">公</option>
@@ -32,7 +30,7 @@
             <option value="1">中</option>
             <option value="1">小</option>
         </select>
-
+        <button>搜尋</button>
     </div>
     @using (Html.BeginForm())
     {
