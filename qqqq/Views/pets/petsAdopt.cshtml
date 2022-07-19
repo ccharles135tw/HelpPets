@@ -22,6 +22,10 @@
             color: black;
             font-weight: 900;
         }
+
+        #alert1 {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
     </style>
 }
 <div>
@@ -102,13 +106,25 @@
                 <span asp-validation-for="MemberEmail" class="text-danger"></span>
             </div>
 
-            <div class="form-group m-1" style="text-align:center">
-                <button type="button" class="btn btn-success" data-dismiss="modal">修改後送出</button>
-                <button type="button" class="btn btn-primary">直接送出</button>
+            <div class="form-group m-1" id="alert1">
+                <button type="button" class="btn btn-success m-2" data-dismiss="modal" onclick="alertlist()">修改後送出</button>
+                <button type="button" class="btn btn-primary" onclick="alertlist()">直接送出</button>
             </div>
         </form>
     </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 @section Scripts {
+    <script>
+        function alertlist() {
+            Swal.fire(
+                '成功',
+                '您已送出條件',
+                'success'
+            )
+        }
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
