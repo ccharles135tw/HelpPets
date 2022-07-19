@@ -5,20 +5,45 @@
 </div>
 @{
     ViewData["Title"] = "petsList";
+    qqqq.Models.我救浪Context db = new 我救浪Context();
+
 }
 
 <div class="filter-bar flex-wrap align-items-center text-center vw-100" style="display: flex; justify-content: space-between; align-content: center ">
     <div class="text-center m-2  " style="flex:none;font-size:20px;text-align:center;display:flex;justify-content:center;align-content:center">
-            種類:<select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
-                <option class="dropdown-item" value="1">狗</option>
-                <option class="dropdown-item" value="1">貓</option>
-            </select>
-        品種: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
+        種類:
+        <select id="Pet" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option value="none" selected disabled hidden>請選擇選項</option>
+            @{
+                var qp = from c in db.Categories where c.IsPet == true && c.CategoryName != "不限" select c;
+                foreach (Category c in qp)
+                {
+                    <option value="@c.CategoryId">@c.CategoryName</option>
+                }
+            }
+        </select>
+        @*<select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
+            <option class="dropdown-item" value="1">狗</option>
+            <option class="dropdown-item" value="1">貓</option>
+        </select>*@
+        品種:
+    <select id="Category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option value="none" selected disabled hidden>請選擇選項</option>
+        @{
+            var qsc = from sc in db.SubCategories where sc.SubCategoryName != "不限" select sc;
+            foreach (SubCategory sc in qsc)
+            {
+                <option value="@sc.SubCategoryId" style="display:none" Category="@sc.CategoryId">@sc.SubCategoryName</option>
+            }
+        }
+    </select>
+
+        @*<select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
             <option value="1">不限</option>
             <option value="1">瑪爾濟斯</option>
             <option value="1">英國短毛</option>
             <option value="1">法國鬥牛犬</option>
-        </select>
+        </select>*@
         性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
             <option value="1">不限</option>
             <option value="1">公</option>
@@ -31,7 +56,7 @@
             <option value="1">小</option>
         </select>
         <button>搜尋</button>
-      
+
     </div>
     <div>
         <form action="@Url.Content("~/pets/Search")" method="post">

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pet.ViewModels;
 using prjHomeLess.ViewModel;
 using qqqq.Models;
 using qqqq.ViewModels;
@@ -22,8 +23,8 @@ namespace qqqq.Controllers
         }
         public IActionResult petsList()
         {
-
-            return View();
+            var q = db.Products.AsEnumerable().Where(p => p.IsPet == true).ToList();
+            return View(CProductView.CProductViews(q));
         }
   
         public IActionResult Search(string keyword)

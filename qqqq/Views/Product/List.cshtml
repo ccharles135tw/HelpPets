@@ -214,7 +214,7 @@
                                         <select id="Pet" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
-                                                var qp = from c in db.Categories where c.IsPet == true && c.CategoryName != "不限" select c;
+                                                var qp = from c in db.Categories where c.IsPet == false && c.CategoryName != "不限" select c;
                                                 foreach (Category c in qp)
                                                 {
                                                     <option value="@c.CategoryId">@c.CategoryName</option>
