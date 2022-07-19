@@ -1,6 +1,6 @@
 ﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
+        <h1 class="display-4 text-white animated slideInDown mb-3">浪浪配對</h1>
     </div>
 </div>
 <meta name="viewport"
@@ -33,140 +33,159 @@
         .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 200px;
-            height: 200px;
+            width: 400px;
+            height: 300px;
         }
 
             .swiper-slide img {
                 display: block;
                 width: 100%;
             }
-
+        #addToList {
+            background-color: #734226;
+        }
         #alert1 {
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
     </style>
-}<body>
-    <!-- Swiper -->
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-            </div>
-            <div class="swiper-slide">
-                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-            </div>
-        </div>
-    </div>
+}<body >
+     <div >
+         <!-- Swiper -->
+         <div class="swiper mySwiper">
+             <div class="swiper-wrapper" style="text-align:center">
+                 <div class="swiper-slide">
+                     <button id="addToList" style="background-color: #734226">
+                         <img src="~/img/pic1.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+                 <div class="swiper-slide">
+                     <button id="addToList">
+                         <img src="~/img/pic2.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+                 <div class="swiper-slide">
+                     <button id="addToList">
+                         <img src="~/img/pic3.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+                 <div class="swiper-slide">
+                     <button id="addToList">
+                         <img src="~/img/pic4.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+                 <div class="swiper-slide">
+                     <button id="addToList">
+                         <img src="~/img/pic5.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+                 <div class="swiper-slide">
+                     <button id="addToList">
+                         <img src="~/img/pic6.jpg" />
+                         <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                     </button>
+                 </div>
+              </div>
+             
+         </div>
 
-    <div class="form-group">
-        <div style="justify-content:flex-end;">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                調整清單
-            </button>
+         <div class="form-group m-3" style="text-align: center"; >
+             <h5 style="color: #D5D8DC ">滑鼠滑動翻頁</h5>
+             <div style="display:flex;justify-content:center;align-items:center;">
+                 <!-- Button trigger modal -->
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content" style="display:flex;">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="text-center">
-                                種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
-                                    <option value="1">狗</option>
-                                    <option value="1">貓</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">公</option>
-                                    <option value="1">母</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                品種: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">瑪爾濟斯</option>
-                                    <option value="1">英國短毛</option>
-                                    <option value="1">法國鬥牛犬</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                毛色: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">黑</option>
-                                    <option value="1">黃</option>
-                                    <option value="1">白</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                結紮: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">是</option>
-                                    <option value="1">否</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">大</option>
-                                    <option value="1">中</option>
-                                    <option value="1">小</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                年齡層: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">幼年</option>
-                                    <option value="1">成年</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                區域: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="1">不限</option>
-                                    <option value="1">台北</option>
-                                    <option value="1">高雄</option>
-                                    <option value="1">台中</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer " id="alert1">
-                            <button type="button" class="btn btn-primary" onclick="alertlist()">調整清單</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="btn btn-success">@Html.ActionLink("保持本來清單", "petsList", null)</button>
-    </div>
+                 <button class="btn btn-success " onclick="alertlist1()" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">維持原條件</button>@*@Html.ActionLink("維持原條件", "petsList", null)*@
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                         style="flex:none;width:120px;margin:10px;align-items:center;justify-content:center">
+                     調整清單
+                 </button>
+                 <!-- Modal -->
+                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                         <div class="modal-content" style="display:flex;">
+                             <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
+                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                     <span aria-hidden="true">&times;</span>
+                                 </button>
+                             </div>
+                             <div class="modal-body">
+                                 <div class="text-center">
+                                     種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
+                                         <option value="1">狗</option>
+                                         <option value="1">貓</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">公</option>
+                                         <option value="1">母</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     品種: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">瑪爾濟斯</option>
+                                         <option value="1">英國短毛</option>
+                                         <option value="1">法國鬥牛犬</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     毛色: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">黑</option>
+                                         <option value="1">黃</option>
+                                         <option value="1">白</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     結紮: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">是</option>
+                                         <option value="1">否</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">大</option>
+                                         <option value="1">中</option>
+                                         <option value="1">小</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     年齡層: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">幼年</option>
+                                         <option value="1">成年</option>
+                                     </select>
+                                 </div>
+                                 <div class="text-center">
+                                     區域: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                         <option value="1">不限</option>
+                                         <option value="1">台北</option>
+                                         <option value="1">高雄</option>
+                                         <option value="1">台中</option>
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="modal-footer " id="alert1">
+                                 <button type="button" class="btn btn-primary" onclick="alertlist()">調整清單</button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+
+             </div>
+         </div>
+     </div>
+   
 </body>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -180,6 +199,13 @@
                 '您已更新條件',
                 'success'
             )
+        }
+        function alertlist1() {
+            Swal.fire(
+                '保存原條件,將自動轉回寵物頁面'
+            ), setTimeout(function () {
+                location.href = "/pets/petsList"
+            }, 3000)
         }
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",

@@ -22,13 +22,12 @@ namespace qqqq.Controllers
         }
         public IActionResult petsList()
         {
-            //string keyword = Request.Form["keyword"];
-            //IEnumerable<CProductShow> data = null;
-            //if (string.IsNullOrEmpty(keyword))
-            //{
-            //   data = from t in db.Products
-            //           select t;
-            //}
+
+            return View();
+        }
+  
+        public IActionResult Search(string keyword)
+        {
 
             return View();
         }

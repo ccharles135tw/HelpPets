@@ -3,58 +3,55 @@
         <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
     </div>
 </div>
-
-
 @{
     ViewData["Title"] = "petsList";
 }
 
-@*<div class="col-12 align-center">*@
-<!-- Start Filter Bar -->
-
-<div class="filter-bar d-flex flex-wrap align-items-center text-center">
-    <div class="text-center ">
-
-        種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
-            <option value="1">狗</option>
-            <option value="1">貓</option>
+<div class="filter-bar flex-wrap align-items-center text-center vw-100" style="display: flex; justify-content: space-between; align-content: center ">
+    <div class="text-center m-2  " style="flex:none;font-size:20px;text-align:center;display:flex;justify-content:center;align-content:center">
+            種類:<select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
+                <option class="dropdown-item" value="1">狗</option>
+                <option class="dropdown-item" value="1">貓</option>
+            </select>
+        品種: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
+            <option value="1">不限</option>
+            <option value="1">瑪爾濟斯</option>
+            <option value="1">英國短毛</option>
+            <option value="1">法國鬥牛犬</option>
         </select>
-    </div>
-    <div>
-        性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+        性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
             <option value="1">不限</option>
             <option value="1">公</option>
             <option value="1">母</option>
         </select>
-        體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+        體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px; flex: none;">
             <option value="1">不限</option>
             <option value="1">大</option>
             <option value="1">中</option>
             <option value="1">小</option>
         </select>
-
+        <button>搜尋</button>
+      
     </div>
-    @using (Html.BeginForm())
-    {
-        @:關鍵字 @Html.TextBox("txtkeyword")
-        <input type="submit" value="查詢" />
-    }
-
-    <div class="sorting mr-auto">
-        <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
-        <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
+    <div>
+        <form action="@Url.Content("~/pets/Search")" method="post">
+            <label>關鍵字</label><input type="text" name="keyword" />
+            <input type="submit" value="查詢" />
+        </form>
     </div>
-    <div style="justify-content:flex-end;">
+
+    <div style="flex:none; justify-content:flex-end">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            寵物配對
-        </button>
-
+        <div class="sorting mr-auto">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">寵物配對</button>
+            <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
+            <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
+        </div>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div>
+        <div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content" style="display:flex;">
+                    <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -64,20 +61,20 @@
                         <div class="modal-body">
                             <div class="text-center">
 
-                                種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
+                                種類: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
                                     <option value="1">狗</option>
                                     <option value="1">貓</option>
                                 </select>
                             </div>
                             <div class="text-center">
-                                性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">公</option>
                                     <option value="1">母</option>
                                 </select>
                             </div>
                             <div>
-                                品種: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                品種: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">瑪爾濟斯</option>
                                     <option value="1">英國短毛</option>
@@ -85,7 +82,7 @@
                                 </select>
                             </div>
                             <div>
-                                毛色: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">黑</option>
                                     <option value="1">黃</option>
@@ -93,14 +90,14 @@
                                 </select>
                             </div>
                             <div>
-                                結紮: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">是</option>
                                     <option value="1">否</option>
                                 </select>
                             </div>
                             <div>
-                                體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">大</option>
                                     <option value="1">中</option>
@@ -108,14 +105,14 @@
                                 </select>
                             </div>
                             <div>
-                                年齡層: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">幼年</option>
                                     <option value="1">成年</option>
                                 </select>
                             </div>
                             <div>
-                                區域: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
+                                區域: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                     <option value="1">不限</option>
                                     <option value="1">台北</option>
                                     <option value="1">高雄</option>
@@ -123,16 +120,17 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer" style="right:0;">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                             <button type="button" class="btn btn-primary">@Html.ActionLink("開始配對", "petsMatch", "pets")</button>
                         </div>
+
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
+</div>
 
 
 <div class="col-4 w-100" id="divAlert">
@@ -148,6 +146,7 @@
             $("#listCol").click(() => {
                 $("#divAlert").load('@Url.Content("~/pets/petsPhoto")')
             })
+
     </script>
 
 }

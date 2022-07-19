@@ -22,13 +22,17 @@
             color: black;
             font-weight: 900;
         }
+
+        #alert1 {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
     </style>
 }
 <div>
     <h1 style="font-weight:900; text-align:center;">領養會員資料確認</h1>
 </div>
 <div style="text-align:right; margin-right:10px; text-decoration:none">
-    <a asp-action="memList" style="color:chocolate;" class="fa-solid fa-right-from-bracket"> 返回</a>
+    <button style="color:#fff;border:none;background-color:#EAA636"><i class="fa-solid fa-right-from-bracket fa-2"></i>@Html.ActionLink("返回", "petsList", "pets") </button>
 </div>
 <hr />
 <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
@@ -41,11 +45,11 @@
                 <span asp-validation-for="MemberID" class="text-danger"></span>
             </div>
 
-            <div @*class="fa-solid fa-paw" *@ class="form-group">
+            <!--<div--> @*class="fa-solid fa-paw" *@ <!--class="form-group">
                 <i class="fa-solid fa-paw"><label asp-for="MemberPhoto" class="control-label"></label></i>
                 <input type="file" id="input" asp-for="MemberPhoto" class="form-control" />
                 <span asp-validation-for="MemberPhoto" class="text-danger"></span>
-            </div>
+            </div>-->
             <div class="form-group">
                 <i class="fa-solid fa-paw"><label asp-for="MemberName" class="control-label"></label></i>
                 <input id="input" asp-for="MemberName" class="form-control" />
@@ -102,13 +106,25 @@
                 <span asp-validation-for="MemberEmail" class="text-danger"></span>
             </div>
 
-            <div class="form-group m-1" style="text-align:center">
-                <button type="button" class="btn btn-success" data-dismiss="modal">修改後送出</button>
-                <button type="button" class="btn btn-primary">直接送出</button>
+            <div class="form-group m-1" id="alert1">
+                <button type="button" class="btn btn-success m-2" data-dismiss="modal" onclick="alertlist()">修改後送出</button>
+                <button type="button" class="btn btn-primary" onclick="alertlist()">直接送出</button>
             </div>
         </form>
     </div>
 </div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 @section Scripts {
+    <script>
+        function alertlist() {
+            Swal.fire(
+                '成功',
+                '將進行評估,請耐心等待回復',
+                'success'
+            )
+        }
+    </script>
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
