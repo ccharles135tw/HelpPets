@@ -12,6 +12,7 @@ namespace qqqq.Controllers
 {
     public class shoppingController : Controller
     {
+        
         public IActionResult shopping()
         {
             var db = new 我救浪Context();
@@ -109,6 +110,12 @@ namespace qqqq.Controllers
             }
             else
                 return RedirectToAction("CartView");
+        }
+        public IActionResult SubCategory(int id)
+        {
+            var db = new 我救浪Context();
+         var list=   db.SubCategories.Where(p => p.CategoryId == id).ToString();
+            return Content(list, "text/plain", System.Text.Encoding.UTF8);
         }
     }
 }
