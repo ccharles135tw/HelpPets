@@ -43,5 +43,11 @@ namespace prjHomeLess_R.Controllers
         {
             return View();
         }
+
+        public IActionResult MemberDoneListTry()
+        {
+
+            return PartialView();
+        }
     }
 }
