@@ -14,12 +14,15 @@ namespace qqqq.ViewModels
         private Vactivity _vactivity;
 
         private CMemberView _cMemberView;
+        private Volunteer _volunteer;
         public VActivityViewModel()
         {
             _cMemberView = new CMemberView();
             _vactivity = new Vactivity();
+            _volunteer = new Volunteer();
         }
         public Vactivity vactivity { get { return _vactivity; } set { _vactivity = value; } }
+        public List<Volunteer> volunteer { get { return volunteer; } set { volunteer = value; } }
         public int ActivityID { get { return _vactivity.ActivityId; } set { _vactivity.ActivityId = value; } }
         public string Title { get { return _vactivity.Title; } set { _vactivity.Title = value; } }
         public string StartDate { get { return _vactivity.StartDate; } set { _vactivity.StartDate = value; } }
