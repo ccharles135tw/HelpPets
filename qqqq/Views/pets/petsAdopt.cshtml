@@ -32,7 +32,7 @@
     <h1 style="font-weight:900; text-align:center;">領養會員資料確認</h1>
 </div>
 <div style="text-align:right; margin-right:10px; text-decoration:none">
-    <a asp-action="memList" style="color:chocolate;" class="fa-solid fa-right-from-bracket"> 返回</a>
+    <button style="color:#fff;border:none;background-color:#EAA636"><i class="fa-solid fa-right-from-bracket fa-2"></i>@Html.ActionLink("返回", "petsList", "pets") </button>
 </div>
 <hr />
 <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
@@ -45,11 +45,11 @@
                 <span asp-validation-for="MemberID" class="text-danger"></span>
             </div>
 
-            <div @*class="fa-solid fa-paw" *@ class="form-group">
+            <!--<div--> @*class="fa-solid fa-paw" *@ <!--class="form-group">
                 <i class="fa-solid fa-paw"><label asp-for="MemberPhoto" class="control-label"></label></i>
                 <input type="file" id="input" asp-for="MemberPhoto" class="form-control" />
                 <span asp-validation-for="MemberPhoto" class="text-danger"></span>
-            </div>
+            </div>-->
             <div class="form-group">
                 <i class="fa-solid fa-paw"><label asp-for="MemberName" class="control-label"></label></i>
                 <input id="input" asp-for="MemberName" class="form-control" />
@@ -120,7 +120,7 @@
         function alertlist() {
             Swal.fire(
                 '成功',
-                '您已送出條件',
+                '將進行評估,請耐心等待回復',
                 'success'
             )
         }
