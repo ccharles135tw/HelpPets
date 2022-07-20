@@ -49,5 +49,21 @@ namespace prjHomeLess_R.Controllers
 
             return PartialView();
         }
+
+        public IActionResult DetailDoneList()
+        {
+
+
+            return PartialView();
+        }
+        public IActionResult vvv()
+        {
+            return ViewComponent("VCdoneList");
+        }
+        public IActionResult order()
+        {
+
+            return ViewComponent("VClist");
+        }
     }
 }

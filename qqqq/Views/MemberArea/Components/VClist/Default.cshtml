@@ -1,7 +1,4 @@
 ﻿
-@{
-    ViewData["Title"] = "MemberDoneListTry";
-}
 
 <h3 class="h5 mb-4 text-center">已完成的訂單</h3>
 <div class="table-wrap">
@@ -39,7 +36,7 @@
 
                 <td>
                     <div class="email">
-                        <a href="#" id="viewDoneList" >
+                        <a href="#" id="viewDoneList">
                             <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
                             <span>點擊檢視詳細資料</span>
                         </a>
@@ -63,17 +60,14 @@
 
 </div>
 
-@section Scripts{
+<script> 
 
-    <script>
-    $("#viewDoneList").click((eve) => {
-    eve.preventDefault();
-    console.log("A");
-    $("#viewChange").empty();
-    $("#viewChange").load('@Url.Content("~/MemberArea/DetailDoneList")');
+       $("#viewDoneList").click((eve) => {
+            eve.preventDefault();
 
-    })
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/vvv")", {}, function (datas) { console.log(datas);$("#viewChange").html(datas); })
 
-    </script>
 
-}
+        })
+</script>
