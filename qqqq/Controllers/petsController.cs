@@ -16,17 +16,34 @@ namespace qqqq.Controllers
     public class petsController : Controller
     {
         我救浪Context db = new 我救浪Context();
-        public IWebHostEnvironment _enviroment;
+        public readonly IWebHostEnvironment _enviroment;
         public petsController(IWebHostEnvironment p)
         {
             _enviroment = p;
         }
+
         public IActionResult petsList()
         {
             var q = db.Products.AsEnumerable().Where(p => p.IsPet == true).ToList();
             return View(CProductView.CProductViews(q));
         }
-  
+        public IActionResult petsSubcategory(int id)
+        {
+            var db = new 我救浪Context();
+            var list = db.SubCategories.Where(p => p.CategoryId == id || p.SubCategoryName == "不限").Select(p=>new { SubCategoryId =p.SubCategoryId,SubCategoryName=p.SubCategoryName }).ToList();
+            //List<CPet> pList = new List<CPet>();
+            //foreach (var subPets in list)
+            //{
+            //    CPet cpet = new CPet();
+            //    cpet.SubCategoryName = subPets.SubCategoryName;
+            //    cpet.SubCategoryId = subPets.SubCategoryId;
+            //    pList.Add(cpet);
+            //}
+            var jsonsubpet = JsonSerializer.Serialize(list);
+            return Json(jsonsubpet);
+            //return View();
+        }
+
         public IActionResult Search(string keyword)
         {
 
