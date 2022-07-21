@@ -31,17 +31,8 @@ namespace qqqq.Controllers
         {
             var db = new 我救浪Context();
             var list = db.SubCategories.Where(p => p.CategoryId == id || p.SubCategoryName == "不限").Select(p=>new { SubCategoryId =p.SubCategoryId,SubCategoryName=p.SubCategoryName }).ToList();
-            //List<CPet> pList = new List<CPet>();
-            //foreach (var subPets in list)
-            //{
-            //    CPet cpet = new CPet();
-            //    cpet.SubCategoryName = subPets.SubCategoryName;
-            //    cpet.SubCategoryId = subPets.SubCategoryId;
-            //    pList.Add(cpet);
-            //}
             var jsonsubpet = JsonSerializer.Serialize(list);
             return Json(jsonsubpet);
-            //return View();
         }
 
         public IActionResult Search(string keyword)
