@@ -12,43 +12,45 @@
 @*<div class="col-12 align-center">*@
 <!-- Start Filter Bar -->
 
-    <div class="filter-bar d-flex flex-wrap align-items-center text-center">
-        <div class="text-center ">
+<div class="filter-bar d-flex flex-wrap align-items-center text-center">
+    <div class="text-center ">
 
-            <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;" name="Category">
-                @foreach (Category cator in Model)
+        <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;" name="Category" id="selectCate">
+            <option value="0">全部</option>
+            @foreach (Category cator in Model)
+            {
+                <option value="@cator.CategoryId">@cator.CategoryName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;" name="SubCategory" id="selectSub">
+            <option value="0">全部</option>
+            @foreach (Category cator in Model)
+            {
+                foreach (SubCategory subCat in cator.SubCategories.ToList())
                 {
-                    <option value="@cator.CategoryId">@cator.CategoryName</option>
+                    <option value="@subCat.SubCategoryId">@subCat.SubCategoryName</option>
                 }
-            </select>
-        </div>
-        <div>
-            <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;" name="SubCategory" id="selectSub">
-                @foreach (Category cator in Model)
-                {
-                    foreach (SubCategory subCat in cator.SubCategories.ToList())
-                    {
-                        <option value="@subCat.SubCategoryId">@subCat.SubCategoryName</option>
-                    }
-                }
-            </select>
-        </div>
-        <div>
-            <div class="input-group filter-bar-search">
-                <input type="text" placeholder="輸入關鍵字" name="Keyword">
-                @*<div class="input-group-append">*@
-                <button type="button" id="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            }
+        </select>
+    </div>
+    <div>
+        <div class="input-group filter-bar-search">
+            <input type="text" placeholder="輸入關鍵字" name="Keyword" id="keyword">
+            @*<div class="input-group-append">*@
+            <button type="button" id="search"><i class="fa-solid fa-magnifying-glass"></i></button>
 
-                @*</div>*@
-            </div>
+            @*</div>*@
         </div>
-       
+    </div>
 
 
-<div class="sorting mr-auto">
-    <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
-    <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
-</div>
+
+    <div class="sorting mr-auto">
+        <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
+        <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
+    </div>
 </div>
 
 @*</div>*@
@@ -66,7 +68,7 @@
             <h2 class="head" style="text-align: center; letter-spacing:50px;font-size:30px">分類</h2>
             <ul class="card-product__title">
                 <li>
-                    <h4><input  class="pixel-radio ParentCategory" type="radio" name="ParentCategory"value="2" />狗用</h4>
+                    <h4><input class="pixel-radio ParentCategory" type="radio" name="ParentCategory" value="2" />狗用</h4>
                     <ul class="single-search-product-wrapper">
                         @foreach (Category cator in Model)
                         {
@@ -77,7 +79,7 @@
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
-                                            <li><input class="pixel-radio SubCategory" type="radio" name="SubCategory"value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
+                                            <li><input class="pixel-radio SubCategory" type="radio" name="SubCategory" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
                                         }
                                     </ul>
                                 </li>
@@ -97,7 +99,7 @@
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
-                                            <li><input  class="pixel-radio SubCategory" type="radio" name="SubCategory" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
+                                            <li><input class="pixel-radio SubCategory" type="radio" name="SubCategory" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
                                         }
                                     </ul>
                                 </li>
@@ -129,34 +131,76 @@
 
 @section scripts{
     <script>
-@using qqqq.ViewModels
+
         let list = true;
-        let ParentCategory = null;
-        let Category = null;
-        let SubCategory = null;
+        let ParentCategory = 0;
+        let Category = 0;
+        let SubCategory = 0;
         let Keyword = "";
-       
-           const divInfo= document.querySelector("#divAlert")
-               $("#divAlert").load('@Url.Content("~/shopping/shoppingCol")')
+        let search = null;
+
+        const divInfo = document.querySelector("#divAlert")
+        filter();
+               @*$("#divAlert").load('@Url.Content("~/shopping/shoppingCol")')*@
         $("#listRow").click(() => {
             list = false;
-                $("#divAlert").load('@Url.Content("~/shopping/shoppingRow")')
+            @*$("#divAlert").load('@Url.Content("~/shopping/shoppingRow")')*@
+            filter();
+
             })
         $("#listCol").click(() => {
             list = true;
-                $("#divAlert").load('@Url.Content("~/shopping/shoppingCol")')
+                @*$("#divAlert").load('@Url.Content("~/shopping/shoppingCol")')*@
+            filter();
         })
         $(".ParentCategory").on("change", (event) => {
+            search = true;
             ParentCategory = event.target.value;
-            console.log(ParentCategory)
+            filter()
         })
         $(".Category").on("change", (event) => {
+            search = true;
             Category = event.target.value;
-            console.log(Category)
+            filter();
         })
         $(".SubCategory").on("change", (event) => {
+            search = true;
             SubCategory = event.target.value;
+            filter();
+        })
+        function filter() {
+            if (list == true) {
+                $("#divAlert").load('@Url.Content("~/shopping/shoppingCol")', { "Keyword": Keyword, "Category": Category, "SubCategory": SubCategory, "ParentCategory": ParentCategory,"Search":search })
+            }
+            else {
+                 $("#divAlert").load('@Url.Content("~/shopping/shoppingRow")', { "Keyword": Keyword, "Category": Category, "SubCategory": SubCategory, "ParentCategory": ParentCategory,"Search":search })
+            }
+        }
+        $("#selectCate").on("change",(event)=> {
+            $.getJSON('@Url.Content("~/shopping/SubCategory")', { "id": event.target.value }, (data) => {
+                let list = JSON.parse(data)
+                let selet = $("#selectSub")
+                selet.empty();
+                let opt = document.createElement("option");
+                opt.value = 0;
+                opt.text = "全部";
+                selet.append(opt)
+                $.each(list, (index, item) => {
+                    opt = document.createElement("option");
+                    opt.value = item.SubCategoryId;
+                    opt.text = item.SubCategoryName;
+                    selet.append(opt);
+                })
+            })
+        })
+        $("#search").on("click", () => {
+            search = false;
+            Category = $("#selectCate").select().val()
+            SubCategory = $("#selectSub").select().val()
+            Keyword = $("#keyword").val()
+            parent = 0
             
+            filter();
         })
     </script>
 

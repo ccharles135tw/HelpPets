@@ -11,5 +11,6 @@ namespace qqqq.ViewModels
         public int ParentCategory { get; set; }
         public int Category { get; set; }
         public int SubCategory { get; set; }
+        public bool Search { get; set; }
     }
 }
