@@ -108,64 +108,94 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" >
                                 <div class="text-center">
-                                    種類: <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;">
-                                        <option value="1">狗</option>
-                                        <option value="1">貓</option>
+                                    <label>種類:</label><select id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qpl = from p in db.Categories where p.IsPet == true select p;
+                                            foreach (Category p in qpl)
+                                            {
+                                                <option value="@p.CategoryId">@p.CategoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>品種:</label><select id="petSubcatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
                                     </select>
                                 </div>
                                 <div class="text-center">
-                                    性別: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">公</option>
-                                        <option value="1">母</option>
+                                    性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qgl = from g in db.Genders select g;
+                                            foreach (Gender g in qgl)
+                                            {
+                                                <option value="@g.GenderId">@g.GenderType</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
-                                <div class="text-center">
-                                    品種: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">瑪爾濟斯</option>
-                                        <option value="1">英國短毛</option>
-                                        <option value="1">法國鬥牛犬</option>
+                                <div>
+                                    毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qcl = from c in db.Colors select c;
+                                            foreach (Color c in qcl)
+                                            {
+                                                <option value="@c.ColorId">@c.ColorName</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
-                                <div class="text-center">
-                                    毛色: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">黑</option>
-                                        <option value="1">黃</option>
-                                        <option value="1">白</option>
+                                <div>
+                                    結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qll = from l in db.Ligations select l;
+                                            foreach (Ligation l in qll)
+                                            {
+                                                <option value="@l.LigationId">@l.LigationType</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
-                                <div class="text-center">
-                                    結紮: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">是</option>
-                                        <option value="1">否</option>
+                                <div>
+                                    體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qsl = from s in db.Sizes select s;
+                                            foreach (Size s in qsl)
+                                            {
+                                                <option value="@s.SizeId">@s.SizeType</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
-                                <div class="text-center">
-                                    體型: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">大</option>
-                                        <option value="1">中</option>
-                                        <option value="1">小</option>
+                                <div>
+                                    年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qal = from a in db.Ages select a;
+                                            foreach (Age a in qal)
+                                            {
+                                                <option value="@a.AgeId">@a.AgeType</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
-                                <div class="text-center">
-                                    年齡層: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">幼年</option>
-                                        <option value="1">成年</option>
-                                    </select>
-                                </div>
-                                <div class="text-center">
-                                    區域: <select class="sorting mr-auto" style="margin-left: 10px; margin-right:10px;">
-                                        <option value="1">不限</option>
-                                        <option value="1">台北</option>
-                                        <option value="1">高雄</option>
-                                        <option value="1">台中</option>
+                                <div>
+                                    區域: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qtl = from t in db.Cities select t;
+                                            foreach (City t in qtl)
+                                            {
+                                                <option value="@t.CityId">@t.CityName</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -189,19 +219,37 @@
 
     <script>
         function alertlist() {
-            Swal.fire(
-                '成功',
-                '您已更新條件',
-                'success'
-            )
+            let timerInterval
+            Swal.fire({
+                title: '條件修改成功!',
+                html: '將在 <b>b</b> 毫秒後回寵物首頁',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft()}, 100);
+                    setTimeout(function () { location.href = "/pets/petsList" }, 3000)
+                }
+            })
         }
+
         function alertlist1() {
-            Swal.fire(
-                '保存原條件,將自動轉回寵物頁面'
-            ), setTimeout(function () {
-                location.href = "/pets/petsList"
-            }, 3000)
+            let timerInterval
+            Swal.fire({
+                title: '保存原條件',
+                html: '將在 <b>b</b> 毫秒後回寵物首頁',
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft() }, 100);
+                    setTimeout(function () { location.href = "/pets/petsList" }, 3000)
+                }
+            })
         }
+
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
             grabCursor: true,
@@ -218,6 +266,23 @@
                 el: ".swiper-pagination",
             },
         });
+          $("#petCatel").on('change', function () {
+            $.getJSON('@Url.Content("~/pets/petsSubcategory")', { "id":this.value}, (data) => {
+                let list = JSON.parse(data);
+                let select = $("#petSubcatel")
+                select.empty();
+                let opt = document.createElement("option");
+                opt.value = 0;
+                opt.text = "請選擇項目";
+                select.append(opt);
+                $.each(list, (index, item) => {
+                    let opt = document.createElement("option");
+                    opt.value = item.SubCategoryId;
+                    opt.text = item.SubCategoryName;
+                    select.append(opt);
+                })
+            })
+        })
     </script>
 
 }

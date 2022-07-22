@@ -28,7 +28,7 @@
         <option value="none" selected disabled hidden>請選擇選項</option>
     </select>
 
-        性別: <select id="petSubcate" class="form-select form-select mb-3" aria-label=".form-select example">
+        性別: <select  class="form-select form-select mb-3" aria-label=".form-select example">
                 <option value="none" selected disabled hidden>請選擇選項</option>
                 @{
                     var qg = from g in db.Genders select g;
@@ -38,7 +38,7 @@
                     }
                 }
                 </select>
-        體型: <select id="petSubcate" class="form-select form-select mb-3" aria-label=".form-select example">
+        體型: <select  class="form-select form-select mb-3" aria-label=".form-select example">
                     <option value="none" selected disabled hidden>請選擇選項</option>
                     @{
                         var qs = from s in db.Sizes select s;
