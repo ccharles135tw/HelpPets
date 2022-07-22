@@ -22,7 +22,7 @@ namespace qqqq.Controllers
         public IActionResult shoppingRow(CShoppingKeyword key)
         {
             我救浪Context db = new 我救浪Context();
-            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == 0 && key.Keyword ==null)
+            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
                 var datas = db.Products.Where(p => p.IsPet == false).ToList();
                 List<CProductShow> list = new List<CProductShow>();
@@ -38,18 +38,22 @@ namespace qqqq.Controllers
             }
             else if (key.Search == false)
             {
-                var list= db.Products.Where(p => p.IsPet == false).ToList();
+                var list = db.Products.Where(p => p.IsPet == false).ToList();
                 if (key.Category != 0)
                 {
                     list = list.Where(p => p.SubCategory.CategoryId == key.Category).ToList();
                 }
-                if (key.SubCategory != 0)
+                if (key.SubCategory != null)
                 {
-                    list = list.Where(p => p.SubCategoryId == key.SubCategory).ToList();
+                    foreach (var n in key.SubCategory)
+                    {
+                        list = list.Where(p => p.SubCategoryId == n).ToList();
+
+                    }
                 }
                 if (!string.IsNullOrEmpty(key.Keyword.Trim()))
                 {
-                    list= list.Where(p => p.ProductName.Contains(key.Keyword)).ToList();
+                    list = list.Where(p => p.ProductName.Contains(key.Keyword.Trim())).ToList();
                 }
                 List<CProductShow> data = new List<CProductShow>();
                 foreach (var p in list)
@@ -65,58 +69,61 @@ namespace qqqq.Controllers
             else
             {
                 List<CProductShow> list = new List<CProductShow>();
-                if (key.ParentCategory != 0)
+                //if (key.ParentCategory != 0)
+                //{
+                //    var parCate = db.Products.Where(p => p.SubCategory.Category.ParentCategory == key.ParentCategory && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
+                //if (key.Category != 0)
+                //{
+                //    var parCate = db.Products.Where(p => p.SubCategory.CategoryId == key.Category && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
+                if (key.SubCategory != null)
                 {
-                    var parCate = db.Products.Where(p => p.SubCategory.Category.ParentCategory == key.ParentCategory && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
+                    foreach (var s in key.SubCategory)
                     {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
+                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false).ToList();
+                        foreach (var p in subCate)
+                        {
+                            CProductShow Cpro = new CProductShow();
+                            Cpro.product = p;
+                            if (p.Photos.Any())
+                                Cpro.Photos = p.Photos.ToList();
+                            //if (!list.Contains(Cpro))
+                                list.Add(Cpro);
+                        }
                     }
                 }
-                if (key.Category != 0)
-                {
-                    var parCate = db.Products.Where(p => p.SubCategory.CategoryId == key.Category && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
-                if (key.SubCategory != 0)
-                {
-                    var parCate = db.Products.Where(p => p.SubCategoryId == key.SubCategory && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
-                if (key.Keyword != null)
-                {
-                    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
+                //if (key.Keyword != null)
+                //{
+                //    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
 
                 return PartialView(list);
             }
@@ -126,7 +133,7 @@ namespace qqqq.Controllers
         {
 
             我救浪Context db = new 我救浪Context();
-            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == 0 && key.Keyword == null)
+            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
                 var datas = db.Products.Where(p => p.IsPet == false).ToList();
@@ -148,21 +155,25 @@ namespace qqqq.Controllers
                 {
                     list = list.Where(p => p.SubCategory.CategoryId == key.Category).ToList();
                 }
-                if (key.SubCategory != 0)
+                if (key.SubCategory != null)
                 {
-                    list = list.Where(p => p.SubCategoryId == key.SubCategory).ToList();
+                    foreach (var n in key.SubCategory)
+                    {
+                        list = list.Where(p => p.SubCategoryId == n).ToList();
+
+                    }
                 }
                 if (!string.IsNullOrEmpty(key.Keyword.Trim()))
                 {
-                    list=  list.Where(p => p.ProductName.Contains(key.Keyword)).ToList();
+                    list = list.Where(p => p.ProductName.Contains(key.Keyword.Trim())).ToList();
                 }
                 List<CProductShow> data = new List<CProductShow>();
-                foreach(var p in list)
+                foreach (var p in list)
                 {
                     CProductShow cPro = new CProductShow();
                     cPro.product = p;
                     if (p.Photos.Any())
-                     cPro.Photos = p.Photos.ToList();
+                        cPro.Photos = p.Photos.ToList();
                     data.Add(cPro);
                 }
                 return PartialView(data);
@@ -170,60 +181,62 @@ namespace qqqq.Controllers
             else
             {
                 List<CProductShow> list = new List<CProductShow>();
-                if (key.ParentCategory != 0)
+                //if (key.ParentCategory != 0)
+                //{
+                //    var parCate = db.Products.Where(p => p.SubCategory.Category.ParentCategory == key.ParentCategory && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
+                //if (key.Category != 0)
+                //{
+                //    var parCate = db.Products.Where(p => p.SubCategory.CategoryId == key.Category && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
+                if (key.SubCategory != null)
                 {
-                    var parCate = db.Products.Where(p => p.SubCategory.Category.ParentCategory == key.ParentCategory && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
+                    foreach (var s in key.SubCategory)
                     {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
+                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false).ToList();
+                        foreach (var p in subCate)
+                        {
+                            CProductShow Cpro = new CProductShow();
+                            Cpro.product = p;
+                            if (p.Photos.Any())
+                                Cpro.Photos = p.Photos.ToList();
+                            //if (!list.Contains(Cpro))
                             list.Add(Cpro);
+                        }
                     }
+                    //if (key.Keyword != null)
+                    //{
+                    //    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
+                    //    foreach (var p in parCate)
+                    //    {
+                    //        CProductShow Cpro = new CProductShow();
+                    //        Cpro.product = p;
+                    //        if (p.Photos.Any())
+                    //            Cpro.Photos = p.Photos.ToList();
+                    //        if (!list.Contains(Cpro))
+                    //            list.Add(Cpro);
+                    //    }
+                    //}
                 }
-                if (key.Category != 0)
-                {
-                    var parCate = db.Products.Where(p => p.SubCategory.CategoryId == key.Category && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
-                if (key.SubCategory != 0)
-                {
-                    var parCate = db.Products.Where(p => p.SubCategoryId == key.SubCategory && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
-                if (key.Keyword != null)
-                {
-                    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
-                    foreach (var p in parCate)
-                    {
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
-
-                return PartialView(list);
+                    return PartialView(list);
             }
         }
         public IActionResult ShowProduct(int id)
@@ -289,11 +302,11 @@ namespace qqqq.Controllers
                 return RedirectToAction("CartView");
         }
         public IActionResult SubCategory(int id)
-        { 
+        {
             var db = new 我救浪Context();
-            if (id ==0)
+            if (id == 0)
             {
-                var list = db.SubCategories.Where(p=>p.Category.IsPet==false).ToList();
+                var list = db.SubCategories.Where(p => p.Category.IsPet == false).ToList();
                 List<CSubCategoryView> Clist = new List<CSubCategoryView>();
                 foreach (var subCate in list)
                 {
@@ -305,8 +318,9 @@ namespace qqqq.Controllers
                 var jsonList = JsonSerializer.Serialize(Clist);
                 return Json(jsonList);
             }
-        
-            else {        
+
+            else
+            {
                 var list = db.SubCategories.Where(p => p.CategoryId == id).ToList();
                 List<CSubCategoryView> Clist = new List<CSubCategoryView>();
                 foreach (var subCate in list)
@@ -317,7 +331,8 @@ namespace qqqq.Controllers
                     Clist.Add(cSub);
                 }
                 var jsonList = JsonSerializer.Serialize(Clist);
-                return Json(jsonList); }
+                return Json(jsonList);
+            }
         }
     }
 }
