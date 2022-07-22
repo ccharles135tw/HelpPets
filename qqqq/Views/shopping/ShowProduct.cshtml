@@ -22,31 +22,31 @@
             else
             {
                 <img id="prodImg" width="400" height="400" src="/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
-                } 
             }
+        }
     </div>
     <br />
     <div class=" col-md-12 col-sm-12 row list-group-item-primary">
         @*<table class="table table-light table-striped-columns col-auto">
-            <thead >
-                <tr >
-                    @foreach (var p in Model.Photos)
-                    {
-                        <td class="col-1">
-                            <img src="~/Images/@p.PictureName" class="col-11" width="100" height="100" />
-                        </td>
+                <thead >
+                    <tr >
+                        @foreach (var p in Model.Photos)
+                        {
+                            <td class="col-1">
+                                <img src="~/Images/@p.PictureName" class="col-11" width="100" height="100" />
+                            </td>
 
-                    }
-                </tr>
-            </thead>
-        </table>*@
+                        }
+                    </tr>
+                </thead>
+            </table>*@
 
-                @foreach (var p in Model.Photos)
-                {
-                    <img src="~/Images/@p.PictureName" class="imgOption col-2 product-item" />
-                }
-          
-      
+        @foreach (var p in Model.Photos)
+        {
+            <img src="~/Images/@p.PictureName" class="imgOption col-2 product-item" />
+        }
+
+
     </div>
 </div>
 <hr />
@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="@Model.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" />
+                        <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
 
                     }
                 }
@@ -133,27 +133,26 @@
     <div>
         <div><h2>評論</h2></div>
         <hr />
-        <div>
-            <div class="text-left row"><img src="~/Images/02.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">陳X中</h5></div>
-            <div class="text-left row"><img src="~/Images/1s.jpg" width="110" height="25" class="col-3 " />  2022/05/15</div>
-            <div class="text-left row"><p><h4 class="text">Duck不必買</h4></p></div>
-            <div></div>
-        </div>
-        <hr />
-        <div>
-            <div class="text-left row"><img src="~/Images/11.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔡X文</h5></div>
-            <div class="text-left row"><img src="~/Images/3s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
-            <div class="text-left row"><p><h4 class="text">台灣不缺貨</h4></p></div>
-            <div></div>
-        </div>
-        <hr />
-        <div>
-            <div class="text-left row"><img src="~/Images/06.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">蔣X安</h5></div>
-            <div class="text-left row"><img src="~/Images/4s.jpg" width="110" height="25" class="col-3" />  2022/05/15</div>
-            <div class="text-left row"><p><h4 class="text">改名會比較好賣</h4></p></div>
-            <div></div>
-        </div>
-        <hr />
+        @{
+            if (Model.product.MemberComments.Count != 0)
+            {
+                foreach (var c in Model.product.MemberComments)
+                {
+                    <div>
+                        <div class="text-left row"><img src="~/Images/02.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
+                        <img src="~/Images/@(c.Grade)s.jpg" width="110" height="25" class="col-3 " /> @c.CommentDate</div>
+                        <div class="text-left row"><p><h4 class="text">@c.Description</h4></p></div>
+                        <div></div>
+                    </div>
+                    <hr />
+                }
+            }
+            else
+            {
+                <h3 class="text-primary">目前暫無評論</h3>
+            }
+        }
+       
     </div>
 </div>
 
