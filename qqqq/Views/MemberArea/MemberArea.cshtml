@@ -73,53 +73,53 @@
                     </div>*@
 
 
-                    <div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
-                            <div class="bfikuD">
-                                <i class="fa fa-heart" aria-hidden="true"></i>
-                            </div>
-                            <div class="DlL0zX">
-                                <span class="adF7Xs">我的最愛</span>
-                            </div>
-                        </a>
-                    </div>
+                <div style="width:96px">
+                    <a class="+1U02e" href="#" id="memFavorite">
+                        <div class="bfikuD">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                        </div>
+                        <div class="DlL0zX">
+                            <span class="adF7Xs">我的最愛</span>
+                        </div>
+                    </a>
+                </div>
 
-                    <div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
-                            <div class="bfikuD">
-                                <i class="fa fa-paw" aria-hidden="true"></i>
-                            </div>
-                            <div class="DlL0zX">
-                                <span class="adF7Xs">已認養寵物</span>
-                            </div>
-                        </a>
-                    </div>
+                <div style="width:96px">
+                    <a class="+1U02e" href="#" id="memPet">
+                        <div class="bfikuD">
+                            <i class="fa fa-paw" aria-hidden="true"></i>
+                        </div>
+                        <div class="DlL0zX">
+                            <span class="adF7Xs">已認養寵物</span>
+                        </div>
+                    </a>
+                </div>
 
-                    <div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
-                            <div class="bfikuD">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="DlL0zX">
-                                <span class="adF7Xs">我的評價</span>
-                            </div>
-                        </a>
-                    </div>
-
-
+                <div style="width:96px">
+                    <a class="+1U02e" href="#" id="memCommon">
+                        <div class="bfikuD">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                        <div class="DlL0zX">
+                            <span class="adF7Xs">我的評價</span>
+                        </div>
+                    </a>
+                </div>
 
 
 
-                    <div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
-                            <div class="bfikuD">
-                                <i class="fa-solid fa-hand-holding-heart"></i>
-                            </div>
-                            <div class="DlL0zX">
-                                <span class="adF7Xs">我的志工</span>
-                            </div>
-                        </a>
-                    </div>
+
+
+                <div style="width:96px">
+                    <a class="+1U02e" href="#" id="memVolunteer">
+                        <div class="bfikuD">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="DlL0zX">
+                            <span class="adF7Xs">我的志工</span>
+                        </div>
+                    </a>
+                </div>
                 </div>
             </div>
 
@@ -152,26 +152,48 @@
             confirm('已將評論送出');
         })
 
-   
+           $.post("@Url.Content("~/MemberArea/mOrder")", {}, function (datas)  { $("#viewChange").html(datas);})
 
         $("#donelist").click((e) => {
             e.preventDefault();
-        
+
             $("#viewChange").empty();
-            $.post("@Url.Content("~/MemberArea/order")", {}, function (datas)  { $("#viewChange").html(datas);})
+            $.post("@Url.Content("~/MemberArea/mOrder")", {}, function (datas)  { $("#viewChange").html(datas);})
+
+        })
+        $("#memFavorite").click((e) => {
+            e.preventDefault();
+
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/mFavorit")", {}, function (datas)  { $("#viewChange").html(datas);})
 
         })
 
-        @*$("#viewDoneList").click((eve) => {
-            eve.preventDefault();
-       
-            $("#viewChange").empty();
-            $.post("@Url.Content("~/MemberArea/vvv")", {}, function (datas) { console.log(datas);$("#viewChange").html(datas); })
-    
+        $("#memPet").click((e) => {
+            e.preventDefault();
 
-        })*@
-        //{}是參數
-     
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/mPet")", {}, function (datas)  { $("#viewChange").html(datas);})
+
+        })
+        $("#memCommon").click((e) => {
+            e.preventDefault();
+
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/mCommon")", {}, function (datas)  { $("#viewChange").html(datas);})
+
+             })
+        $("#memVolunteer").click((e) => {
+            e.preventDefault();
+
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/mVolunteer")", {}, function (datas)  { $("#viewChange").html(datas);})
+
+        })
+  //{}是參數
+
+
+
     </script>
 
 

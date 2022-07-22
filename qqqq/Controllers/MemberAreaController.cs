@@ -56,14 +56,34 @@ namespace prjHomeLess_R.Controllers
 
             return PartialView();
         }
-        public IActionResult vvv()
+        public IActionResult detailList()
         {
             return ViewComponent("VCdoneList");
         }
-        public IActionResult order()
+        public IActionResult mOrder()
         {
 
             return ViewComponent("VClist");
+        }
+        public IActionResult mFavorit()
+        {
+
+            return ViewComponent("VCmfavorite");
+        }
+        public IActionResult mPet()
+        {
+
+            return ViewComponent("VCmpet");
+        }
+        public IActionResult mCommon()
+        {
+
+            return ViewComponent("VCmcommon");
+        }
+        public IActionResult mVolunteer()
+        {
+
+            return ViewComponent("VCmvolunteer");
         }
     }
 }

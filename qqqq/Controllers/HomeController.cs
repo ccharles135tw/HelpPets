@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -65,10 +67,12 @@ namespace prjHomeLess_R.Controllers
             {
                 if (mem.Password.Equals(txtPassword))
                 {
-                    CLoginView cm = new CLoginView();
-                    //string jsonUser = JsonSerializer.Serialize(cm.);
-                    cm._Member = mem;
-                    HttpContext.Session.SetString(CDictionary.SK_LOGIN_USER, cm.Name);
+                    CLoginViewModel cm = new CLoginViewModel();
+                  
+                    cm .MemberID= mem.MemberId;
+                    cm.Email = mem.Email;
+                    string jsonUser = JsonSerializer.Serialize(cm);
+                    HttpContext.Session.SetString(CDictionary.SK_LOGIN_USER, jsonUser);
 
 
                     return RedirectToAction("homepage", "Home");
@@ -115,17 +119,55 @@ namespace prjHomeLess_R.Controllers
             //             mem.Photo = pName;
             //             //todo照片上傳
             //         }
-         
-                //_context.Members.Add(mem);
-                //_context.SaveChanges();
-            
+
+            //_context.Members.Add(mem);
+            //_context.SaveChanges();
+
             //todo
 
             return View("Login");
-         
+
         }
+        
+        public IActionResult forgetPwd()
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("helppetqqq@gmail.com");
+            mail.To.Add("helppetqqq@gmail.com");
+            //主旨
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.Subject = "我就浪";
+            //內文
+            mail.Body = "<html><body><h1>trytrytry</h1></body></html>";
 
+            //內文是否為html
+            mail.IsBodyHtml = true;
+            //優先權
+            mail.Priority = MailPriority.Normal;
+            //設定smtpclient
+          SmtpClient client = new SmtpClient();
+            client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+            client.Host = "smtp.gmail.com";
+            client.Port = 587;
+            client.EnableSsl = true;
 
+            try
+            {
+
+                client.Send(mail);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            client.Dispose();
+            return View();
+        //todo email
+        
+        
+        
+        }
      
 
 

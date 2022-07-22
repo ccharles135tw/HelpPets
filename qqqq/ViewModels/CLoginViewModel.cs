@@ -7,7 +7,7 @@ namespace prjMVCDemo.vModel
 {
     public class CLoginViewModel
     {
-        public string txtAccount { get; set; }
-        public string txtPassword { get; set; }
+        public int MemberID { get; set; }
+        public string Email { get; set; }
     }
 }
