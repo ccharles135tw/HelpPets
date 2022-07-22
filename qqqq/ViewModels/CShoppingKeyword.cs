@@ -10,7 +10,7 @@ namespace qqqq.ViewModels
         public string Keyword { get; set; }
         public int ParentCategory { get; set; }
         public int Category { get; set; }
-        public int SubCategory { get; set; }
+        public int[]SubCategory { get; set; }
         public bool Search { get; set; }
     }
 }

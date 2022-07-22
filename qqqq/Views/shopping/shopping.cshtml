@@ -68,18 +68,18 @@
             <h2 class="head" style="text-align: center; letter-spacing:50px;font-size:30px">分類</h2>
             <ul class="card-product__title">
                 <li>
-                    <h4><input class="pixel-radio ParentCategory" type="radio" name="ParentCategory" value="2" />狗用</h4>
+                    <h4><input class="pixel-radio filter" type="text" name="filter" value="2" readonly />狗</h4>
                     <ul class="single-search-product-wrapper">
                         @foreach (Category cator in Model)
                         {
                             if (cator.ParentCategory == 2)
                             {
                                 <li>
-                                    <h5><input class="pixel-radio Category" type="radio" name="Category" value="@cator.CategoryId">@cator.CategoryName</h5>
+                                    <h5><input class="pixel-radio filter" type="text" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</h5>
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
-                                            <li><input class="pixel-radio SubCategory" type="radio" name="SubCategory" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
+                                            <li><input class="pixel-radio filter" type="checkbox" name="filter" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
                                         }
                                     </ul>
                                 </li>
@@ -88,18 +88,18 @@
                     </ul>
                 </li>
                 <li>
-                    <h4><input class="pixel-radio ParentCategory" type="radio" name="ParentCategory" value="3" />貓用</h4>
+                    <h4><input class="pixel-radio filter" type="text" name="filter" value="3" readonly />貓</h4>
                     <ul class="single-search-product-wrapper">
                         @foreach (Category cator in Model)
                         {
                             if (cator.ParentCategory == 3)
                             {
                                 <li>
-                                    <h5><input class="pixel-radio Category" type="radio" name="Category" value="@cator.CategoryId">@cator.CategoryName</h5>
+                                    <h5><input class="pixel-radio filter" type="radio" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</h5>
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
-                                            <li><input class="pixel-radio SubCategory" type="radio" name="SubCategory" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
+                                            <li><input class="pixel-radio filter" type="checkbox" name="filter" value="@subCat.SubCategoryId">@subCat.SubCategoryName</li>
                                         }
                                     </ul>
                                 </li>
@@ -133,9 +133,9 @@
     <script>
 
         let list = true;
-        let ParentCategory = 0;
-        let Category = 0;
-        let SubCategory = 0;
+        let ParentCategory =0;
+        let Category =0;
+        let SubCategory = [];
         let Keyword = "";
         let search = null;
 
@@ -153,21 +153,37 @@
                 @*$("#divAlert").load('@Url.Content("~/shopping/shoppingCol")')*@
             filter();
         })
-        $(".ParentCategory").on("change", (event) => {
+        $(".filter").on("change", (event) => {
             search = true;
-            ParentCategory = event.target.value;
-            filter()
+            console.log(SubCategory)
+            if (event.target.checked) {
+                ParentCategory = 0;
+                Category = 0
+                SubCategory.push(event.target.value)
+                filter()
+            }
+            else {
+                SubCategory = SubCategory.filter(function (item) {
+                    return item != event.target.value
+                    
+                })
+                filter();
+            }
         })
-        $(".Category").on("change", (event) => {
-            search = true;
-            Category = event.target.value;
-            filter();
-        })
-        $(".SubCategory").on("change", (event) => {
-            search = true;
-            SubCategory = event.target.value;
-            filter();
-        })
+
+        //$(".Category").on("change", (event) => {
+        //    if (event.target.checked) {
+        //        search = true;
+        //        Category = event.target.value;
+        //        filter();
+        //    }
+
+       /* })*/
+        //$(".SubCategory").on("change", (event) => {
+        //    search = true;
+        //    SubCategory = event.target.value;
+        //    filter();
+        //})
         function filter() {
             if (list == true) {
                 $("#divAlert").load('@Url.Content("~/shopping/shoppingCol")', { "Keyword": Keyword, "Category": Category, "SubCategory": SubCategory, "ParentCategory": ParentCategory,"Search":search })
@@ -195,11 +211,13 @@
         })
         $("#search").on("click", () => {
             search = false;
+            SubCategory - null;
+            $(":checkbox").prop("checked",false)
             Category = $("#selectCate").select().val()
-            SubCategory = $("#selectSub").select().val()
+            SubCategory.add( $("#selectSub").select().val())
             Keyword = $("#keyword").val()
             parent = 0
-            
+
             filter();
         })
     </script>

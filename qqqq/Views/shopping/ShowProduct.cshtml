@@ -82,7 +82,7 @@
                 <h5>
                     <label asp-for="SubCategoryId" class="control-label">種類</label>
                 </h5>
-                <input disabled value="@Model.CategoryName / @Model.SubCategoryName " class="form-control" asp-items="ViewBag.SubCategoryId" readonly>
+                <label disabled value=" " class="form-control" asp-items="ViewBag.SubCategoryId" readonly>@Model.CategoryName / @Model.SubCategoryName</label>
 
             </div>
             <div class="form-group">
