@@ -81,7 +81,18 @@ namespace qqqq.Controllers
         }
         public IActionResult petsMatch()
         {
-            return View();
+            我救浪Context db = new 我救浪Context();
+            var datas = db.Products.Where(p => p.IsPet == true).ToList();
+            List<CProductShow> list = new List<CProductShow>();
+            foreach (Product p in datas)
+            {
+                CProductShow cprod = new CProductShow();
+                cprod.product = p;
+                if (p.Photos.Any())
+                    cprod.Photos = p.Photos.ToList();
+                list.Add(cprod);
+            }
+            return View(list);
         }
     }   
 }
