@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.Extensions.Logging;
 
 using Pet.ViewModels;
@@ -45,7 +46,11 @@ namespace prjHomeLess_R.Controllers
             {
                 return RedirectToAction("Login");
             }
-            ViewBag.MEM = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+
+          var sUser=HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            var mName=_context.Members.Where(m => m.Email == memberview.Email).FirstOrDefault();
+            ViewBag.MEM = mName.Name;
             return View();
 
         }
@@ -58,19 +63,21 @@ namespace prjHomeLess_R.Controllers
 
         [HttpPost]
 
-        public IActionResult Login(string txtAccount, string txtPassword)
+        public IActionResult Login(CLoginAccountViewModel vModel)
         {
             //資料庫檔案 ==================================================================
-            Member mem = _context.Members.FirstOrDefault(m => m.Email.Equals(txtAccount));
+            Member mem = _context.Members.FirstOrDefault(m => m.Email.Equals(vModel.txtAccount));
 
             if (mem != null)
             {
-                if (mem.Password.Equals(txtPassword))
+                if (mem.Password.Equals(vModel.txtPassword))
                 {
                     CLoginViewModel cm = new CLoginViewModel();
                   
                     cm .MemberID= mem.MemberId;
                     cm.Email = mem.Email;
+                 
+                    
                     string jsonUser = JsonSerializer.Serialize(cm);
                     HttpContext.Session.SetString(CDictionary.SK_LOGIN_USER, jsonUser);
 
@@ -90,12 +97,7 @@ namespace prjHomeLess_R.Controllers
 
             return Json(city);
         }
-        //public IActionResult CityId()
-        //{
-        //    var cityid = _context.Cities.Select(c => c.CityName).Distinct();
-        //    return Json(cityid);
-
-        //}
+       
 
         public IActionResult Register()
         {

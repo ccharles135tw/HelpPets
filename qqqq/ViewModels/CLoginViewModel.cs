@@ -9,5 +9,6 @@ namespace prjMVCDemo.vModel
     {
         public int MemberID { get; set; }
         public string Email { get; set; }
+
     }
 }
