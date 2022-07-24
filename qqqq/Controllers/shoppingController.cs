@@ -114,6 +114,7 @@ namespace qqqq.Controllers
                             list.Add(Cpro);
                         }
                     }
+                }
                     //if (key.Keyword != null)
                     //{
                     //    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
@@ -127,15 +128,15 @@ namespace qqqq.Controllers
                     //            list.Add(Cpro);
                     //    }
                     //}
-                }
-                        CProductShow Cpro = new CProductShow();
-                        Cpro.product = p;
-                        if (p.Photos.Any())
-                            Cpro.Photos = p.Photos.ToList();
-                        if (!list.Contains(Cpro))
-                            list.Add(Cpro);
-                    }
-                }
+                //}
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
                 if (key.Keyword != null)
                 {
                     var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();

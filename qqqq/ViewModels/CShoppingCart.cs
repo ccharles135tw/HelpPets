@@ -20,6 +20,7 @@ namespace qqqq.ViewModels
         public int CartCount { get; set; }
         [DisplayName("小計")]
         public decimal TotalPrice { get { return (CartCount * CartPrice); } }
-
+        public int Donate { get; set; }
+        public decimal DonatePrice { get { return (Donate * CartPrice); } }
     }
 }
