@@ -9,6 +9,7 @@
 </div>
 <!-- Spinner End -->
 <div class="container">
+    <a href="~/Volunteer/Index" style="border:1px solid black; color:black;">回志工首頁</a>
     <section class="section-margin--small mb-5">
         <div id="Info">
             <table style="width:100%">
@@ -18,14 +19,14 @@
                 </thead>
                 <tbody class="VInfotbody">
                     <tr>
-                        <td><img src="~/img/volunteer/@Model.ActivityPhoto" style="float:left;" /></td>
+                        <td><img src="~/img/volunteer/@Model.ActivityPhoto" style="float:left;width:500px;height:300px;" /></td>
                         <td rowspan="4"><div id="datepicker">請選擇可服務日期及時段</div></td>
                     </tr>
                     <tr>
                         <td>服務時間 : @Model.StartDate ~ @Model.EndDate</td>
                     </tr>
                     <tr>
-                        <td>需求人數 : @Model.PeopleInNeed</td>
+                        <td>需求人數 : @Model.PeopleInNeed | 可候補人數 @Model.PeopleInNeed</td>
                     </tr>
                     <tr>
                         <td>工作內容 : @Model.Description</td>
@@ -33,227 +34,476 @@
                 </tbody>
             </table>
             <br /><br />
-
-
             <div id="container" style="width:100%">
-
             </div>
+            <input type="button" id="send" class="loginShow" value="送出預約" />
         </div>
     </section>
 </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" @*role="dialog"*@="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog .modal-dialog-scrollable ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">請確認以下資料</h4><br />
-                </div>
-                <div class="modal-body" style="font-size:24px;">
-                    <div id="memberInfo">
-                        <span>剩餘人數 : </span><span id="PeopleInNeed"></span><br />
-                        <span>會員姓名 : </span><span id="MemberName">@Model.MemberName</span><br />
-                        <span>連絡電話 : </span><span id="MemberPhone">@Model.MemberPhone </span><br />
-                        <span>電子信箱 : </span><span id="MemberEmail">@Model.MemberEmail </span><br />
-                        <span>住    址 : </span><span id="MemberAddress">@Model.MemberAddress </span><br />
-                        <span>報名活動 : </span><span id="ActivityName">@Model.Title </span><br />
-                        <span id="AllowDate"></span><br />
+<!-- Modal 1-->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog .modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">請確認以下資料</h4><br />
+            </div>
+            <div class="modal-body" style="font-size:24px;">
+                <div id="memberInfo">
+                    <div><span>剩餘人數 : </span><br /><span id="PeopleInNeed"></span></div>
+                    <span id="MemberStatus" hidden></span>
+                    <div class="loginShow"><span>會員姓名 : </span><span id="MemberName">@Model.MemberName</span></div>
+                    <div class="loginShow"><span>連絡電話 : </span><span id="MemberPhone">@Model.MemberPhone </span></div>
+                    <div class="loginShow"><span>電子信箱 : </span><span id="MemberEmail">@Model.MemberEmail </span></div>
+                    <div><span>報名活動 : </span><span id="ActivityName">@Model.Title </span></div>
+                    <div><span id="AllowDate"></span></div>
+                    <div class="loginShow">
                         <span id="AllowTime">
-                            可參與時段 :<br />
-                            <input type="radio" name="time" id="fullDay" value="全天" /><label for="fullDay">全天</label>
-                            <input type="radio" name="time" id="morning" value="上午(0900-1200)" /><label for="morning">上午(0900-1200)</label>
-                            <input type="radio" name="time" id="afternoon" value="下午(1400-1700)" /><label for="afternoon">下午(1400-1700)</label>
-                        </span>
+
+                        </span><br />
+                        <input type="radio" name="time" id="fullDay" value="全天" /><label for="fullDay" id="fullDayLabel">全天</label>
+                        <input type="radio" name="time" id="morning" value="上午(0900-1200)" /><label for="morning" id="morningLabel">上午(0900-1200)</label>
+                        <input type="radio" name="time" id="afternoon" value="下午(1400-1700)" /><label for="afternoon" id="afternoonLabel">下午(1400-1700)</label>
+
                     </div>
-                    <button type="button" id="addFriend" class="bi bi-plus-square-fill" style="border:none; background-color:transparent;" data-dismiss="modal"> 新增同行人員</button>
+                    <button type="button" id="addFriend" class="bi bi-plus-square-fill loginShow" style="border:none; background-color:transparent;" data-dismiss="modal"> 新增同行人員</button>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default confirm" data-dismiss="modal">儲存</button>
+                    <button type="button" class="btn btn-default confirm loginShow" data-dismiss="modal">儲存</button>
                     <button type="button" class="btn btn-default close" data-dismiss="modal">關閉</button>
                 </div>
             </div>
         </div>
     </div>
-    @section Scripts{
-        <script>
-            let addCnt = 0;
-            let addTable = 1;
-            let disableDate = [];
-            let actDate = [];
-            let test = [];
-            //datepicker
-            let selectedDate = null;
-            $(function () {
-                $.datepicker.regional['zh-TW'] = {
-                    dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-                    dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
-                    monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-                    monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-                    prevText: "上月",
-                    nextText: "次月",
-                    weekHeader: "週"
-                };
-                function getAllDate() {
-                    let start = new Date("@Model.StartDate");
-                    let end = new Date("@Model.EndDate");
-                    while (start < end) {
-                        actDate.push(new Date(start))
-                        start.setDate(start.getDate() + 1);
+</div>
+<!-- Modal 2-->
+<div class="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog .modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">請確認以下資料</h4><br />
+            </div>
+            <div class="modal-body" style="font-size:24px;">
+                <div id="memberInfo">
+                    <div><span>剩餘人數 : </span><br /><span id="PeopleInNeed"></span></div>
+                    <span id="MemberStatus" hidden></span>
+                    <div class="loginShow"><span>會員姓名 : </span><span id="MemberName">@Model.MemberName</span></div>
+                    <div class="loginShow"><span>連絡電話 : </span><span id="MemberPhone">@Model.MemberPhone </span></div>
+                    <div class="loginShow"><span>電子信箱 : </span><span id="MemberEmail">@Model.MemberEmail </span></div>
+                    <div><span>報名活動 : </span><span id="ActivityName">@Model.Title </span></div>
+                    <div><span id="AllowDate"></span></div>
+                    <div class="loginShow">
+                        <span id="AllowTime">
+
+                        </span><br />
+                        <input type="radio" name="time" id="fullDay" value="全天" /><label for="fullDay" id="fullDayLabel">全天</label>
+                        <input type="radio" name="time" id="morning" value="上午(0900-1200)" /><label for="morning" id="morningLabel">上午(0900-1200)</label>
+                        <input type="radio" name="time" id="afternoon" value="下午(1400-1700)" /><label for="afternoon" id="afternoonLabel">下午(1400-1700)</label>
+
+                    </div>
+                    <button type="button" id="addFriend" class="bi bi-plus-square-fill loginShow" style="border:none; background-color:transparent;" data-dismiss="modal"> 新增同行人員</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default confirm loginShow" data-dismiss="modal">儲存</button>
+                    <button type="button" class="btn btn-default close" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        let addCnt = 1;  //同行+mem
+        let addTable = 1;//id
+        let disableDate = [];//不可選
+        let actDate = [];//活動範圍
+        //datepicker
+        let selectedDate = null;
+        $(function () {
+            let MemberName = "@Model.MemberName"
+            if (MemberName == "") {
+                $("#send").attr("disabled");
+                $(".loginShow").hide();
+                $("#send").val("登入後開始報名。");
+            }
+            $.datepicker.regional['zh-TW'] = {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                prevText: "上月",
+                nextText: "次月",
+                weekHeader: "週"
+            };
+            function getAllDate() {
+                let start = new Date("@Model.StartDate");
+                let end = new Date("@Model.EndDate");
+                while (start < end) {
+                    actDate.push(new Date(start))
+                    start.setDate(start.getDate() + 1);
+                }
+            }
+            getAllDate();
+
+            actDate.map(x => {
+                let mapDate = `${x.getFullYear()}-${x.getMonth() + 1}-${x.getDate()}`
+                let start = new Date();
+                $.ajaxSetup({ async: false });
+                $.post('@Url.Content("~/Volunteer/getBySession")', { dateSelected: mapDate, actID:@Model.ActivityID }, (result) => {
+                    if (((3-result.morningCountA) == 0) && ((3-result.afternoonCountA) == 0) &&
+                        ((3-result.morningCountB) == 0) && ((3-result.afternoonCountB) == 0)) {
+                        disableDate.push(mapDate)
                     }
-                }
-                getAllDate();
-
-                actDate.map(x => {
-                    let mapDate = `${x.getFullYear()}-${x.getMonth() + 1}-${x.getDate()}`
-                    $.ajaxSetup({ async: false });
-                    $.post('@Url.Content("~/Volunteer/getRegisteredMember")', { dateSelected: mapDate, actID:@Model.ActivityID }, (result) => {
-                        if (((@(Model.PeopleInNeed)-result.morning) == 0) && ((@(Model.PeopleInNeed)-result.afternoon) == 0)) {
-                            disableDate.push(mapDate)
-                        }
-                    })
+                    if (new Date(mapDate) < start) {
+                        disableDate.push(mapDate)
+                    }
                 })
-                function disableDates(date) {
-                    var dateFormat = $.datepicker.formatDate('yy-m-dd', date);
-                    return [disableDate.indexOf(dateFormat) == -1];
-                }
+            })
+            function disableDates(date) {
+                var dateFormat = $.datepicker.formatDate('yy-m-d', date);
+                return [disableDate.indexOf(dateFormat) == -1];
+            }
 
-                $.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
-                $("#datepicker").datepicker({
-                    onSelect: (date) => {
-                        selectedDate = date;
-                        selectDate(new Date(date));
-                    },
-                    dateFormat: "yy-mm-dd",
-                    minDate: new Date("@Model.StartDate"),
-                    maxDate: new Date("@Model.EndDate"),
-                    beforeShowDay: disableDates
-                }).css("font-size", "1.3em");
+            $.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
+            $("#datepicker").datepicker({
+                onSelect: (date) => {
+                    selectedDate = date;
+                    selectDate(new Date(date));
+                },
+                dateFormat: "yy-mm-dd",
+                maxDate: new Date("@Model.EndDate"),
+                beforeShowDay: disableDates,
+                minDate: new Date("@Model.StartDate"),
+            }).css("font-size", "1.3em");
             });
 
-            //開modal
-            let editTarget = "";
-            let flag = true;
-            function selectDate(date) {
-                $.post('@Url.Content("~/Volunteer/getRegisteredMember")', { dateSelected: selectedDate, actID:@Model.ActivityID }, (result) => {
-                    $("#PeopleInNeed").html(`上午 : ${@(Model.PeopleInNeed)-result.morning} | 下午 : ${@(Model.PeopleInNeed)-result.afternoon}`)
-                })
-                let container = $("#container");
-                $("#AllowDate").text(`參加日期 : ${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`);
-                $("#myModal").modal("show");
-                $(".confirm").click(() => {
-                    let htmlString = "";
-                    htmlString = `<div><h3 style="float:left;">${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</h3><button type='button' class='btn btn-primary edit bi bi-toggle-off' style="margin-left:10px;" id="edit${addTable}">修改</button> <button type='button' class='btn btn-primary delete bi bi-trash' id="del${addTable}">刪除</button><table class='table table-striped activity_table' id="tb${addTable}"><thead class='thead-light'><tr><th>時段</th><th>姓名</th><th>電話</th><th>信箱</th><th>地址</th></tr></thead><tbody></div>`;
+        //開modal
+        let editTarget = "";
+        let flag = true;
+        let morningA = 0, morningB = 0, afternoonA = 0, afternoonB = 0, need = 3;
+        let morningAadd = 0, morningBadd = 0, afternoonAadd = 0, afternoonBadd = 0;
+        function selectDate(date) {
+            $("input[name=time]").prop('checked', false)
+            //post 算空位
+            $.post('@Url.Content("~/Volunteer/getBySession")', { dateSelected: selectedDate, actID:@Model.ActivityID }, (result) => {
+                morningA = need - result.morningCountA;
+                morningB = need - result.morningCountB;
+                afternoonA = need - result.afternoonCountA;
+                afternoonB = need - result.afternoonCountB;
+                $("#PeopleInNeed").html(`上午 : ${morningA}人 | 候補( ${morningB} )人<br />
+                                            下午 : ${afternoonA}人 | 候補( ${afternoonB} )人`)
+                if (`${morningA}` == 0 && `${morningB}` == 0) {
+                    $("#fullDay").attr("disabled", "disabled")
+                    $("#morning").attr("disabled", "disabled")
+                    $("#morningLabel").text("早上已滿")
+                }
+                if (`${afternoonA}` == 0 && `${afternoonB}` == 0) {
+                    $("#fullDay").attr("disabled", "disabled")
+                    $("#afternoon").attr("disabled", "disabled")
+                    $("#afternoonLabel").text("下午已滿")
+                }
+                if (`${morningA}` == 0 && `${afternoonA}`) {
+                    $("#AllowTime").text('可參與時段(候補):')
+                    $("#MemberStatus").text('候補')
+                } else {
+                    $("#AllowTime").text('可參與時段 :')
+                    $("#MemberStatus").text('正取')
+                }
+            })//post end
 
-                    let checkedTime = $("input[name=time]:checked").val();
-                    htmlString += `<tr><td id="time${addTable}">${checkedTime}</td><td id="name${addTable}">${$("#MemberName").text()}</td><td id="phone${addTable}">${$("#MemberPhone").text()}</td><td id="email${addTable}">${$("#MemberEmail").text()}</td><td id="address${addTable}">${$("#MemberAddress").text()}</td></tr>`
+            //找重複日期
+            let h3 = $("h3");
+            let existH3 = false
+            h3.each((x, item) => {
+                if (item.innerHTML == `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`) {
+                    existH3 = true;
+                }
+            })
+            if (existH3) {
+                alert(`${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}已存在，請進行修改。`)
+                return;
+            }
 
-                    if (addCnt != 0) {
-                        htmlString += `<tr><td id="friend1time${addTable}">${checkedTime}</td>`
-                        $.each($(".friend input"), (x, item) => {
-                            if (x == 4) {
-                                htmlString += `</tr><tr><td id="friend2time${addTable}">${checkedTime}</td>`
+            let container = $("#container");
+            $("#AllowDate").text(`參加日期 : ${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`);
+            $("#myModal").modal("show");
+            $(".confirm").click(() => {
+                if ($("input[name=time]:checked").val() == null) {
+                    return alert("請選擇服務時段。")
+                }
+                let htmlString = "";
+                htmlString = `<div class="dataArea"><h3 style="float:left;">${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}</h3><button type='button' class='btn btn-primary edit bi bi-toggle-off' style="margin-left:10px;" id="edit${addTable}">修改</button> <button type='button' class='btn btn-primary delete bi bi-trash' id="del${addTable}">刪除</button><table class='table table-striped activity_table' id="tb${addTable}"><thead class='thead-light'><tr><th>時段</th><th>狀態</th><th>姓名</th><th>電話</th><th>信箱</th></tr></thead><tbody></div>`;
+                let checkedTime = $("input[name=time]:checked").val();
+
+                htmlString += `<tr><td id="time${addTable}">${checkedTime}</td><td id="status${addTable}">${$("#MemberStatus").text()}</td><td id="name${addTable}">${$("#MemberName").text()}</td><td id="phone${addTable}">${$("#MemberPhone").text()}</td><td id="email${addTable}">${$("#MemberEmail").text()}</td></tr>`
+
+                if (addCnt != 1) {
+                    htmlString += `<tr><td id="friend1time${addTable}">${checkedTime}</td>`
+                    $.each($(".friend input"), (x, item) => {
+                        if (x == 4) {
+                            htmlString += `</tr><tr><td id="friend2time${addTable}">${checkedTime}</td>`
+                        }
+                        htmlString += `<td id="${item.id}${addTable}">${item.value}</td>`;
+                    })
+                }
+
+                htmlString += `</tr></tbody></table><br />`;
+                container.append(htmlString);
+
+                //移除事件
+                $(".confirm").off("click");
+                $(".edit").off('click');
+                $(".delete").off('click');
+
+                $("#myModal").modal("hide");
+                $(".friend").remove();
+
+                //edit,delete
+                $(".edit").click((event) => {
+                    let id = event.target.id.replace(/[^0-9]/ig, "");
+                    if (flag && editTarget == "") {
+                        editTarget = event.target.id;
+                        $(`#${event.target.id}`).text("儲存");
+                        $(`#${event.target.id}`).removeClass("bi-toggle-off");
+                        $(`#${event.target.id}`).addClass("bi-toggle-on");
+                        flag = false;
+                        let optionstr = "";
+
+                        /*let signed = $(`#tb${id} tbody tr`).length)*/
+                        $.each($(`#tb${id} td`), (x, item) => {
+                            //if (x == 0) {
+                            //    let old = $(`#time${id}`).text()
+
+                            //    item.innerHTML = `<select id='editTime${id}'><option id="editfullDay" value="全天">全天</option><option id="editmorning" value="上午(0900-1200)">上午(0900-1200)</option><option id="editafternoon" value="下午(1400-1700)">下午(1400-1700)</option></select>`;
+                            //    $(`#editTime${id} option[value="${old}"]`).attr("selected", "selected");
+                            //} else if (x <= 4 || x == 8) {
+                            if (x <= 6 || x == 11) {
+                                return;
+                            } else {
+                                item.setAttribute("contenteditable", "true");
                             }
-                            htmlString += `<td id="${item.id}${addTable}">${item.value}</td>`;
                         })
+                        $(`#editTime${id} `).change(() => {
+                            $(`#friend1time${id}`).text($(`#editTime${id} :selected`).text());
+                            $(`#friend2time${id}`).text($(`#editTime${id} :selected`).text());
+                        })
+                    } else if (!flag && editTarget == event.target.id) {
+                        $(`#editTime${id} `).off("change");
+                        $(`#${event.target.id}`).text("修改");
+                        $(`#${event.target.id}`).removeClass("bi-toggle-on");
+                        $(`#${event.target.id}`).addClass("bi-toggle-off");
+                        flag = true;
+                        $.each($(`#tb${id} td`), (x, item) => {
+                            item.setAttribute("contenteditable", "false");
+                            //if (x == 0) {
+                            //    item.innerText = $(`#editTime${id} :selected`).text();
+                            //} else if (x <= 4 || x == 8) {
+                            //    return;
+                            //} else {
+                            //    item.setAttribute("contenteditable", "false");
+                            //}
+                        })
+                        editTarget = "";
+                    } else {
+                        confirm("尚有修改未完成。")
                     }
+                })
 
-                    htmlString += `</tr></tbody></table><br />`;
-                    container.append(htmlString);
+                $(".delete").click((event) => {
+                    event.target.parentNode.remove();
+                    addTable--;
+                })
+                addCnt = 1;
+                addTable++;
+                $("input[name=time]").removeAttr("disabled")
+            });
+            }
+        //關modal
+        $(".close").click(() => {
+            $(".friend").remove();
+            $("#myModal").modal("hide");
+            $(".confirm").off("click");
+            $("input[name=time]").removeAttr("disabled")
+            addCnt = 1;
+        })
+        $("#addFriend").click(() => {
+            addCnt++;
+            $("input[name=time]").attr("disabled","disabled")
+            if ($("input[name=time]:checked").val() == null) {  //找剩餘人數
+                addCnt--;
 
-                    //移除事件
-                    $(".confirm").off("click");
-                    $(".edit").off('click');
-                    $(".delete").off('click');
+                removeDisabled();
+                return alert("請選擇服務時段。")
+            }
+            else if (addCnt > 3) {
+                addCnt--;
+                return alert('同行人員限制為兩人。')
+            }
+            else if (addCnt > need) {  //超過需求
+                addCnt--;
+                return alert("報名人數不可超過需求人數。")
+            }
+            else {
+                if ($("input[name=time]:checked").val() == "全天") {
+                    if (Math.min(morningA, afternoonA) < addCnt) {
+                        addWaiting();
+                        democlick();
+                        alert("正取人數超過需求，同行人員為候補")
+                        return;
+                    }
+                }
+                else if ($("input[name=time]:checked").val() == "上午(0900-1200)") {
+                    if (morningA < addCnt) {
+                        addWaiting();
+                        democlick();
+                        alert("正取人數超過需求，同行人員為候補")
+                        return;
+                    }
+                }
+                else if ($("input[name=time]:checked").val() == "下午(1400-1700)") {
+                    if (afternoonA < addCnt) {
+                        addWaiting();
+                        democlick();
+                        alert("正取人數超過需求，同行人員為候補")
+                        return;
+                    }
+                }
+                addFriend();
+                democlick();
 
-                    $("#myModal").modal("hide");
-                    $(".friend").remove();
-
-                    //edit,delete
-                    $(".edit").click((event) => {
-                        let id = event.target.id.replace(/[^0-9]/ig, "");
-                        if (flag && editTarget == "") {
-                            editTarget = event.target.id;
-                            $(`#${event.target.id}`).text("儲存");
-                            $(`#${event.target.id}`).removeClass("bi-toggle-off");
-                            $(`#${event.target.id}`).addClass("bi-toggle-on");
-                            flag = false;
-
-                            $.each($(`#tb${id} td`), (x, item) => {
-                                if (x == 0) {
-                                    item.innerHTML = `<select id='editTime${id}'><option id="fullDay" value="全天">全天</option><option id="morning" value="上午(0900-1200)">上午(0900-1200)</option><option id="afternoon" value="下午(1400-1700)">下午(1400-1700)</option></select>`;
-                                    $(`#editTime${id} option[value="${checkedTime}"]`).attr("selected","selected");
-                                } else if (x == 1 || x == 5 || x == 10) {
-                                    return;
-                                } else {
-                                    item.setAttribute("contenteditable", "true");
-                                }
-                            })
-                            $(`#editTime${id} `).change(() => {
-                                $(`#friend1time${id}`).text($(`#editTime${id} :selected`).text());
-                                $(`#friend2time${id}`).text($(`#editTime${id} :selected`).text());
-                            })
-                        } else if (!flag && editTarget == event.target.id) {
-                            $(`#editTime${id} `).off("change");
-                            $(`#${event.target.id}`).text("修改");
-                            $(`#${event.target.id}`).removeClass("bi-toggle-on");
-                            $(`#${event.target.id}`).addClass("bi-toggle-off");
-                            flag = true;
-                            $.each($(`#tb${id} td`), (x, item) => {
-                                if (x == 0) {
-                                    item.innerText = $(`#editTime${id} :selected`).text();
-                                } else if (x == 1 || x == 5 || x == 10) {
-                                    return;
-                                } else {
-                                    item.setAttribute("contenteditable", "false");
-                                }
-                            })
-                            editTarget = "";
+                function addFriend() {
+                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend nowaiting"><hr />人員${addCnt - 1}<td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><br />
+                                                    <input type="text" id="friend${addCnt - 1}Status" value="正取" hidden/>
+                                                    姓 名 : <input type="text" id="friend${addCnt-1}Name" placeholder="人員${addCnt - 1}姓名" value=""/><br />
+                                                    連絡電話 :   <input type="text" id="friend${addCnt - 1}Phone" placeholder="電話" value=""/><br />
+                                                    電子信箱 :   <input type="text" id="friend${addCnt - 1}Email" placeholder="電子信箱" value=""/><br /></div>`)
+                    $(".removeBtn1").off("click");
+                    $(".removeBtn2").off("click");
+                    $(".removeBtn1").click(() => {
+                        addCnt--;
+                        console.log(addCnt)
+                        if (addCnt == 1) {
+                            addCnt = 1;
+                            removeDisabled();
+                        }
+                        if ($(".waiting").length != 0 && $(".nowaiting").length != 0) {
+                            if (confirm("請先刪除備取名額")) {
+                                $(".waiting").remove();
+                            } else {
+                                addCnt++
+                            }
                         } else {
-                            confirm("尚有修改未完成。")
+                            $("div .friend1").remove();
                         }
                     })
-
-                    $(".delete").click((event) => {
-                        event.target.parentNode.remove();
-                        addTable--;
+                    $(".removeBtn2").click(() => {
+                        addCnt--;
+                        console.log(addCnt)
+                        if (addCnt == 1) {
+                            removeDisabled();
+                        }
+                       $("div .friend2").remove();
                     })
-
-                    addCnt = 0;
-                    addTable++;
-                });
+                }
+                function addWaiting() {
+                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend waiting"><hr />(候補)人員${addCnt - 1}<td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><br />
+                                                    <input type="text" id="friend${addCnt - 1}Status" value="候補" hidden/>
+                                                    姓 名 : <input type="text" id="friend${addCnt-1}Name" placeholder="人員${addCnt - 1}姓名" value=""/><br />
+                                                    連絡電話 :   <input type="text" id="friend${addCnt - 1}Phone" placeholder="電話" value=""/><br />
+                                                    電子信箱 :   <input type="text" id="friend${addCnt - 1}Email" placeholder="電子信箱" value=""/><br /></div>`)
+                    $(".removeBtn1").off("click");
+                    $(".removeBtn2").off("click");
+                    $(".removeBtn1").click(() => {
+                        addCnt--;
+                        console.log(addCnt)
+                        if (addCnt == 1) {
+                            removeDisabled();
+                        }
+                        if ($(".waiting").length != 0 && $(".nowaiting").length != 0) {
+                            if (confirm("請先刪除備取名額")) {
+                                $(".waiting").remove();
+                            } else {
+                                addCnt++
+                            }
+                        } else {
+                            $("div .friend1").remove();
+                        }
+                    })
+                    $(".removeBtn2").click(() => {
+                        addCnt--;
+                        console.log(addCnt)
+                        if (addCnt == 1) {
+                            removeDisabled();
+                        }
+                        $("div .friend2").remove();
+                    })
+                }
             }
-            //關modal
-            $(".close").click(() => {
-                $(".friend").remove();
-                $("#myModal").modal("hide");
-                $(".confirm").off("click");
-                addCnt = 0;
-            })
-            $("#addFriend").click(() => {
-                addCnt++;
-                if (addCnt > 2)
-                    return confirm('同行人員限制為兩人。')
-                $("#memberInfo").append(`<div class="friend${addCnt} friend"><hr />人員${addCnt}<td><button type='button' class='btn removeBtn${addCnt}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button></td><br />
-                                                        姓 名 : <input type="text" id="friend${addCnt}Name" placeholder="人員${addCnt}姓名" value=""/><br />
-                                                        連絡電話 :   <input type="text" id="friend${addCnt}Phone" placeholder="電話" value=""/><br />
-                                                        電子信箱 :   <input type="text" id="friend${addCnt}Email" placeholder="電子信箱" value=""/><br />
-                                                        住 址 :   <input type="text" id="friend${addCnt}Address" placeholder="住址" value=""/><br /></div>`)
-                $(".removeBtn1").click(() => {
-                    addCnt--;
-                    if (addCnt < 0) {
-                        addCnt = 0;
-                    }
-                    $("div .friend1").empty();
+            function removeDisabled() {
+                $("input[name=time]").removeAttr("disabled")
+            }
+            function democlick() {
+                $("#demoPerson1").click(() => {
+                    setPerson1();
                 })
-                $(".removeBtn2").click(() => {
-                    addCnt--;
-                    if (addCnt < 0) {
-                        addCnt = 0;
-                    }
-                    $("div .friend2").empty();
+                $("#demoPerson2").click(() => {
+                    setPerson2();
                 })
+            }
+
+        })
+
+
+        //demo
+        function setPerson1() {
+            $("#friend1Name").val("朋友一")
+            $("#friend1Phone").val("0911111111")
+            $("#friend1Email").val("billsagi0001@gmail.com")
+        }
+        function setPerson2() {
+            $("#friend2Name").val("朋友二")
+            $("#friend2Phone").val("092222222")
+            $("#friend2Email").val("billsagi0002@gmail.com")
+        }
+
+
+
+        //sendToDB
+        $("#send").click(() => {
+            $(".dataArea").each((index, item) => {
+                //console.log(item);
+                let MemID = @Model.MemberID;
+                let actID = @Model.ActivityID;
+                let actDate = item.firstChild.textContent;
+                let actTime = "", Name = "", Phone = "", Email = "", Status = "";
+                console.log(MemID);
+                console.log(actID);
+                console.log(actDate);
+                let td = item.getElementsByTagName("td")
+                let cnt = 0;
+                for (let i = 0; i < td.length; i++) {
+                    cnt++;
+                    if (cnt != 6) {
+                        if (i % 5 == 0) {
+                            actTime = td[i].innerText
+                        } else if (i % 5 == 1) {
+                            Status = td[i].innerText
+                        } else if (i % 5 == 2) {
+                            Name = td[i].innerText
+                        } else if (i % 5 == 3) {
+                            Phone = td[i].innerText
+                        } else if (i % 5 == 4) {
+                            Email = td[i].innerText
+                            $.ajaxSetup({ async: false });
+                            $.post('@Url.Content("~/Volunteer/saveToDB")', { MemID: MemID, actID: actID, actDate: actDate, actTime: actTime, Status: Status, Name: Name, Phone: Phone, Email: Email })
+                            cnt = 0;
+                        }
+                    }
+                }
+
             })
-
-        </script>
-
-    }
+            document.location.href = '@Url.Content("~/Volunteer/Index")';
+        })
+    </script>
+}

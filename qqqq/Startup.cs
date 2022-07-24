@@ -25,6 +25,7 @@ namespace qqqq
         {
             services.AddControllersWithViews();
             services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,13 +48,15 @@ namespace qqqq
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     //pattern: "{controller=homepage}/{action=enterpage}/{id?}");
-                    pattern: "{controller=Volunteer}/{action=Index}/{id?}");
-        });
+                    //pattern: "{controller=Volunteer}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
+            });
         }
     }
 }

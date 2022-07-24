@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Pet.ViewModels;
+using prjMVCDemo.vModel;
 using qqqq.Models;
 using qqqq.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace final_test.Controllers
 {
@@ -19,46 +18,31 @@ namespace final_test.Controllers
         List<VActivityViewModel> list = new List<VActivityViewModel>();
         public IActionResult Index()
         {
-            //var a = list(db.Vactivities.Select(x => x).ToList());
-            //var a = db.Vactivities.Include(x => x.ActivityCategory).AsSplitQuery().ToList();
-            //var b = db.Members.Select(x=>x).AsSplitQuery().ToList();
-            //foreach (var i in a)
-            //{
-            //    VActivityViewModel vac = new VActivityViewModel();
-            //    vac.vactivity = i;
-            //    vac.ActivityCategoryName = i.ActivityCategory.CategoryName;
-            //    list.Add(vac);
-            //}
-            return View(/*list*/);
+            return View();
         }
-        //public string GetCategoryName(int? id)
-        //{
-        //    return db.VactivityCategories.Where(x => x.ActivityCategoryId == id).Select(y => y.CategoryName).FirstOrDefault().ToString();
-        //}
-        //public IActionResult Info(int? id)
-        //{
-        //    var a = db.Vactivities.Where(x => x.ActivityId == id).Include(y => y.ActivityCategory).AsSplitQuery().FirstOrDefault();
-        //    VActivityViewModel v = new VActivityViewModel();
-        //    v.vactivity = a;
-        //    v.ActivityCategoryName = a.ActivityCategory.CategoryName;
-        //    return View(v);
-        //}
         public IActionResult SignUp(int? id)
         {
             VActivityViewModel v = new VActivityViewModel();
-            var a = db.Vactivities.Where(x => x.ActivityId == id).Include(y=>y.ActivityCategory).AsSplitQuery().FirstOrDefault();
-            
+            var a = db.Vactivities.Where(x => x.ActivityId == id).Include(y => y.ActivityCategory).AsSplitQuery().FirstOrDefault();
+
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+            {
+                var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
+                CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+                var c = db.Members.Where(x => x.Email == memberview.txtAccount).FirstOrDefault();
+                v.MemberID = c.MemberId;
+                v.MemberAddress = c.Address;
+                v.MemberEmail = c.Email;
+                v.MemberName = c.Name;
+                v.MemberPhone = c.MemberPhone;
+            }
+
             v.vactivity = a;
             v.ActivityCategoryName = a.ActivityCategory.CategoryName;
-            //var b = db.Volunteers.Where(x => x.ActivityId == id).Where(y => y.ConfirmByEmp == true).ToList();
-            //v.volunteer = b;
-            //System.Diagnostics.Debug.WriteLine();
-
             return View(v);
         }
         public IActionResult loadCheckBox()
         {
-            //new { x.ActivityCategoryId,x.CategoryName}
             var a = db.VactivityCategories.Select(x => new { x.ActivityCategoryId, x.CategoryName }).ToList();
             return Json(a);
             
@@ -66,12 +50,7 @@ namespace final_test.Controllers
         public IActionResult loadList(int[] intarr,DateTime date,string keyString)
         {
             list.Clear();
-            System.Diagnostics.Debug.WriteLine(date);
-            System.Diagnostics.Debug.WriteLine(keyString);  //null
             int year = date.Year, month = date.Month, day = date.Day;
-            System.Diagnostics.Debug.WriteLine(year.ToString());  //1
-            System.Diagnostics.Debug.WriteLine(month.ToString());
-            System.Diagnostics.Debug.WriteLine(day.ToString());
             if(keyString == "")
             {
                 keyString = null;
@@ -249,42 +228,61 @@ namespace final_test.Controllers
                     }
                 }
             }
-
-
             return Json(resultList.Select(x => new { x.ActivityCategoryID, x.Title, x.PeopleInNeed, x.ActivityCategoryName, x.ActivityID, x.ActivityPhoto, x.Description, x.EndDate, x.StartDate }));
 
         }
-        public IActionResult getRegisteredMember(DateTime dateSelected,int actID)
-        {
-            int year = dateSelected.Year, month = dateSelected.Month, day = dateSelected.Day;
-            System.Diagnostics.Debug.WriteLine(actID);
-            System.Diagnostics.Debug.WriteLine(dateSelected);
-            System.Diagnostics.Debug.WriteLine(year.ToString(),month.ToString(), day.ToString());
-            var a = db.Volunteers.Where(x => x.ActivityId == actID).Where(y => y.ConfirmByEmp == true).ToList();
-            int morning = 0,afternoon=0;
-            foreach (var i in a)
-            {
-                string[] allowdate = i.AllowDate.Split('-');
-                //int endarr = i.AllowTime.AllowTimeId;
-                if (year == int.Parse(allowdate[0]) && month == int.Parse(allowdate[1]) && day == int.Parse(allowdate[2]))
-                {
-                    if (i.ActivityId == 1)
-                    {
-                        morning++;
-                        afternoon++;
-                    }
-                    if (i.ActivityId == 2)
-                    {
-                        morning++;
-                    }
-                    if (i.ActivityId == 3)
-                    {
-                        afternoon++;
-                    }
 
-                }
-            }
-            return Json(new {morning,afternoon });
+        //A:正取 B:候補
+        public IActionResult getBySession(DateTime dateSelected, int actID)
+        {
+            string dateFormat = $"{dateSelected.Year}-{String.Format("{0:00}", dateSelected.Month)}-{String.Format("{0:00}", dateSelected.Day)}";
+            int morningCountA = db.Volunteers.Where(x => x.ActivityId == actID && x.AllowDate == dateFormat && (x.AllowTimeId == 1 || x.AllowTimeId == 2) && x.Waiting == false).ToList().Count;
+            int morningCountB = db.Volunteers.Where(x => x.ActivityId == actID && x.AllowDate == dateFormat && (x.AllowTimeId == 1 || x.AllowTimeId == 2) && x.Waiting == true).ToList().Count;
+            int afternoonCountA = db.Volunteers.Where(x => x.ActivityId == actID && x.AllowDate == dateFormat && (x.AllowTimeId == 1 || x.AllowTimeId == 3) && x.Waiting == false).ToList().Count;
+            int afternoonCountB = db.Volunteers.Where(x => x.ActivityId == actID && x.AllowDate == dateFormat && (x.AllowTimeId == 1 || x.AllowTimeId == 3) && x.Waiting == true).ToList().Count;
+
+            return Json(new
+            {
+                morningCountA = morningCountA,
+                morningCountB = morningCountB,
+                afternoonCountA = afternoonCountA,
+                afternoonCountB = afternoonCountB
+            });
         }
+
+        public IActionResult saveToDB(int MemID,int actID,string actDate,string actTime,string Name,string Phone,string Email ,string Status)
+        {
+
+            //System.Diagnostics.Debug.WriteLine(MemID.ToString(),actID.ToString(),actTime,Name,Phone,Email, actDate, Status);
+            Volunteer v = new Volunteer();
+            v.MemberId = MemID;
+            v.ActivityId = actID;
+            var date = actDate.Split('/');
+            v.AllowDate = $"{date[0]}-{date[1].PadLeft(2,'0')}-{date[2].PadLeft(2, '0')}";
+            v.AllowTimeId = db.VallowTimes.Where(x => x.TimeRange == actTime).Select(y => y.AllowTimeId).FirstOrDefault();
+            v.Name = Name;
+            v.Phone = Phone;
+            v.Email = Email;
+            v.CheckEmail = false;
+            if (Status == "候補")
+            {
+                v.Waiting = true;
+            }
+            else
+            {
+                v.Waiting = false;
+            }
+            System.Diagnostics.Debug.WriteLine($"{date[0]}-{date[1].PadLeft(2, '0')}-{date[2].PadLeft(2, '0')}");
+            db.Volunteers.Add(v);
+            db.SaveChanges();
+            return Json("");
+        }
+        //public ActionResult checkRemaining(DateTime date, int actID, string time)
+        //{
+        //    int timeid = db.VallowTimes.Where(x => x.TimeRange == time).Select(y => y.AllowTimeId).FirstOrDefault();
+        //    string dateFormat = $"{date.Year}-{String.Format("{0:00}", date.Month)}-{String.Format("{0:00}", date.Day)}";
+        //}
+
+       
     }
 }

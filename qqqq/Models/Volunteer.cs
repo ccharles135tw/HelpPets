@@ -12,9 +12,11 @@ namespace qqqq.Models
         public int? ActivityId { get; set; }
         public string AllowDate { get; set; }
         public int? AllowTimeId { get; set; }
+        public string Name { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public bool? ConfirmByEmp { get; set; }
+        public bool? CheckEmail { get; set; }
+        public bool? Waiting { get; set; }
 
         public virtual Vactivity Activity { get; set; }
         public virtual VallowTime AllowTime { get; set; }
