@@ -3,7 +3,7 @@
         <h1 class="display-4 text-white animated slideInDown mb-3">寵物詳細資料</h1>
     </div>
 </div>
-@model IEnumerable<qqqq.ViewModels.CSubCategoryPet>
+@model qqqq.ViewModels.CProductShow
 
 @{
     ViewData["Title"] = "petsDetial";
@@ -12,8 +12,23 @@
     <div>
         <form class="text-left" style="display: flex; align-items: center">
             <div style="flex:none;">
-                <img id="prodImg" width="400" height="400" src="~/img/pic2.jpg" />
+                @*@{
+                    if (Model.Photos.Count == 0)
+                    {
+                        <img id="prodImg" width="400" height="400" src="/Images/notfound.jpg" />
+                    }
+                    else
+                    {
+                        <img id="prodImg" width="400" height="400" src="/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
+                    }
+                }*@
             </div>
+            @*<div class=" col-md-12 col-sm-12 row list-group-item-primary">
+                @foreach (var p in Model.Photos)
+                {
+                    <img src="~/Images/@p.PictureName" class="imgOption col-2 product-item" />
+                }
+            </div>*@
             <div style="flex:none;text-align:left;margin-left:10px;">
                 <hr />
                 <h5>
@@ -183,3 +198,12 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        $(".imgOption").click((event) => {
+            $("#prodImg").attr("src", event.target.src)
+        })
+    </script>
+}*@

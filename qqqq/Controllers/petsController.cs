@@ -40,8 +40,14 @@ namespace qqqq.Controllers
 
             return View();
         }
-        public IActionResult petsDetial()
+        public IActionResult petsDetial(int id)
         {
+            //CProductShow CprodShow = new CProductShow();
+            //Product cProd = (new 我救浪Context()).Products.FirstOrDefault(p => p.ProductId == id);
+            //CprodShow.product = cProd;
+            //if (cProd.Photos.Any())
+            //    CprodShow.Photos = cProd.Photos.ToList();
+            //return View(CprodShow);
             return View();
         }
 

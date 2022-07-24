@@ -2895,14 +2895,14 @@ textarea.form-control-lg {
 
 .btn-secondary {
     color: #fff;
-    background-color: #545454;
+    background-color: #EAA636;
     border-color: none;
 }
 
     .btn-secondary:hover {
         color: #fff;
-        background-color: #474747;
-        border-color: #434343
+        background-color: #EAA636;
+        border-color: #EAA636
     }
 
     .btn-check:focus + .btn-secondary, .btn-secondary:focus {

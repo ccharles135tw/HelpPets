@@ -9,26 +9,28 @@
 
 }
 
-<div class="filter-bar flex-wrap align-items-center text-center vw-100" style="display: flex; justify-content: space-between; align-content: center ">
-    <div class="text-center m-2  " style="flex:none;font-size:20px;text-align:center;display:flex;justify-content:center;align-content:center">
-        種類:
-        <select id="petCate" class="form-select form-select mb-3" aria-label=".form-select example">
-            <option value="none" selected disabled hidden>請選擇選項</option>
-            @{
-                var qp = from c in db.Categories where c.IsPet == true  select c;
-                foreach (Category c in qp)
-                {
-                    <option value="@c.CategoryId">@c.CategoryName</option>
+<div class="filter-bar flex-wrap align-items-center text-center vw-100" style="justify-content:center;align-items:center">
+    <div class="text-center" style="display: flex;flex:none; justify-content: flex-start; align-items: center;padding-top:10px">
+        @*style="flex:none;font-size:20px;text-align:center;display:flex;justify-content:center;align-content:center"*@
+        <div style="flex: none; width: 50%; align-items: center;padding-left:0;">
+            <label>種類:</label>
+            <select id="petCate" class="btn btn-secondary" aria-label=".form-select example">
+                <option value="none">請選擇選項</option>
+                @{
+                    var qp = from c in db.Categories where c.IsPet == true select c;
+                    foreach (Category c in qp)
+                    {
+                        <option value="@c.CategoryId">@c.CategoryName</option>
+                    }
                 }
-            }
-        </select>
+            </select>
 
-        品種:
-    <select id="petSubcate" class="form-select form-select mb-3" aria-label=".form-select example">
-        <option value="none" selected disabled hidden>請選擇選項</option>
-    </select>
-
-        性別: <select  class="form-select form-select mb-3" aria-label=".form-select example">
+            <label>品種:</label>
+            <select id="petSubcate" class="btn btn-secondary" aria-label=".form-select example">
+                <option value="none" selected disabled hidden>請選擇選項</option>
+            </select>
+            <label>性別:</label>
+            <select class="btn btn-secondary" aria-label=".form-select example">
                 <option value="none" selected disabled hidden>請選擇選項</option>
                 @{
                     var qg = from g in db.Genders select g;
@@ -37,75 +39,76 @@
                         <option value="@g.GenderId">@g.GenderType</option>
                     }
                 }
-                </select>
-        體型: <select  class="form-select form-select mb-3" aria-label=".form-select example">
-                    <option value="none" selected disabled hidden>請選擇選項</option>
-                    @{
-                        var qs = from s in db.Sizes select s;
-                        foreach (Size s in qs)
-                        {
-                            <option value="@s.SizeId">@s.SizeType</option>
-                        }
+            </select>
+            <label>體型:</label>
+            <select class="btn btn-secondary" aria-label=".form-select example">
+                <option value="none" selected disabled hidden>請選擇選項</option>
+                @{
+                    var qs = from s in db.Sizes select s;
+                    foreach (Size s in qs)
+                    {
+                        <option value="@s.SizeId">@s.SizeType</option>
                     }
-                </select>
-        <button  class="btn-primary ml-2">搜尋</button>
-
-    </div>
-    <div>
-        <form action="@Url.Content("~/pets/Search")" method="post">
-            <label>關鍵字</label><input type="text" name="keyword" />
-            <input class="btn-primary" type="submit" value="查詢" />
-        </form>
-    </div>
-
-    <div style="flex:none; justify-content:flex-end">
-        <div class="sorting mr-auto">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">寵物配對</button>
-            <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
-            <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
+                }
+            </select>
+            <button type="button" class="btn btn-primary pl-3"  >查詢</button>
         </div>
-        <div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="text-center">
-                                <label>種類:</label><select id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                    @{
-                                        var qpl = from p in db.Categories where p.IsPet == true select p;
-                                        foreach (Category p in qpl)
-                                        {
-                                            <option value="@p.CategoryId">@p.CategoryName</option>
+
+        <div style="flex:none;width:25%"  justify-content: flex-start; align-items: center;>
+            <form action="@Url.Content("~/pets/Search")" method="post">
+                <label>關鍵字</label><input type="text" name="keyword" />
+                <button type="button" class="btn btn-primary" >搜尋</button>
+            </form>
+        </div>
+
+        <div style="flex: none; width: 25%;justify-content: flex-start; align-items: center;">
+            <div class="sorting mr-auto">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">寵物配對</button>
+                <button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
+                <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>
+            </div>
+            <div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
+                                <button type="button" class="close border-0" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <label>種類:</label><select id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qpl = from p in db.Categories where p.IsPet == true select p;
+                                            foreach (Category p in qpl)
+                                            {
+                                                <option value="@p.CategoryId">@p.CategoryName</option>
+                                            }
                                         }
-                                    }
-                                </select>
-                            </div>
-                            <div>
-                                <label>品種:</label><select id="petSubcatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                </select>
-                            </div>
-                            <div class="text-center">
-                                性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                    @{
-                                        var qgl = from g in db.Genders select g;
-                                        foreach (Gender g in qgl)
-                                        {
-                                            <option value="@g.GenderId">@g.GenderType</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>品種:</label><select id="petSubcatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qgl = from g in db.Genders select g;
+                                            foreach (Gender g in qgl)
+                                            {
+                                                <option value="@g.GenderId">@g.GenderType</option>
+                                            }
                                         }
-                                    }
-                                </select>
-                            </div>
-                            <div>
-                                毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                    </select>
+                                </div>
+                                <div>
+                                    毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                         <option value="none" selected disabled hidden>請選擇選項</option>
                                         @{
                                             var qcl = from c in db.Colors select c;
@@ -115,65 +118,67 @@
                                             }
                                         }
                                     </select>
-                            </div>
-                            <div>
-                                結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                </div>
+                                <div>
+                                    結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                         <option value="none" selected disabled hidden>請選擇選項</option>
                                         @{
                                             var qll = from l in db.Ligations select l;
                                             foreach (Ligation l in qll)
                                             {
-                                                <option value="@l.LigationId" >@l.LigationType</option>
+                                                <option value="@l.LigationId">@l.LigationType</option>
                                             }
                                         }
                                     </select>
-                            </div>
-                            <div>
-                                體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                @{ 
-                                    var qsl = from s in db.Sizes select s;
-                                    foreach(Size s in qsl)
-                                        {
-                                        <option value="@s.SizeId">@s.SizeType</option>
+                                </div>
+                                <div>
+                                    體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qsl = from s in db.Sizes select s;
+                                            foreach (Size s in qsl)
+                                            {
+                                                <option value="@s.SizeId">@s.SizeType</option>
+                                            }
                                         }
-                                }
-                                </select>
-                            </div>
-                            <div>
-                                年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                @{ 
-                                    var qal = from a in db.Ages select a;
-                                    foreach(Age a in qal)
-                                        {
-                                            <option value="@a.AgeId">@a.AgeType</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qal = from a in db.Ages select a;
+                                            foreach (Age a in qal)
+                                            {
+                                                <option value="@a.AgeId">@a.AgeType</option>
+                                            }
                                         }
-                                }
-                                </select>
-                            </div>
-                            <div>
-                                區域: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                    <option value="none" selected disabled hidden>請選擇選項</option>
-                                @{ 
-                                    var qtl = from t in db.Cities select t;
-                                    foreach(City t in qtl)
-                                        {
-                                        <option value="@t.CityId">@t.CityName</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    區域: <select class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <option value="none" selected disabled hidden>請選擇選項</option>
+                                        @{
+                                            var qtl = from t in db.Cities select t;
+                                            foreach (City t in qtl)
+                                            {
+                                                <option value="@t.CityId">@t.CityName</option>
+                                            }
                                         }
-                                }
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal-footer" style="right:0;">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary">@Html.ActionLink("開始配對", "petsMatch", "pets")</button>
+                            <div class="modal-footer" style="right:0;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary">@Html.ActionLink("開始配對", "petsMatch", "pets")</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </div>
 
 
