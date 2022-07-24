@@ -75,7 +75,7 @@
                             if (cator.ParentCategory == 2)
                             {
                                 <li>
-                                    <h5><input class="pixel-radio filter" type="text" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</h5>
+                                    <h5><label  filter" type="text" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</label></h5>
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
