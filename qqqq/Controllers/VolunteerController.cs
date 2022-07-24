@@ -28,7 +28,7 @@ namespace final_test.Controllers
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
             {
                 var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
-                CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+                CLoginAccountViewModel memberview = JsonSerializer.Deserialize<CLoginAccountViewModel>(b);
                 var c = db.Members.Where(x => x.Email == memberview.txtAccount).FirstOrDefault();
                 v.MemberID = c.MemberId;
                 v.MemberAddress = c.Address;
