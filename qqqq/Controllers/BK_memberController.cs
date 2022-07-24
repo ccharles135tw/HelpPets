@@ -51,8 +51,6 @@ namespace qqqq.Controllers
         public IActionResult Create(Member m)
         {
             我救浪Context db = new 我救浪Context();
-
-
             db.Members.Add(m);
             db.SaveChanges();
             return RedirectToAction("memList");

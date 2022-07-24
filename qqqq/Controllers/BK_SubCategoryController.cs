@@ -29,12 +29,12 @@ namespace qqqq.Controllers
 
 
         //新增類別
-        public IActionResult Create()
+        public IActionResult sbCreate()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(SubCategory sub)
+        public IActionResult sbCreate(SubCategory sub)
         {
             我救浪Context db = new 我救浪Context();
 
@@ -44,7 +44,7 @@ namespace qqqq.Controllers
         }
 
         //刪除類別
-        public IActionResult Delete(int? id)
+        public IActionResult sbDelete(int? id)
         {
             我救浪Context db = new 我救浪Context();
             SubCategory sub = db.SubCategories.FirstOrDefault(S => S.SubCategoryId == id);
@@ -58,7 +58,7 @@ namespace qqqq.Controllers
 
 
         //修改類別
-        public IActionResult Edit(int? id)
+        public IActionResult sbEdit(int? id)
         {
             我救浪Context db = new 我救浪Context();
             SubCategory sub = db.SubCategories.FirstOrDefault(S => S.SubCategoryId == id);

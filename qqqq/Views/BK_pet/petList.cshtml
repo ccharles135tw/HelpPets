@@ -33,6 +33,7 @@
         @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
         <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
 
+        <a asp-action="sbpetList" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 品種管理</a>
         <a asp-action="Create" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 新增浪浪</a>
     }
 </div>
@@ -156,6 +157,7 @@
                     <p style="text-align: center; color: black">居住空間:10坪</p>
                     <p style="text-align: center; color: black">結紮:是</p>
                     <p style="text-align: center; color: black">描述:性格穩定</p>
+
                 </div>
                 <div class="modal-footer" style="background-color:wheat">
                     <button type="button" style="color:chocolate; border:none;background-color:transparent" class="fa-solid fa-right-from-bracket" data-dismiss="modal"> 返回</button>

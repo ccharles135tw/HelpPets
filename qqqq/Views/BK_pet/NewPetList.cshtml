@@ -1,0 +1,292 @@
+﻿@model IEnumerable<prjHomeLess.ViewModel.CPet>
+
+@{
+    Layout = "_BackLayout";
+    ViewData["Title"] = "NewPetList";
+}
+@section Styles{
+    <style>
+        #thead > tr > th {
+            font-size: 18px;
+            font-weight: 800;
+            color: black;
+        }
+
+        #thead > tr {
+            border: solid antiquewhite 2px;
+            background-color: antiquewhite;
+        }
+
+        #tbody > tr {
+            border: solid antiquewhite 2px;
+            background-color: antiquewhite;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    </style>
+}
+<h1 style="text-align:center; font-weight:900">浪浪管理系統</h1>
+<div style="text-align:left; font-size:16px ; font-weight:600">
+    @using (Html.BeginForm())
+    {
+        @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
+        <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
+
+        <a asp-action="NewCreate" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 新增浪浪</a>
+    }
+</div>
+<br />
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="~/css/BK_style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="row">
+        <table class="table">
+            <thead id="thead" style="text-align: center; border: solid antiquewhite 2px; border-radius: 20px; background-color: antiquewhite;">
+                <tr>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.CategoryId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Product.Photos)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.SubCategoryId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SubCategoryName)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.ProductId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.Continued)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.GenderId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.GenderType)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.ColorId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.ColorName)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.CityId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.CityName)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.YearCost)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.Space)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.SizeId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.SizeType)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.AgeId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.AgeType)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.AccompanyTimeWeek)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.LigationId)
+                    </th>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model.LigationType)
+                    </th>
+                    <th colspan="4"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody" style="text-align:center;">
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.CategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @{
+                            if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
+                            {
+                                <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
+                            }
+                        }
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.SubCategoryId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubCategoryName)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.ProductId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+
+                    <td class="Description@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.Continued)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.GenderId)
+                    </td>
+                    <td class="GenderType@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.GenderType)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.ColorId)
+                    </td>
+                    <td class="ColorName@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.ColorName)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.CityId)
+                    </td>
+                    <td class="CityName@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.CityName)
+                    </td>
+                    <td class="YearCost@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.YearCost)
+                    </td>
+                    <td class="Space@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.Space)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.SizeId)
+                    </td>
+                    <td class="SizeType@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.SizeType)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.AgeId)
+                    </td>
+                    <td class="AgeType@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.AgeType)
+                    </td>
+                    <td class="AccompanyTimeWeek@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.AccompanyTimeWeek)
+                    </td>
+                    <td class="LigationId@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.LigationId)
+                    </td>
+                    <td class="LigationType@(item.ProductId)" hidden>
+                        @Html.DisplayFor(modelItem => item.LigationType)
+                    </td>
+                    <td>
+                        <button data-toggle="modal" data-target="#myModal" Class="fa-solid fa-list detail" id="detail@(item.ProductId)" @*onclick="test(this.id)"*@
+                                style="border:none; background-color:transparent;color:chocolate;font-size:16px">
+                            明細
+                            @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
+                        </button>
+                    </td>
+                    <td>
+                        <button class="fa-solid fa-arrow-down-short-wide">
+                            下架
+                        </button>
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("刪除", "Delete", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-trash-can", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要刪除?')" })
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color:wheat" font-family:標楷體>
+                    <div class="modal-header" style="display: flex; justify-content: center; align-items: center;">
+                        <h3 style="display:flex; font-weight:900; color:black; ">浪浪資料明細</h3>
+                    </div>
+                    <div class="modal-body" style="background-color:antiquewhite;text-align:center;font-weight:400">
+                        @*<div id="LigationId" hidden></div>*@
+
+                        <div id="GenderType"></div>
+                        <div id="ColorName"></div>
+                        <div id="CityName"></div>
+                        <div id="YearCost"></div>
+                        <div id="Space"></div>
+                        <div id="SizeType"></div>
+                        <div id="AgeType"></div>
+                        <div id="AccompanyTimeWeek"></div>
+                        <div id="LigationType"></div>
+                        <div id="Description"></div>
+
+                    </div>
+                    <div class="modal-footer" style="background-color:wheat">
+                        <button type="button" style="color:chocolate; border:none;background-color:transparent" class="fa-solid fa-right-from-bracket" data-dismiss="modal"> 返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts{
+    <script>
+        $(".detail").click((event) => {
+            let id = event.target.id.replace(/[^0-9]/ig, "")
+            console.log(id);
+            $("#GenderType").html(`性別:${$(`.GenderType${id}`).text()}`)
+            $("#ColorName").html(`毛色:${$(`.ColorName${id}`).text()}`)
+            $("#CityName").html(`城市:${$(`.CityName${id}`).text()}`)
+            $("#YearCost").html(`狀態:${$(`.YearCost${id}`).text()}`)
+            $("#Space").html(`空間:${$(`.Space${id}`).text()}坪`)
+            $("#SizeType").html(`體型:${$(`.SizeType${id}`).text()}`)
+            $("#AgeType").html(`年紀:${$(`.AgeType${id}`).text()}`)
+            $("#AccompanyTimeWeek").html(`周陪伴時間:${$(`.AccompanyTimeWeek${id}`).text()}小時`)
+            /*$("#LigationId").html(`LigationId:${$(`.LigationId${id}`).text()}`)*/
+            $("#LigationType").html(`狀態:${$(`.LigationType${id}`).text()}`)
+            $("#Description").html(`描述:${$(`.Description${id}`).text()}`)
+        })
+    </script>
+}
