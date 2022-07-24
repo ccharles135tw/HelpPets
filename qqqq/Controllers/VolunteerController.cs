@@ -7,6 +7,8 @@ using qqqq.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text.Json;
 
 namespace final_test.Controllers
@@ -28,8 +30,9 @@ namespace final_test.Controllers
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
             {
                 var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
-                CLoginAccountViewModel memberview = JsonSerializer.Deserialize<CLoginAccountViewModel>(b);
-                var c = db.Members.Where(x => x.Email == memberview.txtAccount).FirstOrDefault();
+                CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+                System.Diagnostics.Debug.WriteLine(b);
+                var c = db.Members.Where(x => x.Email == memberview.Email).FirstOrDefault();
                 v.MemberID = c.MemberId;
                 v.MemberAddress = c.Address;
                 v.MemberEmail = c.Email;
@@ -252,7 +255,6 @@ namespace final_test.Controllers
 
         public IActionResult saveToDB(int MemID,int actID,string actDate,string actTime,string Name,string Phone,string Email ,string Status)
         {
-
             //System.Diagnostics.Debug.WriteLine(MemID.ToString(),actID.ToString(),actTime,Name,Phone,Email, actDate, Status);
             Volunteer v = new Volunteer();
             v.MemberId = MemID;
@@ -283,6 +285,42 @@ namespace final_test.Controllers
         //    string dateFormat = $"{date.Year}-{String.Format("{0:00}", date.Month)}-{String.Format("{0:00}", date.Day)}";
         //}
 
-       
+       public IActionResult EmailTest(string MemberEmail)
+        {
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress("helppetqqq@gmail.com");
+
+            mail.To.Add(MemberEmail);
+            //主旨
+            mail.SubjectEncoding = System.Text.Encoding.UTF8;
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.Subject = "我救浪-志工活動驗證";
+            //內文
+            string body = "<html><body><h1>trytrytry</h1></body></html>";
+            mail.Body = body;
+
+            //內文是否為html
+            mail.IsBodyHtml = true;
+            //優先權
+            mail.Priority = MailPriority.Normal;
+            //設定smtpclient
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+            client.Host = "smtp.gmail.com";
+            client.Port = 587;
+            client.EnableSsl = true;
+
+            try
+            {
+                client.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            client.Dispose();
+            return Json("");
+            //todo email
+        }
     }
 }
