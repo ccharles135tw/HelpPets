@@ -222,7 +222,7 @@
             let timerInterval
             Swal.fire({
                 title: '條件修改成功!',
-                html: '將在 <b>b</b> 毫秒後回寵物首頁',
+                html: '將在 <b></b> 毫秒後回寵物首頁',
                 timer: 3000,
                 timerProgressBar: true,
                 didOpen: () => {
@@ -238,13 +238,13 @@
             let timerInterval
             Swal.fire({
                 title: '保存原條件',
-                html: '將在 <b>b</b> 毫秒後回寵物首頁',
+                html: '將在 <b></b> 毫秒後回寵物首頁',
                 timer: 3000,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
-                    const b = Swal.getHtmlContainer().querySelector('b')
-                    timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft() }, 100);
+                    const a = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => { a.textContent = Swal.getTimerLeft() }, 100);
                     setTimeout(function () { location.href = "/pets/petsList" }, 3000)
                 }
             })

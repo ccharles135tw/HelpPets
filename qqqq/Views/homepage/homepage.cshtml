@@ -95,7 +95,7 @@
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-solid fa-dog fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在找家的狗</p>
-                            <h1 class="display-5 mb-0" data-toggle="counter-up">10</h1>
+                            <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true&&p.Continued==true&&p.SubCategory.CategoryId==2 ).Count()</h1>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
@@ -105,14 +105,14 @@
                         <img src="~/img/cat.png" style="margin-bottom:20px" />
                     </i>-->
                     <p class="mb-2">正在找家的貓</p>
-                    <h1 class="display-5 mb-0" data-toggle="counter-up">80</h1>
+                    <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true && p.Continued == true && p.SubCategory.CategoryId == 3).Count()</h1>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-users fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在配對的會員</p>
-                    <h1 class="display-5 mb-0" data-toggle="counter-up">35</h1>
+                    <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Members.Count()</h1>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
@@ -128,13 +128,14 @@
 <section id="demos">
     <div class="row">
         <div class="large-12 columns">
+            <marquee><h1>正在找家的毛孩們</h1></marquee>
             <div class="owl-carousel">
                 @foreach (var item in Model)
                 {
                     <div class="swiper-slide" width="100%">
 
                         <button id="addToList" style="background-color: #734226">
-                            <h5 style="color:#fff;">@item.ProductName</h5>
+
                             @{ if (item.Photos.Count == 0)
                                 {
                                     <img src="/Images/notfound.jpg" height="300" zoom />
@@ -144,7 +145,7 @@
                                     <img src="/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
-                            <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                            <h5 style="color:#fff;">@item.ProductName</h5>
                         </button>
                     </div>
                 }
@@ -246,6 +247,21 @@
                         <img class="img-fluid" src="~/img/food2.jpg" alt="">
                         <div class="product-overlay">
                             <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://24h.pchome.com.tw/prod/DEAKVB-A9008UKJ6?fq=/S/DEAKFR"><i class="fa fa-eye text-primary"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                    <div class="text-center p-4">
+                        <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$888</div>
+                        <h4 class="mb-3">貓抓板</h4>
+                        <span>貓家超耐磨貓抓板</span>
+                    </div>
+                    <div class="position-relative mt-auto">
+                        <img class="img-fluid" src="~/img/food3.jpg" alt="">
+                        <div class="product-overlay">
+                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://24h.pchome.com.tw/prod/DEAK8J-A9009O0ST"><i class="fa fa-eye text-primary"></i></a>
                         </div>
                     </div>
                 </div>

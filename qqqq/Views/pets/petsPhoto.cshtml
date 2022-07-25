@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<qqqq.ViewModels.CProductShow>
+@model IEnumerable<qqqq.ViewModels.CAdoptView>
 <section class="section-margin--small mb-5">
 
     <!-- End Filter Bar -->
@@ -11,26 +11,26 @@
             {
                 <div class="col-md-10 col-lg-4">
                     <div class="card text-center card-product">
-                        <div class="card-product__img"  >
-                            <img width="300" height="300" src="/Images/@p.Photos.FirstOrDefault()?.PictureName" alt=""  style="border:3px solid #EAA636;">
+                        <div class="card-product__img">
+                            <img width="300" height="300" src="/Images/@(p._prod.Photos.Where(ph=>ph.IsDefault==true).Count()==0?null:p._prod.Photos.FirstOrDefault().PictureName)" alt="" style="border:3px solid #EAA636;">
                             <div class="card-product__imgOverlay" style="display:block">
-                                <h5 style="color:#000;">性別:母</h5>
-                                <h5 style="color:#000;">體型:小</h5>
-                                <h5 style="color:#000;">年齡層:幼年</h5>
-                                <h5 style="color:#000;">@p.Description</h5>
-                                    <button id="addToList" style=" background: #734226; border: none; border-radius: 10px;">
-                                        <i class="fa-solid fa-list-alt"style="color:#fff;padding-right:5px;">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
-                                    </button>
+                                <h5 style="color:#000;">性別:<span>@(p.GenderType)</span></h5>
+                                <h5 style="color:#000;">體型:<span>@(p.SizeType)</span></h5>
+                                <h5 style="color:#000;">年齡層:<span>@(p.AgeType)</span></h5>
+                                <h5 style="color:#000;">描述 :@p.Description</h5>
+                                <button id="addToList" style=" background: #734226; border: none; border-radius: 10px;">
+                                    <i class="fa-solid fa-list-alt" style="color:#fff;padding-right:5px;">@Html.ActionLink("詳細資料", "petsDetial", "pets",new { id=p.ProductId})</i>
+                                </button>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <p>品種:@p.SubCategoryName</p>
-                            <h4 class="card-product__title"><a href="/pets/petsDetial">@p.ProductName</a></h4>
+                        @*<div class="card-body">
+                        <p>品種:@p.SubCategoryName</p>
+                        <h4 class="card-product__title"><a href="/pets/petsDetial">@p.ProductName</a></h4>
 
-                        </div>
+                    </div>*@
                     </div>
-                </div>  
-                }
+                </div>
+            }
         </div>
     </section>
     <!-- End Best Seller -->
