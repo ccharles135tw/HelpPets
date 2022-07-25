@@ -93,7 +93,7 @@
             <div style="display:flex;justify-content:center;align-items:center;">
                 @*Button trigger modal*@
 
-                <button class="btn btn-success " onclick="alertlist1()" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">@Html.ActionLink("維持原條件", "petsList", null)</button>
+                <button class="btn btn-success " onclick="backpets" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">@Html.ActionLink("維持原條件", "petsList", null)</button>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
                         style="flex:none;width:120px;margin:10px;align-items:center;justify-content:center">
                     調整清單
@@ -223,29 +223,29 @@
             Swal.fire({
                 title: '條件修改成功!',
                 html: '將在 <b></b> 毫秒後回寵物首頁',
-                timer: 3000,
+                timer: 2000,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
                     const b = Swal.getHtmlContainer().querySelector('b')
                     timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft()}, 100);
-                    setTimeout(function () { location.href = "/pets/petsList" }, 3000)
+                    setTimeout(function () { location.href = "/pets/petsList" }, 2000)
                 }
             })
         }
 
-        function alertlist1() {
+        function backpets() {
             let timerInterval
             Swal.fire({
                 title: '保存原條件',
                 html: '將在 <b></b> 毫秒後回寵物首頁',
-                timer: 3000,
+                timer: 2000,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
                     const a = Swal.getHtmlContainer().querySelector('b')
                     timerInterval = setInterval(() => { a.textContent = Swal.getTimerLeft() }, 100);
-                    setTimeout(function () { location.href = "/pets/petsList" }, 3000)
+                    setTimeout(function () { location.href = "/pets/petsList" }, 2000)
                 }
             })
         }
