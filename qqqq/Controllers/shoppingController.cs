@@ -12,6 +12,7 @@ namespace qqqq.Controllers
 {
     public class shoppingController : Controller
     {
+        private bool array = true;
 
         public IActionResult shopping()
         {
@@ -115,19 +116,19 @@ namespace qqqq.Controllers
                         }
                     }
                 }
-                    //if (key.Keyword != null)
-                    //{
-                    //    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
-                    //    foreach (var p in parCate)
-                    //    {
-                    //        CProductShow Cpro = new CProductShow();
-                    //        Cpro.product = p;
-                    //        if (p.Photos.Any())
-                    //            Cpro.Photos = p.Photos.ToList();
-                    //        if (!list.Contains(Cpro))
-                    //            list.Add(Cpro);
-                    //    }
-                    //}
+                //if (key.Keyword != null)
+                //{
+                //    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
+                //    foreach (var p in parCate)
+                //    {
+                //        CProductShow Cpro = new CProductShow();
+                //        Cpro.product = p;
+                //        if (p.Photos.Any())
+                //            Cpro.Photos = p.Photos.ToList();
+                //        if (!list.Contains(Cpro))
+                //            list.Add(Cpro);
+                //    }
+                //}
                 //}
                 //        CProductShow Cpro = new CProductShow();
                 //        Cpro.product = p;
@@ -154,13 +155,13 @@ namespace qqqq.Controllers
                 return PartialView(list);
             }
         }
-        
+
 
         public IActionResult shoppingCol(CShoppingKeyword key)
         {
 
             我救浪Context db = new 我救浪Context();
-            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null  && key.Keyword == null)
+            if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
                 var datas = db.Products.Where(p => p.IsPet == false).ToList();
@@ -294,15 +295,16 @@ namespace qqqq.Controllers
             Product Prod = (new 我救浪Context()).Products.FirstOrDefault(p => p.ProductId == vModel.CartId);
             Cprod.product = Prod;
             Cprod.Photos = (new 我救浪Context()).Photos.Where(p => p.ProductId == Prod.ProductId).ToList();
-            //CShoppingCart item = new CShoppingCart()
-            //{
-            //    CartId = vModel.CartId,
-            //    CartName = Prod.ProductName,
-            //    CartPhoto = Cprod.Photos[0].PictureName,
-            //    CartCount = vModel.CartCount,
-            //    CartPrice = (decimal)Prod.Price
-            //};
+            if (list.Where(p => p.CartId.Equals(vModel.CartId)).Any())
+            {
+                CShoppingCart item = list.Where(p => p.CartId == vModel.CartId).First();
+                item.CartCount = item.CartCount + vModel.CartCount;
+                item.Donate = item.Donate + vModel.Donate;
+            }
+            else
+            {
             list.Add(vModel);
+            }
             jsonCart = JsonSerializer.Serialize(list);
             HttpContext.Session.SetString(
                 CDictionary.SK_購物車商品列表, jsonCart);
@@ -312,15 +314,38 @@ namespace qqqq.Controllers
         }
         public IActionResult CartView()
         {
+            return View();
+        }
+        public IActionResult CartTable(string hidCartId, string hidCount, bool hidIsDonate)
+        {
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_購物車商品列表))
             {
                 string jsonCart = HttpContext.Session.GetString(CDictionary.SK_購物車商品列表);
-
                 List<CShoppingCart> cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
-                return View(cart);
+
+                if (!string.IsNullOrEmpty(hidCartId) && !string.IsNullOrEmpty(hidCount))
+                {
+                    if (hidIsDonate)
+                        cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().Donate = Convert.ToInt32(hidCount);
+                    else
+                        cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().CartCount = Convert.ToInt32(hidCount);
+                    if(cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().CartCount==0&& cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().Donate == 0)
+                        {
+                        cart.Remove(cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First());
+                    }
+                    HttpContext.Session.SetString(
+                        CDictionary.SK_購物車商品列表, JsonSerializer.Serialize(cart));
+                }
+                
+
+                return PartialView(cart);
             }
             else
-                return RedirectToAction("Shopping");
+            {
+                List<CShoppingCart> cart = new List<CShoppingCart>();
+                return PartialView(cart);
+            }
+                
         }
         public IActionResult Pay(int? price)
         {
