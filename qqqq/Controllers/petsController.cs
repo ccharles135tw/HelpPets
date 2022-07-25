@@ -136,10 +136,10 @@ namespace qqqq.Controllers
         //        }
         //        return PartialView(list);
         //    }
-        //    public IActionResult petsAdopt()
-        //    {
-        //        return View();
-        //    }
+        public IActionResult petsAdopt()
+        {
+            return View();
+        }
         public IActionResult petsMatch()
         {
             我救浪Context db = new 我救浪Context();
