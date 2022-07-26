@@ -21,7 +21,7 @@ namespace qqqq.Controllers
         {
             _environment = pet;
         }
-        
+
         public IActionResult NewPetList()
         {
             我救浪Context db = new 我救浪Context();
@@ -97,20 +97,20 @@ namespace qqqq.Controllers
             if (string.IsNullOrEmpty(keyword))
             {
                 datas = (from p in db.Products
-                        where p.IsPet == true && p.Continued == true
-                        select new CPet(p)).ToList();
+                         where p.IsPet == true && p.Continued == true
+                         select new CPet(p)).ToList();
             }
             else
             {
-                datas = (db.Products.Include(p=>p.SubCategory).ThenInclude(s=>s.Category).Where(p => 
-                p.IsPet == true 
-                && (p.ProductName.Contains(keyword) ||
-                  (p.IsPet == true && p.SubCategory.SubCategoryName.Contains(keyword)) ||
-                 (p.IsPet == true && p.SubCategory.Category.CategoryName.Contains(keyword)))
-                ).Select(p=>new CPet(p))).ToList();
+                datas = (db.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p =>
+                    p.IsPet == true
+                    && (p.ProductName.Contains(keyword) ||
+                      (p.IsPet == true && p.SubCategory.SubCategoryName.Contains(keyword)) ||
+                     (p.IsPet == true && p.SubCategory.Category.CategoryName.Contains(keyword)))
+                ).Select(p => new CPet(p))).ToList();
             }
 
-            return View("NewPetList",datas);
+            return View("NewPetList", datas);
         }
 
 
@@ -122,65 +122,53 @@ namespace qqqq.Controllers
         }
         [HttpPost]
 
-        public IActionResult NewCreate(CPet p, IFormFile file)
+        public IActionResult NewCreate(Product pro, PetDetail detail, IFormFile file)
         {
-            try
+            //try
+            //{
+            我救浪Context db = new 我救浪Context();
+
+            pro.Price = 0;
+            pro.SupplierId = 1;
+            pro.IsPet = true;
+            pro.UnitsInStock = 0;
+            pro.Continued = true;
+            pro.Cost = 0;
+            db.Products.Add(pro);
+            db.SaveChanges();
+
+            //System.Diagnostics.Debug.WriteLine(p.ColorName);
+            //System.Diagnostics.Debug.WriteLine(db.Colors.Where(x => x.ColorName == p.ColorName).Select(y => y.ColorId).FirstOrDefault());
+           
+            
+            //detail.ProductId = db.Products.Select(x => x.ProductId).ToList().Last();
+            detail.ProductId = pro.ProductId;
+            
+            db.PetDetails.Add(detail);
+            db.SaveChanges();
+
+            //System.Diagnostics.Debug.WriteLine(detail.ProductId.ToString(), detail.YearCost.ToString(), detail.AccompanyTimeWeek.ToString());
+            //db.Sizes.Add(size);
+
+
+            //照片
+            if (file != null)
             {
-                我救浪Context db = new 我救浪Context();
-                Product pro = new Product();
-                PetDetail detail = new PetDetail();
-
-                pro.SubCategoryId = int.Parse(p.SubCategoryName);
-                pro.ProductName = p.ProductName;
-                pro.Price = 0;
-                pro.SupplierId = 1;
-                pro.IsPet = true;
-                pro.Description = p.Description;
-                pro.UnitsInStock = 0;
-                pro.Continued = true;
-                pro.Cost = 0;
-                db.Products.Add(pro);
+                Photo photo = new Photo();
+                string photoName = Guid.NewGuid().ToString() + ".jpg";
+                file.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + photoName, FileMode.Create));
+                photo.PictureName = photoName;
+                photo.ProductId = pro.ProductId;
+                photo.IsDefault = true;
+                db.Photos.Add(photo);
                 db.SaveChanges();
-
-                //System.Diagnostics.Debug.WriteLine(p.ColorName);
-                //System.Diagnostics.Debug.WriteLine(db.Colors.Where(x => x.ColorName == p.ColorName).Select(y => y.ColorId).FirstOrDefault());
-
-                detail.ProductId = pro.ProductId;
-                //detail.ProductId = db.Products.Select(x => x.ProductId).ToList().Last();
-                detail.Description = p.Description;
-                detail.YearCost = p.YearCost;
-                detail.Space = p.Space;
-                detail.AccompanyTimeWeek = p.AccompanyTimeWeek;
-                detail.CityId = int.Parse(p.CityName);
-                detail.ColorId = int.Parse(p.ColorName);
-                detail.GenderId = int.Parse(p.GenderType);
-                detail.SizeId = int.Parse(p.SizeType);
-                detail.LigationId = int.Parse(p.LigationType);
-                detail.AgeId = int.Parse(p.AgeType);
-
-                //System.Diagnostics.Debug.WriteLine(detail.ProductId.ToString(), detail.YearCost.ToString(), detail.AccompanyTimeWeek.ToString());
-                //db.Sizes.Add(size);
-
-                db.PetDetails.Add(detail);
-                db.SaveChanges();
-
-                if (file != null)
-                {
-                    Photo photo = new Photo();
-                    string photoName = Guid.NewGuid().ToString() + ".jpg";
-                    file.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + photoName, FileMode.Create));
-                    photo.PictureName = photoName;
-                    photo.ProductId = pro.ProductId;
-                    photo.IsDefault = true;
-                    db.Photos.Add(photo);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("NewPetList");
             }
-            catch (Exception)
-            {
-                return RedirectToAction("NewCreate");
-            }
+            return RedirectToAction("NewPetList");
+            //}
+            //catch (Exception)
+            //{
+            //return RedirectToAction("NewCreate");
+            //}
 
         }
 
@@ -231,43 +219,44 @@ namespace qqqq.Controllers
             return View(cPet);
         }
         [HttpPost]
-        public IActionResult NewEdit(CPet cPet, IFormFile file)
+        public IActionResult NewEdit(Product pro,PetDetail detail,IFormFile file)
         {
             我救浪Context db = new 我救浪Context();
             //pet = new CPet();
-
-            PetDetail detail = db.PetDetails.FirstOrDefault(p => p.ProductId == cPet.ProductId);
-            if (detail != null)
+            var q = db.PetDetails.FirstOrDefault(p => p.ProductId == detail.ProductId);
+            if (q != null)
             {
                 //detail.ProductId = db.Products.Select(x => x.ProductId).ToList().Last();
-                detail.Description = cPet.Description;
-                detail.YearCost = cPet.YearCost;
-                detail.Space = cPet.Space;
-                detail.AccompanyTimeWeek = cPet.AccompanyTimeWeek;
-                detail.CityId = int.Parse(cPet.CityName);
-                detail.ColorId = int.Parse(cPet.ColorName);
-                detail.GenderId = int.Parse(cPet.GenderType);
-                detail.SizeId = int.Parse(cPet.SizeType);
-                detail.LigationId = int.Parse(cPet.LigationType);
-                detail.AgeId = int.Parse(cPet.AgeType);
+                q.Description = detail.Description;
+                q.YearCost = detail.YearCost;
+                q.Space = detail.Space;
+                q.AccompanyTimeWeek = detail.AccompanyTimeWeek;
+                q.CityId = detail.CityId;
+                q.ColorId = detail.ColorId;
+                q.GenderId = detail.GenderId;
+                q.SizeId = detail.SizeId;
+                q.LigationId = detail.LigationId;
+                q.AgeId = detail.AgeId;
                 db.SaveChanges();
             }
 
-            Product pro = db.Products.FirstOrDefault(p => p.ProductId == cPet.ProductId);
-            if (pro != null)
+            var qpro = db.Products.FirstOrDefault(p => p.ProductId == pro.ProductId);
+            if (qpro != null)
             {
                 //pro.SubCategoryId = int.Parse(cPet.SubCategoryName);
-                System.Diagnostics.Debug.WriteLine("TEST");
-                System.Diagnostics.Debug.WriteLine(cPet.SubCategoryName);
+                //System.Diagnostics.Debug.WriteLine("TEST");
+                //System.Diagnostics.Debug.WriteLine(cPet.SubCategoryName);
                 //pro.SubCategory.SubCategoryName = cPet.SubCategoryName;
                 //product.SubCategoryId = pp.SubCategoryId;
-                pro.SubCategoryId = int.Parse(cPet.SubCategoryName);
-                pro.ProductName = cPet.ProductName;
-                pro.Description = cPet.Description;
+                qpro.SubCategoryId = pro.SubCategoryId;
+                //qpro.SubCategory.SubCategoryName = pro.SubCategory.SubCategoryName;
+
+                qpro.ProductName = pro.ProductName;
+                qpro.Description = pro.Description;
                 db.SaveChanges();
             }
 
-            Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == cPet.ProductId);
+            Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == pro.ProductId);
             if (photo != null && file != null)
             {
                 Photo ph = new Photo();
@@ -276,7 +265,7 @@ namespace qqqq.Controllers
                 ph.PictureName = photoName;
                 ph.ProductId = pro.ProductId;
                 ph.IsDefault = true;
-                db.Photos.Remove(db.Photos.Where(ph => ph.ProductId == cPet.ProductId).FirstOrDefault());
+                db.Photos.Remove(db.Photos.Where(ph => ph.ProductId == pro.ProductId).FirstOrDefault());
                 db.Photos.Add(ph);
                 db.SaveChanges();
             }
@@ -315,13 +304,13 @@ namespace qqqq.Controllers
                 product.Continued = true;
                 db.SaveChanges();
             }
-            return RedirectToAction("NewPetList");
+            return RedirectToAction("DiscountinueList");
         }
 
         //關鍵字
 
     }
 
-    
+
 }
 

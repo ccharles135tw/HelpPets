@@ -216,7 +216,7 @@ namespace prjHomeLess.ViewModel
         //color
         public int? ColorId
         {
-            get { return _prod.PetDetail.ColorId; }
+            get { return _prod.PetDetail.Color.ColorId; }
         }
         [DisplayName("毛色")]
         public string ColorName

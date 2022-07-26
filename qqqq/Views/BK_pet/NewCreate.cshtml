@@ -82,7 +82,7 @@
                             <label asp-for="SubCategoryName" class="control-label"></label>
                         </i>
                         @*<input asp-for="SubCategoryName" class="form-control" />*@
-                        <select id="SubCategory" asp-for="SubCategoryName" class="input">
+                        <select id="SubCategory" asp-for="SubCategoryId" class="input">
                             <option value="none" selected disabled hidden>請選擇選項</option>
                             @{
                                 var qsc = from sc in db.SubCategories
@@ -119,17 +119,11 @@
 
 
                 <div>
-                    <div class="form-group" hidden>
-                        <label asp-for="GenderId" class="control-label"></label>
-                        <input asp-for="GenderId" class="form-control" />
-                        <span asp-validation-for="GenderId" class="text-danger"></span>
-                    </div>
-
                     <div class="form-group col-md-6" style="float:left">
                         <i class="fa-solid fa-paw">
                             <label asp-for="GenderType" class="control-label"></label>
                         </i>
-                        <select asp-for="GenderType" class="input">
+                        <select asp-for="GenderId" class="input">
                             @{
                                 var qg = from g in db.Genders
                                          where g.GenderType != "不限"
@@ -142,16 +136,11 @@
                         </select>
                         <span asp-validation-for="GenderType" class="text-danger"></span>
                     </div>
-                    <div class="form-group" hidden>
-                        <label asp-for="ColorId" class="control-label"></label>
-                        <input asp-for="ColorId" class="form-control " />
-                        <span asp-validation-for="ColorId" class="text-danger"></span>
-                    </div>
                     <div class="form-group col-md-6" style="float:left">
                         <i class="fa-solid fa-paw">
                             <label asp-for="ColorName" class="control-label"></label>
                         </i>
-                        <select asp-for="ColorName" class="input">
+                        <select asp-for="ColorId" class="input">
                             @{
                                 var qcol = from col in db.Colors
                                            where col.ColorName != "不限"
@@ -167,16 +156,11 @@
                 </div>
 
                 <div>
-                    <div class="form-group " hidden>
-                        <label asp-for="CityId" class="control-label"></label>
-                        <input asp-for="CityId" class="form-control input" />
-                        <span asp-validation-for="CityId" class="text-danger"></span>
-                    </div>
                     <div class="form-group col-md-6" style="float:left">
                         <i class="fa-solid fa-paw">
                             <label asp-for="CityName" class="control-label"></label>
                         </i>
-                        <select asp-for="CityName" class="input">
+                        <select asp-for="CityId" class="input">
                             @{
                                 var qcity = from ci in db.Cities
                                             where ci.CityName != "不限"
@@ -189,16 +173,11 @@
                         </select>
                         <span asp-validation-for="CityName" class="text-danger"></span>
                     </div>
-                    <div class="form-group" hidden>
-                        <label asp-for="SizeId" class="control-label"></label>
-                        <input asp-for="SizeId" class="form-control input" />
-                        <span asp-validation-for="SizeId" class="text-danger"></span>
-                    </div>
                     <div class="form-group col-md-6" style="float:left">
                         <i class="fa-solid fa-paw">
                             <label asp-for="SizeType" class="control-label"></label>
                         </i>
-                        <select asp-for="SizeType" class="input">
+                        <select asp-for="SizeId" class="input">
                             @{
                                 var qsi = from si in db.Sizes
                                           where si.SizeType != "不限"
@@ -212,19 +191,12 @@
                         <span asp-validation-for="SizeType" class="text-danger"></span>
                     </div>
                 </div>
-
-
                 <div>
-                    <div class="form-group" hidden>
-                        <label asp-for="AgeId" class="control-label"></label>
-                        <input asp-for="AgeId" class="form-control" />
-                        <span asp-validation-for="AgeId" class="text-danger"></span>
-                    </div>
                     <div class="form-group col-md-6" style="float:left">
                         <i class="fa-solid fa-paw">
                             <label asp-for="AgeType" class="control-label"></label>
                         </i>
-                        <select asp-for="AgeType" class="input">
+                        <select asp-for="AgeId" class="input">
                             @{
                                 var qag = from ag in db.Ages
                                           where ag.AgeType != "不限"
@@ -241,7 +213,7 @@
                         <i class="fa-solid fa-paw">
                             <label asp-for="LigationType" class="control-label"></label>
                         </i>
-                        <select asp-for="LigationType" class="input">
+                        <select asp-for="LigationId" class="input">
                             @{
                                 var qli = from li in db.Ligations
                                           where li.LigationType != "不限"
@@ -255,9 +227,6 @@
                         <span asp-validation-for="LigationType" class="text-danger"></span>
                     </div>
                 </div>
-
-
-
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="YearCost" class="control-label"></label>
@@ -278,11 +247,6 @@
                     </i>
                     <input asp-for="AccompanyTimeWeek" class="form-control input" />
                     <span asp-validation-for="AccompanyTimeWeek" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="LigationId" class="control-label"></label>
-                    <input asp-for="LigationId" class="form-control" />
-                    <span asp-validation-for="LigationId" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
