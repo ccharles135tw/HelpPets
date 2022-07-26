@@ -115,11 +115,11 @@
                 <div class="form-group" hidden>
                     <input name="MemberID" class="form-control" />
                 </div>
-                <div class="form-group" hidden>
+                @*<div class="form-group" hidden>
                     <label asp-for=" Photo" class="control-label"></label>
                     <input asp-for="Photo" class="form-control" />
                     <span asp-validation-for="Photo" class="text-danger"></span>
-                </div>
+                </div>*@
 
                 <div class="row">
 
@@ -194,6 +194,7 @@
                             </span>
                         </div>
                         <select id="selCity" asp-for="MemberCityName" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
+                       
                         </select>
                         <input id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3">
                     </div>
@@ -225,7 +226,7 @@
                                 <i class="fa fa-envelope text-muted"></i>
                             </span>
                         </div>
-                        <input type="file" value="會員頭貼上傳" name=" File" class="form-control" id="File" />
+                        <input type="file" value="會員頭貼上傳"asp-for="Photo"class="form-control" id="File" />
                     </div>
 
 

@@ -20,7 +20,8 @@ namespace Pet.ViewModels
         {
             _Member=m;
         }
-        public int MemberID { get { return _Member.MemberId; } set { _Member.MemberId = value; } }
+
+        public int MemberId { get { return _Member.MemberId; } set { _Member.MemberId = value; } }
         [DisplayName("頭貼")]
         public string Photo { get { return _Member.Photo; } set { _Member.Photo = value; } }
         [DisplayName("Email")]
