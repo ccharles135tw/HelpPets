@@ -25,9 +25,9 @@
                                     <ul class="card-product__imgOverlay">
                                         <li><button><i class="fa-solid fa-star">收藏</i></button></li>
                                         <li>
-                                            <button id="addToCart">
+                                            <a id="addToCart" href="~/shopping/ShowProduct">
                                                 <i class="ti-heart fa-solid fa-cart-shopping">@Html.ActionLink("加入購物車", "showproduct", new { id = p.ProductId })</i>
-                                            </button>
+                                            </a>
                                         </li>
                                     </ul>
                                 </div>

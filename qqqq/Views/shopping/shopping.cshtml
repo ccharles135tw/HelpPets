@@ -118,11 +118,11 @@
     <div class="col-1 ">
         <ul class="navbar-dark list-unstyled float-right " style="position:fixed">
             <li>
-                <button class="btn btn-secondary border-0" title="Popover title" style="width: 100%; background: rgba(244,126,1,0.8); "
+                <a class="btn btn-secondary border-0" title="Popover title" style="width: 100%; background: rgba(244,126,1,0.8); "
                         data-container="body" data-toggle="popover" data-placement="right"
-                        data-content="右側的 Popover 中的一些内容">
-                    <i class="fa-solid fa-cart-shopping">@Html.ActionLink(" (0)", "CartView", null)</i>
-                </button><br />
+                        data-content="右側的 Popover 中的一些内容" href="~/shopping/CartView">
+                        <i class="fa-solid fa-cart-shopping">(0)</i>
+                </a><br />
             </li> 
             <li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="追蹤商品"><i class="fa-solid fa-star">收藏</i></button><br /></li>
             @*<li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="回到頂端"><i class="fa-solid fa-circle-arrow-up">TOP</i></button><br /></li>*@
