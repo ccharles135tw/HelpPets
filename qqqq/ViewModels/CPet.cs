@@ -45,6 +45,12 @@ namespace prjHomeLess.ViewModel
         //    Product = product;
         //}
 
+        //照片
+        public Photo Photo
+        {
+            get { return _photo; }
+            set { _photo = value; }
+        }
 
         //貓或狗
         public Category Category
@@ -116,6 +122,32 @@ namespace prjHomeLess.ViewModel
             set { _ligation = value; }
         }
 
+
+
+
+        //photo
+        public int PictureId
+        {
+            get { return _photo.PictureId; }
+            set { _photo.PictureId = value; }
+        }
+
+        [DisplayName("圖片")]
+        public byte[] Picture
+        {
+            get { return _photo.Picture; }
+            set { _photo.Picture = value; }
+        }
+        public string PictureName 
+        {
+            get { return _photo.PictureName; }
+            set { _photo.PictureName = value; }
+        }
+        public bool? IsDefault
+        {
+            get { return _photo.IsDefault; }
+            set { _photo.IsDefault = value; }
+        }
 
 
         //category

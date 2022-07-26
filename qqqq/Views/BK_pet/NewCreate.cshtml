@@ -28,13 +28,14 @@
     <hr />
     <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
         <div class="col-md-4">
-            <form asp-action="NewCreate">
+            <form asp-action="NewCreate" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group" hidden>
                     <label asp-for="CategoryId" class="control-label"></label>
                     <input asp-for="CategoryId" class="form-control input" />
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="ProductName" class="control-label"></label>
@@ -42,48 +43,62 @@
                     <input asp-for="ProductName" class="form-control input" />
                     <span asp-validation-for="ProductName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="CategoryName" class="control-label"></label>
-                    </i>
-                    @*<input asp-for="CategoryName" class="form-control" />*@
-                    <select id="Category" asp-for="CategoryName" class="input">
-                        <option value="none" selected disabled hidden>請選擇選項</option>
-                        @{
-                            var q = from c in db.Categories
-                                    where c.IsPet == true && c.CategoryName != "不限"
-                                    select c;
-                            foreach (Category c in q)
-                            {
-                                <option value="@c.CategoryId">@c.CategoryName</option>
-                            }
-                        }
-                    </select>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="SubCategoryName" class="control-label"></label>
-                    </i>
-                    @*<input asp-for="SubCategoryName" class="form-control" />*@
-                    <select id="SubCategory" asp-for="SubCategoryName"class="input">
-                        <option value="none" selected disabled hidden>請選擇選項</option>
-                        @{
-                            var qsc = from sc in db.SubCategories
-                                      where sc.Category.IsPet == true && sc.SubCategoryName != "不限"
-                                      select sc;
-                            foreach (SubCategory sc in qsc)
-                            {
-                                <option style="display:none;" value="@sc.SubCategoryId" Category="@sc.CategoryId">@sc.SubCategoryName</option>
-                            }
-                        }
-                    </select>
-                    <span asp-validation-for="SubCategoryName" class="text-danger"></span>
-                </div>
                 <div class="form-group" hidden>
                     <label asp-for="ProductId" class="control-label"></label>
                     <input asp-for="ProductId" class="form-control" />
                     <span asp-validation-for="ProductId" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Photo" class="control-label"></label>
+                    </i>
+                    <input type="file" name="file" asp-for="Photo" class="form-control-file input" />
+                    @*<input asp-for="Photo" class="form-control input" />*@
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+
+                <div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="CategoryName" class="control-label"></label>
+                        </i>
+                        @*<input asp-for="CategoryName" class="form-control" />*@
+                        <select id="Category" asp-for="CategoryName" class="input">
+                            <option value="none" selected disabled hidden>請選擇選項</option>
+                            @{
+                                var q = from c in db.Categories
+                                        where c.IsPet == true && c.CategoryName != "不限"
+                                        select c;
+                                foreach (Category c in q)
+                                {
+                                    <option value="@c.CategoryId">@c.CategoryName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="SubCategoryName" class="control-label"></label>
+                        </i>
+                        @*<input asp-for="SubCategoryName" class="form-control" />*@
+                        <select id="SubCategory" asp-for="SubCategoryName" class="input">
+                            <option value="none" selected disabled hidden>請選擇選項</option>
+                            @{
+                                var qsc = from sc in db.SubCategories
+                                          where sc.Category.IsPet == true && sc.SubCategoryName != "不限"
+                                          select sc;
+                                foreach (SubCategory sc in qsc)
+                                {
+                                    <option style="display:none;" value="@sc.SubCategoryId" Category="@sc.CategoryId">@sc.SubCategoryName</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="SubCategoryName" class="text-danger"></span>
+                    </div>
+                </div>
+
+
 
                 <div class="form-group" hidden>
                     <label asp-for="Price" class="control-label"></label>
@@ -101,134 +116,148 @@
                     <input asp-for="Cost" class="form-control" />
                     <span asp-validation-for="Cost" class="text-danger"></span>
                 </div>
-                <div class="form-group" hidden>
-                    <label asp-for="GenderId" class="control-label"></label>
-                    <input asp-for="GenderId" class="form-control" />
-                    <span asp-validation-for="GenderId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="GenderType" class="control-label"></label>
-                    </i>
-                    <select asp-for="GenderType" class="input">
-                        @{
-                            var qg = from g in db.Genders
-                                     where g.GenderType != "不限"
-                                     select g;
-                            foreach (Gender g in qg)
-                            {
-                                <option value="@g.GenderId">@g.GenderType</option>
+
+
+                <div>
+                    <div class="form-group" hidden>
+                        <label asp-for="GenderId" class="control-label"></label>
+                        <input asp-for="GenderId" class="form-control" />
+                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="GenderType" class="control-label"></label>
+                        </i>
+                        <select asp-for="GenderType" class="input">
+                            @{
+                                var qg = from g in db.Genders
+                                         where g.GenderType != "不限"
+                                         select g;
+                                foreach (Gender g in qg)
+                                {
+                                    <option value="@g.GenderId">@g.GenderType</option>
+                                }
                             }
-                        }
-                    </select>
-                    <span asp-validation-for="GenderType" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="ColorId" class="control-label"></label>
-                    <input asp-for="ColorId" class="form-control " />
-                    <span asp-validation-for="ColorId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="ColorName" class="control-label"></label>
-                    </i>
-                    <select asp-for="ColorName" class="input">
-                        @{
-                            var qcol = from col in db.Colors
-                                       where col.ColorName != "不限"
-                                       select col;
-                            foreach (Color col in qcol)
-                            {
-                                <option value="@col.ColorId">@col.ColorName</option>
+                        </select>
+                        <span asp-validation-for="GenderType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="ColorId" class="control-label"></label>
+                        <input asp-for="ColorId" class="form-control " />
+                        <span asp-validation-for="ColorId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="ColorName" class="control-label"></label>
+                        </i>
+                        <select asp-for="ColorName" class="input">
+                            @{
+                                var qcol = from col in db.Colors
+                                           where col.ColorName != "不限"
+                                           select col;
+                                foreach (Color col in qcol)
+                                {
+                                    <option value="@col.ColorId">@col.ColorName</option>
+                                }
                             }
-                        }
-                    </select>
-                    <span asp-validation-for="ColorName" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="CityId" class="control-label"></label>
-                    <input asp-for="CityId" class="form-control input" />
-                    <span asp-validation-for="CityId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="CityName" class="control-label"></label>
-                    </i>
-                    <select asp-for="CityName" class="input">
-                        @{
-                            var qcity = from ci in db.Cities
-                                        where ci.CityName != "不限"
-                                        select ci;
-                            foreach (City ci in qcity)
-                            {
-                                <option value="@ci.CityId">@ci.CityName</option>
-                            }
-                        }
-                    </select>
-                    <span asp-validation-for="CityName" class="text-danger"></span>
+                        </select>
+                        <span asp-validation-for="ColorName" class="text-danger"></span>
+                    </div>
                 </div>
 
-                <div class="form-group" hidden>
-                    <label asp-for="SizeId" class="control-label"></label>
-                    <input asp-for="SizeId" class="form-control input" />
-                    <span asp-validation-for="SizeId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="SizeType" class="control-label"></label>
-                    </i>
-                    <select asp-for="SizeType" class="input">
-                        @{
-                            var qsi = from si in db.Sizes
-                                      where si.SizeType != "不限"
-                                      select si;
-                            foreach (Size si in qsi)
-                            {
-                                <option value="@si.SizeId">@si.SizeType</option>
+                <div>
+                    <div class="form-group " hidden>
+                        <label asp-for="CityId" class="control-label"></label>
+                        <input asp-for="CityId" class="form-control input" />
+                        <span asp-validation-for="CityId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="CityName" class="control-label"></label>
+                        </i>
+                        <select asp-for="CityName" class="input">
+                            @{
+                                var qcity = from ci in db.Cities
+                                            where ci.CityName != "不限"
+                                            select ci;
+                                foreach (City ci in qcity)
+                                {
+                                    <option value="@ci.CityId">@ci.CityName</option>
+                                }
                             }
-                        }
-                    </select>
-                    <span asp-validation-for="SizeType" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="AgeId" class="control-label"></label>
-                    <input asp-for="AgeId" class="form-control" />
-                    <span asp-validation-for="AgeId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="AgeType" class="control-label"></label>
-                    </i>
-                    <select asp-for="AgeType" class="input">
-                        @{
-                            var qag = from ag in db.Ages
-                                      where ag.AgeType != "不限"
-                                      select ag;
-                            foreach (Age ag in qag)
-                            {
-                                <option value="@ag.AgeId">@ag.AgeType</option>
+                        </select>
+                        <span asp-validation-for="CityName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="SizeId" class="control-label"></label>
+                        <input asp-for="SizeId" class="form-control input" />
+                        <span asp-validation-for="SizeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="SizeType" class="control-label"></label>
+                        </i>
+                        <select asp-for="SizeType" class="input">
+                            @{
+                                var qsi = from si in db.Sizes
+                                          where si.SizeType != "不限"
+                                          select si;
+                                foreach (Size si in qsi)
+                                {
+                                    <option value="@si.SizeId">@si.SizeType</option>
+                                }
                             }
-                        }
-                    </select>
-                    <span asp-validation-for="AgeType" class="text-danger"></span>
+                        </select>
+                        <span asp-validation-for="SizeType" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="LigationType" class="control-label"></label>
-                    </i>
-                    <select asp-for="LigationType" class="input">
-                        @{
-                            var qli = from li in db.Ligations
-                                      where li.LigationType != "不限"
-                                      select li;
-                            foreach (Ligation li in qli)
-                            {
-                                <option value="@li.LigationId">@li.LigationType</option>
+
+
+                <div>
+                    <div class="form-group" hidden>
+                        <label asp-for="AgeId" class="control-label"></label>
+                        <input asp-for="AgeId" class="form-control" />
+                        <span asp-validation-for="AgeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="AgeType" class="control-label"></label>
+                        </i>
+                        <select asp-for="AgeType" class="input">
+                            @{
+                                var qag = from ag in db.Ages
+                                          where ag.AgeType != "不限"
+                                          select ag;
+                                foreach (Age ag in qag)
+                                {
+                                    <option value="@ag.AgeId">@ag.AgeType</option>
+                                }
                             }
-                        }
-                    </select>
-                    <span asp-validation-for="LigationType" class="text-danger"></span>
+                        </select>
+                        <span asp-validation-for="AgeType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="LigationType" class="control-label"></label>
+                        </i>
+                        <select asp-for="LigationType" class="input">
+                            @{
+                                var qli = from li in db.Ligations
+                                          where li.LigationType != "不限"
+                                          select li;
+                                foreach (Ligation li in qli)
+                                {
+                                    <option value="@li.LigationId">@li.LigationType</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="LigationType" class="text-danger"></span>
+                    </div>
                 </div>
+
+
+
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="YearCost" class="control-label"></label>
@@ -247,12 +276,12 @@
                     <i class="fa-solid fa-paw">
                         <label asp-for="AccompanyTimeWeek" class="control-label"></label>
                     </i>
-                    <input  asp-for="AccompanyTimeWeek" class="form-control input" />
+                    <input asp-for="AccompanyTimeWeek" class="form-control input" />
                     <span asp-validation-for="AccompanyTimeWeek" class="text-danger"></span>
                 </div>
                 <div class="form-group" hidden>
                     <label asp-for="LigationId" class="control-label"></label>
-                    <input  asp-for="LigationId" class="form-control" />
+                    <input asp-for="LigationId" class="form-control" />
                     <span asp-validation-for="LigationId" class="text-danger"></span>
                 </div>
 
@@ -261,7 +290,7 @@
                         <label asp-for="Description" class="control-label"></label>
                     </i>
                     <br />
-                    <textarea class="input " asp-for="Description"></textarea>
+                    <textarea class="input form-control" asp-for="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group" style="text-align:right">
@@ -273,12 +302,6 @@
         </div>
     </div>
 
-    <div>
-        <a asp-action="NewPetList">返回頁面</a>
-    </div>
-   
-
-//
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
         <script>
@@ -289,8 +312,6 @@
                 let CategoryId = this.value;
                 $(`#SubCategory option[Category=${CategoryId}]`).show();
             });
-
-
         </script>
     }
 
