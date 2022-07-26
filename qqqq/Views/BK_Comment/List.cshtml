@@ -89,7 +89,7 @@
 
 @*新增用的textarea*@
 <div class="divAddResponse">
-    <textarea class="responseText" style="display: none;"></textarea> <button style="display: none; background-color: #D2691E; border: none; border-radius: 10px; font-size: 15px; color: #fff; padding: 3px; " class="responseSubmit">送出</button>
+    <textarea class="responseText" style="display: none;border:1px solid #EAA636"></textarea> <button style="display: none; background-color: #D2691E; border: none; border-radius: 10px; font-size: 15px; color: #fff; padding: 3px; " class="responseSubmit">送出</button>
             <div class="divLoading" style="display:none" >
                 <div class="spinner-border text-primary "  role="status" >
                     <span class="visually-hidden" ></span>
@@ -106,8 +106,8 @@
             let divResponse = $(this).parents(".divResponse").eq(0);
             let  loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>回覆加載中...</span></div>');
             if ($(this).text().includes("查看")) {
-                $(this).text(`${$(this).text().replace("查看","收起")}`)
-                divResponse.siblings(".divResponseForTempAdd").empty();//清空暫存的新增回覆
+                $(this).text("收起回覆")
+                divResponse.siblings(".divResponseForTempAdd").show();
                 if ($(this).siblings().length == 0) {
                     $.ajax({
                         url:"@Url.Content("~/BK_Comment/GetResponse")",
@@ -115,6 +115,7 @@
                         data:{ id: divResponse.attr("commentid") },
                         beforeSend: function() {
                             divResponse.append(loadingMessage);
+                            divResponse.siblings(".divResponseForTempAdd").empty();//清空暫存的新增回覆
                         },
                         success: function(data) {
                             loadingMessage.remove();
@@ -128,7 +129,8 @@
                 }
             }
             else if ($(this).text().includes("收起")) {
-                $(this).text(`${$(this).text().replace("收起","查看")}`)
+                $(this).text(`查看回覆`)
+                divResponse.siblings(".divResponseForTempAdd").hide();
                  $(this).siblings().hide();
             }
 
@@ -167,8 +169,8 @@
                 },
                 success: function (data)
                 {
-                   // $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponse").append(data);
-                    $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponseForTempAdd").append(data);//將新增的回覆先放在divTemp裡面，載入回覆時再清掉
+                    // $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponse").append(data);
+                    $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponseForTempAdd").show().append(data);//將新增的回覆先放在divTemp裡面，載入回覆時再清掉
                     $(responseSubmit).siblings(".divLoading").hide();
                     $(".btnAddResponse").show();
                 }
