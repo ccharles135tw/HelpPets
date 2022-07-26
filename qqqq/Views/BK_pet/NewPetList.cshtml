@@ -27,15 +27,18 @@
 }
 <h1 style="text-align:center; font-weight:900">浪浪管理系統</h1>
 <div style="text-align:left; font-size:16px ; font-weight:600">
-    @using (Html.BeginForm())
-    {
-        @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
+    <form method="post" action="@Url.Content("~/BK_pet/KeyWord")">
+       
+        關鍵字<input type="text" value="@ViewBag.keyword" name="keyword" />
         <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
 
         <a asp-action="NewCreate" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 新增浪浪</a>
-     
+
         <a asp-action="DiscountinueList" class="fa-solid fa-arrow-down-short-wide" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 下架浪浪 / </a>
-    }
+
+    </form>
+    
+      
 </div>
 <br />
 
