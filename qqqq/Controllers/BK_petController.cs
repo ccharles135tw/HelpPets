@@ -90,28 +90,7 @@ namespace qqqq.Controllers
             return View(list);
         }
 
-        public IActionResult KeyWord(string keyword)
-        {
-            我救浪Context db = new 我救浪Context();
-            List<CPet> datas = null;
-            if (string.IsNullOrEmpty(keyword))
-            {
-                datas = (from p in db.Products
-                         where p.IsPet == true && p.Continued == true
-                         select new CPet(p)).ToList();
-            }
-            else
-            {
-                datas = (db.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).Where(p =>
-                    p.IsPet == true
-                    && (p.ProductName.Contains(keyword) ||
-                      (p.IsPet == true && p.SubCategory.SubCategoryName.Contains(keyword)) ||
-                     (p.IsPet == true && p.SubCategory.Category.CategoryName.Contains(keyword)))
-                ).Select(p => new CPet(p))).ToList();
-            }
-
-            return View("NewPetList", datas);
-        }
+      
 
 
         //新增浪浪
@@ -308,7 +287,29 @@ namespace qqqq.Controllers
         }
 
         //關鍵字
+        public IActionResult KeyWord(string keyword)
+        {
+            我救浪Context db = new 我救浪Context();
+            List<CPet> datas = null;
+            ViewBag.keyword = keyword;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = (from p in db.Products
+                         where p.IsPet == true && p.Continued == true
+                         select new CPet(p)).ToList();
+            }
+            else
+            {
+                datas = (db.Products.Include(p => p.SubCategory).ThenInclude(s => s.Category).
+                    Where(p => p.IsPet == true
+                    && p.Continued==true&&(p.ProductName.Contains(keyword) ||
+                      (p.IsPet == true && p.SubCategory.SubCategoryName.Contains(keyword)) ||
+                     (p.IsPet == true && p.SubCategory.Category.CategoryName.Contains(keyword)))
+                ).Select(p => new CPet(p))).ToList();
+            }
 
+            return View("NewPetList", datas);
+        }
     }
 
 

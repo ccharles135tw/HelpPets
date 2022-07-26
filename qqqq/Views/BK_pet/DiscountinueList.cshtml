@@ -27,12 +27,11 @@
 }
 <h1 style="text-align:center; font-weight:900">已下架浪浪</h1>
 <div style="text-align:left; font-size:16px ; font-weight:600">
-    @using (Html.BeginForm())
-    {
-        @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
-        <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
+    @*<form method="post" action="@Url.Content("~/BK_pet/KeyWord")">
+        關鍵字<input type="text" value="@ViewBag.keyword" name="keyword" />
+        <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>*@
         <a asp-action="NewPetList" class="fa-solid fa-hand-point-left" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 返回列表</a>
-    }
+    @*</form>*@
 </div>
 <br />
 
@@ -222,7 +221,7 @@
                             </button>
                         </td>
                         <td>
-                            @Html.ActionLink("上架", "Continued", "BK_pet", new { id = item.ProductId }, new { Class="fa-solid fa-arrow-up-wide-short", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要上架?')" })
+                            @Html.ActionLink("上架", "Continued", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-up-wide-short", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要上架?')" })
                         </td>
                         <td>
                             @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
