@@ -34,12 +34,12 @@
                                 </select>
                 foreach (var mc in Model)
                 {
-                                    <div style="border:1px solid red;margin-bottom:20px;" class="divCommentAll" commentid="@mc.memberComment.CommentId">
-                                        <div class="row" style="border:1px solid blue;padding:0;">
+                                    <div style="border:3px solid #EAA636;margin-bottom:20px;padding:10px 10px 10px 20px;" class="divCommentAll" commentid="@mc.memberComment.CommentId">
+                                        <div class="row" style="padding:0;">
                                             <div>
                                                 <img style="padding:0;margin:auto;height:50px;width:30px" src="~/Images/009dbd20-766d-4daf-ad99-bf86a655bd16.jpg" />
                                             </div>
-                                            <div style="border: 1px solid black;">
+                                            <div>
                                                 <div style="height:50px">
                                                     <p>@(mc.memberComment.Member.Name)</p>
                                                     <p>@mc.CommentDate</p>
@@ -48,7 +48,7 @@
                                                     @{
                                             for (int i = 0; i < mc.Grade; i++)
                                             {
-                                                                        <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png">
+                                                 <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png">
                                             }
                                                         }
                                                         <p class="responseText">@mc.Description</p>
@@ -58,25 +58,27 @@
                                             <div class="row">
                                                 <div class="col-1 divAddResponseContainer"> </div>
                                                 <div class="divResponseContainInput">
-                                                    <div style="border:1px solid yellow;display:inline" class="divResponse" commentid="@mc.memberComment.CommentId">
+                                                    <div style="display:inline;padding:0;" class="divResponse" commentid="@mc.memberComment.CommentId">
                                                         @{
-                                        if (mc.memberComment.CommentResponses.Count > 0)
-                                        {
-                                                                    <button class="btnSeeResponse" commentid="@mc.memberComment.CommentId">查看回覆(@mc.CountOfResponse)</button>
-                                        }
+                                                            if (mc.memberComment.CommentResponses.Count > 0)
+                                                            {
+                                                                <button class="btnSeeResponse" style="background-color:#EAA636;border:none;border-radius:10px;font-size:15px;color:#fff;padding:3px;" commentid="@mc.memberComment.CommentId">查看回覆(@mc.CountOfResponse)</button>
                                                             }
-                                                        </div>
-                                                     <div style="border:1px solid yellow;display:inline" class="divResponseForTempAdd" commentid="@mc.memberComment.CommentId">
-                                                        
-                                                      </div>
-                                                        <button class="btnAddResponse" style="float:right;">新增回覆</button>
-                                                        @*@{
-                                                if (mc.memberComment.CommentResponses.Count==0)
-                                                {
-                                                    <button class="btnAddResponse" >新增回覆</button>
-                                                }
-                                            }*@
+                                                        }
                                                     </div>
+
+                                                    <div style="display:inline" class="divResponseForTempAdd" commentid="@mc.memberComment.CommentId">
+
+                                                    </div> 
+                                                    <button class="btnAddResponse" style=" background-color: #D2691E; border: none; border-radius: 10px; font-size: 15px; color: #fff; padding: 3px; ">新增回覆</button>
+
+                                                    @*@{
+            if (mc.memberComment.CommentResponses.Count==0)
+            {
+                <button class="btnAddResponse" >新增回覆</button>
+            }
+        }*@
+                                                </div>
                                                 </div>
                                      </div>
                 }
@@ -87,7 +89,7 @@
 
 @*新增用的textarea*@
 <div class="divAddResponse">
-    <textarea class="responseText" style="display: none;"></textarea> <button style="display: none;" class="responseSubmit">送出</button>
+    <textarea class="responseText" style="display: none;"></textarea> <button style="display: none; background-color: #D2691E; border: none; border-radius: 10px; font-size: 15px; color: #fff; padding: 3px; " class="responseSubmit">送出</button>
             <div class="divLoading" style="display:none" >
                 <div class="spinner-border text-primary "  role="status" >
                     <span class="visually-hidden" ></span>

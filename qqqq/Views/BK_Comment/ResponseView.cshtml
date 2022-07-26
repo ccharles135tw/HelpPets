@@ -5,12 +5,12 @@
 @{
     foreach (var rv in Model)
     {
-        <div  style="border:1px solid blue;padding:0;" class="divResponseAll">
+        <div  style="border: 1px solid #D2691E; padding: 0;margin:10px" class="divResponseAll">
             <div class="row">
                 <div>
                     <img style="padding:0;margin:auto;height:50px;width:30px" src="~/Images/009dbd20-766d-4daf-ad99-bf86a655bd16.jpg" />
                 </div>
-                <div style="width:650px" class="responseBody">
+                <div style="width:700px" class="responseBody">
                     <div style="height:50px" >
                         @{
                             if (rv.IsEmployee == true)
@@ -26,17 +26,17 @@
                     </div>
                     <p class="responseText">@rv.Description</p>
                 </div>
-                <div>
-                    <button class="btnEditResponse" responseid="@rv.ResponseId" >修改</button>
+                <div style="display:flex;height:30px;margin-right:20px">
+                    <button class="btnEditResponse" responseid="@rv.ResponseId" style="margin-right:5px;margin-top:5px; flex:none;background-color:green;border:none;border-radius:2px;font-size:15px;color:#fff;padding:3px;" >修改</button>
                     <br />
-                    <button class="btnDeleteResponse" responseid="@rv.ResponseId">刪除</button>
+                    <button class="btnDeleteResponse" responseid="@rv.ResponseId" style="margin-top: 5px; flex: none; background-color: red; border: none; border-radius: 2px; font-size: 15px; color: #fff; padding: 3px; ">刪除</button>
                 </div>
             </div>
         </div>
     }
         if(ViewBag.isMoreResponse==true)
         {
-                <button class="btnSeeMoreResponse">顯示更多回覆</button>
+                <button class="btnSeeMoreResponse"  style="background-color:#EAA636;border:none;border-radius:10px;font-size:15px;color:#fff;padding:3px;">顯示更多回覆</button>
         }
 
 
