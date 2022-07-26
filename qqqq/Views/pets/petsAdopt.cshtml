@@ -1,13 +1,34 @@
-﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+@using prjMVCDemo.vModel;
+@using qqqq.Models;
+@using qqqq.ViewModels;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Net;
+@using System.Net.Mail;
+@using System.Text.Json;
+
+@model IEnumerable<qqqq.ViewModels.CAdoptView>
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
     </div>
 </div>
-@model Pet.ViewModels.CMemberView
+@*@model Pet.ViewModels.CMemberView*@
 
 @{
     ViewData["Title"] = "Edit";
-
+    qqqq.Models.我救浪Context db = new 我救浪Context();
+    CLoginViewModel memberview = null;
+    if (Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+    {
+        var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
+        memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+    }
+    var user = db.Members.Where(m => m.MemberId == 52).FirstOrDefault();
 }
 @section Styles{
     <style>
@@ -33,7 +54,7 @@
     <h1 style="font-weight:900; text-align:center;">領養會員資料確認</h1>
 </div>
 <div style="text-align:right; margin-right:10px; text-decoration:none">
-    <button style="color:#fff;border:none;background-color:#EAA636"><i class="fa-solid fa-right-from-bracket fa-2"></i>@Html.ActionLink("返回", "petsList", "pets") </button>
+    <a style="color:#fff;border:none;background-color:#EAA636;padding:7px;cursor:pointer;user-select:none" href="~/pets/petsList"><i class="fa-solid fa-right-from-bracket fa-2">返回</i></a>
 </div>
 <hr />
 <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
@@ -41,70 +62,71 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" hidden>
-                <label asp-for="MemberID" class="control-label"></label>
-                <input id="input" asp-for="MemberID" class="form-control" />
-                <span asp-validation-for="MemberID" class="text-danger"></span>
+                <label  class="control-label"></label>
+                <input id="input"  class="form-control" />
+                <span  class="text-danger"></span>
             </div>
 
-            <!--<div--> @*class="fa-solid fa-paw" *@ <!--class="form-group">
+            <!--<div--> @*class="fa-solid fa-paw" *@
+            <!--class="form-group">
                 <i class="fa-solid fa-paw"><label asp-for="MemberPhoto" class="control-label"></label></i>
                 <input type="file" id="input" asp-for="MemberPhoto" class="form-control" />
                 <span asp-validation-for="MemberPhoto" class="text-danger"></span>
             </div>-->
             <div class="form-group">
-                <i class="fa-solid fa-paw"><label asp-for="MemberName" class="control-label"></label></i>
-                <input id="input" asp-for="MemberName" class="form-control" />
-                <span asp-validation-for="MemberName" class="text-danger"></span>
+                <i class="fa-solid fa-paw"><label class="control-label">會員姓名</label></i>
+                <input id="input" class="form-control" value="@user.Name"/>
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label asp-for="MemberBirthDate" class="control-label"></label>
+                    <label class="control-label">會員生日</label>
                 </i>
-                <input type="date" id="input" asp-for="MemberBirthDate" class="form-control" />
-                <span asp-validation-for="MemberBirthDate" class="text-danger"></span>
+                <input type="date" id="input"  class="form-control" asp-for="@user.BirthdayDate"/>
+                <span class="text-danger"  ></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label asp-for="MemberPhone" class="control-label"></label>
+                    <label  class="control-label">會員手機號碼</label>
                 </i>
-                <input id="input" asp-for="MemberPhone" class="form-control" />
-                <span asp-validation-for="MemberPhone" class="text-danger"></span>
+                <input id="input" class="form-control" value="@user.MemberPhone" />
+                <span  class="text-danger" ></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <i class="fa-solid fa-paw">
                     <label asp-for="MemberPassword" class="control-label"></label>
                 </i>
                 <input id="input" asp-for="MemberPassword" class="form-control" />
                 <span asp-validation-for="MemberPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
+            </div>*@
+            @*<div class="form-group" hidden>
                 <i class="fa-solid fa-paw">
                     <label asp-for="MemberCityID" class="control-label"></label>
                 </i>
                 <input id="input" asp-for="MemberCityID" class="form-control" />
                 <span asp-validation-for="MemberCityID" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label asp-for="MemberCityName" class="control-label"></label>
+                    <label  class="control-label">居住城市</label>
                 </i>
-                <input id="input" asp-for="MemberCityName" class="form-control" />
-                <span asp-validation-for="MemberCityName" class="text-danger"></span>
+                <input id="input"  class="form-control" value="@user.City.CityName" />
+                <span  class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label asp-for="MemberAddress" class="control-label"></label>
+                    <label class="control-label">會員地址</label>
                 </i>
-                <input id="input" asp-for="MemberAddress" class="form-control" />
-                <span asp-validation-for="MemberAddress" class="text-danger"></span>
+                <input id="input"  class="form-control" value="@user.Address" />
+                <span  class="text-danger"></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label asp-for="MemberEmail" class="control-label"></label>
+                    <label  class="control-label">會員電子信箱</label>
                 </i>
-                <input id="input" asp-for="MemberEmail" class="form-control" />
-                <span asp-validation-for="MemberEmail" class="text-danger"></span>
+                <input id="input"  class="form-control" value="@user.Email" />
+                <span  class="text-danger"></span>
             </div>
 
             <div class="form-group m-1" id="alert1">

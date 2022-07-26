@@ -29,9 +29,11 @@ namespace Pet.Controllers
             //Debug.WriteLine(q1.FirstOrDefault().ProductName);
             //Debug.WriteLine(new CProductView(q1.FirstOrDefault()).SubCategoryName);
             //Debug.WriteLine(q1.FirstOrDefault().SubCategory.SubCategoryName);
-            var q = db.Products.AsEnumerable().Where(p => p.IsPet == false && p.Continued == true).ToList();
-
-             return View(CProductView.CProductViews(q));
+            var q = db.Products.Include(p=>p.MemberComments).AsEnumerable().Where(p => p.IsPet == false && p.Continued == true).Select(p => new CProductView { Product = p, Rate =p.MemberComments.Count()==0?0:(double)p.MemberComments.Average(mc => mc.Grade) }).ToList();
+            ViewBag.continued = true;
+            var suppliers = db.Suppliers.Select(s => s.SupplierId).ToArray<int>();
+            ViewBag.suppliers = System.Text.Json.JsonSerializer.Serialize(suppliers);
+            return View(q);
             //return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
         public ActionResult Create()
@@ -93,24 +95,43 @@ namespace Pet.Controllers
                 return false;
             }
         }
-        public ActionResult EasySearch(string Keyword,decimal? PriceLow,decimal? PriceHigh,string Continued)
+        public bool UnDelete(int id)
+        {
+            try
+            {
+                var q = db.Products.FirstOrDefault(p => p.ProductId == id);
+                q.Continued = true;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public ActionResult EasySearch(string Keyword,decimal? PriceLow,decimal? PriceHigh,bool Continued, int[] suppliers)
         {
             Debug.WriteLine(Continued);
             string keyword=Keyword;
             if(string.IsNullOrEmpty(Keyword)==false) keyword=keyword.ToUpper();
-            var q = (from p in db.Products.Include(x => x.Supplier).Include(x => x.SubCategory).ThenInclude(x => x.Category).AsEnumerable()
-                    where p.IsPet == false && p.Continued==true
+            var q = (from p in db.Products.Include(x => x.Supplier).Include(x => x.SubCategory).ThenInclude(x => x.Category).Include(x=>x.MemberComments).AsEnumerable()
+                    where p.IsPet == false 
+                    && (p.Continued==Continued)
                     && ((string.IsNullOrEmpty(Keyword)) ? true : (p.ProductName.ToUpper().Contains(keyword) || p.Supplier.Name.ToUpper().Contains(keyword)|| p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword)))
                     && ((PriceLow==null) ? true : p.Price >= (decimal)PriceLow)
                     && ((PriceHigh==null) ? true : p.Price <= (decimal)PriceHigh)
-                    orderby 1
-                    select p).ToList();
+                    && (suppliers.Length == 0 ? false : Array.Exists(suppliers,x=>x==p.SupplierId))
+                  //  orderby 1
+                    select new CProductView { Product = p, Rate = p.MemberComments.Count() == 0 ? 0 : (double)p.MemberComments.Average(mc => mc.Grade) }).ToList();
 
 
             ViewBag.keyword = Keyword;
             ViewBag.low = PriceLow;
             ViewBag.high = PriceHigh;
-            return View("List", CProductView.CProductViews(q));
+            ViewBag.continued=Continued;
+            ViewBag.suppliers = System.Text.Json.JsonSerializer.Serialize(suppliers);
+           // Debug.WriteLine((suppliers));
+            return View("List", q);
         }
         public ActionResult Delete_Images(string Delete_Images ,int ProductId)
         {

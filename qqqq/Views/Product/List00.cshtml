@@ -14,17 +14,17 @@
         .spanPage {
             margin: 0 5px;
             cursor: pointer;
-            color: #EAA636;
+            color: dodgerblue;
         }
 
             .spanPage:hover {
-/*                text-decoration-line: underline;
-*/                color: #754027;
+                text-decoration-line: underline;
+                color: red;
             }
 
             .spanPage.spanPageSelected {
                 text-decoration-line: underline;
-                color: #754027;
+                color: red;
             }
 
         #thead > tr > th {
@@ -60,12 +60,6 @@
             font-weight: 400;
             background-color: antiquewhite;
         }
-        input[type=radio] {
-            accent-color: #79392C;
-        }
-        input[type=checkbox] {
-            accent-color: #79392C;
-        }
     </style>
 }
 
@@ -80,32 +74,33 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link href="~/css/BK_style.css" rel="stylesheet" />
 </head>
 <body>
 
+
     <form method="post" action="~/Product/EasySearch" style="font-size:18px;" id="searchForm">
-        關鍵字 <input type="text" name="Keyword" style="width:100px;border-radius:15px;border:2px solid #EAA636" class="text-center" value="@ViewBag.keyword" />
+        關鍵字 <input type="text" name="Keyword" style="width:100px;border-radius:15px;" class="text-center" value="@ViewBag.keyword" />
         價錢區間
-        <input type="number" name="PriceLow" style="width: 80px; border-radius: 15px; border: 2px solid #EAA636" value="@ViewBag.low" class="text-center" />~<input type="number" name="PriceHigh" style="width: 80px; border-radius: 15px; border: 2px solid #EAA636" value="@ViewBag.high" class="text-center" /><span class="m-2">(單位:元)</span>
-        <label>上架中<input type="radio" value="True" name="Continued"  /></label>
-        <label>已下架<input type="radio" value="False" name="Continued" /></label>
-        <br />
-        <label>品牌:</label>
-        <br />
-        <div>
+        <input type="number" name="PriceLow" style="width:80px; border-radius:15px;" value="@ViewBag.low" class="text-center" />~<input type="number" name="PriceHigh" style="width:80px;border-radius:15px;" value="@ViewBag.high" class="text-center" />(單位:元)
+        <label>上架中</label><input type="radio" value="True" name="Continued" />
+            <label>已下架</label><input type="radio" value="False" name="Continued" />
+            <br />
+            <label>品牌:</label>
+            <br />
+            <div>
             @{
-                foreach (var s in db.Suppliers.ToList())
-                {
-                    <sapn class="m-2"> <label >@s.Name</label><input  type="checkbox" value="@s.SupplierId" name="suppliers" /></sapn>
-                }
+            foreach(var s in db.Suppliers.ToList())
+            {
+                    <sapn> <label>@s.Name</label><input type="checkbox" value="@s.SupplierId" name="suppliers"/></sapn>
             }
-            <input  style=" background-color:#D2691E;border:none;border-radius:10px;font-weight:700;color:#fff" type="button" value="全部勾選" id="btnSupplier" />
-        </div>
+        }
+                <input type="button" value="全部勾選" id="btnSupplier"/>
+            </div>
 
 
-        <button class="fa-solid fa-magnifying-glass" style="color:black; margin:10px,20px,10px,20px;border:none;background-color:transparent;" id="Search">搜尋</button>
-        <button class="fa-solid fa-eraser" style="border:none;background-color:transparent;" id="Clear"> 清空</button>
+        <button style="color:black; margin:10px,20px,10px,20px;border:none;background-color:transparent;" id="Search">搜尋</button> <button class="fa-solid fa-eraser" style="border:none;background-color:transparent;" id="Clear"> 清空</button>
         <!-- Button trigger modal -->
         <button class="fa-solid fa-user-plus" type="button" style="float:right;padding-top:10px; font-size:20px;color:chocolate;border:none;background-color:transparent;" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="$('#staticBackdrop').modal('show')"> 新增商品</button>
     </form>
@@ -140,8 +135,8 @@
                             @Html.DisplayNameFor(model => model.SupplierName)
                         </th>
                         @*<th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>*@
+            @Html.DisplayNameFor(model => model.Description)
+        </th>*@
                         <th style="white-space:nowrap;">
                             @Html.DisplayNameFor(model => model.UnitsInStock)
                         </th>
@@ -153,86 +148,85 @@
                 <tbody id="tbody" style="text-align:center;">
                     @foreach (var item in Model)
                     {
-                        <tr>
+                    <tr>
+                        @{
+                            string c = item.Product.SubCategory.Category.CategoryName + "/" + item.SubCategoryName;
+                        }
+                        <td>
                             @{
-                                string c = item.Product.SubCategory.Category.CategoryName + "/" + item.SubCategoryName;
+                                if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
+                                {
+                                    <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
+                                }
+                                else
+                                {
+                                    <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
+                                }
                             }
-                            <td>
-                                @{
-                                    if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
-                                    {
-                                        <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
-                                    }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td style="white-space:nowrap">
+                            @Html.DisplayFor(modelItem => item.Continued)
+                        </td>
+                        <td style="white-space:nowrap">
+                            @*@Html.DisplayFor(modelItem =>item.SubCategoryName)*@
+                            @c
+                        </td>
+                        <td>
+                            <span>@item.Rate.ToString("#.0")</span>
+                            @*@Html.DisplayFor(modelItem => item.Rate.ToString("#.0"))*@
+                            <br />
+                            @{
+                                for (int i = 0; i < Math.Floor(item.Rate); i++)
+                                {
+                                    <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png"/>
                                 }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProductName)
-                            </td>
-                            <td style="white-space:nowrap">
-                                @Html.DisplayFor(modelItem => item.Continued)
-                            </td>
-                            <td style="white-space:nowrap">
-                                @*@Html.DisplayFor(modelItem =>item.SubCategoryName)*@
-                                @c
-                            </td>
-                            <td>
-                                <span>@item.Rate.ToString("#.0")</span>
-                                @*@Html.DisplayFor(modelItem => item.Rate.ToString("#.0"))*@
-                                <br />
-                                @{
-                                    for (int i = 0; i < Math.Floor(item.Rate); i++)
-                                    {
-                                        <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" />
-                                    }
+                            }
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SupplierName)
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnitsInStock)
+                        </td>
+                        <td>
+                            @Html.ActionLink("評論", "List", "BK_Comment", new { id = item.ProductId }, new {})
+                            @Html.ActionLink("編輯", "Edit", "Product", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", style = "color:chocolate;font-size:16px;text-decoration-line:none;" })
+                            <br />
+                            @*@Html.ActionLink("下架商品", "Delete", "Product", new { id = item.ProductId }, new { style = "white-space:nowrap;", onclick = "return confirm('確定要下架嗎')", Class = "btn btn-danger" })*@
+                            @{
+                                if (item.Product.Continued == true)
+                                {
+                                    <button ProductId=@item.ProductId class="btn-delete fa-solid fa-arrow-down-short-wide" style="color:chocolate;font-size:16px;border:none;background-color:transparent;">下架</button>
                                 }
-
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Price)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Cost)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SupplierName)
-                            </td>
-                            @*<td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UnitsInStock)
-                            </td>
-                            <td >
-                                @Html.ActionLink("評論", "List", "BK_Comment", new { id = item.ProductId }, new { Class = "fa-solid fa-comments", style = "color:chocolate;font-size:16px;text-decoration-line:none;padding-bottom:10px" })
-                                <br/>
-                                @Html.ActionLink("編輯", "Edit", "Product", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", style = "color:chocolate;font-size:16px;text-decoration-line:none;padding-bottom:10px" })
-                                <br />
-                                @*@Html.ActionLink("下架商品", "Delete", "Product", new { id = item.ProductId }, new { style = "white-space:nowrap;", onclick = "return confirm('確定要下架嗎')", Class = "btn btn-danger" })*@
-                                @{
-                                    if (item.Product.Continued == true)
-                                    {
-                                        <button ProductId=@item.ProductId class="btn-delete fa-solid fa-arrow-down-short-wide" style="color:chocolate;font-size:16px;border:none;background-color:transparent;">下架</button>
-                                    }
-                                    else
-                                    {
-                                        <button ProductId=@item.ProductId class="btn-undelete fa-solid fa-arrow-down-short-wide" style="color:chocolate;font-size:16px;border:none;background-color:transparent;">重新上架</button>
-                                    }
+                                else
+                                {
+                                    <button ProductId=@item.ProductId class="btn-undelete fa-solid fa-arrow-down-short-wide" style="color:chocolate;font-size:16px;border:none;background-color:transparent;">重新上架</button>
                                 }
+                            }
 
-                            </td>
+                        </td>
 
 
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>
 
             <div class="row">
-                <div id="divPage" style="background-color: #FAEBD7; border-radius:20px; margin: auto; border: 2px solid #EAA636; text-align: center;" class="col-12"></div>
+                <div id="divPage" style="border-radius:20px; margin:auto;border:2px solid black; text-align:center" class="col-12"></div>
             </div>
         </div>
     </div>
@@ -267,7 +261,7 @@
                                                 var qp = from c in db.Categories where c.IsPet == true && c.CategoryName != "不限" select c;
                                                 foreach (Category c in qp)
                                                 {
-                                                    <option value="@c.CategoryId">@c.CategoryName</option>
+                                                                                                                                                        <option value="@c.CategoryId">@c.CategoryName</option>
                                                 }
                                             }
                                         </select>
@@ -284,7 +278,7 @@
                                                 var qc = from c in db.Categories where c.IsPet == false select c;
                                                 foreach (Category c in qc)
                                                 {
-                                                    <option value="@c.CategoryId" style="display:none" parentCategory="@c.ParentCategory">@c.CategoryName</option>
+                                                                                                                                                        <option value="@c.CategoryId" style="display:none" parentCategory="@c.ParentCategory">@c.CategoryName</option>
                                                 }
                                             }
                                         </select>
@@ -302,7 +296,7 @@
                                                 var qsc = from sc in db.SubCategories where sc.SubCategoryName != "不限" select sc;
                                                 foreach (SubCategory sc in qsc)
                                                 {
-                                                    <option value="@sc.SubCategoryId" style="display:none" Category="@sc.CategoryId">@sc.SubCategoryName</option>
+                                                                                                                                                        <option value="@sc.SubCategoryId" style="display:none" Category="@sc.CategoryId">@sc.SubCategoryName</option>
                                                 }
                                             }
                                         </select>
@@ -334,7 +328,7 @@
                                                 var q = from s in db.Suppliers select s;
                                                 foreach (Supplier s in q)
                                                 {
-                                                    <option value="@s.SupplierId">@s.Name</option>
+                                                                                                                                                        <option value="@s.SupplierId">@s.Name</option>
                                                 }
                                             }
                                         </select>
@@ -535,8 +529,7 @@ $(".btn-undelete").on("click", function()
         }
         //search initializie
 $(":radio[value=@ViewBag.continued]").trigger("click");
-        $("#btnSupplier").on("click", function () {
-            console.log("12345");
+$("#btnSupplier").on("click", function() {
     $(`#searchForm :checkbox`).prop("checked",true);
 })
     </script>

@@ -5,244 +5,383 @@
     Layout = "_BackLayout";
     qqqq.Models.我救浪Context db = new 我救浪Context();
 }
-
-<h1>浪浪修改</h1>
-
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="NewEdit">
-            <div class="form-group" hidden>
-                <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
-                <span asp-validation-for="ProductId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" hidden>
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <select id="Category" asp-for="CategoryName" class="input">
-                    <option value="none" selected disabled hidden>請選擇選項</option>
-                    @{
-                        var q = from c in db.Categories
-                                where c.IsPet == true && c.CategoryName != "不限"
-                                select c;
-                        foreach (Category c in q)
-                        {
-                            if (Model.Product.SubCategory.CategoryId == c.CategoryId)
-                            {
-                                <option value="@c.CategoryId" selected>@c.CategoryName</option>
-                            }
-                            else
-                            {
-                                <option value="@c.CategoryId">@c.CategoryName</option>
-                            }
-                        }
-                    }
-                </select>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="SubCategoryId" class="control-label"></label>
-                <input asp-for="SubCategoryId" class="form-control" />
-                <span asp-validation-for="SubCategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubCategoryName" class="control-label"></label>
-                <select id="SubCategory" name="SubCategoryId" class="form-select " aria-label=".form-select-sm example">
-                    <option value="none" selected disabled hidden>請選擇選項</option>
-                    @{
-                        var qsc = from sc in db.SubCategories
-                                  where sc.SubCategoryName != "不限"
-                                  select sc;
-                        foreach (SubCategory sc in qsc)
-                        {
-                            if (sc.CategoryId == Model.Product.SubCategory.CategoryId)
-                            {
-                                if (sc.SubCategoryId == Model.Product.SubCategoryId)
-                                {
-                                    <option value="@sc.SubCategoryId" selected Category="@sc.CategoryId">@sc.SubCategoryName</option>
-                                }
-                                else
-                                {
-                                    <option value="@sc.SubCategoryId" Category="@sc.CategoryId">@sc.SubCategoryName</option>
-                                }
-
-                            }
-                            else
-                            {
-                                <option value="@sc.SubCategoryId" style="display:none" Category="@sc.CategoryId">@sc.SubCategoryName</option>
-                            }
-                        }
-                    }
-                </select>
-                <span asp-validation-for="SubCategoryName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="GenderId" class="control-label"></label>
-                <input asp-for="GenderId" class="form-control" />
-                <span asp-validation-for="GenderId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GenderType" class="control-label"></label>
-                <select asp-for="GenderType" class="input">
-                    @{
-                        var qg = from g in db.Genders
-                                 where g.GenderType != "不限"
-                                 select g;
-                        foreach (Gender g in qg)
-                        {
-                            if (g.GenderId == Model.GenderId)
-                            {
-                                <option value="@g.GenderId" selected>@g.GenderType</option>
-                            }
-                            else
-                            {
-                                <option value="@g.GenderId">@g.GenderType</option>
-                            }
-
-                        }
-                    }
-                </select>
-                <span asp-validation-for="GenderType" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="ColorId" class="control-label"></label>
-                <input asp-for="ColorId" class="form-control" />
-                <span asp-validation-for="ColorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ColorName" class="control-label"></label>
-                <select asp-for="ColorName" class="input">
-                    @{
-                        var qcol = from col in db.Colors
-                                   where col.ColorName != "不限"
-                                   select col;
-                        foreach (Color col in qcol)
-                        {
-                            if (col.ColorId == Model.ColorId)
-                            {
-                                <option value="@col.ColorId" selected>@col.ColorName</option>
-                            }
-                            else
-                            {
-                                <option value="@col.ColorId">@col.ColorName</option>
-                            }
-
-                        }
-                    }
-                </select>
-                <span asp-validation-for="ColorName" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="CityId" class="control-label"></label>
-                <input asp-for="CityId" class="form-control" />
-                <span asp-validation-for="CityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CityName" class="control-label"></label>
-                <select asp-for="CityName" class="input">
-                    @{
-                        var qcity = from ci in db.Cities
-                                    where ci.CityName != "不限"
-                                    select ci;
-                        foreach (City ci in qcity)
-                        {
-                            if (ci.CityId == Model.CityId)
-                            {
-                                <option value="@ci.CityId" selected>@ci.CityName</option>
-                            }
-                            else
-                            {
-                                <option value="@ci.CityId">@ci.CityName</option>
-                            }
-                            <option value="@ci.CityId">@ci.CityName</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="CityName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="YearCost" class="control-label"></label>
-                <input asp-for="YearCost" class="form-control" />
-                <span asp-validation-for="YearCost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Space" class="control-label"></label>
-                <input asp-for="Space" class="form-control" />
-                <span asp-validation-for="Space" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="SizeId" class="control-label"></label>
-                <input asp-for="SizeId" class="form-control" />
-                <span asp-validation-for="SizeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SizeType" class="control-label"></label>
-                <input asp-for="SizeType" class="form-control" />
-                <span asp-validation-for="SizeType" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="AgeId" class="control-label"></label>
-                <input asp-for="AgeId" class="form-control" />
-                <span asp-validation-for="AgeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AgeType" class="control-label"></label>
-                <input asp-for="AgeType" class="form-control" />
-                <span asp-validation-for="AgeType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccompanyTimeWeek" class="control-label"></label>
-                <input asp-for="AccompanyTimeWeek" class="form-control" />
-                <span asp-validation-for="AccompanyTimeWeek" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="LigationId" class="control-label"></label>
-                <input asp-for="LigationId" class="form-control" />
-                <span asp-validation-for="LigationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LigationType" class="control-label"></label>
-                <input asp-for="LigationType" class="form-control" />
-                <span asp-validation-for="LigationType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+@section Styles{
+    <style>
+    .input{
+        border:solid antiquewhite 2px;
+        border-radius:20px;
+        color:black;
+        font-weight:400;
+        background-color:antiquewhite;
+    }
+    label {
+        color: black;
+        font-weight: 900;
+    }
+    }
+    </style>
+    <div>
+        <h1 style="font-weight:900; text-align:center; margin-top: 30px; margin-bottom: 10px">浪浪修改</h1>
     </div>
-</div>
+    <div style="text-align:right; margin-right:10px; text-decoration:none">
+        <a asp-action="NewPetList" style="color:chocolate;" class="fa-solid fa-right-from-bracket"> 返回</a>
+    </div>
+    <hr />
 
-<div>
-    <a asp-action="NewPetList">返回</a>
-</div>
+    <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
+        <div class="col-md-4">
+            <form asp-action="NewEdit" enctype="multipart/form-data">
+                <div class="form-group" hidden>
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <input asp-for="ProductId" class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="ProductName" class="control-label"></label>
+                    </i>
+                    <input asp-for="ProductName" class="form-control input" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Photo" class="control-label"></label>
+                    </i>
+                    <span></span>
+                    <i>
+                        @{
+                            if (Model.Product.Photos.Count > 0)
+                            {
+                                foreach (var photo in Model.Product.Photos)
+                                {
+                                    <img src="~/Images/@photo.PictureName" PictureID=@photo.PictureId style="width: 180px; height: 150px" class="img col-4" onclick="img_active()" />
+                                }
 
-        $("#Category").change(function () {
-            $(`#SubCategory option`).hide();
-            $("#SubCategory").val("none");
-            let CategoryId = this.value;
-            $(`#SubCategory option[Category=${CategoryId}]`).show();
-        });
-    </script>
-}
+                            }
+                        }
+                    </i>
+                    <input type="file" asp-for="Photo" name="file" class="form-control input" />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div>
+                    <div class="form-group col-md-6" hidden>
+                        <label asp-for="CategoryId" class="control-label"></label>
+                        <input asp-for="CategoryId" class="form-control" />
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw ">
+                            <label asp-for="CategoryName" class="control-label"></label>
+                        </i>
+                        <select id="Category" asp-for="CategoryName" class="input">
+                            <option value="none" selected disabled hidden></option>
+                            @{
+                                var q = from c in db.Categories
+                                        where c.IsPet == true && c.CategoryName != "不限"
+                                        select c;
+                                foreach (Category c in q)
+                                {
+                                    if (Model.Product.SubCategory.CategoryId == c.CategoryId)
+                                    {
+                                        <option value="@c.CategoryId" selected>@c.CategoryName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@c.CategoryId">@c.CategoryName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="SubCategoryId" class="control-label"></label>
+                        <input asp-for="SubCategoryId" class="form-control" />
+                        <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="SubCategoryName" class="control-label"></label>
+                        </i>
+                        <select asp-for="SubCategoryName" id="SubCategory" name="SubCategoryName" class="form-select input" aria-label=".form-select-sm example">
+                            <option value="none" selected disabled hidden>請選擇選項</option>
+                            @{
+                                var qsc = from sc in db.SubCategories
+                                          where sc.SubCategoryName != "不限"
+                                          select sc;
+                                foreach (SubCategory sc in qsc)
+                                {
+                                    if (sc.CategoryId == Model.Product.SubCategory.CategoryId)
+                                    {
+                                        if (sc.SubCategoryId == Model.Product.SubCategoryId)
+                                        {
+                                            <option value="@sc.SubCategoryId" selected Category="@sc.CategoryId">@sc.SubCategoryName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@sc.SubCategoryId" Category="@sc.CategoryId">@sc.SubCategoryName</option>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@sc.SubCategoryId" style="display:none" Category="@sc.CategoryId">@sc.SubCategoryName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="SubCategoryName" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <div class="form-group" hidden>
+                        <label asp-for="GenderId" class="control-label"></label>
+                        <input asp-for="GenderId" class="form-control" />
+                        <span asp-validation-for="GenderId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="GenderType" class="control-label"></label>
+                        </i>
+                        <select asp-for="GenderType" class="input">
+                            @{
+                                var qg = from g in db.Genders
+                                         where g.GenderType != "不限"
+                                         select g;
+                                foreach (Gender g in qg)
+                                {
+                                    if (g.GenderId == Model.GenderId)
+                                    {
+                                        <option value="@g.GenderId" selected>@g.GenderType</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@g.GenderId">@g.GenderType</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="GenderType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="ColorId" class="control-label"></label>
+                        <input asp-for="ColorId" class="form-control" />
+                        <span asp-validation-for="ColorId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="ColorName" class="control-label"></label>
+                        </i>
+                        <select asp-for="ColorName" class="input">
+                            @{
+                                var qcol = from col in db.Colors
+                                           where col.ColorName != "不限"
+                                           select col;
+                                foreach (Color col in qcol)
+                                {
+                                    if (col.ColorId == Model.ColorId)
+                                    {
+                                        <option value="@col.ColorId" selected>@col.ColorName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@col.ColorId">@col.ColorName</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="ColorName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group" hidden>
+                        <label asp-for="CityId" class="control-label"></label>
+                        <input asp-for="CityId" class="form-control" />
+                        <span asp-validation-for="CityId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="CityName" class="control-label"></label>
+                        </i>
+                        <select asp-for="CityName" class="input">
+                            @{
+                                var qcity = from ci in db.Cities
+                                            where ci.CityName != "不限"
+                                            select ci;
+                                foreach (City ci in qcity)
+                                {
+                                    if (ci.CityId == Model.CityId)
+                                    {
+                                        <option value="@ci.CityId" selected>@ci.CityName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@ci.CityId">@ci.CityName</option>
+                                    }
+                                    <option value="@ci.CityId">@ci.CityName</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="CityName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" hidden>
+                        <label asp-for="SizeId" class="control-label"></label>
+                        <input asp-for="SizeId" class="form-control" />
+                        <span asp-validation-for="SizeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="SizeType" class="control-label"></label>
+                        </i>
+                        <select asp-for="SizeType" class="input">
+                            @{
+                                var qsi = from si in db.Sizes
+                                          where si.SizeType != "不限"
+                                          select si;
+                                foreach (Size si in qsi)
+                                {
+                                    if (si.SizeId == Model.SizeId)
+                                    {
+                                        <option value="@si.SizeId" selected>@si.SizeType</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@si.SizeId">@si.SizeType</option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="SizeType" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+
+                <div>
+                    <div class="form-group" hidden>
+                        <label asp-for="AgeId" class="control-label"></label>
+                        <input asp-for="AgeId" class="form-control" />
+                        <span asp-validation-for="AgeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="AgeType" class="control-label"></label>
+                        </i>
+                        <select asp-for="AgeType" class="input">
+                            @{
+                                var qag = from ag in db.Ages
+                                          where ag.AgeType != "不限"
+                                          select ag;
+                                foreach (Age ag in qag)
+                                {
+                                    if (ag.AgeId == Model.AgeId)
+                                    {
+                                        <option value="@ag.AgeId" selected>@ag.AgeType</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@ag.AgeId">@ag.AgeType</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="AgeType" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group" hidden>
+                        <label asp-for="LigationId" class="control-label"></label>
+                        <input asp-for="LigationId" class="form-control" />
+                        <span asp-validation-for="LigationId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6" style="float:left">
+                        <i class="fa-solid fa-paw">
+                            <label asp-for="LigationType" class="control-label"></label>
+                        </i>
+                        <select asp-for="LigationType" class="input">
+                            @{
+                                var qli = from li in db.Ligations
+                                          where li.LigationType != "不限"
+                                          select li;
+                                foreach (Ligation li in qli)
+                                {
+                                    if (li.LigationId == Model.LigationId)
+                                    {
+                                        <option value="@li.LigationId" selected>@li.LigationType</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@li.LigationId">@li.LigationType</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="LigationType" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="YearCost" class="control-label"></label>
+                    </i>
+                    <input asp-for="YearCost" class="form-control input" />
+                    <span asp-validation-for="YearCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Space" class="control-label"></label>
+                    </i>
+                    <input asp-for="Space" class="form-control input" />
+                    <span asp-validation-for="Space" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="AccompanyTimeWeek" class="control-label"></label>
+                    </i>
+                    <input asp-for="AccompanyTimeWeek" class="form-control input" />
+                    <span asp-validation-for="AccompanyTimeWeek" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Description" class="control-label"></label>
+                    </i>
+                    <br />
+                    <textarea asp-for="Description" class="input form-control" style="height:100PX"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="text-align:right">
+                    <i class="fa-solid fa-floppy-disk">
+                        <input type="submit" value="儲存" class="input" style="text-decoration:none;border:none;" />
+                    </i>
+                </div>
+            </form>
+        </div>
+    </div>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
+
+            $("#Category").change(function () {
+                $(`#SubCategory option`).hide();
+                $("#SubCategory").val("none");
+                let CategoryId = this.value;
+                $(`#SubCategory option[Category=${CategoryId}]`).show();
+            });
+        </script>
+    }
 

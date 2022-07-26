@@ -17,6 +17,8 @@ namespace qqqq.Models
         public string Email { get; set; }
         public bool? CheckEmail { get; set; }
         public bool? Waiting { get; set; }
+        public string OrderDate { get; set; }
+        public string VerificationCode { get; set; }
 
         public virtual Vactivity Activity { get; set; }
         public virtual VallowTime AllowTime { get; set; }

@@ -9,72 +9,69 @@ namespace qqqq.ViewModels
 {
     public class CAdoptView
     {
-        public Category _category;
-        public SubCategory _subCategory;
-        public Product _prod;
-        public PetDetail _petDetail;
-        public Gender _gender;
-        public Color _color;
-        public City _city;
-        public Size _size;
-        public Age _age;
-        public Ligation _ligation;
-        public Photo _photo;
+
+        public Product product;
+        MemberWish memberWish;
 
 
 
 
-        public CAdoptView()
+        public CAdoptView(Product p)
         {
-            _category = new Category();
-            _subCategory = new SubCategory();
-            _prod = new Product();
-            _petDetail = new PetDetail();
-            _gender = new Gender();
-            _color = new Color();
-            _city = new City();
-            _size = new Size();
-            _age = new Age();
-            _ligation = new Ligation();
-            _photo = new Photo();
+            product = p;
+        }
+        public CAdoptView(Product p ,MemberWish mw)
+        {
+            product = p;
+            memberWish = mw;
 
+        }
+        public static List<CAdoptView> CAdoptViews(List<Product> listproductuct)
+        {
+            List<CAdoptView> list = new List<CAdoptView>();
+            foreach(var p in listproductuct)
+            {
+                CAdoptView cAdoptView = new CAdoptView(p);
+                list.Add(cAdoptView);
+            }
+            return list;
         }
 
 
         //性別--
         public string GenderType
         {
-            get { return _prod.PetDetail.Gender.GenderType; }
+            get { return product.PetDetail.Gender.GenderType; }
         }
 
         //顏色--
         public string ColorName
         {
-            get { return _prod.PetDetail.Color.ColorName; }
+            get { return product.PetDetail.Color.ColorName; }
         }
 
         //城市--
         public string CityName
         {
-            get { return _prod.PetDetail.City.CityName; }
+            get { return product.PetDetail.City.CityName; }
         }
 
         //體型 -- 
         public string SizeType
         {
-            get { return _prod.PetDetail.Size.SizeType; }
+            get { return product.PetDetail.Size.SizeType; }
         }
 
         //年紀--
         public string AgeType
         {
-            get { return _prod.PetDetail.Age.AgeType; }
+            get { return product.PetDetail.Age.AgeType; }
         }
 
         //結紮--
         public string LigationType
         {
-            get { return _prod.PetDetail.Ligation.LigationType; }
+            get { return product.PetDetail.Ligation.LigationType; }
         }
 
 
@@ -83,59 +80,79 @@ namespace qqqq.ViewModels
         [DisplayName("類別")]
         public string CategoryName
         {
-            get { return _prod.SubCategory.Category.CategoryName; }
+            get { return product.SubCategory.Category.CategoryName; }
         }
         //subcategory --
         [DisplayName("品種")]
         public string SubCategoryName
         {
-            get { return _prod.SubCategory.SubCategoryName; }
+            get { return product.SubCategory.SubCategoryName; }
         }
         //product
         public int ProductId
         {
-            get { return _prod.ProductId; }
+            get { return product.ProductId; }
         }
         [DisplayName("名字")]
         public string ProductName
         {
-            get { return _prod.ProductName; }
+            get { return product.ProductName; }
         }
         [DisplayName("描述")]
         public string Description
         {
-            get { return _prod.Description; }
+            get { return product.Description; }
         }
         public int? UnitsInStock
         {
-            get { return _prod.UnitsInStock; }
+            get { return product.UnitsInStock; }
         }
         [DisplayName("領養狀態")]
         public bool? Continued
         {
-            get { return _prod.Continued; }
+            get { return product.Continued; }
         }
         public decimal? Cost
         {
-            get { return _prod.Cost; }
+            get { return product.Cost; }
         }
         //petdetail
         [DisplayName("年花費")]
         public decimal? YearCost
         {
-            get { return _prod.PetDetail.YearCost; }
+            get { return product.PetDetail.YearCost; }
         }
         [DisplayName("空間")]
         public int? Space
         {
-            get { return _prod.PetDetail.Space; }
+            get { return product.PetDetail.Space; }
         }
         [DisplayName("週陪伴時間")]
         public int? AccompanyTimeWeek
         {
-            get { return _prod.PetDetail.AccompanyTimeWeek; }
+            get { return product.PetDetail.AccompanyTimeWeek; }
+        }
+        public int MatchScore
+        {
+           get
+           {
+                int score = 0;
+                if (product.SubCategory.CategoryId != memberWish.CategoryId && memberWish.CategoryId != 1) return 0;
+                if (product.SubCategoryId == memberWish.SubCategoryId || memberWish.SubCategoryId == 1) score += 30;
+                if (product.PetDetail.GenderId == memberWish.GenderId || memberWish.GenderId == 1) score += 20;
+                if (product.PetDetail.ColorId == memberWish.ColorId || memberWish.ColorId == 1) score += 10;
+                if (product.PetDetail.CityId == memberWish.CityId || memberWish.CityId == 1) score += 5;
+                if (product.PetDetail.SizeId == memberWish.SizeId || memberWish.SizeId == 1) score += 10;
+                if (product.PetDetail.AgeId == memberWish.AgeId || memberWish.AgeId == 1) score += 10;
+                if (product.PetDetail.LigationId == memberWish.LigationId || memberWish.LigationId == 1) score += 15;
+                //if (memberWish.YearCost >= ((decimal)product.PetDetail.YearCost) * 0.8m) score += 5;
+                //if (memberWish.AccompanyTimeWeek >= (decimal)product.PetDetail.AccompanyTimeWeek * 0.8m) score += 5;
+                //if (memberWish.Space >= (decimal)product.PetDetail.Space * 0.8m) score += 5;
+                return score;
+            }
+            
+
         }
 
-        public List<Photo> Photos { get; set; }
     }
 }

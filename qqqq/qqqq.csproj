@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\BK_Comment\CommentView.cshtml" />
+    <None Include="Views\BK_Comment\List.cshtml" />
+    <None Include="Views\BK_Comment\ResponseView.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
