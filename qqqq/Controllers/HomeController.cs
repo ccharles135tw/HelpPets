@@ -107,35 +107,65 @@ namespace prjHomeLess_R.Controllers
         }
 
         [HttpPost]
+        //==========================================================
 
-        public IActionResult Register(Member mem, IFormFile File)
+     
+            public IActionResult Register(CLoginView Vmodel, IFormFile File)
         {
+            Member mem = new Member();
+            if (mem.Name != null)
+                return RedirectToAction("Login");
+       
+                //string pName = Guid.NewGuid().ToString() + ".jpg";
+                string pName = mem.MemberId + ".jpg";
+                File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
+                mem.Photo = pName;
+            //todo照片上傳
 
-            //         if(mem.Name!=null)
-            //return RedirectToAction("Login");
-            //         if (mem.Photo != null)
-            //         {
-            //             string pName = Guid.NewGuid().ToString() + ".jpg";
-            //             Debug.WriteLine(pName);
-            //             File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
-            //             mem.Photo = pName;
-            //             //todo照片上傳
-            //         }
+            Vmodel._Member = new Member();
 
-            //_context.Members.Add(mem);
-            //_context.SaveChanges();
+            _context.Members.Add(mem);
+            _context.SaveChanges();
 
+
+
+            return View(Vmodel);
             //todo
-
-            return View("Login");
-
         }
-        
-        public IActionResult forgetPwd()
+    
+
+            //public IActionResult Register(Member mem, IFormFile File)
+            //{
+
+            //    if (mem.Name != null)
+            //        return RedirectToAction("Login");
+            //    if (mem.Photo != null)
+            //    {
+            //        //string pName = Guid.NewGuid().ToString() + ".jpg";
+            //        string pName = mem.MemberId + ".jpg";
+            //        File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
+            //        mem.Photo = pName;
+            //        //todo照片上傳
+            //    }
+
+            //    _context.Members.Add(mem);
+            //    _context.SaveChanges();
+
+
+
+            //    return View("Login");
+
+            //}
+            public IActionResult forgetPwd()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult forgetPwd(CLoginAccountViewModel vModel)
         {
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress("helppetqqq@gmail.com");
-            mail.To.Add("helppetqqq@gmail.com");
+            mail.To.Add(vModel.txtAccount);
             //主旨
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.BodyEncoding = System.Text.Encoding.UTF8;

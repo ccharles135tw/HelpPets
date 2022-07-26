@@ -42,7 +42,7 @@
                 <td>
                     <div>
                         <textarea style="width:200px;height:60px" readonly></textarea>
-                    
+
                     </div>
                 </td>
 
@@ -50,7 +50,7 @@
                     <img src="~/Images/memstar.jpg" style="width:100px;height:20px" />
                 </td>
 
-                <td >
+                <td>
                     <div>
                         <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
                             <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
@@ -70,20 +70,38 @@
     <!-- The Modal -->
 
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">商品評論</h4>
+                    <h4 class="modal-title">評論此商品</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <textarea placeholder="請在此區 評論商品" maxlength="100"></textarea>
-                </div>
+                    <div class="container-fluid">
+                        <div class="row justify-content-lg-evenly">
 
+                            <div id="star" class="d-flex justify-center " style="width:60px">
+
+
+                                <img class="mw-100" id="1" src="~/Images/Common_sad.jpg" />
+                                <img class="mw-100" id="2" src="~/Images/Common_sad.jpg" />
+                                <img class="mw-100" id="3" src="~/Images/Common_sad.jpg" />
+                                <img class="mw-100" id="4" src="~/Images/Common_sad.jpg" />
+                                <img class="mw-100" id="5" src="~/Images/Common_sad.jpg" />
+                            </div>
+                        </div>
+                        <p>單擊給分,雙擊重新評分</p>
+                        <p id="count">請和英雄打招呼</p>
+
+                        <textarea placeholder="請在此區 評論商品" maxlength="100" style="max-width:250px"></textarea>
+
+
+                    </div>
+                </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee">送出</button>
@@ -96,5 +114,31 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
- 
+    //評價星等
+    let flag = true;
+
+    $("#star img").hover(function () {
+        if (flag) {
+            console.log("AAA");
+            $(this).attr("src", "../../../Images/Common_hi.jpg").prevAll().attr("src", "../../../Images/Common_hi.jpg");
+            let count = $(this).index() + 1;
+            $("#count").text(`有${count}個英雄跟你打招呼`);
+        }
+    },
+        function () {
+            if (flag) {
+                $("#star img").attr("src", "../../../Images/Common_sad.jpg");
+                $("#count").text(`你正在決定會有幾位英雄跟你打招呼`);
+            }
+        })
+
+
+    $("#star img").click(function () {
+        flag = false;
+    })
+
+    $("#star img").dblclick(function () {
+        flag = true
+    });
+
 </script>
