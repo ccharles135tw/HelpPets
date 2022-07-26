@@ -21,7 +21,7 @@ namespace qqqq.Controllers
         {
             _environment = pet;
         }
-        //todo 上架問題
+        
         public IActionResult NewPetList()
         {
             我救浪Context db = new 我救浪Context();
@@ -55,7 +55,7 @@ namespace qqqq.Controllers
             }
             return View(list);
         }
-
+        //已下架浪浪
         public IActionResult DiscountinueList()
         {
             我救浪Context db = new 我救浪Context();
@@ -88,13 +88,33 @@ namespace qqqq.Controllers
                 list.Add(pet);
             }
             return View(list);
+        }
 
+        public IActionResult KeyWord(string keyword)
+        {
+            我救浪Context db = new 我救浪Context();
+            List<CPet> datas = null;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = (from p in db.Products
+                        where p.IsPet == true && p.Continued == true
+                        select new CPet(p)).ToList();
+            }
+            else
+            {
+                datas = (db.Products.Include(p=>p.SubCategory).ThenInclude(s=>s.Category).Where(p => 
+                p.IsPet == true 
+                && (p.ProductName.Contains(keyword) ||
+                  (p.IsPet == true && p.SubCategory.SubCategoryName.Contains(keyword)) ||
+                 (p.IsPet == true && p.SubCategory.Category.CategoryName.Contains(keyword)))
+                ).Select(p=>new CPet(p))).ToList();
+            }
+
+            return View("NewPetList",datas);
         }
 
 
-
         //新增浪浪
-        //todo 照片新增修改
         //todo Demo
         public IActionResult NewCreate()
         {
