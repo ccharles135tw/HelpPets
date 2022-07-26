@@ -1,0 +1,50 @@
+﻿@model IEnumerable<qqqq.ViewModels.CCommentView>
+
+
+    @{
+        foreach (var mc in Model)
+        {
+    <div style="border:1px solid red" class="divCommentAll" commentid="@mc.memberComment.CommentId">
+                        <div class="row" style="border:1px solid blue;padding:0;">
+                            <div>
+                                <img style="padding:0;margin:auto;height:50px;width:30px;" src="~/Images/009dbd20-766d-4daf-ad99-bf86a655bd16.jpg" />
+                            </div>
+                            <div style="border: 1px solid black;">
+                                <div style="height:50px">
+                                    <p>@(mc.memberComment.Member.Name)</p>
+                                    <p>@mc.CommentDate</p>
+                                </div>
+                                <div>
+                                    @{
+                                    for (int i = 0; i < mc.Grade; i++)
+                                    {
+                                                                                                                                                                <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png">
+                                    }
+                                        }
+                                        <p class="responseText">@mc.Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 divAddResponseContainer"> </div>
+                                <div class="divResponseContainInput">
+                                    <div style="border:1px solid yellow;" class="divResponse">
+                                        @{
+                                if (mc.memberComment.CommentResponses.Count > 0)
+                                {
+                                                    <button class="btnSeeResponse" commentid="@mc.memberComment.CommentId">查看回覆(@mc.CountOfResponse)</button>
+                                }
+                                            }
+                                        </div>
+                                        @{
+                            if (mc.memberComment.CommentResponses.Count==0)
+                            {
+                                                <button class="btnAddResponse" >新增回覆</button>
+                            }
+                                            }
+                                 </div>
+                             </div>
+    </div>
+        }
+    }
+        

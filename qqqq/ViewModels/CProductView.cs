@@ -60,8 +60,9 @@ namespace Pet.ViewModels
         public List<string> PictureNames=new List<string>();
 
         [DisplayName("狀態")]
-        public bool Continued { get { return (bool)this.Product.Continued; } set { this.Product.Continued = value; } }
-
+        public string Continued { get { return this.Product.Continued==true? "上架中":"已下架"; }}
+        [DisplayName("平均評價")]
+        public double Rate { get; set; }
 
     }
 }

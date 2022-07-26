@@ -7,6 +7,11 @@ namespace qqqq.Models
 {
     public partial class MemberComment
     {
+        public MemberComment()
+        {
+            CommentResponses = new HashSet<CommentResponse>();
+        }
+
         public int CommentId { get; set; }
         public int? ProductId { get; set; }
         public int? MemberId { get; set; }
@@ -16,5 +21,6 @@ namespace qqqq.Models
 
         public virtual Member Member { get; set; }
         public virtual Product Product { get; set; }
+        public virtual ICollection<CommentResponse> CommentResponses { get; set; }
     }
 }

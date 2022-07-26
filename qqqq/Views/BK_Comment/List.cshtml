@@ -1,0 +1,346 @@
+﻿@model List<qqqq.ViewModels.CCommentView>
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "_BackLayout";
+}
+@section Styles{
+    <style>
+        .responseText {
+            font-size: 150%;
+            word-wrap: break-word;
+            white-space: pre-line;
+            width: 600px;
+        }
+    </style>
+}
+<h1>留言管理</h1>
+
+@{
+        if(Model.Count==0)
+        {
+    <p>目前沒有留言</p>
+        }
+        else
+        {
+    <div id="divList" productid=@Model[0].memberComment.ProductId>
+                @{
+                                <select style="width:150px;margin-bottom:20px;" class="custom-select" id="sel-sort" aria-label="Default select example">
+                                    <option value="CommentDate/">日期(新>舊)</option>
+                                    <option value="CommentDate/asc">日期(舊>新)</option>
+                                    <option value="Grade/">評價(高>低)</option>
+                                    <option value="Grade/asc">評價(低>高)</option>
+                                    <option value="CountOfResponse/">最多回覆</option>
+                                </select>
+                foreach (var mc in Model)
+                {
+                                    <div style="border:1px solid red;margin-bottom:20px;" class="divCommentAll" commentid="@mc.memberComment.CommentId">
+                                        <div class="row" style="border:1px solid blue;padding:0;">
+                                            <div>
+                                                <img style="padding:0;margin:auto;height:50px;width:30px" src="~/Images/009dbd20-766d-4daf-ad99-bf86a655bd16.jpg" />
+                                            </div>
+                                            <div style="border: 1px solid black;">
+                                                <div style="height:50px">
+                                                    <p>@(mc.memberComment.Member.Name)</p>
+                                                    <p>@mc.CommentDate</p>
+                                                </div>
+                                                <div>
+                                                    @{
+                                            for (int i = 0; i < mc.Grade; i++)
+                                            {
+                                                                        <img width="30" src="~/Images/6092_bookmark_favorite_rate_star_icon.png">
+                                            }
+                                                        }
+                                                        <p class="responseText">@mc.Description</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-1 divAddResponseContainer"> </div>
+                                                <div class="divResponseContainInput">
+                                                    <div style="border:1px solid yellow;display:inline" class="divResponse" commentid="@mc.memberComment.CommentId">
+                                                        @{
+                                        if (mc.memberComment.CommentResponses.Count > 0)
+                                        {
+                                                                    <button class="btnSeeResponse" commentid="@mc.memberComment.CommentId">查看回覆(@mc.CountOfResponse)</button>
+                                        }
+                                                            }
+                                                        </div>
+                                                     <div style="border:1px solid yellow;display:inline" class="divResponseForTempAdd" commentid="@mc.memberComment.CommentId">
+                                                        
+                                                      </div>
+                                                        <button class="btnAddResponse" style="float:right;">新增回覆</button>
+                                                        @*@{
+                                                if (mc.memberComment.CommentResponses.Count==0)
+                                                {
+                                                    <button class="btnAddResponse" >新增回覆</button>
+                                                }
+                                            }*@
+                                                    </div>
+                                                </div>
+                                     </div>
+                }
+                      }
+    </div>
+}
+    }
+
+@*新增用的textarea*@
+<div class="divAddResponse">
+    <textarea class="responseText" style="display: none;"></textarea> <button style="display: none;" class="responseSubmit">送出</button>
+            <div class="divLoading" style="display:none" >
+                <div class="spinner-border text-primary "  role="status" >
+                    <span class="visually-hidden" ></span>
+                </div>
+                <span>訊息傳送中...</span>
+            </div>
+</div>
+
+@section Scripts{
+    @*新增回復&查看收起回覆*@
+    <script>
+        $("#divList").on("click",".btnSeeResponse", function ()
+        {
+            let divResponse = $(this).parents(".divResponse").eq(0);
+            let  loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>回覆加載中...</span></div>');
+            if ($(this).text().includes("查看")) {
+                $(this).text(`${$(this).text().replace("查看","收起")}`)
+                divResponse.siblings(".divResponseForTempAdd").empty();//清空暫存的新增回覆
+                if ($(this).siblings().length == 0) {
+                    $.ajax({
+                        url:"@Url.Content("~/BK_Comment/GetResponse")",
+                        type:"post",
+                        data:{ id: divResponse.attr("commentid") },
+                        beforeSend: function() {
+                            divResponse.append(loadingMessage);
+                        },
+                        success: function(data) {
+                            loadingMessage.remove();
+                            divResponse.append(data);
+                           // divResponse.parents(".divResponseContainInput").eq(0).append('<button class="btnAddResponse" style="float:right;">新增回覆</button>')
+                        }
+                    });
+                }
+                else {
+                    $(this).siblings().show();
+                }
+            }
+            else if ($(this).text().includes("收起")) {
+                $(this).text(`${$(this).text().replace("收起","查看")}`)
+                 $(this).siblings().hide();
+            }
+
+           // divResponse.html(loadingMessage);
+            //divResponse.load("@Url.Content("~/BK_Comment/GetResponse")", { id: $(this).attr("commentid") }, function ()
+            //{
+            //    //$(this).parents(".divResponseContainInput").append('<button class="btnAddResponse">新增回覆</button>');
+            //    divResponse.parents(".divResponseContainInput").eq(0).append('<button class="btnAddResponse" style="float:right;">新增回覆</button>')
+            //});
+
+        })
+
+        $("#divList").on("click", ".btnAddResponse", function ()
+        {
+            $(".btnAddResponse").show();
+            $(".responseSubmit").attr("commentid", $(this).parents(".divCommentAll").eq(0).attr("commentid"));
+            $(this).hide();
+            $(this).parents(".divResponseContainInput").append($(".divAddResponse"))
+            $(".divAddResponse textarea").show().siblings("button").show();
+        })
+
+        $("#divList").on("click", ".responseSubmit", function ()
+        {
+
+            let responseText = $(this).siblings("textarea").val();
+            $(this).siblings("textarea").val("");
+            let responseSubmit = this;
+            $.ajax({
+                url: "@Url.Content("~/BK_Comment/AddResponse")",
+                type: "Post",
+                data: { id:$(responseSubmit).attr("commentid"), response: responseText },
+
+                beforeSend: function ()
+                {
+                    $(responseSubmit).hide().siblings("textarea").hide().siblings(".divLoading").show();
+                },
+                success: function (data)
+                {
+                   // $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponse").append(data);
+                    $(responseSubmit).parents(".divResponseContainInput").eq(0).find(".divResponseForTempAdd").append(data);//將新增的回覆先放在divTemp裡面，載入回覆時再清掉
+                    $(responseSubmit).siblings(".divLoading").hide();
+                    $(".btnAddResponse").show();
+                }
+            })
+        })
+    </script>
+
+    @*回覆修改*@
+<script>
+    var btnEditnow = null;
+    $("#divList").on("click", ".btnEditResponse", function ()
+    {
+        let p = $(this).parents(".row").eq(0).find("p.responseText");
+        let textarea = $('<textarea class="responseText textEditResponse"></textarea>');
+        textarea.val(p.text());
+        $(p).after(textarea);
+        p.hide();
+        textarea.focus();
+        textarea.attr("responseid", $(this).attr("responseid"));
+        btnEditnow = $(this);
+        btnEditnow.attr("disabled",true);
+
+    })
+    $("#divList").on("blur", ".textEditResponse", function ()
+    {
+        if (confirm("要儲存修改嗎") == true)
+        {
+            let textEditResponse = this;
+            let loadingMessage = null;
+            let p = $(this).siblings("p.responseText");
+            $.ajax({
+                url: "@Url.Content("~/BK_Comment/EditResponse")",
+                type: "Post",
+                data: { id: $(textEditResponse).attr("responseid"), response: $(textEditResponse).val() },
+
+                beforeSend: function ()
+                {
+                    //console.log(textEditResponse);
+                    // loadingMessage = $("<div></div>");
+                    loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>訊息修改中...</span></div>');
+                    $(textEditResponse).after(loadingMessage);
+                    $(textEditResponse).remove();
+                },
+                success: function (data)
+                {
+                    loadingMessage.remove();
+                    p.text(data);
+                    p.show();
+                    btnEditnow.removeAttr("disabled");
+                }
+            })
+        }
+        else
+        {
+            $(this).siblings("p.responseText").show();
+            $(this).remove();
+           
+            btnEditnow.removeAttr("disabled");
+        }
+    })
+</script>
+      @* 回覆刪除*@
+<script>
+$("#divList").on("click", ".btnDeleteResponse", function() {
+    if (confirm("確定要刪除嗎") == true) {
+            let btntDeleteResponse = this;
+            let loadingMessage = null;
+               $.ajax({
+                url: "@Url.Content("~/BK_Comment/DeleteResponse")",
+                type: "Post",
+                data: { id: $(btntDeleteResponse).attr("responseid")},
+
+                beforeSend: function ()
+                {
+                    //console.log(textEditResponse);
+                    // loadingMessage = $("<div></div>");
+                    loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>刪除中...</span></div>');
+                    $(btntDeleteResponse).after(loadingMessage);
+                },
+                success: function (data)
+                {
+                    loadingMessage.remove();
+                    if (data == true) {
+                        $(btntDeleteResponse).parents(".divResponseAll").eq(0).remove();
+                        alert("刪除成功");
+                    }
+                    else {
+                        alert("刪除失敗");
+                    }
+
+                }
+            })
+    }
+})
+</script>
+@*評論排序*@
+<script>
+let selSort = $("#sel-sort");
+selSort.val("@ViewBag.sortType")
+selSort.on("change", function() {
+    //console.log("@Url.Content($"~/BK_Comment/List?id=")" + $("#divList").attr("productid") + "&sortString=" + $(this).val());
+    window.location.href = "@Url.Content($"~/BK_Comment/List?id=")" + $("#divList").attr("productid") + "&sortString=" + $(this).val();
+})
+</script>
+    @*scroll載入評論*@
+<script>
+var commentCount = 10;
+var isScrollAjax = false;
+window.onscroll = function(event) {
+    if (isScrollAjax == true) return;
+    let loadingMessage = null;
+    var wScrollY = window.scrollY; // 當前滾動條位置 
+    var wInnerH = window.innerHeight; // 裝置視窗的高度（不會變） 
+    var bScrollH = document.body.scrollHeight; // 滾動條總高度 
+    if (wScrollY + wInnerH >= bScrollH) {
+        console.log("scrollTest");
+        $.ajax({
+                url: "@Url.Content("~/BK_Comment/AjaxForComment")",
+                type: "Post",
+                data: {id:$("#divList").attr("productid"),sortString:$("#sel-sort").val(),count:commentCount},
+
+                beforeSend: function ()
+                {
+                    //console.log(textEditResponse);
+                    // loadingMessage = $("<div></div>");
+                    loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>評論加載中...</span></div>');
+                    $("#divList").append(loadingMessage);
+                    isScrollAjax = true;
+                },
+                success: function (data)
+                {
+                    loadingMessage.remove();
+                    if (data == false) {
+                    $("#divList").append("<p>已經沒有其他評論囉</p>");
+                        //console.log($(".divCommentAll").length);
+                    }
+                    else {
+                        $("#divList").append(data);
+                        isScrollAjax = false;
+                        count:commentCount += 10;
+                    }
+
+                }
+            })
+    }
+}
+</script>
+    @*更多回覆*@
+<script>
+$("#divList").on("click", ".btnSeeMoreResponse", function() {
+    let divResponse = $(this).parents(".divResponse").eq(0);
+    let loadingMessage = null;
+    let btnSeeMoreResponse = $(this);
+    let btnAddResponse = $(this).parents(".divResponseContainInput").eq(0).find(".btnAddResponse").eq(0);
+    $.ajax({
+                url: "@Url.Content("~/BK_Comment/GetResponse")",
+                type: "Post",
+                data: {id:divResponse.attr("commentid"),count:divResponse.find(".divResponseAll").length},
+
+                beforeSend: function ()
+                {
+                    loadingMessage = $('<div class="divLoading"><div class="spinner-border text-primary "  role="status"><span class="visually-hidden"></span></div><span>回復加載中...</span></div>');
+                  
+                    divResponse.append(loadingMessage);
+                    divResponse.siblings(".divResponseForTempAdd").empty();//清掉先前新增時暫存的回覆
+                },
+                success: function (data)
+                {
+                    loadingMessage.remove();
+                    
+                    divResponse.append(data);
+                    btnSeeMoreResponse.remove();
+                }
+            })
+})
+</script>
+}

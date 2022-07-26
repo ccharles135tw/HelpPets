@@ -9,6 +9,7 @@ namespace qqqq.Models
     {
         public Member()
         {
+            CommentResponses = new HashSet<CommentResponse>();
             MemberComments = new HashSet<MemberComment>();
             MyFavorites = new HashSet<MyFavorite>();
             Orders = new HashSet<Order>();
@@ -30,6 +31,7 @@ namespace qqqq.Models
         public virtual City City { get; set; }
         public virtual Hgender Hgender { get; set; }
         public virtual MemberWish MemberWish { get; set; }
+        public virtual ICollection<CommentResponse> CommentResponses { get; set; }
         public virtual ICollection<MemberComment> MemberComments { get; set; }
         public virtual ICollection<MyFavorite> MyFavorites { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

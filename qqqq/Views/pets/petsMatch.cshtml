@@ -4,7 +4,7 @@
     </div>
 </div>
 
-@model IEnumerable<qqqq.ViewModels.CProductShow>
+@model IEnumerable<qqqq.ViewModels.CAdoptView>
 
 @{
     ViewData["Title"] = "petsMatch";
@@ -70,16 +70,17 @@
 
                         <button id="addToList" style="background-color: #734226">
                             <h5 style="color:#fff;">@item.ProductName</h5>
-                            @{ if (item.Photos.Count == 0)
+                            Scroe<span>@item.MatchScore</span>
+                            @{ if (item.product.Photos.Count == 0)
                                 {
                                     <img src="/Images/notfound.jpg" height="300" zoom />
                                 }
                                 else
                                 {
-                                    <img src="/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
+                                    <img src="/Images/@item.product.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
-                            <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
+                            <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets",new {id=item.ProductId})</i>
                         </button>
                     </div>
                 }

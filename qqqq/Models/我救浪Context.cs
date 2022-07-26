@@ -21,6 +21,7 @@ namespace qqqq.Models
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
+        public virtual DbSet<CommentResponse> CommentResponses { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Hgender> Hgenders { get; set; }
@@ -28,7 +29,6 @@ namespace qqqq.Models
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberComment> MemberComments { get; set; }
         public virtual DbSet<MemberWish> MemberWishes { get; set; }
-        public virtual DbSet<MemberWishColor> MemberWishColors { get; set; }
         public virtual DbSet<MyFavorite> MyFavorites { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -92,6 +92,38 @@ namespace qqqq.Models
                 entity.Property(e => e.ColorId).HasColumnName("ColorID");
 
                 entity.Property(e => e.ColorName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<CommentResponse>(entity =>
+            {
+                entity.HasKey(e => e.ResponseId);
+
+                entity.ToTable("CommentResponse");
+
+                entity.Property(e => e.ResponseId).HasColumnName("ResponseID");
+
+                entity.Property(e => e.CommentDate).HasColumnType("datetime");
+
+                entity.Property(e => e.CommentId).HasColumnName("CommentID");
+
+                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+
+                entity.Property(e => e.MemberId).HasColumnName("MemberID");
+
+                entity.HasOne(d => d.Comment)
+                    .WithMany(p => p.CommentResponses)
+                    .HasForeignKey(d => d.CommentId)
+                    .HasConstraintName("FK_CommentResponse_Member_Comment");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.CommentResponses)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("FK_CommentResponse_Employee1");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.CommentResponses)
+                    .HasForeignKey(d => d.MemberId)
+                    .HasConstraintName("FK_CommentResponse_Member");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -219,6 +251,8 @@ namespace qqqq.Models
 
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
+                entity.Property(e => e.ColorId).HasColumnName("ColorID");
+
                 entity.Property(e => e.GenderId).HasColumnName("GenderID");
 
                 entity.Property(e => e.LigationId).HasColumnName("LigationID");
@@ -243,6 +277,11 @@ namespace qqqq.Models
                     .WithMany(p => p.MemberWishes)
                     .HasForeignKey(d => d.CityId)
                     .HasConstraintName("FK_Member_Adopt_City");
+
+                entity.HasOne(d => d.Color)
+                    .WithMany(p => p.MemberWishes)
+                    .HasForeignKey(d => d.ColorId)
+                    .HasConstraintName("FK_Member_Wish_Color");
 
                 entity.HasOne(d => d.Gender)
                     .WithMany(p => p.MemberWishes)
@@ -270,27 +309,6 @@ namespace qqqq.Models
                     .HasForeignKey(d => d.SubCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Member_Wish_SubCategory");
-            });
-
-            modelBuilder.Entity<MemberWishColor>(entity =>
-            {
-                entity.ToTable("Member_Wish_Color");
-
-                entity.Property(e => e.MemberWishColorId).HasColumnName("Member_Wish_ColorID");
-
-                entity.Property(e => e.ColorId).HasColumnName("ColorID");
-
-                entity.Property(e => e.MemberId).HasColumnName("MemberID");
-
-                entity.HasOne(d => d.Color)
-                    .WithMany(p => p.MemberWishColors)
-                    .HasForeignKey(d => d.ColorId)
-                    .HasConstraintName("FK_Member_Wish_Color_Color");
-
-                entity.HasOne(d => d.Member)
-                    .WithMany(p => p.MemberWishColors)
-                    .HasForeignKey(d => d.MemberId)
-                    .HasConstraintName("FK_Member_Wish_Color_Member_Wish");
             });
 
             modelBuilder.Entity<MyFavorite>(entity =>
@@ -607,7 +625,11 @@ namespace qqqq.Models
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
+                entity.Property(e => e.OrderDate).HasMaxLength(50);
+
                 entity.Property(e => e.Phone).HasMaxLength(50);
+
+                entity.Property(e => e.VerificationCode).HasMaxLength(50);
 
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.Volunteers)

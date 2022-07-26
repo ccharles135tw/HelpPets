@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace qqqq.Controllers
 {
@@ -40,15 +41,10 @@ namespace qqqq.Controllers
         }
         public IActionResult petsPhoto()
         {
-            var a = db.Products.Where(x => x.IsPet == true);
-            
+            var a = db.Products.Where(x => x.IsPet == true).ToList();
+
             ////a.FirstOrDefault().SubCategory.SubCategoryName;
-            foreach (var i in a)
-            {
-                CAdoptView adoptView = new CAdoptView();
-                adoptView._prod = i;
-                list.Add(adoptView);
-            }
+            var list = CAdoptView.CAdoptViews(a);
             return PartialView("petsPhoto",list);
         }
         public IActionResult petsSubcategory(int id)
@@ -64,12 +60,7 @@ namespace qqqq.Controllers
                                     (categoryid==1?true:p.SubCategory.CategoryId==categoryid)&&
                                     (petDetail.GenderId == 1 ? true : p.PetDetail.GenderId == petDetail.GenderId) &&
                                     (petDetail.SizeId == 1 ? true : p.PetDetail.SizeId == petDetail.SizeId)).ToList();
-           foreach(var i  in a)
-            {
-                CAdoptView adoptView = new CAdoptView();
-                adoptView._prod = i;
-                list.Add(adoptView);
-            }
+            var list = CAdoptView.CAdoptViews(a);
             return PartialView("petsPhoto", list);
         }
         public IActionResult SearchForKeyword(string keyword)
@@ -81,12 +72,7 @@ namespace qqqq.Controllers
             else
             {
                 var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword) || p.Description.Contains(keyword))).ToList();
-                foreach (var i in a)
-                {
-                    CAdoptView adoptView = new CAdoptView();
-                    adoptView._prod = i;
-                    list.Add(adoptView);
-                }
+                var list = CAdoptView.CAdoptViews(a);
                 Debug.WriteLine(list[0].GenderType);
                 return PartialView("petsPhoto", list);
             }
@@ -140,20 +126,16 @@ namespace qqqq.Controllers
         {
             return View();
         }
-        public IActionResult petsMatch()
+        public IActionResult petsMatch(MemberWish memberWish)
         {
             我救浪Context db = new 我救浪Context();
-            var datas = db.Products.Where(p => p.IsPet == true).ToList();
-            List<CProductShow> list = new List<CProductShow>();
-            foreach (Product p in datas)
-            {
-                CProductShow cprod = new CProductShow();
-                cprod.product = p;
-                if (p.Photos.Any())
-                    cprod.Photos = p.Photos.ToList();
-                list.Add(cprod);
-            }
-            return View(list);
+            var datas = db.Products.Include(p=>p.SubCategory).AsEnumerable().Where( p => 
+                (p.IsPet == true) && 
+               ( p.Continued == true)&&
+               (p.SubCategory.CategoryId==memberWish.CategoryId||memberWish.CategoryId==1))
+                .Select(p => new CAdoptView(p, memberWish)).ToList();
+            datas=datas.Where(p=>p.MatchScore>=55).OrderByDescending(p => p.MatchScore).ToList();
+            return View(datas);
         }
     }
 }
