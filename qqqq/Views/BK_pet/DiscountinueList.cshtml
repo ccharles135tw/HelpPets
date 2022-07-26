@@ -2,7 +2,7 @@
 
 @{
     Layout = "_BackLayout";
-    ViewData["Title"] = "NewPetList";
+    ViewData["Title"] = "DiscountinueList";
 }
 @section Styles{
     <style>
@@ -25,16 +25,13 @@
         }
     </style>
 }
-<h1 style="text-align:center; font-weight:900">浪浪管理系統</h1>
+<h1 style="text-align:center; font-weight:900">已下架浪浪</h1>
 <div style="text-align:left; font-size:16px ; font-weight:600">
     @using (Html.BeginForm())
     {
         @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
         <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
-
-        <a asp-action="NewCreate" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 新增浪浪</a>
-     
-        <a asp-action="DiscountinueList" class="fa-solid fa-arrow-down-short-wide" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 下架浪浪 / </a>
+        <a asp-action="NewPetList" class="fa-solid fa-hand-point-left" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 返回列表</a>
     }
 </div>
 <br />
@@ -134,106 +131,106 @@
             <tbody id="tbody" style="text-align:center;">
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.CategoryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                    </td>
-                    <td>
-                        @{
-                            if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
-                            {
-                                <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
+                    <tr>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @{
+                                if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
+                                {
+                                    <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
+                                }
+                                else
+                                {
+                                    <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
+                                }
                             }
-                            else
-                            {
-                                <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
-                            }
-                        }
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.SubCategoryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SubCategoryName)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.ProductId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.SubCategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubCategoryName)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.ProductId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
 
-                    <td class="Description@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.Continued)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.GenderId)
-                    </td>
-                    <td class="GenderType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.GenderType)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.ColorId)
-                    </td>
-                    <td class="ColorName@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.ColorName)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.CityId)
-                    </td>
-                    <td class="CityName@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.CityName)
-                    </td>
-                    <td class="YearCost@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.YearCost)
-                    </td>
-                    <td class="Space@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.Space)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.SizeId)
-                    </td>
-                    <td class="SizeType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.SizeType)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.AgeId)
-                    </td>
-                    <td class="AgeType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.AgeType)
-                    </td>
-                    <td class="AccompanyTimeWeek@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.AccompanyTimeWeek)
-                    </td>
-                    <td class="LigationId@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.LigationId)
-                    </td>
-                    <td class="LigationType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.LigationType)
-                    </td>
-                    <td>
-                        <button data-toggle="modal" data-target="#myModal" Class="fa-solid fa-list detail" id="detail@(item.ProductId)" @*onclick="test(this.id)"*@
-                                style="border:none; background-color:transparent;color:chocolate;font-size:16px">
-                            明細
-                            @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
-                        </button>
-                    </td>
-                    <td>
-                        @Html.ActionLink("下架", "Discontinued", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要下架?')" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("刪除", "Delete", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-trash-can", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要刪除?')" })
-                    </td>
-                </tr>
+                        <td class="Description@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.Continued)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.GenderId)
+                        </td>
+                        <td class="GenderType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.GenderType)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.ColorId)
+                        </td>
+                        <td class="ColorName@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.ColorName)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.CityId)
+                        </td>
+                        <td class="CityName@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.CityName)
+                        </td>
+                        <td class="YearCost@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.YearCost)
+                        </td>
+                        <td class="Space@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.Space)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.SizeId)
+                        </td>
+                        <td class="SizeType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.SizeType)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.AgeId)
+                        </td>
+                        <td class="AgeType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.AgeType)
+                        </td>
+                        <td class="AccompanyTimeWeek@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.AccompanyTimeWeek)
+                        </td>
+                        <td class="LigationId@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.LigationId)
+                        </td>
+                        <td class="LigationType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.LigationType)
+                        </td>
+                        <td>
+                            <button data-toggle="modal" data-target="#myModal" Class="fa-solid fa-list detail" id="detail@(item.ProductId)" @*onclick="test(this.id)"*@
+                                    style="border:none; background-color:transparent;color:chocolate;font-size:16px">
+                                明細
+                                @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
+                            </button>
+                        </td>
+                        <td>
+                            @Html.ActionLink("上架", "Continued", "BK_pet", new { id = item.ProductId }, new { Class="fa-solid fa-arrow-up-wide-short", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要上架?')" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("刪除", "Delete", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-trash-can", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要刪除?')" })
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
