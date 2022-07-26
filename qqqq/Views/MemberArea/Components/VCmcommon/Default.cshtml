@@ -87,11 +87,12 @@
                             <div id="star" class="d-flex justify-center " style="width:60px">
 
 
-                                <img class="mw-100" id="1" src="~/Images/Common_sad.jpg" />
-                                <img class="mw-100" id="2" src="~/Images/Common_sad.jpg" />
-                                <img class="mw-100" id="3" src="~/Images/Common_sad.jpg" />
-                                <img class="mw-100" id="4" src="~/Images/Common_sad.jpg" />
-                                <img class="mw-100" id="5" src="~/Images/Common_sad.jpg" />
+                                <img class="mw-100" id="1" src="@Url.Content("~/Images/Common_sad.jpg")"/>
+                                <img class="mw-100" id="2" src="@Url.Content("~/Images/Common_sad.jpg")"/>
+                                <img class="mw-100" id="3" src="@Url.Content("~/Images/Common_sad.jpg")"/>
+                                <img class="mw-100" id="4" src="@Url.Content("~/Images/Common_sad.jpg")"/>
+                                <img class="mw-100" id="5" src="@Url.Content("~/Images/Common_sad.jpg")"/>
+                            
                             </div>
                         </div>
                         <p>單擊給分,雙擊重新評分</p>
@@ -120,14 +121,14 @@
     $("#star img").hover(function () {
         if (flag) {
             console.log("AAA");
-            $(this).attr("src", "../../../Images/Common_hi.jpg").prevAll().attr("src", "../../../Images/Common_hi.jpg");
+            $(this).attr("src", "@Url.Content("~/Images/Common_hi.jpg")").prevAll().attr("src", "@Url.Content("~/Images/Common_hi.jpg")");
             let count = $(this).index() + 1;
             $("#count").text(`有${count}個英雄跟你打招呼`);
         }
     },
         function () {
             if (flag) {
-                $("#star img").attr("src", "../../../Images/Common_sad.jpg");
+                $("#star img").attr("src", "@Url.Content("~/Images/Common_sad.jpg")");
                 $("#count").text(`你正在決定會有幾位英雄跟你打招呼`);
             }
         })

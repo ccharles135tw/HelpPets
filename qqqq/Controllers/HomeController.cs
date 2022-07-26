@@ -8,6 +8,7 @@ using Pet.ViewModels;
 
 using prjMVCDemo.vModel;
 using qqqq.Models;
+using qqqq.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,13 +35,42 @@ namespace prjHomeLess_R.Controllers
         {
             _logger = logger;
             _environment = p;
+
+        }
+        public IActionResult empLogin()
+        {
+
+            return View();
+                }
+        [HttpPost]
+        public IActionResult empLogin(CLoginAccountViewModel vModel)
+        {
+            Employee emp = _context.Employees.FirstOrDefault(e => e.Phone == vModel.txtAccount);
+
+            if (emp != null)
+            {
+                if (emp.Password.Equals(vModel.txtPassword))
+                {
+                    CEmp eV = new CEmp();
+
+                    eV.EmpoyeeId = emp.EmpoyeeId;
+                    eV.Phone = emp.Phone;
+                    eV.Name = emp.Name;
+
+                    string jsonUser = JsonSerializer.Serialize(eV);
+                    HttpContext.Session.SetString(CDictionary.SK_LOGIN_EMP, jsonUser);
+                    return RedirectToAction("BK_employee", "BK_employee");
+                }
+            }
+    
+            return View();
+
         }
 
+    
         //=====================================
         public IActionResult Index()
         {
-
-
             if (!HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
 
             {
@@ -80,7 +110,7 @@ namespace prjHomeLess_R.Controllers
                     
                     string jsonUser = JsonSerializer.Serialize(cm);
                     HttpContext.Session.SetString(CDictionary.SK_LOGIN_USER, jsonUser);
-
+                    
 
                     return RedirectToAction("homepage", "Home");
                 }
@@ -91,11 +121,11 @@ namespace prjHomeLess_R.Controllers
         }
         public IActionResult City()
         {
-            var city = _context.Cities.Select(c => c.CityName).Distinct();
+            var city = _context.Cities.Select(c=>new {cityName=c.CityName,cityId=c.CityId }).Distinct();
             //return Json(city);
+            var JsonCity= JsonSerializer.Serialize(city);
 
-
-            return Json(city);
+            return Json(JsonCity);
         }
        
 
@@ -109,54 +139,49 @@ namespace prjHomeLess_R.Controllers
         [HttpPost]
         //==========================================================
 
-     
-            public IActionResult Register(CLoginView Vmodel, IFormFile File)
+
+        //public IActionResult Register(CLoginView Vmodel, IFormFile File)
+        //{
+
+        //    Member mem = new Member();
+
+        //    mem = Vmodel._Member;
+
+        //    if (Vmodel.Photo == null)
+        //    {
+
+
+        //        string pName = "mem" + mem.MemberId + ".jpg";
+        //        File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
+        //        Vmodel.Photo = pName;
+
+        //            }
+
+
+        //    _context.Members.Add(mem);
+        //    _context.SaveChanges();
+
+
+
+        //    return View(Vmodel);
+        //    //todo
+        //}
+
+
+        public IActionResult Register(Member mem, IFormFile File)
         {
-            Member mem = new Member();
-            if (mem.Name != null)
-                return RedirectToAction("Login");
-       
-                //string pName = Guid.NewGuid().ToString() + ".jpg";
-                string pName = mem.MemberId + ".jpg";
+
+                string pName = Guid.NewGuid().ToString() + ".jpg";
                 File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
                 mem.Photo = pName;
-            //todo照片上傳
-
-            Vmodel._Member = new Member();
 
             _context.Members.Add(mem);
             _context.SaveChanges();
 
+            return View("Login");
 
-
-            return View(Vmodel);
-            //todo
         }
-    
-
-            //public IActionResult Register(Member mem, IFormFile File)
-            //{
-
-            //    if (mem.Name != null)
-            //        return RedirectToAction("Login");
-            //    if (mem.Photo != null)
-            //    {
-            //        //string pName = Guid.NewGuid().ToString() + ".jpg";
-            //        string pName = mem.MemberId + ".jpg";
-            //        File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
-            //        mem.Photo = pName;
-            //        //todo照片上傳
-            //    }
-
-            //    _context.Members.Add(mem);
-            //    _context.SaveChanges();
-
-
-
-            //    return View("Login");
-
-            //}
-            public IActionResult forgetPwd()
+        public IActionResult forgetPwd()
         {
             return View();
         }

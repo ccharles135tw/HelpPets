@@ -1,4 +1,6 @@
-﻿
+﻿@model qqqq.Models.Member
+
+
 @{
     ViewData["Title"] = "MemberArea";
 }
@@ -20,8 +22,8 @@
 
         <div class="container">
             <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="~/css_Q/Images/222.jpg" alt="" width="100" height="100" />
-                <h2>陳國興</h2>
+                <img class="d-block mx-auto mb-4" src="@Url.Content($"~/Images/{Model.Photo}")" alt="" width="100" height="100" />
+                <h2>@Model.Name</h2>
 
 
 
@@ -49,90 +51,68 @@
                         </a>
                     </div>
 
-                    @*<div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
-                            <div class="bfikuD">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              
 
+                    <div style="width:96px">
+                        <a class="+1U02e" href="#" id="memFavorite">
+                            <div class="bfikuD">
+                                <i class="fa fa-heart" aria-hidden="true"></i>
                             </div>
                             <div class="DlL0zX">
-                                <span class="adF7Xs">未完成訂單</span>
+                                <span class="adF7Xs">我的最愛</span>
                             </div>
                         </a>
                     </div>
 
                     <div style="width:96px">
-                        <a class="+1U02e" href="@Url.Content("~/MemberArea/MemberDoneList")">
+                        <a class="+1U02e" href="#" id="memPet">
                             <div class="bfikuD">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                <i class="fa fa-paw" aria-hidden="true"></i>
                             </div>
                             <div class="DlL0zX">
-                                <span class="adF7Xs">已取消訂單</span>
+                                <span class="adF7Xs">已認養寵物</span>
                             </div>
                         </a>
-                    </div>*@
+                    </div>
 
-
-                <div style="width:96px">
-                    <a class="+1U02e" href="#" id="memFavorite">
-                        <div class="bfikuD">
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                        </div>
-                        <div class="DlL0zX">
-                            <span class="adF7Xs">我的最愛</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div style="width:96px">
-                    <a class="+1U02e" href="#" id="memPet">
-                        <div class="bfikuD">
-                            <i class="fa fa-paw" aria-hidden="true"></i>
-                        </div>
-                        <div class="DlL0zX">
-                            <span class="adF7Xs">已認養寵物</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div style="width:96px">
-                    <a class="+1U02e" href="#" id="memCommon">
-                        <div class="bfikuD">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="DlL0zX">
-                            <span class="adF7Xs">我的評價</span>
-                        </div>
-                    </a>
-                </div>
+                    <div style="width:96px">
+                        <a class="+1U02e" href="#" id="memCommon">
+                            <div class="bfikuD">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="DlL0zX">
+                                <span class="adF7Xs">我的評價</span>
+                            </div>
+                        </a>
+                    </div>
 
 
 
 
 
-                <div style="width:96px">
-                    <a class="+1U02e" href="#" id="memVolunteer">
-                        <div class="bfikuD">
-                            <i class="fa-solid fa-hand-holding-heart"></i>
-                        </div>
-                        <div class="DlL0zX">
-                            <span class="adF7Xs">我的志工</span>
-                        </div>
-                    </a>
-                </div>
+                    <div style="width:96px">
+                        <a class="+1U02e" href="#" id="memVolunteer">
+                            <div class="bfikuD">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <div class="DlL0zX">
+                                <span class="adF7Xs">我的志工</span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
 
             @*=================================================================================*@
 
-         
-        <div id="viewChange">
 
-        </div>
+            <div id="viewChange">
+
+            </div>
 
 
-        
+
         </div>
     </section>
 

@@ -28,7 +28,7 @@ namespace Pet.ViewModels
         [EmailAddress]   
         [Required]
         public string Email { get { return _Member.Email; } set { _Member.Email = value; } }
-        [DisplayName("密碼"), Required()]
+        [DisplayName("密碼"), Required]
         public string Password { get { return _Member.Password; } set { _Member.Password = value; } }
         [DisplayName("確認密碼"),Compare("Password")]
         public string PasswordConfirm { get; set; }
@@ -37,11 +37,10 @@ namespace Pet.ViewModels
         [DisplayName("手機"), Required()]
         public string MemberPhone { get { return _Member.MemberPhone; } set { _Member.MemberPhone = value; } }
         [DisplayName("生日"), DataType(DataType.Date), Required()]
-        public DateTime MemberBirthDate { get { return (DateTime)_Member.BirthdayDate; } set { _Member.BirthdayDate = value; } }
-        public int? CityId { get { return (int)_Member.CityId; } set { _Member.CityId= value; } }
+        public DateTime BirthdayDate { get { return (DateTime)_Member.BirthdayDate; } set { _Member.BirthdayDate = value; } }
+       
         [DisplayName("城市"), Required()]
-        public string MemberCityName { get { return _Member.City.CityName; }set { _Member.City.CityName = value; } }
-        public int MemberCityId { get { return _Member.City.CityId; }set { _Member.City.CityId = value; } }
+        public int MemberCityId { get { return (int) _Member.CityId; }set { _Member.CityId = value; } }
         [DisplayName("地址"), Required()]
         public string Address { get { return _Member.Address; } set { _Member.Address = value; } }
         [DisplayName("性別"), Required()]
