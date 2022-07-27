@@ -15,7 +15,7 @@ namespace Pet.ViewModels
             Member = new Member();
         }
         public int MemberID { get { return Member.MemberId; } set { Member.MemberId = value; } }
-        public int MemberId { get { return Member.MemberId; } set { Member.MemberId = value; } }
+        //public int MemberId { get { return Member.MemberId; } set { Member.MemberId = value; } }
         [DisplayName("會員名稱")]
         public string MemberName { get { return Member.Name; }set { Member.Name = value; } }
         [DisplayName("密碼")]
