@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\BK_SubCategory\**" />
+    <Content Remove="Views\BK_SubCategory\**" />
+    <EmbeddedResource Remove="Views\BK_SubCategory\**" />
+    <None Remove="Views\BK_SubCategory\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\BK_Comment\CommentView.cshtml" />
     <None Include="Views\BK_Comment\List.cshtml" />
     <None Include="Views\BK_Comment\ResponseView.cshtml" />

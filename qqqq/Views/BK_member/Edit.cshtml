@@ -3,10 +3,12 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "_BackLayout";
+    qqqq.Models.我救浪Context db = new 我救浪Context();
 }
+
 @section Styles{
     <style>
-        #input {
+        .input {
             border: solid antiquewhite 2px;
             border-radius: 20px;
             color: black;
@@ -20,94 +22,146 @@
         }
     </style>
 }
-    
 
 
 
-    <div>
-        <h1 style="font-weight:900; text-align:center; margin-top: 30px; margin-bottom: 10px">會員修改</h1>
-    </div>
-    <div style="text-align:right; margin-right:10px; text-decoration:none">
+
+<div>
+    <h1 style="font-weight:900; text-align:center; margin-top: 30px; margin-bottom: 10px">會員修改</h1>
+</div>
+<div style="text-align:right; margin-right:10px; text-decoration:none">
     <a asp-action="memList" style="color:chocolate;" class="fa-solid fa-right-from-bracket"> 返回</a>
+</div>
+<hr />
+<div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="MemberID" class="control-label"></label>
+                <input asp-for="MemberID" class="form-control" />
+                <span asp-validation-for="MemberID" class="text-danger"></span>
+            </div>
+
+            <div @*class="fa-solid fa-paw"*@ class="form-group">
+                <i class="fa-solid fa-paw"><label asp-for="Photo" class="control-label"></label></i>
+                <i>
+                    @{ if (Model.Photo != null)
+                        {
+                            <img src="~/Images/@Model.Photo" style="width: 180px; height: 150px" class="img col-4" onclick="img_active()" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/Default.jpg" style="width:180px;height:150px;" />
+                        }
+
+                    }
+                </i>
+                <input type="file" name="file" class="form-control input" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-paw"><label asp-for="Name" class="control-label"></label></i>
+                <input asp-for="Name" class="form-control input" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="GenderType" class="control-label"></label>
+                </i>
+                <select asp-for="HgenderId" class="input">
+                    @{
+                        var qgen = from gen in db.Hgenders
+                                   where gen.GenderType != "不限"
+                                   select gen;
+                        foreach (Hgender gen in qgen)
+                        {
+                            if (gen.HgenderId == Model.HgenderId)
+                            {
+                                <option value="@gen.HgenderId" selected>@gen.GenderType</option>
+                            }
+                            else
+                            {
+                                <option value="@gen.HgenderId">@gen.GenderType</option>
+                            }
+
+                        }
+                    }
+                </select>
+                <span asp-validation-for="GenderType" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="BirthdayDate" class="control-label"></label>
+                </i>
+                <input type="datetime" asp-for="BirthdayDate" class="form-control input" />
+                <span asp-validation-for="BirthdayDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="MemberPhone" class="control-label"></label>
+                </i>
+                <input asp-for="MemberPhone" class="form-control input" />
+                <span asp-validation-for="MemberPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="Password" class="control-label"></label>
+                </i>
+                <input asp-for="Password" class="form-control input" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="CityName" class="control-label"></label>
+                </i>
+                <select asp-for="CityID" class="input">
+                    @{
+                        var qci = from ci in db.Cities
+                                  where ci.CityName != "不限"
+                                  select ci;
+                        foreach (City ci in qci)
+                        {
+                            if (ci.CityId == Model.CityID)
+                            {
+                                <option value="@ci.CityId" selected>@ci.CityName</option>
+                            }
+                            else
+                            {
+                                <option value="@ci.CityId">@ci.CityName</option>
+                            }
+
+                        }
+                    }
+                </select>
+                <span asp-validation-for="CityName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="Address" class="control-label"></label>
+                </i>
+                <input asp-for="Address" class="form-control input" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-paw">
+                    <label asp-for="Email" class="control-label"></label>
+                </i>
+                <input asp-for="Email" class="form-control input" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="text-align:right">
+                <i class="fa-solid fa-floppy-disk"><input type="submit" value="儲存" class="input" /></i>
+            </div>
+        </form>
     </div>
-    <hr />
-    <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
-        <div class="col-md-4">
-            <form asp-action="Edit" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group" hidden>
-                    <label asp-for="MemberID" class="control-label"></label>
-                    <input id="input" asp-for="MemberID" class="form-control" />
-                    <span asp-validation-for="MemberID" class="text-danger"></span>
-                </div>
-
-                <div @*class="fa-solid fa-paw"*@ class="form-group">
-                    <i class="fa-solid fa-paw"><label asp-for="MemberPhoto" class="control-label"></label></i>
-                    <input type="file" id="input" asp-for="MemberPhoto" class="form-control" />
-                    <span asp-validation-for="MemberPhoto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw"><label asp-for="MemberName" class="control-label"></label></i>
-                    <input id="input" asp-for="MemberName" class="form-control" />
-                    <span asp-validation-for="MemberName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberBirthDate" class="control-label"></label>
-                    </i>
-                    <input type="date" id="input" asp-for="MemberBirthDate" class="form-control" />
-                    <span asp-validation-for="MemberBirthDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberPhone" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberPhone" class="form-control" />
-                    <span asp-validation-for="MemberPhone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberPassword" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberPassword" class="form-control" />
-                    <span asp-validation-for="MemberPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberCityID" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberCityID" class="form-control" />
-                    <span asp-validation-for="MemberCityID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberCityName" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberCityName" class="form-control" />
-                    <span asp-validation-for="MemberCityName" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberAddress" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberAddress" class="form-control" />
-                    <span asp-validation-for="MemberAddress" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberEmail" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberEmail" class="form-control" />
-                    <span asp-validation-for="MemberEmail" class="text-danger"></span>
-                </div>
-
-                <div class="form-group" style="text-align:right">
-                    <i class="fa-solid fa-floppy-disk"><input type="submit" value="儲存" id="input" /></i>
-                </div>
-            </form>
-        </div>
-    </div>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
