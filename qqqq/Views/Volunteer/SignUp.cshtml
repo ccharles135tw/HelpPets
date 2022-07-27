@@ -471,6 +471,7 @@
 
         //sendToDB
         $("#send").click(() => {
+            let random = Math.random().toString(36).substring(2);
             $(".dataArea").each((index, item) => {
                 //console.log(item);
                 let MemID = @Model.MemberID;
@@ -496,13 +497,14 @@
                         } else if (i % 5 == 4) {
                             Email = td[i].innerText
                             $.ajaxSetup({ async: false });
-                            $.post('@Url.Content("~/Volunteer/saveToDB")', { MemID: MemID, actID: actID, actDate: actDate, actTime: actTime, Status: Status, Name: Name, Phone: Phone, Email: Email })
+                            $.post('@Url.Content("~/Volunteer/saveToDB")', { random: random, MemID: MemID, actID: actID, actDate: actDate, actTime: actTime, Status: Status, Name: Name, Phone: Phone, Email: Email })
                             cnt = 0;
                         }
                     }
                 }
-
             })
+            $.post('@Url.Content("~/Volunteer/EmailTest")', { random: random })
+
             document.location.href = '@Url.Content("~/Volunteer/Index")';
         })
     </script>
