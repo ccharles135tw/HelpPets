@@ -457,41 +457,6 @@ namespace qqqq.Controllers
             }
 
         }
-        public IActionResult Favorite(int ProductId)
-        {
-            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
-            {
-                string jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-                if (jsonUser != null)
-                {
-                    CLoginViewModel cart = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
-                    Member mem = db.Members.FirstOrDefault(m => m.HgenderId == cart.MemberID);
-                    var favorites = db.MyFavorites.ToList();
-                    if (!db.MyFavorites.Where(p => p.ProductId == ProductId && p.MemberId == cart.MemberID).Any())
-                    {
-                        MyFavorite myFav = new MyFavorite();
-                        myFav.MemberId = cart.MemberID;
-                        myFav.ProductId = ProductId;
-                        db.MyFavorites.Add(myFav);
-                        db.SaveChanges();
-                        return Content("已新增產品至收藏清單");
-                    }
-                    else
-                    {
-                        return Content("產品已在收藏清單中");
-                    }
-
-                }
-                else
-                {
-                    return Content("請先登入會員");
-                }
-
-            }
-            else
-            {
-                return Content("請先登入會員");
-            }
-        }
+      
     }
 }
