@@ -76,18 +76,26 @@ namespace prjHomeLess_R.Controllers
 
             string pName = Guid.NewGuid().ToString() + ".jpg";
             File.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + pName, FileMode.Create));
-            mem.Photo = pName;
 
-            if (Vmem != null)
-            {
+            if (mem.Photo != null)
+                Vmem.Photo =Vmem.Photo;
+            else
+                Vmem.Photo = pName;
 
-             
+            Vmem.Name = mem.Name;
+            Vmem.Email = mem.Email;
+            Vmem.Password = mem.Password;
+            Vmem.MemberPhone = mem.MemberPhone;
+            Vmem.CityId = mem.CityId;
+            Vmem.Address = mem.Address;
+            Vmem.BirthdayDate = mem.BirthdayDate;
+            Vmem.HgenderId = mem.HgenderId;
+
 
                 _context.SaveChanges();
-            }
+       
 
             return RedirectToAction("MemberArea");
-
 
 
         }

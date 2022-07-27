@@ -1,5 +1,6 @@
 ﻿@model Pet.ViewModels.CLoginView
-}
+    @{qqqq.Models.我救浪Context db = new 我救浪Context(); }
+
 
 @ViewData["Title"] = "MemberEdoit";
 
@@ -111,7 +112,7 @@
 
         <!-- Registeration Form -->
         <div class="col-md-7 col-lg-6 ml-auto">
-            <form asp-action="MemberArea" enctype="multipart/form-data">
+            <form asp-action="MemberEdoit" enctype="multipart/form-data">
                 <!-- hidden -->
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group" hidden>
@@ -136,14 +137,14 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
 
                     <!-- Last Name
-    <div class="input-group col-lg-6 mb-4">
-        <div class="input-group-prepend">
-            <span class="input-group-text bg-white px-4 border-md border-right-0">
-                <i class="fa-solid fa-location-dot"></i>
-            </span>
-        </div>
-        <input id="lastName" type="text" name="lastname" placeholder="Last Name" class="form-control bg-white border-left-0 border-md">
-    </div>-->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                        </div>
+                        <input id="lastName" type="text" name="lastname" placeholder="Last Name" class="form-control bg-white border-left-0 border-md">
+                    </div>-->
                     <!-- Email Address -->
                     <div class="input-group col-lg-12 mb-4">
                         <div class="input-group-prepend">
@@ -193,7 +194,11 @@
                             </span>
                         </div>
                         <select id="selCity" asp-for="MemberCityId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted" name="CityId">
-                            <option value="@Model.MemberCityId"></option>
+                            @{ var q = db.Cities.Where(c => c.CityId == Model.MemberCityId);
+                                    
+                       foreach(var c in q){
+                            <option value="@Model.MemberCityId">@c.CityName</option>
+                                    } }
                         </select>
                         <input value="@Model.Address" id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3">
                     </div>
@@ -207,7 +212,7 @@
                         <input value="@Model.BirthdayDate" type="date" name="BirthdayDate" class="form-control bg-white border-left-0 border-md" />
 
                     </div>
-            
+
 
                     <!-- gender -->
                     <div class="input-group col-lg-12 mb-4">
@@ -219,7 +224,7 @@
                         <select asp-for="HgenderId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
                             <option value="1">男性</option>
                             <option value="2">女性</option>
-                            <option>不透露</option>
+                            <option value="3">不透露</option>
                         </select>
 
                     </div>
@@ -246,7 +251,7 @@
 
                     </div>
 
-                   
+
                     <!-- Already Registered -->
                     <div class="text-center w-100">
                         <p class="text-muted font-weight-bold"> @Html.ActionLink("取消編輯", "MemberArea", "MemberArea")</p>

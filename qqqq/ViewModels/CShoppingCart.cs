@@ -8,7 +8,10 @@ namespace qqqq.ViewModels
 {
     public class CShoppingCart
     {
-       
+        [DisplayName("選取結帳")]
+        public bool CartPay { get; set; }
+        [DisplayName("選取結帳")]
+        public bool DonatePay { get; set; }
         public int CartId { get; set; }
         [DisplayName("商品圖片")] 
         public string CartPhoto { get; set; }
@@ -22,5 +25,7 @@ namespace qqqq.ViewModels
         public decimal TotalPrice { get { return (CartCount * CartPrice); } }
         public int Donate { get; set; }
         public decimal DonatePrice { get { return (Donate * CartPrice); } }
+
+   
     }
 }

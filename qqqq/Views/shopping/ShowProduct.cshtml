@@ -12,8 +12,9 @@
 
 
 
-<div class="container text-center col-md-6 col-sm-12">
-    <div>
+<div class="container  col-md-6 col-sm-12">
+
+    <div class="text-center">
         @{
             if (Model.Photos.Count == 0)
             {
@@ -74,7 +75,7 @@
                 <h5>
                     <label asp-for="ProductName" class="control-label">產品名稱</label>
                 </h5>
-                <input asp-for="ProductName" name="CartName" class="form-control" readonly />
+                <input asp-for="ProductName" name="CartName" class="form-control text-center" readonly />
 
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
@@ -89,14 +90,14 @@
                 <h5>
                     <label asp-for="Price" class="control-label">售價</label>
                 </h5>
-                <input asp-for="Price" class="form-control " readonly name="CartPrice" />
+                <input asp-for="Price" class="form-control text-center" readonly name="CartPrice" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <h5>
-                    <label asp-for="SupplierId" class="control-label">品牌</label>
+                    <label asp-for="SupplierId" class="control-label ">品牌</label>
                 </h5>
-                <input disabled value="@Model.SupplierName" class="form-control" asp-items="ViewBag.SupplierId" id="sup" readonly>
+                <input disabled value="@Model.SupplierName" class="form-control text-center" asp-items="ViewBag.SupplierId" id="sup" readonly>
 
             </div>
 
@@ -111,7 +112,7 @@
                 <h5>
                     <label asp-for="UnitsInStock" class="control-label">庫存</label>
                 </h5>
-                <input disabled asp-for="UnitsInStock" class="form-control" readonly />
+                <input disabled asp-for="UnitsInStock" class="form-control text-center" readonly />
 
             </div>
 
@@ -119,7 +120,7 @@
                 <h5>
                     <label class="product">數量</label>
                 </h5>
-                <input type="number" class="form-control" name="CartCount" min="0" max="@Model.UnitsInStock" value="0" />
+                <input type="number" class="form-control text-center" name="CartCount" min="0" max="@Model.UnitsInStock" value="0" />
                 <span class="text-danger"></span>
             </div>
             <br />
@@ -129,14 +130,14 @@
                 <h5>
                     <label class="product alert-danger">捐贈我救浪</label>
                 </h5>
-                <input type="number" class="form-control" name="Donate" min="0" max="@Model.UnitsInStock" value="0" />
+                <input type="number" class="form-control text-center" name="Donate" min="0" max="@Model.UnitsInStock" value="0" />
                 <span class="text-danger"></span>
             </div>
             <br />
 
             <div class="form-group">
-                <input type="submit" value="加入購物車" class="btn btn-primary" />
-                <button class="btn btn-success"> <i>@Html.ActionLink("返回產品列表", "shopping", null)</i></button>
+                <button type="submit"  class="btn btn-primary"> <i class="fa-solid fa-plus">加入購物車</i></button>
+                <a href="~/shopping/shopping" class="btn-success p-2" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前往商城</i></a>
             </div>
         </form>
     </div>
@@ -168,15 +169,17 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a href="~/shopping/shopping" class="btn-primary p-2" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前去購物</i></a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
     <script>
 
         $(".imgOption").click((event) => {
             $("#prodImg").attr("src", event.target.src)
+           
         })
+      
     </script>
 }

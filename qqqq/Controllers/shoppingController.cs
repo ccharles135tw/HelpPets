@@ -7,22 +7,23 @@ using System.Threading.Tasks;
 using qqqq.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using prjMVCDemo.vModel;
 
 namespace qqqq.Controllers
 {
     public class shoppingController : Controller
     {
         private bool array = true;
-
+        我救浪Context db = new 我救浪Context();
         public IActionResult shopping()
         {
-            var db = new 我救浪Context();
+
             List<Category> list = db.Categories.Where(p => p.IsPet == false).ToList();
             return View(list);
         }
         public IActionResult shoppingRow(CShoppingKeyword key)
         {
-            我救浪Context db = new 我救浪Context();
+
             if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
@@ -160,7 +161,7 @@ namespace qqqq.Controllers
         public IActionResult shoppingCol(CShoppingKeyword key)
         {
 
-            我救浪Context db = new 我救浪Context();
+
             if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
@@ -303,7 +304,7 @@ namespace qqqq.Controllers
             }
             else
             {
-            list.Add(vModel);
+                list.Add(vModel);
             }
             jsonCart = JsonSerializer.Serialize(list);
             HttpContext.Session.SetString(
@@ -329,14 +330,14 @@ namespace qqqq.Controllers
                         cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().Donate = Convert.ToInt32(hidCount);
                     else
                         cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().CartCount = Convert.ToInt32(hidCount);
-                    if(cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().CartCount==0&& cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().Donate == 0)
-                        {
+                    if (cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().CartCount == 0 && cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First().Donate == 0)
+                    {
                         cart.Remove(cart.Where(x => x.CartId.Equals(Convert.ToInt32(hidCartId))).First());
                     }
                     HttpContext.Session.SetString(
                         CDictionary.SK_購物車商品列表, JsonSerializer.Serialize(cart));
                 }
-                
+
 
                 return PartialView(cart);
             }
@@ -345,13 +346,14 @@ namespace qqqq.Controllers
                 List<CShoppingCart> cart = new List<CShoppingCart>();
                 return PartialView(cart);
             }
-                
+
         }
-        public IActionResult Pay(int? price)
+        public IActionResult Pay(List<CShoppingCart> item)
         {
-            if (price != null)
+            var test = HttpContext.Request;
+            if (item.Any())
             {
-                return View((int)price);
+                return View(123);
             }
             else
                 return RedirectToAction("CartView");
@@ -387,6 +389,108 @@ namespace qqqq.Controllers
                 }
                 var jsonList = JsonSerializer.Serialize(Clist);
                 return Json(jsonList);
+            }
+        }
+        public IActionResult Favorite(int ProductId)
+        {
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+            {
+                string jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+                if (jsonUser != null)
+                {
+                    CLoginViewModel cart = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+                    Member mem = db.Members.FirstOrDefault(m => m.HgenderId == cart.MemberID);
+                    var favorites = db.MyFavorites.ToList();
+                    if (!db.MyFavorites.Where(p => p.ProductId == ProductId && p.MemberId == cart.MemberID).Any())
+                    {
+                        MyFavorite myFav = new MyFavorite();
+                        myFav.MemberId = cart.MemberID;
+                        myFav.ProductId = ProductId;
+                        db.MyFavorites.Add(myFav);
+                        db.SaveChanges();
+                        return Content("已新增產品至收藏清單");
+                    }
+                    else
+                    {
+                        return Content("產品已在收藏清單中");
+                    }
+
+                }
+                else
+                {
+                    return Content("請先登入會員");
+                }
+
+            }
+            else
+            {
+                return Content("請先登入會員");
+            }
+        }
+        public IActionResult FavoriteList()
+        {
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+            {
+                var jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+                if (jsonUser != null)
+                {
+                    var User = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+                    var list = db.Products.Where(p =>p.IsPet==false&& p.MyFavorites.Where(f => f.MemberId == User.MemberID).Any()).ToList();
+                    List<CProductShow> data = new List<CProductShow>();
+                    foreach (var p in list)
+                    {
+                        CProductShow cProd = new CProductShow();
+                        cProd.product = p;
+                        if (db.Photos.Where(c => c.ProductId == p.ProductId).Any())
+                        {
+                            cProd.Photos = db.Photos.Where(c => c.ProductId==p .ProductId).ToList();
+                        }
+                        data.Add(cProd);
+                    }
+                    return View(data);
+                }
+                return Content("請先登入會員");
+            }
+            else
+            {
+                return Content("請先登入會員");
+            }
+
+        }
+        public IActionResult Favorite(int ProductId)
+        {
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+            {
+                string jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+                if (jsonUser != null)
+                {
+                    CLoginViewModel cart = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+                    Member mem = db.Members.FirstOrDefault(m => m.HgenderId == cart.MemberID);
+                    var favorites = db.MyFavorites.ToList();
+                    if (!db.MyFavorites.Where(p => p.ProductId == ProductId && p.MemberId == cart.MemberID).Any())
+                    {
+                        MyFavorite myFav = new MyFavorite();
+                        myFav.MemberId = cart.MemberID;
+                        myFav.ProductId = ProductId;
+                        db.MyFavorites.Add(myFav);
+                        db.SaveChanges();
+                        return Content("已新增產品至收藏清單");
+                    }
+                    else
+                    {
+                        return Content("產品已在收藏清單中");
+                    }
+
+                }
+                else
+                {
+                    return Content("請先登入會員");
+                }
+
+            }
+            else
+            {
+                return Content("請先登入會員");
             }
         }
     }

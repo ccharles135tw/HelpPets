@@ -1,6 +1,7 @@
 ﻿using qqqq.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,18 +26,23 @@ namespace qqqq.ViewModels
         }
 
         public int ProductId { get { return _prod.ProductId; } set { _prod.ProductId = value; } }
+        [DisplayName("產品名稱")]
         public string ProductName { get { return _prod.ProductName; } set { _prod.ProductName = value; } }
         public int SubCategoryId { get { return _prod.SubCategoryId; } set { _prod.SubCategoryId = value; } }
+        [DisplayName("價格")]
         public decimal? Price { get { return _prod.Price; } set { _prod.Price = value; } }
         public int? SupplierId { get { return _prod.SupplierId; } set { _prod.SupplierId = value; } }
         public bool? IsPet { get { return _prod.IsPet; } set { _prod.IsPet = value; } }
+        [DisplayName("詳細資訊")]
         public string Description { get { return _prod.Description; } set { _prod.Description = value; } }
+        [DisplayName("庫存")]
         public int? UnitsInStock { get { return _prod.UnitsInStock; } set { _prod.UnitsInStock = value; } }
         public bool? Continued { get { return _prod.Continued; } set { _prod.Continued = value; } }
         public decimal? Cost { get { return _prod.Cost; } set { _prod.Cost = value; } }
         public  List<Photo> Photos { get; set; }
         public string SubCategoryName { get { return product.SubCategory.SubCategoryName; }  }
         public string CategoryName { get { return product.SubCategory.Category.CategoryName; } }
+        [DisplayName("品牌")]
         public string SupplierName { get { return product.Supplier.Name; } }
     }
 }
