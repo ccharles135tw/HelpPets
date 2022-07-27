@@ -350,8 +350,6 @@ namespace qqqq.Controllers
         }
         public IActionResult Pay(List<CShoppingCart> item)
         {
-
-
             if (item.Any())
             {
                 List<CShoppingCart> list = new List<CShoppingCart>();
@@ -489,22 +487,36 @@ namespace qqqq.Controllers
             db.Orders.Add(or);
             db.SaveChanges();
             var id = db.Orders.First(p => p.OrderDate == or.OrderDate && p.MemberId == or.MemberId && p.SendAddress == or.SendAddress).OrderId;
-            return Content(id.ToString());
+            return Content(or.OrderId.ToString());
         }
-        public IActionResult createOrderDetail(string address, List<CShoppingCart> data)
+        public IActionResult createOrderDetail(string orderId, List<CShoppingCart> data)
         {
-            var jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-            var user = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
-            Order or = new Order();
-            or.EmployeeId = 1;
-            or.MemberId = user.MemberID;
-            or.OrderDate = DateTime.Now.Date;
-            or.SendAddress = address;
-            or.OrderStatusId = 2;
-            db.Orders.Add(or);
+            foreach (var p in data)
+            {
+                if (p.CartPay == true)
+                {
+                    OrderDetail od = new OrderDetail();
+                    od.OrderId =int.Parse( orderId);
+                    od.ProductId = p.CartId;
+                    od.Quantity = p.CartCount;
+                    od.UnitPrice = db.Products.First(c => c.ProductId == p.CartId).Price;
+                    od.IsDonate = false;
+                    db.OrderDetails.Add(od);
+                }
+                if (p.DonatePay == true)
+                {
+                    OrderDetail od = new OrderDetail();
+                    od.OrderId = int.Parse(orderId);
+                    od.ProductId = p.CartId;
+                    od.Quantity = p.Donate;
+                    od.UnitPrice = db.Products.First(c => c.ProductId == p.CartId).Price;
+                    od.IsDonate = true;
+                    db.OrderDetails.Add(od);
+                }
+               
+            } 
             db.SaveChanges();
-            var id = db.Orders.First(p => p.OrderDate == or.OrderDate && p.MemberId == or.MemberId && p.SendAddress == or.SendAddress).OrderId;
-            return Content(id.ToString());
+                return Content("訂單已成立");
         }
     }
 }

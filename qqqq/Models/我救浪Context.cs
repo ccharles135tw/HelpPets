@@ -369,7 +369,7 @@ namespace qqqq.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ProductId })
+                entity.HasKey(e => new { e.OrderId, e.ProductId, e.IsDonate })
                     .HasName("PK_Order_Detail_1");
 
                 entity.ToTable("Order_Detail");

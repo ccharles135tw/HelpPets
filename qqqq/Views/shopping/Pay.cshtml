@@ -10,218 +10,237 @@
     ViewData["Title"] = "";
 }
 <div class="container col-md-6 col-sm-12">
-    <form enctype="multipart/form-data">
+    @*<form enctype="multipart/form-data">*@
 
-        <table class="table  ">
-            <thead>
-                <tr>
-                    <th hidden>
-                        @Html.DisplayNameFor(model => model[0].CartId)
-                    </th>
+    <table class="table  ">
+        <thead>
+            <tr>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model[0].CartId)
+                </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].CartPhoto)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].CartName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].CartPrice)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].CartCount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].TotalPrice)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].CartPhoto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].CartName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].CartPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].CartCount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].TotalPrice)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
-                @{
-                    decimal pay = 0;
-                    for (int i = 0; i < Model.Count(); i++)
+            @{
+                decimal pay = 0;
+                for (int i = 0; i < Model.Count(); i++)
+                {
+                    if (Model[i].CartPay == true)
                     {
-                        if (Model[i].CartPay == true)
-                        {
 
-                            <tr>
-                                <td hidden>
-                                    @Html.DisplayFor(item => item[i].CartId)
-                                </td>
+                        <tr>
+                            <td hidden>
+                                @Html.DisplayFor(item => item[i].CartId)
+                            </td>
 
-                                <td>
-                                    <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].CartName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].CartPrice)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].CartCount)
-                                    @*<input type="number" min="1" value="@item[i].CartCount" onchange="ChangeItemCount('@item[i].CartId',this.value,false)" />*@
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].TotalPrice)
-                                </td>
+                            <td>
+                                <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].CartName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].CartPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].CartCount)
+                                @*<input type="number" min="1" value="@item[i].CartCount" onchange="ChangeItemCount('@item[i].CartId',this.value,false)" />*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].TotalPrice)
+                            </td>
 
-                            </tr>
-                        }
-                        if (Model[i].DonatePay == true)
-                        {
+                        </tr>
+                    }
+                    if (Model[i].DonatePay == true)
+                    {
 
-                            <tr>
-                                <td hidden>
+                        <tr>
+                            <td hidden>
 
-                                    @Html.DisplayFor(item => item[i].CartId)
-                                </td>
+                                @Html.DisplayFor(item => item[i].CartId)
+                            </td>
 
-                                <td>
-                                    <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].CartName)
-                                    <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].CartPrice)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].Donate)
+                            <td>
+                                <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].CartName)
+                                <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].CartPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].Donate)
 
-                                    @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(item => item[i].DonatePrice)
-                                </td>
+                                @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(item => item[i].DonatePrice)
+                            </td>
 
-                            </tr>
-                            @*@(pay=pay+ Model[i].DonatePrice);*@
-                        }
+                        </tr>
+                        @*@(pay=pay+ Model[i].DonatePrice);*@
                     }
                 }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5" class="text-center "><h5>總價:@(Model.Where(x=>x.CartPay).Sum(x=>x.TotalPrice)+ Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice))</h5></td>
-
-                    <td>
-                        @if (Model.Count() != 0)
-                        {
-                            <button class="btn btn-success" type="submit">結帳</button>
-                            @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
-                        }
-                        else
-                        {
-                            <button class="btn btn-success" type="button">結帳</button>
-                            @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
-                        }
-                    </td>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-center "><h5>總價:@(Model.Where(x=>x.CartPay).Sum(x=>x.TotalPrice)+ Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice))</h5></td>
 
 
-                </tr>
-            </tfoot>
-        </table>
 
-    </form>
+
+            </tr>
+        </tfoot>
+    </table>
+
+    @*</form>*@
     <h1>結帳</h1>
     <br />
-    <form>
-        <fieldset>
-            <legend class="title"><b>選擇付款及運送方式</b></legend>
-            <br />
-            <div class="form-group alert alert-warning ">
-                <h5>
-                    <label class="control-label col-12">付款方式</label>
-                </h5>
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>信用卡</b></label>
+    @*<form>*@
+    <fieldset>
+        <legend class="title"><b>選擇付款及運送方式</b></legend>
+        <br />
+        <div class="form-group alert alert-warning ">
+            <h5>
+                <label class="control-label col-12">付款方式</label>
+            </h5>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>信用卡</b></label>
 
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>貨到付款</b></label>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>貨到付款</b></label>
 
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>LinePay</b></label>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" /><b>LinePay</b></label>
 
-                <span for="Pay" class="text-danger"></span>
-            </div><br />
-            <div class="form-group alert alert-warning">
-                <h5>
-                    <label class="control-label">運送方式</label>
-                </h5>
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>宅配</b></label>
+            <span for="Pay" class="text-danger"></span>
+        </div><br />
+        <div class="form-group alert alert-warning">
+            <h5>
+                <label class="control-label">運送方式</label>
+            </h5>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>宅配</b></label>
 
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>7-11取貨</b></label>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>7-11取貨</b></label>
 
-                <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>全家取貨</b></label>
-                <span for="Pay" class="text-danger"></span>
-            </div>
-        </fieldset>
-        <hr />
-        <fieldset>
-            <legend class="title"><b>運送資訊</b></legend>
-            <br />
-            <div class="form-group alert alert-success ">
-                <h5>
-                    <label class="control-label col-12">購買人資料      <input type="checkbox" />同會員資料</label>
-                </h5>
-                <label class="col-md-4 col-sm-12">姓名: <input type="text" /><b></b></label>
-
-                <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /><b></b></label>
-                <label class="col-md-6 col-sm-12 mt-3">聯絡電話(非必填): <input type="tel" /><b></b></label>
-                <br />
-                <label class="col-md-10 col-sm-12 mt-3"> Email: <input type="text" name="pay" class="col-10" /><b></b></label>
-                <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" /><b></b></label>
-                <span for="Pay" class="text-danger"></span>
-            </div><br />
-            <div class="form-group alert alert-success">
-                <h5>
-                    <label class="control-label">收件人資料        <input type="checkbox" />同購買人</label>
-                </h5>
-                <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /><b></b></label>
-
-                <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" /><b></b></label>
-                <span for="Pay" class="text-danger"></span>
-            </div>
-        </fieldset>
-        <hr />
-        <fieldset>
-            <div class="form-group alert alert-info mt-4">
-                <h5>
-                    <label class="control-label">備註</label>
-                </h5>
-                <textarea class="mce-resize" rows="8" cols="100"></textarea>
-            </div>
-            <hr />
-            <div class="form-group alert alert-danger mt-4 ">
-                <h5>
-                    <label class="control-label">商品金額:100</label><br />
-                    <label class="control-label">運      費  : 60</label><br />
-                    <label class="control-label">總金額  : 60)</label>
-                </h5>
-            </div>
-        </fieldset>
-        <div>
-            <a>   @Html.ActionLink("確定", "shopping", "shopping", null, new { onclick = "return alert('訂單已成立')", @class = "btn btn-success" })</a>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="send" /><b>全家取貨</b></label>
+            <span for="Pay" class="text-danger"></span>
         </div>
+    </fieldset>
+    <hr />
+    <fieldset>
+        <legend class="title"><b>運送資訊</b></legend>
+        <br />
+        <div class="form-group alert alert-success ">
+            <h5>
+                <label class="control-label col-12">購買人資料      <input type="checkbox" />同會員資料</label>
+            </h5>
+            <label class="col-md-4 col-sm-12">姓名: <input type="text" /><b></b></label>
 
-    </form>
+            <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /><b></b></label>
+            <label class="col-md-6 col-sm-12 mt-3">聯絡電話(非必填): <input type="tel" /><b></b></label>
+            <br />
+            <label class="col-md-10 col-sm-12 mt-3"> Email: <input type="text" name="pay" class="col-10" /><b></b></label>
+            <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" /><b></b></label>
+            <span for="Pay" class="text-danger"></span>
+        </div><br />
+        <div class="form-group alert alert-success">
+            <h5>
+                <label class="control-label">收件人資料        <input type="checkbox" />同購買人</label>
+            </h5>
+            <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /><b></b></label>
+
+            <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" id="address" /><b></b></label>
+            <span for="Pay" class="text-danger"></span>
+        </div>
+    </fieldset>
+    <hr />
+    <fieldset>
+        <div class="form-group alert alert-info mt-4">
+            <h5>
+                <label class="control-label">備註</label>
+            </h5>
+            <textarea class="mce-resize" rows="8" cols="100"></textarea>
+        </div>
+        <hr />
+        <div class="form-group alert alert-danger mt-4 ">
+            <h5>
+                <label class="control-label">商品金額:100</label><br />
+                <label class="control-label">運      費  : 60</label><br />
+                <label class="control-label">總金額  : 60)</label>
+            </h5>
+        </div>
+    </fieldset>
+    <div>
+        <button class="btn btn-success" onclick="pay()">確定</button>
+    </div>
+
+    @*</form>*@
 </div>
-
-<script>
+@section scripts{
+    <script>
     debugger;
     var data = JSON.parse('@Html.Raw(JsonSerializer.Serialize(Model))');
-    console.log(data);
 
-    function Test() {
-        $.ajax({
-            url: "@Url.Action("createOrderDetail", "Shopping")",
-                        type:"post",
-                  data: { data: data},
-                        success: function(data) {
 
+    function pay() {
+        const add = $("#address").val()
+        let id=""
+        if (add.trim() == "") {
+            alert("請輸入收件人住址")
+        }
+        else {
+            $.ajax({
+                url: "@Url.Action("createOrder", "Shopping")",
+                type: "post",
+                data: { address:add },
+                success: async function (re) {
+                    id = re
+                    console.log(re)
+     $.ajax({
+                         url: "@Url.Action("createOrderDetail", "Shopping")",
+                type: "post",
+                        data: {
+                            data:data,
+                            orderId: id
+                        },
+                        success: function (response) {
+                            console.log(response)
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: response,
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            setTimeout(function () { window.location.href = "@Url.Content("~/MemberArea/MemberArea")" },2000)
+
+                }
+            });
                         }
-                    });
+            })
+
+        }
     }
 
-</script>
+    </script>
+}

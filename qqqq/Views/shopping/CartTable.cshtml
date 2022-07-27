@@ -90,7 +90,7 @@
                     <tr>
                         <td hidden>
 
-                            @Html.DisplayFor(item => item[i].CartId)
+                            @Html.HiddenFor(item => item[i].CartId)
                         </td>
                         <td>
                             @Html.CheckBoxFor(item => item[i].DonatePay, new { @class = "chk" })
