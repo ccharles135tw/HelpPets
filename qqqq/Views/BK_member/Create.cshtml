@@ -3,10 +3,11 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "_BackLayout";
+    qqqq.Models.我救浪Context db = new 我救浪Context();
 }
 @section Styles{
     <style>
-    #input{
+    .input{
         border:solid antiquewhite 2px;
         border-radius:20px;
         color:black;
@@ -27,8 +28,8 @@
     <hr />
     <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
         <div class="col-md-4">
-            <form asp-action="Create">
-                <div  id="input" asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div id="input" asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group" hidden>
                     <label asp-for="MemberID" class="control-label"></label>
                     <input asp-for="MemberID" class="form-control" />
@@ -36,74 +37,112 @@
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
-                        <label asp-for="MemberPhoto" class="control-label"></label>
+                        <label asp-for="Photo" class="control-label"></label>
                     </i>
-                    <input  id="input" type="file"  asp-for="MemberPhoto" class="form-control" />
-                    <span asp-validation-for="MemberPhoto" class="text-danger"></span>
+                    <input type="file"  name="file" class="form-control-file input" />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
-                        <label asp-for="MemberName" class="control-label"></label>
+                        <label asp-for="Name" class="control-label"></label>
                     </i>
-                    <input id="input" asp-for="MemberName" class="form-control" />
-                    <span asp-validation-for="MemberName" class="text-danger"></span>
+                    <input asp-for="Name" class="form-control input" id="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
-                        <label asp-for="MemberBirthDate" class="control-label"></label>
+                        <label asp-for="GenderType" class="control-label"></label>
                     </i>
-                    <input type="date" id="input" asp-for="MemberBirthDate" class="form-control" />
-                    <span asp-validation-for="MemberBirthDate" class="text-danger"></span>
+                    <select asp-for="HgenderId" class="input">
+                        @{
+                            var qhg = from gen in db.Hgenders
+                                      where gen.GenderType != "不限"
+                                      select gen;
+                            foreach (Hgender gen in qhg)
+                            {
+                                <option value="@gen.HgenderId">@gen.GenderType</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="GenderType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="BirthdayDate" class="control-label"></label>
+                    </i>
+                    <input type="date" asp-for="BirthdayDate" class="form-control input" />
+                    <span asp-validation-for="BirthdayDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="MemberPhone" class="control-label"></label>
                     </i>
-                    <input id="input" asp-for="MemberPhone" class="form-control" />
+                    <input asp-for="MemberPhone" class="form-control input" id="Phone" />
                     <span asp-validation-for="MemberPhone" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
-                        <label asp-for="MemberPassword" class="control-label"></label>
+                        <label asp-for="Password" class="control-label"></label>
                     </i>
-                    <input id="input" asp-for="MemberPassword" class="form-control" />
-                    <span asp-validation-for="MemberPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group" hidden>
-                    <label asp-for="MemberCityID" class="control-label"></label>
-                    <input id="input" asp-for="MemberCityID" class="form-control" />
-                    <span asp-validation-for="MemberCityID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberCityName" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberCityName" class="form-control" />
-                    <span asp-validation-for="MemberCityName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberAddress" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberAddress" class="form-control" />
-                    <span asp-validation-for="MemberAddress" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <i class="fa-solid fa-paw">
-                        <label asp-for="MemberEmail" class="control-label"></label>
-                    </i>
-                    <input id="input" asp-for="MemberEmail" class="form-control" />
-                    <span asp-validation-for="MemberEmail" class="text-danger"></span>
+                    <input asp-for="Password" class="form-control input" id="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="CityName" class="control-label"></label>
+                    </i>
+                    <select asp-for="CityID" class="input">
+                        @{
+                            var qci = from ci in db.Cities
+                                      where ci.CityName != "不限"
+                                      select ci;
+                            foreach (City ci in qci)
+                            {
+                                <option value="@ci.CityId">@ci.CityName</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Address" class="control-label"></label>
+                    </i>
+                    <input asp-for="Address" class="form-control input" id="Address" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <i class="fa-solid fa-paw">
+                        <label asp-for="Email" class="control-label"></label>
+                    </i>
+                    <input asp-for="Email" class="form-control input" id="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
                 <div class="form-group" style="text-align:right">
                     <i class="fa-solid fa-floppy-disk">
-                        <input type="submit" value="新增" id="input" />
+                        <input type="submit" value="新增" class="input" />
+                    </i>
+                    <i class="fa-solid fa-paw">
+                        <button type="button" id="demo" class="input">demo</button>
                     </i>
                 </div>
             </form>
         </div>
     </div>
     @section Scripts {
+        <script>
+            $("#demo").click(() => {
+                $("#Name").val("柯冠宇");
+                $("#Phone").val("0911234567");
+                $("#Password").val("0487");
+                $("#Address").val("台北市大安區復興南路一段390號");
+                $("#Email").val("Deus0487@gamil.com");
+            })
+
+
+        </script>
+
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }

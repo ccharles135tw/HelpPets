@@ -1,15 +1,23 @@
-﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
+﻿@section Styles{ 
+<style>
+    input[type=radio] {
+        accent-color: #EAA636;
+    }
+</style>
+}
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h2 class="display-4 text-white animated slideInDown mb-3">您選擇的志工活動為 @Model.Title</h2>
     </div>
 </div>
+
 <!-- Spinner Start -->
 <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" role="status"></div>
 </div>
 <!-- Spinner End -->
 <div class="container">
-    <a href="~/Volunteer/Index" style="border:1px solid black; color:black;">回志工首頁</a>
+    <a href="~/Volunteer/Index"  style="color:#fff;background-color:#EAA636;border-radius:10px;border:none;margin-top:10px;padding:10px;">回志工首頁</a>
     <section class="section-margin--small mb-5">
         <div id="Info">
             <table style="width:100%">
@@ -36,7 +44,7 @@
             <br /><br />
             <div id="container" style="width:100%">
             </div>
-            <input type="button" id="send" class="loginShow" value="送出預約" />
+            <input type="button" id="send" class="loginShow" value="送出預約"  style="color:#fff;background-color:#EAA636;border-radius:10px;border:none;margin-top:10px;padding:10px;" />
         </div>
     </section>
 </div>
@@ -101,7 +109,7 @@
                         <input type="radio" name="time" id="afternoon" value="下午(1400-1700)" /><label for="afternoon" id="afternoonLabel">下午(1400-1700)</label>
 
                     </div>
-                    <button type="button" id="addFriend" class="bi bi-plus-square-fill loginShow" style="border:none; background-color:transparent;" data-dismiss="modal"> 新增同行人員</button>
+                    <button type="button" id="addFriend" class="bi bi-plus-square-fill loginShow" style="border: none; background-color: transparent; color:#734226" data-dismiss="modal"> 新增同行人員</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default confirm loginShow" data-dismiss="modal">儲存</button>
@@ -373,11 +381,11 @@
                 democlick();
 
                 function addFriend() {
-                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend nowaiting"><hr />人員${addCnt - 1}<td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><br />
-                                                    <input type="text" id="friend${addCnt - 1}Status" value="正取" hidden/>
-                                                    姓 名 : <input type="text" id="friend${addCnt-1}Name" placeholder="人員${addCnt - 1}姓名" value=""/><br />
-                                                    連絡電話 :   <input type="text" id="friend${addCnt - 1}Phone" placeholder="電話" value=""/><br />
-                                                    電子信箱 :   <input type="text" id="friend${addCnt - 1}Email" placeholder="電子信箱" value=""/><br /></div>`)
+                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend nowaiting"><hr />人員${addCnt - 1}<td><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend' style="color:#EAA636;"><i class='bi bi-person-dash-fill'>刪除</i></button><br />
+                                                    <input type="text" class="m-2" id="friend${addCnt - 1}Status" value="正取" hidden/>
+                                                    姓 名 : <input type="text" class="m-2" id="friend${addCnt-1}Name" placeholder="人員${addCnt - 1}姓名" value=""/><br />
+                                                    連絡電話 :   <input type="text" class="m-2" id="friend${addCnt - 1}Phone" placeholder="電話" value=""/><br />
+                                                    電子信箱 :   <input type="text" class="m-2" id="friend${addCnt - 1}Email" placeholder="電子信箱" value=""/><br /></div>`)
                     $(".removeBtn1").off("click");
                     $(".removeBtn2").off("click");
                     $(".removeBtn1").click(() => {
@@ -407,7 +415,7 @@
                     })
                 }
                 function addWaiting() {
-                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend waiting"><hr />(候補)人員${addCnt - 1}<td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><br />
+                    $("#memberInfo").append(`<div class="friend${addCnt - 1} friend waiting"><hr />(候補)人員${addCnt - 1}<td><button id="demoPerson${addCnt - 1}">Demo${addCnt - 1}</button></td><button type='button' class='btn removeBtn${addCnt - 1}' id= 'removeFriend'><i class='bi bi-person-dash-fill'></i></button><br />
                                                     <input type="text" id="friend${addCnt - 1}Status" value="候補" hidden/>
                                                     姓 名 : <input type="text" id="friend${addCnt-1}Name" placeholder="人員${addCnt - 1}姓名" value=""/><br />
                                                     連絡電話 :   <input type="text" id="friend${addCnt - 1}Phone" placeholder="電話" value=""/><br />

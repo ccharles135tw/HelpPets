@@ -203,22 +203,8 @@ body {
         'pics pics pics'
         'words words words';
 }
-.pics{
-
-}
-.words{
-
-}
-.dog {
-    position: absolute;
-}
-
-.cat {
-    position: absolute;
-}
 
 .word {
-    position: absolute;
     -webkit-animation: word 1.1s both;
     animation: word 1.1s both;
 }

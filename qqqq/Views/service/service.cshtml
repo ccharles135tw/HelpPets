@@ -5,19 +5,22 @@
 </div>
 @section Styles{
     <style>
-        #news{
-            color:#000;
-            font-size:30px;
+        #news {
+            color: #000;
+            font-size: 30px;
         }
-        a:hover{
-            background-color:#EAA636;
+
+/*        a:hover {
+            background-color: #EAA636;
+        }*/
+
+        td {
+            font-size: 30px;
         }
-        td{
-            font-size:30px;
+
+        th {
+            font-size: 35px;
         }
-        th{
-            font-size:35px;
-                    }
     </style>
 }
 
@@ -30,6 +33,10 @@
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td>2022/07/26</td>
+                <td><a id="news" href="https://pets.ettoday.net/news/2302706">新竹縣「566人搶16隻品種貓」擠爆現場　獸醫看收容所嘆氣了</a></td>
+            </tr>
             <tr>
                 <td>2022/07/25</td>
                 <td><a id="news" href="https://www.peopo.org/news/593714">台灣耗費鉅資流浪動物依舊嚴重 監委田秋堇：農委會要加強源頭管控</a></td>
@@ -58,60 +65,66 @@
     </table>
 </div>
 <!-- Facts End -->
-<!-- Service Start -->
+<!-- Team Start -->
 <div class="container-xxl py-6">
     <div class="container">
-        <div class="row g-5">
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <p class="text-primary text-uppercase mb-2">// 我們如何幫助您</p>
-                <h1 class="display-6 mb-4">我們提供的服務</h1>
-                <p class="mb-5">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</p>
-                <div class="row gy-5 gx-4">
-                    <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                <i class="fa fa-solid fa-dog text-white"></i>
-                            </div>
-                            <h5 class="mb-0">文字文字</h5>
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-6 mb-4">為浪浪們一起努力</h1>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item text-center rounded overflow-hidden">
+                    <img class="img-fluid" src="~/img/comp1.jpg" alt="">
+                    <div class="team-text">
+                        <div class="team-title">
+                            <h5>全國動物收容管理系統</h5>
+                            <span>全國</span>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</span>
-                    </div>
-                    <div class="col-sm-6 wow fadeIn" data-wow-delay="0.2s">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                <i class="fa fa-solid fa-cat text-white"></i>
-                            </div>
-                            <h5 class="mb-0">文字文字</h5>
+                        <div class="team-social">
+                            <a class="btn btn-square btn-light rounded-circle" href="https://asms.coa.gov.tw/Amlapp/App/Default.aspx"><i class="fa fa-eye text-primary"></i></a>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
-                    </div>
-                    <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                <i class="fa fa-users text-white"></i>
-                            </div>
-                            <h5 class="mb-0">文字文字</h5>
-                        </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
-                    </div>
-                    <div class="col-sm-6 wow fadeIn" data-wow-delay="0.4s">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                <i class="fa fa-solid fa-house text-white"></i>
-                            </div>
-                            <h5 class="mb-0">文字文字</h5>
-                        </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                <div class="row img-twice position-relative h-100">
-                    <div class="col-6">
-                        <img class="img-fluid rounded" src="~/img/ser1.jpg" alt="">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="team-item text-center rounded overflow-hidden">
+                    <img class="img-fluid" src="~/img/comp2.jpg" alt="">
+                    <div class="team-text">
+                        <div class="team-title">
+                            <h5>台北市動物保護處</h5>
+                            <span>台北市</span>
+                        </div>
+                        <div class="team-social">
+                            <a class="btn btn-square btn-light rounded-circle" href="https://www.tcapo.gov.taipei/"><i class="fa fa-eye text-primary"></i></a>
+                        </div>
                     </div>
-                    <div class="col-6 align-self-end">
-                        <img class="img-fluid rounded" src="~/img/ser2.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="team-item text-center rounded overflow-hidden">
+                    <img class="img-fluid" src="~/img/comp3.jpg" alt="">
+                    <div class="team-text">
+                        <div class="team-title">
+                            <h5>台中動物保護處</h5>
+                            <span>台中</span>
+                        </div>
+                        <div class="team-social">
+                            <a class="btn btn-square btn-light rounded-circle" href="https://www.animal.taichung.gov.tw/1521486/Nodelist"><i class="fa fa-eye text-primary"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="team-item text-center rounded overflow-hidden">
+                    <img class="img-fluid" src="~/img/comp4.jpg" alt="">
+                    <div class="team-text">
+                        <div class="team-title">
+                            <h5>台南動物之家</h5>
+                            <span>台南</span>
+                        </div>
+                        <div class="team-social">
+                            <a class="btn btn-square btn-light rounded-circle" href="https://ahipo.tainan.gov.tw/Default.aspx"><i class="fa fa-eye text-primary"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>

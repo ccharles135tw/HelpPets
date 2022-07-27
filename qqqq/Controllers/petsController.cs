@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using prjMVCDemo.vModel;
 
 namespace qqqq.Controllers
 {
@@ -71,9 +72,9 @@ namespace qqqq.Controllers
             }
             else
             {
-                var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword) || p.Description.Contains(keyword))).ToList();
+                var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword))).ToList();
                 var list = CAdoptView.CAdoptViews(a);
-                Debug.WriteLine(list[0].GenderType);
+               //Debug.WriteLine(list[0].GenderType);
                 return PartialView("petsPhoto", list);
             }
             
@@ -82,49 +83,14 @@ namespace qqqq.Controllers
         {
           
             var a = db.Products.Where(x => x.ProductId == id).FirstOrDefault();
-            
-            //CProductShow CprodShow = new CProductShow();
-            //Product cProd = (new 我救浪Context()).Products.FirstOrDefault(p => p.ProductId == id);
-            //CprodShow.product = cProd;
-            //if (cProd.Photos.Any())
-            //    CprodShow.Photos = cProd.Photos.ToList();
-            //return View(CprodShow);
+
             return View(a);
         }
 
-        //    public IActionResult petsPhoto()
-        //    {
-        //        我救浪Context db = new 我救浪Context();
-        //        var datas = db.Products.Where(p => p.IsPet == true).ToList();
-
-        //        //foreach (Product p in datas)
-        //        //{
-        //        //    CPet cprod = new CPet();
-        //        //    cprod._prod = p;
-        //        //    if (p.Photos.Any())
-        //        //        cprod.Photos = p.Photos.ToList();
-        //        //    list.Add(cprod);
-        //        //}
-        //        return PartialView(list);
-        //    }
-        //    public IActionResult petsPhotoRow()
-        //    {
-        //        我救浪Context db = new 我救浪Context();
-        //        var datas = db.Products.Where(p => p.IsPet == true).ToList();
-        //        List<CProductShow> list = new List<CProductShow>();
-        //        foreach (Product p in datas)
-        //        {
-        //            CProductShow cprod = new CProductShow();
-        //            cprod.product = p;
-        //            if (p.Photos.Any())
-        //                cprod.Photos = p.Photos.ToList();
-        //            list.Add(cprod);
-        //        }
-        //        return PartialView(list);
-        //    }
-        public IActionResult petsAdopt()
+        public IActionResult petsAdopt(int id)
         {
-            return View();
+            var a = db.Products.Where(x => x.ProductId == id).FirstOrDefault();
+            return View(new CAdoptView(a));
         }
         public IActionResult petsMatch(MemberWish memberWish)
         {
@@ -136,6 +102,52 @@ namespace qqqq.Controllers
                 .Select(p => new CAdoptView(p, memberWish)).ToList();
             datas=datas.Where(p=>p.MatchScore>=55).OrderByDescending(p => p.MatchScore).ToList();
             return View(datas);
+        }
+        public void WishSaveChange(PetDetail petDetail, Product product, int categoryid)
+        {
+            CLoginViewModel memberview = null;
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+            {
+                var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
+                memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+            }
+            var a = db.MemberWishes.Where(x => x.MemberId == memberview.MemberID).FirstOrDefault();
+            a.CategoryId = categoryid;
+            a.SubCategoryId = product.SubCategoryId;
+            a.GenderId = petDetail.GenderId;
+            a.ColorId = petDetail.ColorId;
+            a.LigationId = petDetail.LigationId;
+            a.SizeId = petDetail.SizeId;
+            a.AgeId = petDetail.AgeId;
+            a.CityId = petDetail.CityId;
+            db.SaveChanges();
+
+        }
+        public void AdoptOrder(int memID , int productID)
+        {
+            Order order = new Order()
+            {
+                OrderDate = DateTime.Now,
+                MemberId = memID,
+                EmployeeId = 1,
+                SendAddress = db.Members.Where(x => x.MemberId == memID).Select(y => y.Address).FirstOrDefault(),
+                OrderStatusId = 2
+            };
+            db.Orders.Add(order);
+            db.SaveChanges();
+
+            OrderDetail orderDetail = new OrderDetail()
+            {
+                OrderId = db.Orders.Select(x => x.OrderId).ToList().LastOrDefault(),
+                ProductId = productID,
+                UnitPrice = 0,
+                Quantity = 1,
+                IsDonate = false
+            };
+            db.OrderDetails.Add(orderDetail);
+            db.SaveChanges();
+
+
         }
     }
 }

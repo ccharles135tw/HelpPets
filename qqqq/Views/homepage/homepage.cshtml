@@ -5,11 +5,12 @@
 <!-- javascript -->
 <script src="../assets/vendors/jquery.min.js"></script>
 <script src="../assets/owlcarousel/owl.carousel.js"></script>
-@model IEnumerable<qqqq.ViewModels.CProductShow>
+@model List<qqqq.ViewModels.CProductShow>
 
 @{
     ViewData["Title"] = "petsMatch";
     qqqq.Models.我救浪Context db = new 我救浪Context();
+    
 
 }
 <style>
@@ -51,11 +52,11 @@
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        @*<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>*@
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
         <div class="carousel-item  active" data-bs-interval="2000">
-            <a style="height:100%"  href="/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" class="d-block vw-100"></a>
+            <a style="height:100%" href="/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" class="d-block vw-100"></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
                 <p>Some representative placeholder content for the first slide.</p>*@
@@ -68,13 +69,13 @@
                 <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
-        <!--<div class="carousel-item" data-bs-interval="2000">
-        <img src="~/img/home2.jpg" class="d-block w-100">
-        <div class="carousel-caption  d-md-block">-->
-        @*<h1 id="titleh1">First slide label</h1>
-        <p>Some representative placeholder content for the first slide.</p>*@
-        <!--</div>
-    </div>-->
+        <div class="carousel-item" data-bs-interval="2000">
+            <a style="height:100%" href="/pest/petsList"><img src="~/img/p首頁/pet.png" class="d-block vw-100"></a>
+            <div class="carousel-caption d-md-block">
+                @*<h1 id="titleh1">First slide label</h1>
+                <p>Some representative placeholder content for the first slide.</p>*@
+            </div>
+        </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="bi bi-chevron-left fa-5x " style="color:#EAA636" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -127,18 +128,18 @@
 </div>
 <section id="demos">
     <div class="row">
-        <div class="large-12 columns">
+        <div class="large-12 columns pl-3">
             @*<marquee><h1>正在找家的毛孩們</h1></marquee>*@
             <div class="owl-carousel">
                 @foreach (var item in Model)
                 {
-                    <div class="swiper-slide" style="width:300px;height:400px;">
+                    <div class="swiper-slide" style="width:300px;height:350px;">
 
-                        <button id="addToList" style="background-color: #734226">
+                        <div id="addToList" style="background-color: #734226;text-align:center " >
 
                             @{ if (item.Photos.Count == 0)
                                 {
-                                    <img src="/Images/notfound.jpg" height="300" zoom />
+                                    <img src="/Images/notfound.jpg" width="300" height="300" zoom />
                                 }
                                 else
                                 {
@@ -146,7 +147,7 @@
                                 }
                             }
                             <h5 style="color:#fff;">@item.ProductName</h5>
-                        </button>
+                        </div>
                     </div>
                 }
             </div>
@@ -171,26 +172,11 @@
                 <div class="h-100">
                     <h3 class="text-primary text-uppercase mb-2">//成立宗旨</h3>
                     <h1 class="display-6 mb-4">我們願意為浪浪多做一份努力</h1>
-                    @*<p>文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</p>*@
                     <h5>
                         一般人在面對街頭流浪動物時，第一眼的感覺會報以同情的眼光，但絕少會主動伸出援手來幫助牠們，以致街頭流浪動物數目與日俱增，在此同時，是否也代表著人類對於不同形式的生命愈來愈不重視，這種現象是人類文明進步的產物，抑或是人類之善念已被文明的進步所湮滅。
                         宣導尊重生命及愛護動物的觀念，督促政府以人道方式解決流浪動物造成的社會及環境問題，提升台灣國際形象，使動物免於流浪及虐待，直到街上沒有流浪動物為止。
                     </h5>
-                    @*<div class="row g-2 mb-4">
-                        <div class="col-sm-6">
-                            <i class="fa fa-check text-primary me-2"></i>文字文字
-                        </div>
-                        <div class="col-sm-6">
-                            <i class="fa fa-check text-primary me-2"></i>文字文字
-                        </div>
-                        <div class="col-sm-6">
-                            <i class="fa fa-check text-primary me-2"></i>文字文字
-                        </div>
-                        <div class="col-sm-6">
-                            <i class="fa fa-check text-primary me-2"></i>文字文字
-                        </div>
-                    </div>*@
-                    @*<a class="btn btn-primary rounded-pill py-3 px-5" href="">了解更多</a>*@
+
                 </div>
             </div>
         </div>
@@ -221,66 +207,32 @@
             <h1 class="display-6 mb-4">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</h1>
         </div>
         <div class="row g-4">
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                    <div class="text-center p-4">
-                        <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">$545</div>
-                        <h3 class="mb-3">飼料</h3>
-                        <span>【Farmina 法米納】全齡犬 天然無穀糧-羊肉藍莓〈小顆粒〉800g</span>
-                    </div>
-                    <div class="position-relative mt-auto">
-                        <img class="img-fluid" src="~/img/food1.jpg" alt="">
-                        <div class="product-overlay">
-                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://www.momoshop.com.tw/goods/GoodsDetail.jsp?i_code=5597396&str_category_code=4700200129&sourcePageType=4"><i class="fa fa-eye text-primary"></i></a>
+            @{
+                var list = db.Products.Where(p => p.IsPet == false).ToList();
+                int totalCount = list.Count;
+                for (int i = 0; i < 4; i++)
+                {
+                    Random r = new Random(DateTime.Now.Millisecond);
+                    int index = r.Next(0, totalCount);
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                            <div class="text-center p-4">
+                                <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">$@(((decimal)list[index].Price).ToString("#"))元</div>
+                                <h3 class="mb-3">@(list[index].ProductName)</h3>
+                            </div>
+                            <div class="position-relative mt-auto">
+                                <img class="img-fluid" src="~/Images/@(list[index].Photos.Count==0?null:list[index].Photos.Where(ph=>ph.IsDefault==true).FirstOrDefault().PictureName)" alt="">
+                                <div class="product-overlay">
+                                    <a class="btn btn-lg-square btn-outline-light rounded-circle" href="~/shopping/showproduct/@(list[index].ProductId)"><i class="fa fa-eye text-primary"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                    <div class="text-center p-4">
-                        <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$350</div>
-                        <h3 class="mb-3">牽繩</h3>
-                        <span>【澳洲 EZYDOG】減少50%拉力 外出不拉傷 零拉力牽繩25(64cm)</span>
-                    </div>
-                    <div class="position-relative mt-auto">
-                        <img class="img-fluid" src="~/img/food2.jpg" alt="">
-                        <div class="product-overlay">
-                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://24h.pchome.com.tw/prod/DEAKVB-A9008UKJ6?fq=/S/DEAKFR"><i class="fa fa-eye text-primary"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                    <div class="text-center p-4">
-                        <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$888</div>
-                        <h4 class="mb-3">貓抓板</h4>
-                        <span>貓家超耐磨貓抓板</span>
-                    </div>
-                    <div class="position-relative mt-auto">
-                        <img class="img-fluid" src="~/img/food3.jpg" alt="">
-                        <div class="product-overlay">
-                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://24h.pchome.com.tw/prod/DEAK8J-A9009O0ST"><i class="fa fa-eye text-primary"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                    <div class="text-center p-4">
-                        <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$888</div>
-                        <h4 class="mb-3">貓抓板</h4>
-                        <span>貓家超耐磨貓抓板</span>
-                    </div>
-                    <div class="position-relative mt-auto">
-                        <img class="img-fluid" src="~/img/food3.jpg" alt="">
-                        <div class="product-overlay">
-                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="https://24h.pchome.com.tw/prod/DEAK8J-A9009O0ST"><i class="fa fa-eye text-primary"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    list.RemoveAt(index);
+                    totalCount--;
+                }
+
+            }
         </div>
     </div>
 </div>
@@ -292,43 +244,48 @@
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <h3 class="text-primary text-uppercase mb-2">// 熱心志工團隊</h3>
                 <h1 class="display-6 mb-4">我們提供的協助</h1>
-                <p class="mb-5">文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</p>
+                <p class="mb-5">
+                    強化動物保護教育及法令觀念，同時擴增動物照護人力、提升收容動物福利，與精進為民服務品
+                    質，廣徵熱心公益及具愛護動物觀念之民眾，協助執行收容動物照護及推
+                    廣動物認養工作，並依據志願服務法、動物保護法第23條等相關規定，召
+                    募長期固定志願服務
+                </p>
                 <div class="row gy-5 gx-4">
                     <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="d-flex align-items-center mb-3">
                             <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
                                 <i class="fa fa-solid fa-dog text-white"></i>
                             </div>
-                            <h5 class="mb-0">文字文字</h5>
+                            <h5 class="mb-0">​接送志工</h5>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字</span>
+                        <span>專車接送犬隻往返醫院絕育、原地放回及交還飼主。</span>
                     </div>
                     <div class="col-sm-6 wow fadeIn" data-wow-delay="0.2s">
                         <div class="d-flex align-items-center mb-3">
                             <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
                                 <i class="fa fa-solid fa-cat text-white"></i>
                             </div>
-                            <h5 class="mb-0">文字文字</h5>
+                            <h5 class="mb-0">​園區掃除志工</h5>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
+                        <span>我們非常注重中途站的傳染病防疫，幫助營造一個安全的絕育、休養環境，歡迎您的加入！</span>
                     </div>
                     <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
                         <div class="d-flex align-items-center mb-3">
                             <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
                                 <i class="fa fa-users text-white"></i>
                             </div>
-                            <h5 class="mb-0">文字文字</h5>
+                            <h5 class="mb-0">家訪志工</h5>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
+                        <span>家戶訪查，找出放養貓狗，並說明飼主寵物絕育之重要,並協助安排後續流程。</span>
                     </div>
                     <div class="col-sm-6 wow fadeIn" data-wow-delay="0.4s">
                         <div class="d-flex align-items-center mb-3">
                             <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
                                 <i class="fa fa-solid fa-house text-white"></i>
                             </div>
-                            <h5 class="mb-0">文字文字</h5>
+                            <h5 class="mb-0">跨海認養</h5>
                         </div>
-                        <span>文字文字文字文字文字文字文字文字文字文字</span>
+                        <span> 由搭機由台灣直飛美加的愛心旅客擔任「護犬大使」，以附加行李的方式護送這些貓狗出國，前往地球另一端的新家。</span>
                     </div>
                 </div>
             </div>
@@ -353,7 +310,7 @@
             owl.owlCarousel({
                 items: 4,
                 loop: true,
-                margin: 10,
+                //margin: 10,
                 autoplay: true,
                 autoplayTimeout: 1000,
                 autoplayHoverPause: true

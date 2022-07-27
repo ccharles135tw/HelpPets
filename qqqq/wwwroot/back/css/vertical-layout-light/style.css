@@ -11009,7 +11009,7 @@ pre {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #F5F7FF;
+    background-color: #fff;
 }
 
 .table-hover tbody tr:hover {
@@ -21175,7 +21175,7 @@ code {
 
 /* Footer */
 .footer {
-    background: #F5F7FF;
+    background: #fff;
     padding: 30px 2.45rem;
     transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
@@ -21470,7 +21470,7 @@ code {
     padding-top: 16px;
     padding-bottom: 16px;
     z-index: 10;
-    background: #F5F7FF;
+    background: #fff;
 }
 
 .doc-content {
@@ -29978,7 +29978,7 @@ div.tagsinput {
 }
 
 .content-wrapper {
-    background: #F5F7FF;
+    background: #fff;
     padding: 2.375rem 2.375rem;
     width: 100%;
     -webkit-flex-grow: 1;

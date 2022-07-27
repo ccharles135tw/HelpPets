@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Pet.ViewModels;
 using qqqq.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +13,12 @@ namespace qqqq.Controllers
 {
     public class BK_memberController : Controller
     {
+
+        public IWebHostEnvironment _environment;
+        public BK_memberController(IWebHostEnvironment member)
+        {
+            _environment = member;
+        }
         public IActionResult memList(CMemberView vModel)
         {
             //我救浪Context db = new 我救浪Context();
@@ -37,7 +46,7 @@ namespace qqqq.Controllers
                 CMemberView v = new CMemberView();
                 v.Member = m;
                 //v.MemberNewBirthDate =(string)m.BirthdayDate.ToString();
-                list.Add(v); 
+                list.Add(v);
             }
             return View(list);
         }
@@ -48,9 +57,20 @@ namespace qqqq.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Member m)
+        public IActionResult Create(Member m, IFormFile file)
         {
             我救浪Context db = new 我救浪Context();
+            m.VolunteerHour = 0;
+            //m.BirthdayDate =  m.BirthdayDate;
+
+
+            //照片
+            if (file != null)
+            {
+                string photoName = Guid.NewGuid().ToString() + ".jpg";
+                file.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + photoName, FileMode.Create));
+                m.Photo = photoName;
+            }
             db.Members.Add(m);
             db.SaveChanges();
             return RedirectToAction("memList");
@@ -81,22 +101,56 @@ namespace qqqq.Controllers
             return View(new CMemberView(mem));
         }
         [HttpPost]
-        public IActionResult Edit(Member mb)
+        public IActionResult Edit(Member mb, IFormFile file)
         {
             我救浪Context db = new 我救浪Context();
-            Member mem = db.Members.FirstOrDefault(m => m.MemberId == mb.MemberId);
-            if (mem != null)
+            var q = db.Members.FirstOrDefault(m => m.MemberId == mb.MemberId);
+            if (q != null)
             {
-                mem.Name = mb.Name;
-                mem.Password = mb.Password;
-                mem.Address = mb.Address;
-                mem.BirthdayDate = mb.BirthdayDate;
-                mem.Email = mb.Email;
-                mem.MemberPhone = mb.MemberPhone;
+                q.Name = mb.Name;
+                q.HgenderId = mb.HgenderId;
+                q.BirthdayDate = mb.BirthdayDate;
+                q.MemberPhone = mb.MemberPhone;
+                q.Password = mb.Password;
+                q.CityId = mb.CityId;
+                q.Address = mb.Address;
+                q.Email = mb.Email;
+
                 db.SaveChanges();
+            }
+            var qph = db.Members.FirstOrDefault(m => m.MemberId == mb.MemberId).Photo;
+            if ( file != null)
+            {
+                string photoName = Guid.NewGuid().ToString() + ".jpg";
+                file.CopyTo(new FileStream(_environment.WebRootPath + "/Images/" + photoName, FileMode.Create));
+                mb.Photo = photoName;
+                db.Members.Remove(db.Members.Where(ph => ph.MemberId == mb.MemberId).FirstOrDefault());
+                db.Members.Add(mb);
+                db.SaveChanges();
+            }
+          
+            return RedirectToAction("memList");
+        }
+
+
+
+        //
+        public IActionResult KeyWord(string keyword)
+        {
+            我救浪Context db = new 我救浪Context();
+            List<CMemberView> datas = null;
+            ViewBag.keyword = keyword;
+            if (string.IsNullOrEmpty(keyword))
+            {
+                datas = (from m in db.Members
+                         select new CMemberView(m)).ToList();
+            }
+            else
+            {
+                datas = db.Members.Where(m => m.Name.Contains(keyword) || m.MemberPhone.Contains(keyword) || m.Email.Contains(keyword)).Select(m => new CMemberView(m)).ToList();
 
             }
-            return RedirectToAction("memList");
+            return View("memList",datas);
         }
     }
 }
