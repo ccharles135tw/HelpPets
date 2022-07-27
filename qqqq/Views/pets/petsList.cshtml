@@ -336,15 +336,14 @@
         $("#btnSearch").click(() => {
             $.post('@Url.Content("~/pets/SearchForPet")', $("#formSearch").serialize(), (result) => {
                 $("#divAlert").empty();
-                //console.log(result)
                 $("#divAlert").append(result);
             })
         })
 
-         $("#btnKeyword").click(() => {
+        $("#btnKeyword").click(() => {
+            console.log(1);
             $.post('@Url.Content("~/pets/SearchForKeyword")', $("#formKeyword").serialize(), (result) => {
                 $("#divAlert").empty();
-                //console.log(result)
                 $("#divAlert").append(result);
             })
         })

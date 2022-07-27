@@ -72,9 +72,9 @@ namespace qqqq.Controllers
             }
             else
             {
-                var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword) || p.Description.Contains(keyword))).ToList();
+                var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword))).ToList();
                 var list = CAdoptView.CAdoptViews(a);
-                Debug.WriteLine(list[0].GenderType);
+               //Debug.WriteLine(list[0].GenderType);
                 return PartialView("petsPhoto", list);
             }
             

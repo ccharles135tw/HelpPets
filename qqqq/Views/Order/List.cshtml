@@ -3,11 +3,31 @@
 @{
     ViewData["Title"] = "List";
     Layout = "_BackLayout";
+    qqqq.Models.我救浪Context db = new 我救浪Context();
 }
 
 @section Styles
 {
     <style>
+        .thHover:hover {
+            cursor: pointer;
+        }
+
+        .spanPage {
+            margin: 0 5px;
+            cursor: pointer;
+            color: dodgerblue;
+        }
+
+            .spanPage:hover {
+                text-decoration-line: underline;
+                color: red;
+            }
+
+            .spanPage.spanPageSelected {
+                text-decoration-line: underline;
+                color: red;
+            }
         th {
             white-space: nowrap
         }
@@ -32,14 +52,28 @@
     </style>
 }<h1 style="text-align:center; font-weight:900">訂單管理系統</h1>
 <div style="text-align:left; font-size:16px ; font-weight:600">
-    @using (Html.BeginForm())
-    {
-        @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
-        <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
-    }
+    <form action="@Url.Content("~/Order/Search")" id="searchForm">
+        <label>關鍵字</label> <input type="text" value="@ViewBag.keyword" style="border-radius:30px;" name="keyword" id="keyword" />
+        <label>價錢區間(總金額)</label><input type="number" name="PriceLow" style="width:80px; border-radius:15px;" value="@ViewBag.low" class="text-center" />~<input type="number" name="PriceHigh" style="width:80px;border-radius:15px;" value="@ViewBag.high" class="text-center" />(單位:元)
+        <label>日期區間</label><input type="date" name="DateLow" value="@(ViewBag.datelow==null?null:ViewBag.datelow.ToString("yyyy-MM-dd"))" /><input type="date" name="DateHigh" value="@(ViewBag.datehigh==null?null:ViewBag.datehigh.ToString("yyyy-MM-dd"))" />
+        <div style="display:inline-block;position:relative;top:15px" >
+           
+                @{
+                    foreach (var os in db.OrderStatuses.ToList())
+                    {
+                        <label>@os.StatusType</label><input type="checkbox" value="@os.OrderStatusId" name="orderStatus" class="check-orderStatus" />
+                    }
+                }
+            <br />
+                <label>商品</label><input type="radio" value="False" name="isPet" />
+                <label>浪浪</label><input type="radio" value="True" name="isPet" />
+        </div>
+            <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
+    </form>
+
+    
 </div>
 <br />
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -91,12 +125,14 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.MemberId)
+                            @item.order.Member.Name
                         </td>
                         @*<td>
-                    @Html.DisplayFor(modelItem => item.EmployeeId)
-                </td>*@
+                                @Html.DisplayFor(modelItem => item.EmployeeId)
+                            </td>*@
                         <td>
-                            @Html.DisplayFor(modelItem => item.OrderDate)
+                            @*@Html.DisplayFor(modelItem => ((DateTime)item.OrderDate).ToString("yyyy/MM/dd"))*@
+                            @(((DateTime)item.OrderDate).ToString("yyyy/MM/dd"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.SendAddress)
@@ -121,6 +157,9 @@
             </tbody>
         </table>
     </div>
+    <div class="row">
+        <div id="divPage" style="border-radius:20px; margin:auto;border:2px solid black; text-align:center" class="col-12"></div>
+    </div>
     <!-- Button trigger modal -->
     @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
@@ -139,9 +178,9 @@
                     <div id="txtDetail"></div>
                     <br />
                 </div>
-                
+
                 <div class="modal-footer">
-                    <button style="font-size:24px; color:chocolate; border:none;background-color:transparent" type="button"  data-bs-dismiss="modal" onclick="$('#exampleModal').modal('hide')">關閉</button>
+                    <button style="font-size:24px; color:chocolate; border:none;background-color:transparent" type="button" data-bs-dismiss="modal" onclick="$('#exampleModal').modal('hide')">關閉</button>
                     @*<button type="button" class="btn btn-primary">Save changes</button>*@
                 </div>
             </div>
@@ -177,6 +216,97 @@
 
          })
         </script>
+        <script>
+            //searchForm
+        $(":radio[value=@ViewBag.isPet]").trigger("click");
+        </script>
+        @{//SearchForm
+            if (ViewBag.orderStatus != null)
+            {
+                <script>
+                    let a = @ViewBag.orderStatus;
+                for (let index of a)
+                {
+                    $(`#searchForm .check-orderStatus[value=${index}]`).trigger("click");
+                }
+                </script>
+            }
+        }
+        <script>
+            //排序
+            var sortMode = false;
+            $("th").slice(0, 6).on("click", Sort).addClass("thHover");
+            function Sort()
+            {
+                sortMode = !sortMode;
+                let index = $(this).index();
+                $("th").removeClass("bg-warning");
+                $(this).addClass("bg-warning");
+                let all = $("tbody tr");
+                for (let i = 0; i < all.length; i++)
+                {
+                    let j = 0;
+
+                    let preAll = all.eq(i).prevAll();
+
+                    for (j = 0; j < preAll.length; j++)
+                    {
+
+                        let ele_price = all.eq(i).children("td").eq(index).text();
+                        let pre_price = preAll.eq(j).children("td").eq(index).text();
+                        if (isNaN(ele_price) == false)
+                        {
+                            ele_price = parseInt(ele_price);
+                            pre_price = parseInt(pre_price);
+                        }
+                        if (sortMode == true)
+                        {
+                            if (ele_price >= pre_price)
+                            {
+                                all.eq(i).insertAfter(preAll.eq(j));
+                                break;
+                            }
+                        }
+                        else if (sortMode == false)
+                        {
+                            if (ele_price <= pre_price)
+                            {
+                                all.eq(i).insertAfter(preAll.eq(j));
+                                break;
+                            }
+                        }
+                    }
+                    if (j == preAll.length)
+                    {
+                        all.eq(i).prependTo("tbody");
+                    }
+                }
+                $("#divPage .spanPage").eq(0).trigger("click");
+            }
+        </script>
+        <script>
+            //Page
+            let tr = $("tbody tr");
+            let pageCount = Math.ceil(tr.length / 10);
+            for (let i = 1; i <= pageCount; i++)
+            {
+                $("#divPage").append(`<span class="spanPage">${i}</span>`);
+            }
+            let spanPage = $("#divPage .spanPage");
+            spanPage.on("click", function ()
+            {
+                tr = $("tbody tr");
+                tr.hide();
+                let index = 10 * $(this).text();
+                spanPage.removeClass("spanPageSelected");
+                $(this).addClass("spanPageSelected");
+                tr.slice(index - 10, index).show();
+                window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+            })
+            spanPage.eq(0).trigger("click");
+
+        </script>
     }
+
 </body>
 </html>

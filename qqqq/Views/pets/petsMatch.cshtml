@@ -87,7 +87,7 @@
                 {
                     <div class="swiper-slide" width="100%">
 
-                        <button id="addToList" style="background-color: #734226">
+                        <div id="addToList" style="background-color: #734226">
                             <h5 style="color:#fff;">@item.ProductName</h5>
                             <h5 style="color:lightgray">媒合度<span>@item.MatchScore</span>%</h5>
                             @{ if (item.product.Photos.Count == 0)
@@ -100,7 +100,7 @@
                                 }
                             }
                             <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = item.ProductId })</i>
-                        </button>
+                        </div>
                     </div>
                 }
 

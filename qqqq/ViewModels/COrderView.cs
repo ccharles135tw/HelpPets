@@ -22,6 +22,7 @@ namespace Pet.ViewModels
                 string rr = od.Product.ProductName + " * " + od.Quantity;
                 details.Add(rr);
             }
+           
         }
         static public List<COrderView> COrderViews(List<Order> orders)
         {
@@ -52,7 +53,8 @@ namespace Pet.ViewModels
  
         public List<string> details;
         [DisplayName("訂單總金額")]
-        public string OrderMoney { get { return (order.OrderDetails.Sum(o => (decimal)(o.UnitPrice * o.Quantity))).ToString("0")+"元";} }
+       // public string OrderMoney { get { return (order.OrderDetails.Sum(o => (decimal)(o.UnitPrice * o.Quantity))).ToString("0")+"元";} }
+        public string OrderMoney { get { return (order.OrderDetails.Sum(o => (decimal)(o.UnitPrice * o.Quantity))).ToString("0"); } }
 
     }
 }
