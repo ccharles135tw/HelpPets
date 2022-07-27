@@ -3,10 +3,130 @@
         <h1 class="display-4 text-white animated slideInDown mb-3">結帳</h1>
     </div>
 </div>
+@model List<qqqq.ViewModels.CShoppingCart>
+@using System.Text.Json
+
 @{
-    ViewData["Title"] = "Pay";
+    ViewData["Title"] = "";
 }
 <div class="container col-md-6 col-sm-12">
+    <form enctype="multipart/form-data">
+
+        <table class="table  ">
+            <thead>
+                <tr>
+                    <th hidden>
+                        @Html.DisplayNameFor(model => model[0].CartId)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].CartPhoto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].CartName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].CartPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].CartCount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model[0].TotalPrice)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    decimal pay = 0;
+                    for (int i = 0; i < Model.Count(); i++)
+                    {
+                        if (Model[i].CartPay == true)
+                        {
+
+                            <tr>
+                                <td hidden>
+                                    @Html.DisplayFor(item => item[i].CartId)
+                                </td>
+
+                                <td>
+                                    <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].CartName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].CartPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].CartCount)
+                                    @*<input type="number" min="1" value="@item[i].CartCount" onchange="ChangeItemCount('@item[i].CartId',this.value,false)" />*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].TotalPrice)
+                                </td>
+
+                            </tr>
+                        }
+                        if (Model[i].DonatePay == true)
+                        {
+
+                            <tr>
+                                <td hidden>
+
+                                    @Html.DisplayFor(item => item[i].CartId)
+                                </td>
+
+                                <td>
+                                    <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].CartName)
+                                    <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].CartPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].Donate)
+
+                                    @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(item => item[i].DonatePrice)
+                                </td>
+
+                            </tr>
+                            @*@(pay=pay+ Model[i].DonatePrice);*@
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center "><h5>總價:@(Model.Where(x=>x.CartPay).Sum(x=>x.TotalPrice)+ Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice))</h5></td>
+
+                    <td>
+                        @if (Model.Count() != 0)
+                        {
+                            <button class="btn btn-success" type="submit">結帳</button>
+                            @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
+                        }
+                        else
+                        {
+                            <button class="btn btn-success" type="button">結帳</button>
+                            @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
+                        }
+                    </td>
+
+
+                </tr>
+            </tfoot>
+        </table>
+
+    </form>
     <h1>結帳</h1>
     <br />
     <form>
@@ -75,15 +195,33 @@
             <hr />
             <div class="form-group alert alert-danger mt-4 ">
                 <h5>
-                    <label class="control-label">商品金額: @Model</label><br />
+                    <label class="control-label">商品金額:100</label><br />
                     <label class="control-label">運      費  : 60</label><br />
-                    <label class="control-label">總金額  : @(60+Model)</label>
+                    <label class="control-label">總金額  : 60)</label>
                 </h5>
             </div>
         </fieldset>
         <div>
-             <a>   @Html.ActionLink("確定", "shopping", "shopping", null, new { onclick = "return alert('訂單已成立')", @class = "btn btn-success" })</a>
+            <a>   @Html.ActionLink("確定", "shopping", "shopping", null, new { onclick = "return alert('訂單已成立')", @class = "btn btn-success" })</a>
         </div>
 
     </form>
 </div>
+
+<script>
+    debugger;
+    var data = JSON.parse('@Html.Raw(JsonSerializer.Serialize(Model))');
+    console.log(data);
+
+    function Test() {
+        $.ajax({
+            url: "@Url.Action("createOrderDetail", "Shopping")",
+                        type:"post",
+                  data: { data: data},
+                        success: function(data) {
+
+                        }
+                    });
+    }
+
+</script>

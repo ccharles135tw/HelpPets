@@ -54,6 +54,7 @@
                     <tr>
                         <td hidden>
                             @Html.DisplayFor(item => item[i].CartId)
+                            @Html.HiddenFor(item => item[i].CartId)
                         </td>
                         <td>
                             @Html.CheckBoxFor(item => item[i].CartPay, new { @class = "chk" })
@@ -106,7 +107,7 @@
                             @Html.DisplayFor(item => item[i].CartPrice)
                         </td>
                         <td>
-                            @Html.TextBoxFor(item => item[i].Donate, new { @min = "1", @type = "number", @onchange = $"ChangeItemCount('{Model[i].CartId}',this.value,false)" })
+                            @Html.TextBoxFor(item => item[i].Donate, new { @min = "1", @type = "number", @onchange = $"ChangeItemCount('{Model[i].CartId}',this.value,true)" })
 
                             @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
                         </td>

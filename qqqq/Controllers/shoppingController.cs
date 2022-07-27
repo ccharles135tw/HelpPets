@@ -350,10 +350,29 @@ namespace qqqq.Controllers
         }
         public IActionResult Pay(List<CShoppingCart> item)
         {
-            var test = HttpContext.Request;
+
+
             if (item.Any())
             {
-                return View(123);
+                List<CShoppingCart> list = new List<CShoppingCart>();
+                foreach (var p in item)
+                {
+                    CShoppingCart cProd = new CShoppingCart();
+                    var prod = db.Products.First(c => c.ProductId == p.CartId);
+                    cProd.CartCount = p.CartCount;
+                    cProd.CartId = p.CartId;
+                    cProd.CartPrice = (decimal)prod.Price;
+                    cProd.Donate = p.Donate;
+                    cProd.DonatePay = p.DonatePay;
+                    cProd.CartPay = p.CartPay;
+                    cProd.CartName = prod.ProductName;
+                    if (db.Photos.Any(c => c.ProductId == p.CartId && c.IsDefault == true))
+                    {
+                        cProd.CartPhoto = db.Photos.First(c => c.ProductId == p.CartId && c.IsDefault == true).PictureName;
+                    }
+                    list.Add(cProd);
+                }
+                return View(list);
             }
             else
                 return RedirectToAction("CartView");
@@ -435,7 +454,7 @@ namespace qqqq.Controllers
                 if (jsonUser != null)
                 {
                     var User = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
-                    var list = db.Products.Where(p =>p.IsPet==false&& p.MyFavorites.Where(f => f.MemberId == User.MemberID).Any()).ToList();
+                    var list = db.Products.Where(p => p.IsPet == false && p.MyFavorites.Where(f => f.MemberId == User.MemberID).Any()).ToList();
                     List<CProductShow> data = new List<CProductShow>();
                     foreach (var p in list)
                     {
@@ -443,7 +462,7 @@ namespace qqqq.Controllers
                         cProd.product = p;
                         if (db.Photos.Where(c => c.ProductId == p.ProductId).Any())
                         {
-                            cProd.Photos = db.Photos.Where(c => c.ProductId==p .ProductId).ToList();
+                            cProd.Photos = db.Photos.Where(c => c.ProductId == p.ProductId).ToList();
                         }
                         data.Add(cProd);
                     }
@@ -457,6 +476,35 @@ namespace qqqq.Controllers
             }
 
         }
-       
+        public IActionResult createOrder(string address)
+        {
+            var jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            var user = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+            Order or = new Order();
+            or.EmployeeId = 1;
+            or.MemberId = user.MemberID;
+            or.OrderDate = DateTime.Now.Date;
+            or.SendAddress = address;
+            or.OrderStatusId = 2;
+            db.Orders.Add(or);
+            db.SaveChanges();
+            var id = db.Orders.First(p => p.OrderDate == or.OrderDate && p.MemberId == or.MemberId && p.SendAddress == or.SendAddress).OrderId;
+            return Content(id.ToString());
+        }
+        public IActionResult createOrderDetail(string address, List<CShoppingCart> data)
+        {
+            var jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            var user = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+            Order or = new Order();
+            or.EmployeeId = 1;
+            or.MemberId = user.MemberID;
+            or.OrderDate = DateTime.Now.Date;
+            or.SendAddress = address;
+            or.OrderStatusId = 2;
+            db.Orders.Add(or);
+            db.SaveChanges();
+            var id = db.Orders.First(p => p.OrderDate == or.OrderDate && p.MemberId == or.MemberId && p.SendAddress == or.SendAddress).OrderId;
+            return Content(id.ToString());
+        }
     }
 }
