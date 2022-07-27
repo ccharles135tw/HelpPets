@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<qqqq.Models.Order>
+
+
 
 <h3 class="h5 mb-4 text-center">訂單總覽</h3>
 <div class="table-wrap">
@@ -11,41 +13,59 @@
                 <th>購買日期</th>
                 <th>訂單狀態</th>
                 <th>&nbsp;</th>
-
             </tr>
         </thead>
         <tbody>
-            <tr class="alert" role="alert">
-
-                <td>
-                    1
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>尚有其他3筆資料</span>
-                    </div>
-                </td>
-
-                <td>$600</td>
-                <td>
-                    2012/12/12
-                </td>
-
-                <td>訂單狀態</td>
-
-                <td>
-                    <div class="email">
-                        <a href="#" id="viewDoneList">
-                            <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
-                            <span>點擊檢視詳細資料</span>
-                        </a>
-                    </div>
-                </td>
 
 
 
-            </tr>
+            @{
+
+                我救浪Context db = new 我救浪Context();
+                foreach (var item in Model)
+                {
+                    <tr class="alert" role="alert">
+                        <td>
+                            @item.OrderId
+                        </td>
+                        <td>
+                            <div class="email">
+                                @{var detail = db.OrderDetails.Where(x => x.OrderId == item.OrderId).Select(y => y.Product.ProductName).ToList(); }
+                                <span>@detail.FirstOrDefault()</span>
+                                <span>尚有其他@(detail.Count - 1 )筆資料</span>
+                            </div>
+                        </td>
+                        @{
+                            decimal totalPrice = 0;
+                            var totalList = db.OrderDetails.Where(x => x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
+                            foreach (var i in totalList)
+                            {
+                                totalPrice += (decimal)i.total;
+                            }
+                        }
+                        <td>
+                    
+                            @(String.Format("{0:$#,0}", totalPrice))
+                        </td>
+                        <td>
+                            @($"{((DateTime)item.OrderDate).Year}-{((DateTime)item.OrderDate).Month}-{((DateTime)item.OrderDate).Day}")
+                        </td>
+
+                        <td>@(db.OrderStatuses.Where(x=>x.OrderStatusId==item.OrderStatusId).Select(y=>y.StatusType).FirstOrDefault())</td>
+
+                        <td>
+                            <div class="email">
+                                <a href="#" class="viewDoneList" orderid=@item.OrderId>
+                                    <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
+                                    <span>點擊檢視詳細資料</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            }
+
 
 
             <!--=========================================================================================-->
@@ -59,14 +79,18 @@
 
 
 </div>
+<script>
 
-<script> 
 
-       $("#viewDoneList").click((eve) => {
-            eve.preventDefault();
+    $(".viewDoneList").click(function (eve)  {
+        let orderid = $(this).attr("orderid");
+        console.log(orderid);
+           eve.preventDefault();
+           $("#viewChange").empty();
+        $.post("@Url.Content("~/MemberArea/detailList")", {
+            id: orderid
 
-            $("#viewChange").empty();
-            $.post("@Url.Content("~/MemberArea/detailList")", {}, function (datas) { console.log(datas);$("#viewChange").html(datas); })
+           }, function (datas) { console.log(datas); $("#viewChange").html(datas); })
 
 
         })

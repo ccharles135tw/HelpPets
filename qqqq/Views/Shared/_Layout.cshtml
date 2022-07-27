@@ -73,8 +73,8 @@
                             <li class="dropdown-item"><a>@Html.ActionLink("會員註冊", "Register", "Home")</a> </li>
                             <li class="dropdown-item"><a>@Html.ActionLink("會員專區", "MemberArea", "MemberArea")</a> </li>
                             <li class="dropdown-item"><a>@Html.ActionLink("TRY", "Index", "HOME")</a> </li>
-                            <li class="dropdown-item"><a>@ViewBag.MEM</a> </li>
-                        </ul>
+                            <li class="dropdown-item"><b id="mName">123</b> </li>
+                        </ul> 
                     </div>
                 </div>
 
@@ -164,3 +164,23 @@
 </body>
 
 </html>
+
+    @{ 
+        if (CDictionary.SK_LOGIN_USER !=null) {
+        <script>
+
+            $("#mName").empty();
+            $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("#mName").html(datas); })
+        
+
+        </script>
+                    }
+                }
+
+
+
+
+
+
+
+  

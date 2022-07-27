@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<qqqq.Models.OrderDetail>
 
 
 <h3 class="h5 mb-4 text-center">詳細訂單內容</h3>
@@ -15,257 +15,63 @@
                 <th>總價</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
+                <th>&nbsp;</th>
+
             </tr>
         </thead>
         <tbody>
-            <tr class="alert" role="alert">
+            @{ 我救浪Context db = new 我救浪Context();
+                int count = 0;
+                foreach(var item in Model){
+                    count++;
+                        <tr class="alert" role="alert">
 
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
+                            <td>
+                                @count
 
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                            </td>
 
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                @*<td>星等</td>*@
-                <td>$120</td>
-                <td class="quantity">
-                    <div class="input-group">
-                        2
-                        @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                    </div>
-                </td>
-                <td>$240</td>
+                            <td>
+                                <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
 
-                <td>
-                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                    </button>
-                </td>
-                <td>
+                            </td>
+                            <td>
+                                <div class="email">
+                                    <span>@item.Product.ProductName </span>
+                                    <span>@item.Product.Description</span>
+                                </div>
+                            </td>
+                            @*<td>星等</td>*@
+                            <td>   @(String.Format("{0:$#,0}", item.UnitPrice))</td>
+                            <td class="quantity">
+                                <div class="input-group">
+                                    @item.Quantity
+                                    @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
+                                </div>
+                            </td>
+                            @{
+                                decimal totalPrice = 0;
+                                var totalList = db.OrderDetails.Where(x => x.ProductId == item.ProductId && x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
+                                foreach (var i in totalList)
+                                {
+                                    totalPrice += (decimal)i.total;
+                                }
+                            }
+                        <td> @(String.Format("{0:$#,0}", totalPrice))</td>
 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                    </button>
-                </td>
+                            <td>
+                                <div>
+                                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
+                                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                        <span>產品評論</span>
+                                    </button>
+                                </div>
+                            </td>
 
-
-            </tr>
+                        </tr>
+                    } }
             <!--=========================================================================================-->
 
-
-
-            <tr class="alert" role="alert">
-
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
-
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
-
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                <td>$120</td>
-                <td class="quantity">
-                    <div class="input-group">
-                        2
-                        @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                    </div>
-                </td>
-                <td>$240</td>
-                <td>
-                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                    </button>
-                </td>
-
-            </tr>
-            <!--=========================================================================================-->
-            <tr class="alert" role="alert">
-
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
-
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
-
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                <td>$120</td>
-                <td class="quantity">
-                    <div class="input-group">
-                        2
-                        @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                    </div>
-                </td>
-                <td>$240</td>
-                <td>
-                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                    </button>
-                </td>
-
-            </tr>
-            <!--=========================================================================================-->
-            <tr class="alert" role="alert">
-
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
-
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
-
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                <td>$120</td>
-                <td class="quantity">
-                    <div class="input-group">
-                        2
-                        @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                    </div>
-                </td>
-                <td>$240</td>
-                <td>
-                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                    </button>
-                </td>
-
-            </tr>
-            <!--=========================================================================================-->
-            @*<tr class="alert" role="alert">
-                    <td>
-                        <label class="checkbox-wrap checkbox-primary">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>
-                        <div class="img" style="background-image: url(images/product-2.png);"></div>
-                    </td>
-                    <td>
-                        <div class="email">
-                            <span>Sneakers Shoes 2020 For Men </span>
-                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                        </div>
-                    </td>
-                    <td>$30.99</td>
-                    <td class="quantity">
-                        <div class="input-group">
-                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                        </div>
-                    </td>
-                    <td>$30.99</td>
-                    <td>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                        </button>
-                    </td>
-                </tr>
-
-                <tr class="alert" role="alert">
-                    <td>
-                        <label class="checkbox-wrap checkbox-primary">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>
-                        <div class="img" style="background-image: url(images/product-3.png);"></div>
-                    </td>
-                    <td>
-                        <div class="email">
-                            <span>Sneakers Shoes 2020 For Men </span>
-                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                        </div>
-                    </td>
-                    <td>$35.50</td>
-                    <td class="quantity">
-                        <div class="input-group">
-                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                        </div>
-                    </td>
-                    <td>$35.50</td>
-                    <td>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                        </button>
-                    </td>
-                </tr>
-
-                <tr class="alert" role="alert">
-                    <td>
-                        <label class="checkbox-wrap checkbox-primary">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                    <td>
-                        <div class="img" style="background-image: url(images/product-4.png);"></div>
-                    </td>
-                    <td>
-                        <div class="email">
-                            <span>Sneakers Shoes 2020 For Men </span>
-                            <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                        </div>
-                    </td>
-                    <td>$76.99</td>
-                    <td class="quantity">
-                        <div class="input-group">
-                            <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                        </div>
-                    </td>
-                    <td>$76.99</td>
-                    <td>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                        </button>
-                    </td>
-                </tr>*@
 
 
         </tbody>

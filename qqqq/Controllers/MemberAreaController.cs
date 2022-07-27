@@ -126,9 +126,9 @@ namespace prjHomeLess_R.Controllers
 
             return PartialView();
         }
-        public IActionResult detailList()
+        public IActionResult detailList(int id)
         {
-            return ViewComponent("VCdoneList");
+            return ViewComponent("VCdoneList",id);
         }
         public IActionResult mOrder()
         {
@@ -154,6 +154,10 @@ namespace prjHomeLess_R.Controllers
         {
 
             return ViewComponent("VCmvolunteer");
+        }  public IActionResult mName()
+        {
+
+            return ViewComponent("VCemembername");
         }
     }
 }

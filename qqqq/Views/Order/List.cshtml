@@ -85,6 +85,7 @@
             <tbody id="tbody" style="text-align:center;">
                 @foreach (var item in Model)
                 {
+               
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.OrderId)
@@ -147,7 +148,7 @@
             </div>
         </div>
     </div>
-
+    
     @section Scripts{
         <script>
         $(".btn-detail").on("click", function()
