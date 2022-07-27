@@ -69,14 +69,14 @@
             <h2 class="head" style="text-align: center; letter-spacing:50px;font-size:30px">分類</h2>
             <ul class="card-product__title">
                 <li>
-                    <h4><label class="team-title"  type="text" name="filter" value="2" readonly >狗用</label></h4>
+                    <h4><label class="team-title" type="text" name="filter" value="2" readonly>狗用</label></h4>
                     <ul class="single-search-product-wrapper">
                         @foreach (Category cator in Model)
                         {
                             if (cator.ParentCategory == 2)
                             {
                                 <li>
-                                    <h5><label  filter" type="text" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</label></h5>
+                                    <h5><label filter" type="text" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</label></h5>
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
@@ -89,14 +89,14 @@
                     </ul>
                 </li>
                 <li>
-                    <h4><label  type="text" name="filter" value="3" readonly >貓用</label></h4>
+                    <h4><label type="text" name="filter" value="3" readonly>貓用</label></h4>
                     <ul class="single-search-product-wrapper">
                         @foreach (Category cator in Model)
                         {
                             if (cator.ParentCategory == 3)
                             {
                                 <li>
-                                    <h5><label  type="radio" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</label></h5>
+                                    <h5><label type="radio" name="filter" value="@cator.CategoryId" readonly>@cator.CategoryName</label></h5>
                                     <ul class="child">
                                         @foreach (SubCategory subCat in cator.SubCategories.ToList())
                                         {
@@ -230,6 +230,25 @@
 
             filter();
         })
+function addFavorite ( ProductId) {
+        $.ajax({
+            url: "@Url.Content("~/shopping/favorite")",
+            data: { ProductId:ProductId },
+            success: function (response) {
+                Swal.fire({
+                    title: response,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                })
+            }
+        })
+
+    }
     </script>
 
 }
+
