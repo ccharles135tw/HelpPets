@@ -40,7 +40,7 @@
                     <i class="fa-solid fa-paw">
                         <label asp-for="ProductName" class="control-label"></label>
                     </i>
-                    <input asp-for="ProductName" class="form-control input" />
+                    <input asp-for="ProductName" class="form-control input" id="ProductName" />
                     <span asp-validation-for="ProductName" class="text-danger"></span>
                 </div>
                 <div class="form-group" hidden>
@@ -102,7 +102,7 @@
 
                 <div class="form-group" hidden>
                     <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
+                    <input asp-for="Price" class="form-control"  />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
 
@@ -231,21 +231,21 @@
                     <i class="fa-solid fa-paw">
                         <label asp-for="YearCost" class="control-label"></label>
                     </i>
-                    <input asp-for="YearCost" class="form-control input" />
+                    <input asp-for="YearCost" class="form-control input" id="YearCost" />
                     <span asp-validation-for="YearCost" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="Space" class="control-label"></label>
                     </i>
-                    <input asp-for="Space" class="form-control input" />
+                    <input asp-for="Space" class="form-control input" id="Space" />
                     <span asp-validation-for="Space" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <i class="fa-solid fa-paw">
                         <label asp-for="AccompanyTimeWeek" class="control-label"></label>
                     </i>
-                    <input asp-for="AccompanyTimeWeek" class="form-control input" />
+                    <input asp-for="AccompanyTimeWeek" class="form-control input" id="Time"/>
                     <span asp-validation-for="AccompanyTimeWeek" class="text-danger"></span>
                 </div>
 
@@ -254,12 +254,15 @@
                         <label asp-for="Description" class="control-label"></label>
                     </i>
                     <br />
-                    <textarea class="input form-control" asp-for="Description"></textarea>
+                    <textarea class="input form-control" asp-for="Description" id="Description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group" style="text-align:right">
                     <i class="fa-solid fa-floppy-disk">
                         <input class="input" type="submit" value="新增" />
+                    </i>
+                    <i class="fa-solid fa-paw">
+                        <button type="button" id="demo" class="input">demo</button>
                     </i>
                 </div>
             </form>
@@ -269,13 +272,22 @@
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
         <script>
-
+            //連動
             $("#Category").change(function () {
                 $(`#SubCategory option`).hide();
                 $("#SubCategory").val("none");
                 let CategoryId = this.value;
                 $(`#SubCategory option[Category=${CategoryId}]`).show();
             });
+
+            //demo
+            $("#demo").click(() => {
+                $("#ProductName").val("查理布朗");
+                $("#YearCost").val("50000");
+                $("#Space").val("10");
+                $("#Time").val("30");
+                $("#Description").val("很乖巧");
+            })
         </script>
     }
 
