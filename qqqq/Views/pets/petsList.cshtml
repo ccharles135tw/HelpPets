@@ -21,14 +21,33 @@
     ViewData["Title"] = "petsList";
     qqqq.Models.我救浪Context db = new 我救浪Context();
     CLoginViewModel memberview = null;
+
     if (Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
     {
         var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
         memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
-    }
-    var user = db.Members.Where(m => m.MemberId == 52).FirstOrDefault();
-}
 
+    }
+    if (memberview == null)
+    {
+        memberview = new CLoginViewModel();
+        memberview.MemberID = 1;
+    }
+    var user = db.Members.Where(m => m.MemberId == memberview.MemberID).FirstOrDefault();
+    //if (user.MemberWish == null ? false : (z.SizeId == user.MemberWish.SizeId))
+    //user.MemberWish == null ? false : (p.GenderId == user.MemberWish.GenderId)
+    //var user = db.Members.Where(m => m.MemberId == memberview.MemberID).FirstOrDefault();
+
+
+}
+@section Styles{ 
+<style>
+    label{
+        font-weight:700;
+        font-size:20px;
+    }
+</style>
+}
 <div class="filter-bar flex-wrap align-items-center text-center vw-100" style="justify-content:center;align-items:center">
     <div class="text-center" style="display: flex;flex:none; justify-content: flex-start; align-items: center;padding-top:10px"
          style="text-align:right; margin-right:10px; text-decoration:none">
@@ -72,21 +91,26 @@
                     }
                 }
             </select>
-            <button type="button" id="btnSearch" class="btn btn-primary pl-3">查詢</button>
+            <button type="button" id="btnSearch" class="btn btn-primary pl-3" style="background-color: #D2691E">查詢</button>
         </form>
 
         <div style="flex:none;width:25%" justify-content: flex-start; align-items: center;>
             <form method="post" id="formKeyword">
-                <label>關鍵字</label><input type="text" name="keyword" />
-                <button type="button" class="btn btn-primary" id="btnKeyword">搜尋</button>
+                <label>關鍵字:</label><input type="text" name="keyword" class="m-2" />
+                <button type="button" class="btn btn-primary" id="btnKeyword" style="background-color: #D2691E">搜尋</button>
             </form>
         </div>
 
         <div style="flex: none; width: 25%;justify-content: flex-end; align-items: center;">
             <div class="sorting mr-auto" style="text-align:right; margin-right:10px; text-decoration:none">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">會員願望清單</button>
+                @{ if (memberview.MemberID != 1)
+                    {
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background-color: #D2691E">會員願望清單</button>
+                    }
+
+                }
                 @*<button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
-                <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>*@
+        <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>*@
             </div>
             <div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -178,13 +202,6 @@
 
                                                 }
                                             }
-                                            @*@{
-                    var qcl = from c in db.Colors select c;
-                    foreach (Color c in qcl)
-                    {
-                        <option value="@c.ColorId">@c.ColorName</option>
-                    }
-                }*@
                                         </select>
                                     </div>
                                     <div>
@@ -205,13 +222,6 @@
 
                                                 }
                                             }
-                                            @*@{
-                    var qll = from l in db.Ligations select l;
-                    foreach (Ligation l in qll)
-                    {
-                        <option value="@l.LigationId">@l.LigationType</option>
-                    }
-                }*@
                                         </select>
                                     </div>
                                     <div>
@@ -294,30 +304,6 @@
 
 
 <div class="col-4 w-100" id="divAlert">
-    @*@foreach (var p in Model)
-        {
-            <div class="col-md-10 col-lg-4">
-                <div class="card text-center card-product">
-                    <div class="card-product__img">
-                        <img width="300" height="300" src="/Images/@(p._prod.Photos.Where(ph=>ph.IsDefault==true).Count()==0?null:p._prod.Photos.FirstOrDefault().PictureName)" alt="" style="border:3px solid #EAA636;">
-                        <div class="card-product__imgOverlay" style="display:block">
-                            <h5 style="color:#000;">性別:<span>@(p.GenderType)</span></h5>
-                            <h5 style="color:#000;">體型:<span>@(p.SizeType)</span></h5>
-                            <h5 style="color:#000;">年齡層:<span>@(p.AgeType)</span></h5>
-                            <h5 style="color:#000;">描述 :@p.Description</h5>
-                            <button id="addToList" style=" background: #734226; border: none; border-radius: 10px;">
-                                <i class="fa-solid fa-list-alt" style="color:#fff;padding-right:5px;">@Html.ActionLink("詳細資料", "petsDetial", "pets")</i>
-                            </button>
-                        </div>
-                    </div>
-                   *<div class="card-body">
-                            <p>品種:@p.SubCategoryName</p>
-                            <h4 class="card-product__title"><a href="/pets/petsDetial">@p.ProductName</a></h4>
-
-                        </div>
-                </div>
-            </div>
-        }*@
 </div>
 
 @section scripts{

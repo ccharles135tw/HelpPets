@@ -1,4 +1,16 @@
-﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+@using prjMVCDemo.vModel;
+@using qqqq.Models;
+@using qqqq.ViewModels;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Net;
+@using System.Net.Mail;
+@using System.Text.Json;
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h1 class="display-4 text-white animated slideInDown mb-3">寵物詳細資料</h1>
     </div>
@@ -7,6 +19,12 @@
 
 @{
     ViewData["Title"] = "petsDetial";
+    CLoginViewModel memberview = null;
+    if (Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+    {
+        var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
+        memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+    }
 }
 <div class="container text-center col-md-6 col-sm-12">
     <div>
@@ -15,6 +33,10 @@
                 <img id="prodImg" width="400" height="400" src="/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
             </div>
             <div style="flex:none;text-align:left;margin-left:10px;">
+                <hr />
+                <h5>
+                    <label class="control-label">名字:<span>@Model.ProductName</span></label>
+                </h5>
                 <hr />
                 <h5>
                     <label class="control-label">種類:<span>@Model.SubCategory.Category.CategoryName</span></label>
@@ -82,9 +104,21 @@
         <div class="m-2">
             <div class="form-group">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
+                @{
+                    if (memberview != null)
+                    {
+                        <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
                     我要評估領養
                 </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary m-1" id="login" >
+                            請登入或註冊會員
+                        </button>
+                    }
+                }
+
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -137,7 +171,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
-                                <button type="button" class="btn btn-primary">@Html.ActionLink("我可以做到", "petsAdopt", "pets")</button>
+                                <button type="button" class="btn btn-primary">@Html.ActionLink("我可以做到", "petsAdopt", "pets", new { id = Model.ProductId })</button>
                             </div>
                         </div>
                     </div>
@@ -184,11 +218,33 @@
 </div>
 
 @*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
 
-        $(".imgOption").click((event) => {
-            $("#prodImg").attr("src", event.target.src)
+            $(".imgOption").click((event) => {
+                $("#prodImg").attr("src", event.target.src)
+            })
+        </script>
+    }*@
+@section Scripts{
+    <script>
+        //function alertlist() {
+        //    let timerInterval
+        //    Swal.fire({
+        //        title: '請註冊或登入會員!',
+        //        html: '將在 <b></b> 毫秒後回會員登入頁面',
+        //        timer: 1000,
+        //        timerProgressBar: true,
+        //        didOpen: () => {
+        //            Swal.showLoading()
+        //            const b = Swal.getHtmlContainer().querySelector('b')
+        //            timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft()}, 100);
+        //            setTimeout(function () { location.href = "/Home/Login" }, 1000)
+        //        }
+        //    })
+        //}
+        $("#login").click(() => {
+            document.location.href = "@Url.Content("~/home/login/")"
         })
     </script>
-}*@
+}

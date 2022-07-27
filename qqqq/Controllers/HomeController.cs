@@ -112,7 +112,7 @@ namespace prjHomeLess_R.Controllers
                     HttpContext.Session.SetString(CDictionary.SK_LOGIN_USER, jsonUser);
                     
 
-                    return RedirectToAction("homepage", "Home");
+                    return RedirectToAction("homepage", "homepage");
                 }
             }
 

@@ -10,14 +10,14 @@
 @using System.Net;
 @using System.Net.Mail;
 @using System.Text.Json;
-
-@model IEnumerable<qqqq.ViewModels.CAdoptView>
+@model qqqq.ViewModels.CAdoptView
+@*@model IEnumerable<qqqq.ViewModels.CAdoptView>*@
 <div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h1 class="display-4 text-white animated slideInDown mb-3">領養中心</h1>
     </div>
 </div>
-@*@model Pet.ViewModels.CMemberView*@
+
 
 @{
     ViewData["Title"] = "Edit";
@@ -28,7 +28,7 @@
         var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
         memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
     }
-    var user = db.Members.Where(m => m.MemberId == 52).FirstOrDefault();
+    var user = db.Members.Where(m => m.MemberId == memberview.MemberID).FirstOrDefault();
 }
 @section Styles{
     <style>
@@ -59,79 +59,59 @@
 <hr />
 <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form asp-action="Edit" enctype="multipart/form-data" id="memform">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" hidden>
-                <label  class="control-label"></label>
-                <input id="input"  class="form-control" />
-                <span  class="text-danger"></span>
+                <label class="control-label"></label>
+                <input id="input" class="form-control" />
+                <span class="text-danger"></span>
             </div>
-
-            <!--<div--> @*class="fa-solid fa-paw" *@
-            <!--class="form-group">
-                <i class="fa-solid fa-paw"><label asp-for="MemberPhoto" class="control-label"></label></i>
-                <input type="file" id="input" asp-for="MemberPhoto" class="form-control" />
-                <span asp-validation-for="MemberPhoto" class="text-danger"></span>
-            </div>-->
             <div class="form-group">
                 <i class="fa-solid fa-paw"><label class="control-label">會員姓名</label></i>
-                <input id="input" class="form-control" value="@user.Name"/>
+                <input id="inputName" class="form-control" value="@user.Name" disabled />
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
                     <label class="control-label">會員生日</label>
                 </i>
-                <input type="date" id="input"  class="form-control" asp-for="@user.BirthdayDate"/>
-                <span class="text-danger"  ></span>
+                <input type="date" id="inputBirthday" class="form-control" asp-for="@user.BirthdayDate" disabled />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label  class="control-label">會員手機號碼</label>
+                    <label class="control-label">會員手機號碼</label>
                 </i>
-                <input id="input" class="form-control" value="@user.MemberPhone" />
-                <span  class="text-danger" ></span>
+                <input id="inputPhone" class="form-control" value="@user.MemberPhone" disabled />
+                <span class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <i class="fa-solid fa-paw">
-                    <label asp-for="MemberPassword" class="control-label"></label>
-                </i>
-                <input id="input" asp-for="MemberPassword" class="form-control" />
-                <span asp-validation-for="MemberPassword" class="text-danger"></span>
-            </div>*@
-            @*<div class="form-group" hidden>
-                <i class="fa-solid fa-paw">
-                    <label asp-for="MemberCityID" class="control-label"></label>
-                </i>
-                <input id="input" asp-for="MemberCityID" class="form-control" />
-                <span asp-validation-for="MemberCityID" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label  class="control-label">居住城市</label>
+                    <label class="control-label">居住城市</label>
                 </i>
-                <input id="input"  class="form-control" value="@user.City.CityName" />
-                <span  class="text-danger"></span>
+                <input id="inputCityId" class="form-control" value="@user.City.CityName" disabled />
+
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <i class="fa-solid fa-paw">
                     <label class="control-label">會員地址</label>
                 </i>
-                <input id="input"  class="form-control" value="@user.Address" />
-                <span  class="text-danger"></span>
+                <input id="inputadd" class="form-control" value="@user.Address" disabled />
+                <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">
-                    <label  class="control-label">會員電子信箱</label>
+                    <label class="control-label">會員電子信箱</label>
                 </i>
-                <input id="input"  class="form-control" value="@user.Email" />
-                <span  class="text-danger"></span>
+                <input id="inputemail" class="form-control" value="@user.Email" disabled />
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group m-1" id="alert1">
-                <button type="button" class="btn btn-success m-2" data-dismiss="modal" onclick="alertlist()">修改後送出</button>
-                <button type="button" class="btn btn-primary" onclick="alertlist()">直接送出</button>
+                <button type="button" class="btn btn-success m-2" data-dismiss="modal" onclick="alertlist1()">修改</button>
+                <button type="button" class="btn btn-primary" onclick="alertlist()" id="adoptOrder">直接送出</button>
             </div>
         </form>
     </div>
@@ -140,12 +120,17 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 @section Scripts {
     <script>
+
         function alertlist() {
+            $.post("@Url.Content("~/pets/AdoptOrder")", { memID: @(user.MemberId), productID:@Model.ProductId})
             Swal.fire(
                 '成功',
                 '將進行評估,請耐心等待回復',
                 'success'
             )
+        }
+        function alertlist1() {
+            document.location.href="@Url.Content("~/MemberArea/MemberEdoit/")"
         }
     </script>
 
