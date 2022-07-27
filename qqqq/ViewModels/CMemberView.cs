@@ -14,37 +14,41 @@ namespace Pet.ViewModels
         {
             Member = new Member();
         }
-        public int MemberID { get { return Member.MemberId; } set { Member.MemberId = value; } }
+        public int MemberID { get { return Member.MemberId; } }
         //public int MemberId { get { return Member.MemberId; } set { Member.MemberId = value; } }
         [DisplayName("會員名稱")]
-        public string MemberName { get { return Member.Name; }set { Member.Name = value; } }
+        public string Name { get { return Member.Name; } }
         [DisplayName("密碼")]
-        public string MemberPassword { get { return Member.Password; } set { Member.Password = value; } }
+        public string Password { get { return Member.Password; }  }
         [DisplayName("手機")]
-        public string MemberPhone { get { return Member.MemberPhone; } set { Member.MemberPhone = value; } }
+        public string MemberPhone { get { return Member.MemberPhone; }  }
         [DisplayName("地址")]
-        public string MemberAddress { get { return Member.Address; } set { Member.Address = value; } }
-        public int MemberCityID { get { return (int)Member.CityId; } set { Member.CityId = value; } }
+        public string Address { get { return Member.Address; }  }
+        public int CityID { get { return (int)Member.CityId; }  }
         [DisplayName("城市")]
-        public string MemberCityName { get { return Member.City.CityName; }}
-        [DisplayName("生日")]
-        public DateTime MemberBirthDate { get { return (DateTime)Member.BirthdayDate; } set { Member.BirthdayDate = value; } }
+        public string CityName { get { return Member.City.CityName; }}
+        //[DisplayName("生日")]
+        //public DateTime BirthDate { get { return (DateTime)Member.BirthdayDate; }}
+        [DisplayName("性別")]
+        public string GenderType { get { return Member.Hgender.GenderType; } }
+        public int HgenderId { get { return (int)Member.HgenderId;}}
         [DisplayName("Email")]
-        public string MemberEmail { get { return Member.Email; } set { Member.Email = value; } }
+        public string Email { get { return Member.Email; }}
 
         /// <summary>
         /// ////////////////////
         /// </summary>
         /// 
         [DisplayName("生日")]
-        public string MemberNewBirthDate { get { return ((DateTime)Member.BirthdayDate).ToString("yyyy/MM/dd"); } }
+        public string BirthdayDate { get { return ((DateTime)Member.BirthdayDate).ToString("yyyy/MM/dd"); } }
 
         [DisplayName("頭貼")]
-        public string MemberPhoto { get { return Member.Photo; } set { Member.Photo = value; } }
+        public string Photo { get { return Member.Photo; } }
 
         public CMemberView(Member member)
         {
             Member = member;
+
         }
         //看資料庫新增的欄位取什麼
         //[DisplayName("志工時數")]
