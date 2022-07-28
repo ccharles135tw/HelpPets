@@ -65,7 +65,7 @@
 
                                         <span class="caption" style="font-size:90%"> </span>
 
-                                        <div class="control__indicator"></div>
+
 
                                         <span class="ml-auto"><a href="#" class="forgot-pass"></a></span>
                                     </div>
@@ -73,8 +73,9 @@
                                     <input type="submit" value="登入" class="btn btn-pill text-white btn-block btn-primary">
 
                                     <span class="d-block text-center my-4 text-muted"></span>
+                                    <button id="empdemo" class="btn btn-light">demo</button>
 
-                                 
+
                                 </form>
                             </div>
                         </div>
@@ -93,3 +94,11 @@
     <script src="~/css_Q/js/main.js"></script>
 </body>
 </html>
+<script>
+    $("#empdemo").click((e) => {
+        e.preventDefault();
+        $("#txtEmpAccount").val("0000000001");
+        $("#txtEmpPassword").val("0");
+
+    })
+</script>
