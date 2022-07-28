@@ -55,7 +55,7 @@ namespace qqqq
                     name: "default",
                     //pattern: "{controller=homepage}/{action=enterpage}/{id?}");
                     //pattern: "{controller=Volunteer}/{action=Index}/{id?}");
-                    pattern: "{controller=Home}/{action=Login}/{id?}");
+                    pattern: "{controller=homepage}/{action=enterpage}/{id?}");
             });
         }
     }
