@@ -43,17 +43,17 @@
                         <span class="icon-menu"></span>
                     </button>*@
                 @*<ul class="navbar-nav mr-lg-2">
-                    <li class="nav-item nav-search d-none d-lg-block">
-                        <div class="input-group">
-                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                                <span class="input-group-text" id="search">
-                                    <i class="icon-search"></i>
-                                </span>
+                        <li class="nav-item nav-search d-none d-lg-block">
+                            <div class="input-group">
+                                <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                    <span class="input-group-text" id="search">
+                                        <i class="icon-search"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
                             </div>
-                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
-                        </div>
-                    </li>
-                </ul>*@
+                        </li>
+                    </ul>*@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
@@ -301,8 +301,8 @@
 
 
                     @*<li class="nav-item">
-                        <span><img src="~/back/images/icon5.png" />@Html.ActionLink("浪浪類別管理", "sbpetList", "BK_SubCategory")</span>
-                    </li>*@
+                            <span><img src="~/back/images/icon5.png" />@Html.ActionLink("浪浪類別管理", "sbpetList", "BK_SubCategory")</span>
+                        </li>*@
 
                     <li class="nav-item">
                         <span><img src="~/back/images/icon2.png" />@Html.ActionLink("浪浪管理", "newpetList", "BK_pet")</span>
@@ -336,7 +336,7 @@
 
 
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="~/back/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -356,7 +356,6 @@
     <!-- Custom js for this page-->
     <script src="~/back/js/dashboard.js"></script>
     <script src="~/back/js/Chart.roundedBarCharts.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="~/css/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
     <!-- End custom js for this page-->
     @await RenderSectionAsync("Scripts", required: false)
