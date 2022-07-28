@@ -14,15 +14,16 @@ namespace qqqq.ViewComponents
     public class VCmpet : ViewComponent
     {
         我救浪Context _context = new 我救浪Context();
-        public async Task<IViewComponentResult> InvokeAsync(int id)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            //var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-            //CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-            ////var Vmem =await  _context.Orders.Where(o=>o.MemberId==memberview.MemberID).FirstOrDefaultAsync();
-            //var q = await _context.Orders.Where(o => o.MemberId == memberview.MemberID&&o.).ToListAsync();
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+           
+            var q = await _context.Orders.Where(o => o.MemberId == memberview.MemberID&&o.OrderDetails.All(od=>od.Product.IsPet==true)).ToListAsync();
+         
 
 
-            return View();
+            return View(q);
         }
     }
 }

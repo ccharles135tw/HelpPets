@@ -22,54 +22,56 @@
         <tbody>
             @{ 我救浪Context db = new 我救浪Context();
                 int count = 0;
-                foreach(var item in Model){
+                foreach (var item in Model)
+                {
                     count++;
-                        <tr class="alert" role="alert">
+                    <tr class="alert" role="alert">
 
-                            <td>
-                                @count
+                        <td>
+                            @count
 
-                            </td>
+                        </td>
+                        @{var photo = db.Photos.Where(p => p.ProductId == item.ProductId).Select(p => p.PictureName).FirstOrDefault();}
+                        <td>
+                            <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                            @*<img  src="@Url.Content($"~/Images/{photo.ToList()}")" style="width:60px;height:60px;" />*@
 
-                            <td>
-                                <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
-
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>@item.Product.ProductName </span>
-                                    <span>@item.Product.Description</span>
-                                </div>
-                            </td>
-                            @*<td>星等</td>*@
-                            <td>   @(String.Format("{0:$#,0}", item.UnitPrice))</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    @item.Quantity
-                                    @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                                </div>
-                            </td>
-                            @{
-                                decimal totalPrice = 0;
-                                var totalList = db.OrderDetails.Where(x => x.ProductId == item.ProductId && x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
-                                foreach (var i in totalList)
-                                {
-                                    totalPrice += (decimal)i.total;
-                                }
+                        </td>
+                        <td>
+                            <div class="email">
+                                <span>@item.Product.ProductName </span>
+                                <span>@item.Product.Description</span>
+                            </div>
+                        </td>
+                        @*<td>星等</td>*@
+                        <td>   @(String.Format("{0:$#,0}", item.UnitPrice))</td>
+                        <td class="quantity">
+                            <div class="input-group">
+                                @item.Quantity
+                                @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
+                            </div>
+                        </td>
+                        @{
+                            decimal totalPrice = 0;
+                            var totalList = db.OrderDetails.Where(x => x.ProductId == item.ProductId && x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
+                            foreach (var i in totalList)
+                            {
+                                totalPrice += (decimal)i.total;
                             }
+                        }
                         <td> @(String.Format("{0:$#,0}", totalPrice))</td>
 
-                            <td>
-                                <div>
-                                    <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                                        <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                                        <span>產品評論</span>
-                                    </button>
-                                </div>
-                            </td>
+                        <td>
+                            <div>
+                                <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
+                                    <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                    <span>產品評論</span>
+                                </button>
+                            </div>
+                        </td>
 
-                        </tr>
-                    } }
+                    </tr>
+                } }
             <!--=========================================================================================-->
 
 
@@ -78,20 +80,39 @@
     </table>
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">商品評論</h4>
+                    <h4 class="modal-title">評論此商品</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <textarea placeholder="請在此區 評論商品" maxlength="100"></textarea>
-                </div>
+                    <div class="container-fluid">
+                        <div class="row justify-content-lg-evenly">
 
+                            <div id="star" class="d-flex justify-center " style="width:60px">
+
+
+                                <img class="mw-100" id="1" src="@Url.Content("~/Images/Common_sad.jpg")" />
+                                <img class="mw-100" id="2" src="@Url.Content("~/Images/Common_sad.jpg")" />
+                                <img class="mw-100" id="3" src="@Url.Content("~/Images/Common_sad.jpg")" />
+                                <img class="mw-100" id="4" src="@Url.Content("~/Images/Common_sad.jpg")" />
+                                <img class="mw-100" id="5" src="@Url.Content("~/Images/Common_sad.jpg")" />
+
+                            </div>
+                        </div>
+                        <p>請為此商品評分</p>
+                        <p id="count"></p>
+
+                        <textarea placeholder="請在此區 評論商品" maxlength="100" style="max-width:250px"></textarea>
+
+
+                    </div>
+                </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee">送出</button>
@@ -101,11 +122,33 @@
         </div>
     </div>
 </div>
-<button id="btn1">d111111</button>
-<button id="btn2">d111111</button>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-    $("#btn1").on("click", function () { alert("Test") })
-    let b = document.querySelector("#btn2");
-    b.addEventListener("click", () => { alert("Test") })
+    //評價星等
+    let flag = true;
+
+    $("#star img").hover(function () {
+        if (flag) {
+            console.log("AAA");
+            $(this).attr("src", "@Url.Content("~/Images/Common_hi.jpg")").prevAll().attr("src", "@Url.Content("~/Images/Common_hi.jpg")");
+            let count = $(this).index() + 1;
+            $("#count").text(`此商品得到${count}分的評價`);
+        }
+    },
+        function () {
+            if (flag) {
+                $("#star img").attr("src", "@Url.Content("~/Images/Common_sad.jpg")");
+                $("#count").text(`評分中`);
+            }
+        })
+
+
+    $("#star img").click(function () {
+        flag = false;
+    })
+
+    $("#star img").dblclick(function () {
+        flag = true
+    });
+
 </script>

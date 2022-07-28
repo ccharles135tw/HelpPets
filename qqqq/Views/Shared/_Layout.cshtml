@@ -66,14 +66,14 @@
                 </ul>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">會員</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">會員<b></b></a>
                     <div class="dropdown-menu m-0" style="background:#1E1913;">
                         <ul>
                             <li class="dropdown-item "><a>@Html.ActionLink("會員登入", "Login", "Home")</a></li>
                             <li class="dropdown-item"><a>@Html.ActionLink("會員註冊", "Register", "Home")</a> </li>
                             <li class="dropdown-item"><a>@Html.ActionLink("會員專區", "MemberArea", "MemberArea")</a> </li>
-                            <li class="dropdown-item"><a>@Html.ActionLink("TRY", "Index", "HOME")</a> </li>
-                            <li class="dropdown-item"><b id="mName">123</b> </li>
+                      
+                            @*<li class="dropdown-item">Hi!<b id="mName">123</b> </li>*@
                         </ul> 
                     </div>
                 </div>
@@ -155,8 +155,8 @@
         if (CDictionary.SK_LOGIN_USER !=null) {
         <script>
 
-            $("#mName").empty();
-            $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("#mName").html(datas); })
+            $("b").empty();
+            $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("b").html(datas); })
         
 
         </script>

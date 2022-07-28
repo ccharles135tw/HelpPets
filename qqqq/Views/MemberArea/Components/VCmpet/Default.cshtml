@@ -18,44 +18,71 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="alert" role="alert">
+            @{
+                我救浪Context db = new 我救浪Context();
+                int count = 0;
+                foreach (var item in Model)
+                {
+                    count++;
 
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
+                        <tr class="alert" role="alert">
 
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                            <td>
+                                @count
+                                @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
+                            </td>
 
-                </td>
-                <td>
-                    123456
-                </td>
+                            <td>
+                                <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
 
-                <td>公</td>
-                <td class="quantity">
-                    已結紮
-                </td>
-                <td>認養成功</td>
+                            </td>
 
-                <td>
-                    2011/11/11
-                    </td>
-                <td>
-                    <div class="email">
-                        <a href="#" id="viewDoneList" data-toggle="modal" data-target="#myModal">
-                            <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
-                            <span>寵物細節描述</span>
-                        </a>
-                    </div>
-             
-                </td>
+                            <td>
+                                @(db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.ProductName))
+                            </td>
 
 
-            </tr>
-      
 
+                         
+
+
+
+
+
+                            <td>    @( db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.PetDetail.Gender).FirstOrDefault())</td>
+
+
+
+                            <td class="quantity">
+                                @( db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.PetDetail.Ligation).FirstOrDefault())
+                            </td>
+
+
+
+                            <td>
+                                @(db.OrderStatuses.Where(o => o.OrderStatusId == item.OrderStatusId).Select(o => o.StatusType).FirstOrDefault())
+
+                            </td>
+
+
+                            <td>
+                                @item.OrderDate
+                            </td>
+                            <td>
+                                <div class="email">
+                                    <a href="#" id="viewDoneList" data-toggle="modal" data-target="#myModal">
+                                        <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
+                                        <span>寵物細節描述</span>
+                                    </a>
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+
+                }
+            }
         </tbody>
     </table>
     <!-- The Modal -->
@@ -77,22 +104,22 @@
                     <p style="text-align:left">寵物:很乖巧不會亂叫不會咬人很好動重點會在尿布墊上小號與大號</p>
                     <p style="text-align:left">寵物編號:123123</p>
                     <p style="text-align:left">寵物編號:123123</p>
-                   
+
                     @*<ul style="list-style:none; display:block" >
-            編號:
-            <li>Coffee</li>
-            顏色:
-            <li>Tea</li>
-            描述:
-            <li>很乖巧不會亂叫不會咬人很好動重點會在尿布墊上小號與大號</li>
-        </ul>*@
+                            編號:
+                            <li>Coffee</li>
+                            顏色:
+                            <li>Tea</li>
+                            描述:
+                            <li>很乖巧不會亂叫不會咬人很好動重點會在尿布墊上小號與大號</li>
+                        </ul>*@
                 </div>
 
 
 
 
 
-       
+
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
@@ -104,14 +131,8 @@
     </div>
 
 </div>
-<button id="btn1">try1</button>
-<button id="btn2">try2</button>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
- 
+
 </script>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}

@@ -12,15 +12,22 @@ namespace Pet.ViewModels
     public class CLoginView
     {
         public Member _Member;
+        public Order _Order;
+        public OrderDetail _OrderDetail;
+
+
         public CLoginView()
         {
+            _Order = new Order();
+            _OrderDetail = new OrderDetail();
             _Member = new Member();
         }
         public CLoginView(Member m)
         {
+     
             _Member=m;
         }
-
+       
         public int MemberId { get { return _Member.MemberId; } set { _Member.MemberId = value; } }
         [DisplayName("頭貼")]
         public string Photo { get { return _Member.Photo; } set { _Member.Photo = value; } }

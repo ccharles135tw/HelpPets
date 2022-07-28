@@ -131,7 +131,7 @@
                             <i class="fa fa-user text-muted"></i>
                         </span>
                     </div>
-                    <input id="firstName" type="text" asp-for="Name" placeholder="姓名" class="form-control bg-white border-left-0 border-md" required>
+                    <input id="Name" type="text" asp-for="Name" placeholder="姓名" class="form-control bg-white border-left-0 border-md" required>
 
 
                 </div>
@@ -163,7 +163,7 @@
                             <i class="fa fa-lock text-muted"></i>
                         </span>
                     </div>
-                    <input id="password" type="password" asp-for="Password" placeholder="密碼" class="form-control bg-white border-left-0 border-md">
+                    <input id="password" type="password" asp-for="Password" placeholder="密碼" class="form-control bg-white border-left-0 border-md"required>
 
                 </div>
 
@@ -174,7 +174,7 @@
                             <i class="fa-solid fa-eye" id="seePwd"></i>
                         </span>
                     </div>
-                    <input id="passwordConfirmation" type="password" asp-for="PasswordConfirm" placeholder="再次輸入密碼" class="form-control bg-white border-left-0 border-md">
+                    <input id="passwordConfirmation" type="password" asp-for="PasswordConfirm" placeholder="再次輸入密碼" class="form-control bg-white border-left-0 border-md"required >
                 </div>
 
                 <!-- phone -->
@@ -184,7 +184,7 @@
                             <i class="fa fa-phone-square text-muted"></i>
                         </span>
                     </div>
-                    <input asp-for="MemberPhone" id="MemberPhone" type="text" placeholder="手機號碼" class="form-control bg-white border-left-0 border-md" name="MemberPhone">
+                    <input asp-for="MemberPhone" id="MemberPhone" type="text" placeholder="手機號碼" class="form-control bg-white border-left-0 border-md" name="MemberPhone"required>
                 </div>
                 <!--  address -->
                 <div class="input-group col-lg-12 mb-4">
@@ -193,9 +193,11 @@
                             <i class="fa fa-phone-square text-muted"></i>
                         </span>
                     </div>
+                  
                     <select id="selCity" asp-for="MemberCityId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted" name="CityId">
+                       
                     </select>
-                    <input id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3">
+                    <input id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3"required>
                 </div>
                 <!-- birthday -->
                 <div class="input-group col-lg-12 mb-4">
@@ -205,7 +207,7 @@
                         </span>
                     </div>
                     @*<input asp-for="MemberBirthDate" class="form-control bg-white border-left-0 border-md" />*@
-                    <input type="date" name="BirthdayDate" class="form-control bg-white border-left-0 border-md" />
+                    <input type="date" name="BirthdayDate" id="BirthdayDate" class="form-control bg-white border-left-0 border-md"  required/>
                 </div>
 
 
@@ -238,7 +240,7 @@
                             <i class="fa fa-envelope text-muted"></i>
                         </span>
                     </div>
-                    <input type="file" value="會員頭貼上傳" name="File" class="form-control" id="File" />
+                    <input type="file" value="會員頭貼上傳" name="File" class="form-control" id="File" required/>
 
                 </div>
 
@@ -254,12 +256,12 @@
 
                 </div>
 
-            
+
                 <!-- Already Registered -->
                 <div class="text-center w-100">
                     <p class="text-muted font-weight-bold"> @Html.ActionLink("已是會員", "Login")</p>
                 </div>
-
+                <button id="demo" class="btn btn-light">demo</button>
             </div>
             </form>
         </div>
@@ -290,7 +292,9 @@
        objData.forEach(city => {
             const opt = new Option(city.cityName, city.cityId);
             console.log(opt);
-            selCity.options.add(opt);
+           selCity.options.add(opt);
+
+       
 
 
         })
@@ -336,7 +340,25 @@
             }
             
     </script>
+    <script>
+        $("#demo").click((e) => {
+            e.preventDefault();
 
+            $("#email").val("lin123123@gmail.com");
+            $("#Name").val("林國斌");
+            $("#password").val("azBnt123");   
+            $("#passwordConfirmation").val("azBnt123");
+      
+            $("#MemberPhone").val("0987654321");
+            $("#selCity optiones").val(2);
+            $("#Address").val("中山路五段號");    
+            $("#BirthdayDate").val("2011/11/11");
+
+        })
+
+
+
+    </script>
 
 }
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

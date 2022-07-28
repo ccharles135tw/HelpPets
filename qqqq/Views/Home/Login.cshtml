@@ -60,9 +60,9 @@
 
                                         <span class="caption" style="font-size:90%">  @Html.ActionLink("創建帳號", "Register") </span>
 
-                               
 
-                                        <span class="ml-auto"><a href="#" id="forget" class="forgot-pass">@Html.ActionLink("忘記密碼", "forgetPwd")忘記密碼</a></span>
+
+                                        <span class="ml-auto"><a href="#" id="forget" class="forgot-pass">@Html.ActionLink("忘記密碼", "forgetPwd")</a></span>
                                     </div>
 
                                     <input type="submit" value="登入" class="btn btn-pill text-white btn-block btn-primary">
@@ -70,27 +70,30 @@
                                     <span class="d-block text-center my-4 text-muted"> or sign in with</span>
 
                                     <div class="social-login text-center">
-                                        <a href="https://zh-tw.facebook.com/"> 
+                                        <a href="https://zh-tw.facebook.com/">
                                             <img src="~/img/home/icons8-facebook-48.png" />
                                         </a>
                                         @*<a href="#" class="facebook">
-                                            <span class="icon-facebook mr-3"></span>
-                                        </a>*@
-                                    <a href="https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoiemgtSGFudCJ9%22%7D">
-                                        <img src="~/img/home/icons8-twitter-circled-48.png" />
+                                                <span class="icon-facebook mr-3"></span>
+                                            </a>*@
+                                        <a href="https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoiemgtSGFudCJ9%22%7D">
+                                            <img src="~/img/home/icons8-twitter-circled-48.png" />
 
-                                    </a>
+                                        </a>
                                         @*<a href="#" class="twitter">
-                                            <span class="icon-twitter mr-3"></span>
-                                        </a>*@
-                                    <a href="https://myaccount.google.com/?hl=zh_TW&pli=1">
-                                        <img src="~/img/home/icons8-google-48.png" />
+                                                <span class="icon-twitter mr-3"></span>
+                                            </a>*@
+                                        <a href="https://myaccount.google.com/?hl=zh_TW&pli=1">
+                                            <img src="~/img/home/icons8-google-48.png" />
 
-                                    </a>
+                                        </a>
                                         <!--<a href="#" class="google">
                                             <span class="icon-google mr-3"></span>
                                         </a>-->
                                     </div>
+                                    <button id="chal"class="btn btn-light">查爾斯</button>
+                                    <button id="52" class="btn btn-light">陳坤佐</button>
+                                    <button id="login" class="btn btn-light">demo</button>
                                 </form>
                             </div>
                         </div>
@@ -102,6 +105,9 @@
         </div>
     </div>
 
+   
+
+
 
     <script src="~/css_Q/js/jquery-3.3.1.min.js"></script>
     <script src="~/css_Q/js/popper.min.js"></script>
@@ -111,7 +117,27 @@
 </html>
 @section Scripts{
     <script>
-       
+        $("#chal").click((e) => {
+            e.preventDefault();
+            $("#txtAccount").val("billsagi0001@gmail.com");
+            $("#txtPassword").val("0000");
+
+        })
+        $("#52").click((e) => {
+            e.preventDefault();
+            $("#txtAccount").val("054054@gmail.com");
+            $("#txtPassword").val("054");
+
+        })
+        $("#login").click((e) => {
+            e.preventDefault();
+            $("#txtAccount").val("lin123123@gmail.com");
+            $("#txtPassword").val("azBnt123");
+
+        })
+   
+
+
     </script>
 
 

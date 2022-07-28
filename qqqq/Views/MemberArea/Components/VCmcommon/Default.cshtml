@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<qqqq.Models.MemberComment>
 
 
 <h3 class="h5 mb-4 text-center">我的評論</h3>
@@ -19,52 +19,57 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="alert" role="alert">
+            @*@{ int count = 0;
+                foreach(var q in Model)
+                {
+                    count++;*@
+                    <tr class="alert" role="alert">
 
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
+                        <td>
+                      1
+                            @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
+                        </td>
 
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                        <td>
+                            <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
 
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                @*<td>星等</td>*@
-                <td>$120</td>
+                        </td>
+                        <td>
+                            <div class="email">
+                                <span>貓砂鏟 </span>
+                                <span>規格:粉色  尺寸:L</span>
+                            </div>
+                        </td>
+                        @*<td>星等</td>*@
+                        <td>$120</td>
 
-                <td>
-                    <div>
-                        <textarea style="width:200px;height:60px" readonly></textarea>
+                        <td>
+                            <div>
+                                <textarea style="width:200px;height:60px" readonly></textarea>
 
-                    </div>
-                </td>
+                            </div>
+                        </td>
 
-                <td>
-                    <img src="~/Images/memstar.jpg" style="width:100px;height:20px" />
-                </td>
+                        <td>
+                            <img src="~/Images/memstar.jpg" style="width:100px;height:20px" />
+                        </td>
 
-                <td>
-                    <div>
-                        <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                            <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                            <span>修改評論</span>
-                        </button>
-                        <div>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                <span>刪除評論</span>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                        <td>
+                            <div>
+                                <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
+                                    <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                    <span>修改評論</span>
+                                </button>
+                                <div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                        <span>刪除評論</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+      
         </tbody>
     </table>
     <!-- The Modal -->
@@ -95,8 +100,8 @@
                             
                             </div>
                         </div>
-                        <p>單擊給分,雙擊重新評分</p>
-                        <p id="count">請和英雄打招呼</p>
+                        <p>請為此商品評分</p>
+                        <p id="count"></p>
 
                         <textarea placeholder="請在此區 評論商品" maxlength="100" style="max-width:250px"></textarea>
 
@@ -123,13 +128,13 @@
             console.log("AAA");
             $(this).attr("src", "@Url.Content("~/Images/Common_hi.jpg")").prevAll().attr("src", "@Url.Content("~/Images/Common_hi.jpg")");
             let count = $(this).index() + 1;
-            $("#count").text(`有${count}個英雄跟你打招呼`);
+            $("#count").text(`此商品得到${count}分的評價`);
         }
     },
         function () {
             if (flag) {
                 $("#star img").attr("src", "@Url.Content("~/Images/Common_sad.jpg")");
-                $("#count").text(`你正在決定會有幾位英雄跟你打招呼`);
+                $("#count").text(`評分中`);
             }
         })
 

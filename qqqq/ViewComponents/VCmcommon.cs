@@ -14,11 +14,11 @@ namespace qqqq.ViewComponents
     public class VCmcommon : ViewComponent
     {
         我救浪Context _context = new 我救浪Context();
-        public async Task<IViewComponentResult> InvokeAsync(int id)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-            var mName = _context.Members.Where(m => m.Email == memberview.Email).FirstOrDefault();
+            //var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            //CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            //var mName = await _context.MemberComments.Where(m => m.MemberId == memberview.MemberID).FirstOrDefaultAsync();
          
             return View();
 

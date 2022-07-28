@@ -163,7 +163,7 @@
                             </span>
                         </div>
 
-                        <input id="password" type="password" asp-for="Password" placeholder="密碼" class="form-control bg-white border-left-0 border-md">
+                        <input id="password" type="password" value="@Model.Password" asp-for="Password" placeholder="密碼" class="form-control bg-white border-left-0 border-md"required>
 
                     </div>
 
@@ -174,7 +174,7 @@
                                 <i class="fa-solid fa-eye" id="seePwd"></i>
                             </span>
                         </div>
-                        <input id="passwordConfirmation" type="password" asp-for="PasswordConfirm" placeholder="再次輸入密碼" class="form-control bg-white border-left-0 border-md">
+                        <input id="passwordConfirmation" type="password" value="@Model.PasswordConfirm" asp-for="PasswordConfirm" placeholder="再次輸入密碼" class="form-control bg-white border-left-0 border-md"required>
                     </div>
 
                     <!-- phone -->
@@ -184,7 +184,7 @@
                                 <i class="fa fa-phone-square text-muted"></i>
                             </span>
                         </div>
-                        <input value="@Model.MemberPhone" asp-for="MemberPhone" id="MemberPhone" type="text" placeholder="手機號碼" class="form-control bg-white border-left-0 border-md">
+                        <input value="@Model.MemberPhone" asp-for="MemberPhone" id="MemberPhone" type="text" placeholder="手機號碼" class="form-control bg-white border-left-0 border-md"required>
                     </div>
                     <!--  address -->
                     <div class="input-group col-lg-12 mb-4">
@@ -200,7 +200,7 @@
                             <option value="@Model.MemberCityId">@c.CityName</option>
                                     } }
                         </select>
-                        <input value="@Model.Address" id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3">
+                        <input value="@Model.Address" id="Address" type="tel" asp-for="Address" placeholder="地址" class="form-control bg-white border-md border-left-0 pl-3"required>
                     </div>
                     <!-- birthday -->
                     <div class="input-group col-lg-12 mb-4">
@@ -209,7 +209,7 @@
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>
                         </div>
-                        <input value="@Model.BirthdayDate" type="date" name="BirthdayDate" class="form-control bg-white border-left-0 border-md" />
+                        <input value="@Model.BirthdayDate" type="date" name="BirthdayDate" class="form-control bg-white border-left-0 border-md" required/>
 
                     </div>
 
@@ -236,7 +236,7 @@
                                 <i class="fa fa-envelope text-muted"></i>
                             </span>
                         </div>
-                        <input type="file" value="會員頭貼上傳" name="File" class="form-control" id="File" />
+                        <input type="file" value="會員頭貼上傳" name="File" class="form-control" id="File" required/>
                     </div>
 
                     <input hidden name="Photo" class="form-control" />

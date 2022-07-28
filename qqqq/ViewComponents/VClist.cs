@@ -21,7 +21,7 @@ namespace qqqq.ViewComponents
             var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
             //var Vmem =await  _context.Orders.Where(o=>o.MemberId==memberview.MemberID).FirstOrDefaultAsync();
-            var q = await _context.Orders.Where(o => o.MemberId == memberview.MemberID).ToListAsync();
+            var q = await _context.Orders.Where(o => o.MemberId == memberview.MemberID&&o.OrderDetails.All(od=>od.Product.IsPet==false)).ToListAsync();
   
 
             return View(q);

@@ -41,7 +41,7 @@
 
 
                     <div style="width:96px">
-                        <a class="+1U02e" href="#" id="donelist">
+                        <a class="+1U02e" href="#" id="donelist" >
                             <div class="bfikuD">
                                 <i class="fa fa-archive" aria-hidden="true"></i>
                             </div>
@@ -65,7 +65,8 @@
                     </div>
 
                     <div style="width:96px">
-                        <a class="+1U02e" href="#" id="memPet">
+                        <a class="+1U02e" href="#" id="memPet" >
+                            <!--todo-->
                             <div class="bfikuD">
                                 <i class="fa fa-paw" aria-hidden="true"></i>
                             </div>
@@ -148,12 +149,29 @@
             $.post("@Url.Content("~/MemberArea/mFavorit")", {}, function (datas)  { $("#viewChange").html(datas);})
 
         })
+        //-----------------------------------------------------------------------
+          @*$(".viewDoneList").click(function (eve) {
 
-        $("#memPet").click((e) => {
+        let orderid = $(this).attr("orderid");
+        console.log(orderid);
+           eve.preventDefault();
+           $("#viewChange").empty();
+        $.post("@Url.Content("~/MemberArea/detailList")", {
+            id: orderid
+
+           }, function (datas) { console.log(datas); $("#viewChange").html(datas); })
+
+
+          })*@
+        //-----------------------------------------------------------------------
+
+        $("#memPet").click(function (e) {
+
+          
             e.preventDefault();
 
             $("#viewChange").empty();
-            $.post("@Url.Content("~/MemberArea/mPet")", {}, function (datas)  { $("#viewChange").html(datas);})
+            $.post("@Url.Content("~/MemberArea/mPet")", {   }, function (datas) { $("#viewChange").html(datas); })
 
         })
         $("#memCommon").click((e) => {
