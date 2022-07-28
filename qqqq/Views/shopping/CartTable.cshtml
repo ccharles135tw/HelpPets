@@ -80,7 +80,7 @@
                         <td>
 
                             <button class="btn btn-warning"><i class="fa-regular fa-eye"></i>@Html.ActionLink("檢視商品", "showproduct", new { id = Model[i].CartId })</button> |
-                            <button class="btn btn-danger" onclick="ChangeItemCount('@Model[i].CartId',0,false)"><i class="fa-solid fa-trash-can"></i> 刪除</button>
+                            <button class="btn btn-danger"type="button"  onclick="ChangeItemCount('@Model[i].CartId',0,false)"><i class="fa-solid fa-trash-can"></i> 刪除</button>
                         </td>
                     </tr>
                 }
@@ -117,7 +117,7 @@
                         <td>
 
                             <label class="btn btn-warning"><i class="fa-regular fa-eye"></i>@Html.ActionLink("檢視商品", "showproduct", new { id = Model[i].CartId })</label> |
-                            <button class="btn btn-danger" onclick="ChangeItemCount('@Model[i].CartId',0,true)"><i class="fa-solid fa-trash-can"></i> 刪除</button>
+                            <button class="btn btn-danger"type="button" onclick="ChangeItemCount('@Model[i].CartId',0,true)"><i class="fa-solid fa-trash-can"></i> 刪除</button>
                         </td>
                     </tr>
                 }
