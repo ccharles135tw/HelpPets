@@ -1,15 +1,14 @@
-﻿@model IEnumerable<qqqq.Models.Order>
-
+﻿@model List<prjHomeLess.ViewModel.CMempetView>
 
 <h3 class="h5 mb-4 text-center">已認養寵物</h3>
 <div class="table-wrap">
     <table class="table">
         <thead class="thead-primary">
             <tr>
-                <th>序</th>
+                <th>序號</th>
                 <th>照片</th>
-                <th>寵物編號</th>
-                @*<th>&nbsp;</th>*@
+                <th>寵物名</th>
+           
                 <th>性別</th>
                 <th>結紮</th>
                 <th>認養狀態</th>
@@ -28,39 +27,28 @@
                         <tr class="alert" role="alert">
 
                             <td>
-                                @count
-                                @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
+                            @item.OrderId
                             </td>
 
                             <td>
-                                <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                                @*<img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />*@
 
                             </td>
 
                             <td>
-                                @(db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.ProductName))
+                           @*@item.ProductName*@
                             </td>
-
-
-
-                         
-
-
-
-
-
-                            <td>    @( db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.PetDetail.Gender).FirstOrDefault())</td>
-
-
-
+                            <td>
+                                @*@item.Gender*@
+                            </td>
+                          
                             <td class="quantity">
-                                @( db.OrderDetails.Where(o => o.OrderId == item.OrderId).Select(o => o.Product.PetDetail.Ligation).FirstOrDefault())
+                                @*@item.Lagition*@
                             </td>
 
 
-
                             <td>
-                                @(db.OrderStatuses.Where(o => o.OrderStatusId == item.OrderStatusId).Select(o => o.StatusType).FirstOrDefault())
+                           @item.OrderStaus
 
                             </td>
 
