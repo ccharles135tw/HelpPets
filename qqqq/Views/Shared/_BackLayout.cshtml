@@ -332,6 +332,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
     <script src="~/back/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -354,8 +355,14 @@
     <script src="~/css/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
     <!-- End custom js for this page-->
 
-    @*chatbox*@
-     <script src="~/js/chatbox.js"></script>
+     @*chatbox*@
+     <script src="~/js/chatboxForBK.js"></script>
+     <script>
+    $(document).ready(() =>
+{
+        Test();
+})
+     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
