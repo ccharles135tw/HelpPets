@@ -72,9 +72,9 @@
                             <li class="dropdown-item "><a>@Html.ActionLink("會員登入", "Login", "Home")</a></li>
                             <li class="dropdown-item"><a>@Html.ActionLink("會員註冊", "Register", "Home")</a> </li>
                             <li class="dropdown-item"><a>@Html.ActionLink("會員專區", "MemberArea", "MemberArea")</a> </li>
-                      
+
                             @*<li class="dropdown-item">Hi!<b id="mName">123</b> </li>*@
-                        </ul> 
+                        </ul>
                     </div>
                 </div>
 
@@ -84,9 +84,12 @@
             </div>
         </div>
     </nav>
+
     <!-- 標題欄END -->
     <!-- 首頁圖 -->
     @RenderBody()
+    <a class=" "><partial name="chatbox.cshtml" /></a>
+
     <div class="container-fluid bg-dark text-light footer my-6 mb-0 py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
@@ -124,9 +127,9 @@
         </div>
     </div>
 
-    
 
-    <a  class=" btn-primary btn-lg-square rounded-circle back-to-top"><partial name="chatbox.cshtml" /></a>
+
+    @*<a class=" btn-primary btn-lg-square rounded-circle back-to-top"><partial name="chatbox.cshtml" /></a>*@
 
 
     <!-- JavaScript Libraries -->
@@ -151,17 +154,18 @@
 
 </html>
 
-    @{ 
-        if (CDictionary.SK_LOGIN_USER !=null) {
+@{
+    if (CDictionary.SK_LOGIN_USER != null)
+    {
         <script>
 
             $("b").empty();
             $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("b").html(datas); })
-        
+
 
         </script>
-                    }
-                }
+    }
+}
 
 
 
@@ -169,4 +173,3 @@
 
 
 
-  
