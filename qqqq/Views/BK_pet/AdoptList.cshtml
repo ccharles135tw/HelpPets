@@ -1,0 +1,117 @@
+﻿@model IEnumerable<qqqq.ViewModels.CAdoptListForPetView>
+
+@{
+    ViewData["Title"] = "AdoptList";
+    Layout = "_BackLayout";
+}
+
+<h1>領養申請人列表</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberContact)
+            </th>
+            <th>
+                會員基本資料
+            </th>
+            <th>
+                會員願望清單
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberName)
+            </td>
+            <td>
+                <p style="white-space: pre; ">@item.MemberContact</p>
+            </td>
+            <td>
+                <button memberid="@item.MemeberID" type="button" class="btn btn-primary btnModalMemberDetail" data-toggle="modal" data-target="#ModalMemberData">
+                    查看
+                </button>
+            </td>
+            <td>
+                <button memberid="@item.MemeberID" orderid="@item.order.OrderId" type="button" class="btn btn-primary btnModalMemberWish" data-toggle="modal" data-target="#ModalMemberData">
+                    查看
+                </button>
+            </td>
+
+            <td>
+                <button orderid="@item.order.OrderId" productid="@item.order.OrderDetails.FirstOrDefault().ProductId"  class="btn btn-primary btnChooseAdopter">確定為領養者</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="ModalMemberData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+    $("table").on("click", ".btnModalMemberDetail", function ()
+    {
+        let btn = this;
+
+        $.post("@Url.Content("~/BK_pet/MemberDetail")", { id: $(this).attr("memberid") }, function (data)
+        {
+            $("#ModalMemberData .modal-body").html(data);
+        })
+    })
+        $("table").on("click", ".btnModalMemberWish", function ()
+    {
+        let btn = this;
+
+        $.post("@Url.Content("~/BK_pet/MemberWish")", { id: $(this).attr("memberid") }, function (data)
+        {
+            $("#ModalMemberData .modal-body").html(data);
+        })
+        })
+        $("table").on("click", ".btnChooseAdopter", function ()
+        {
+            if (confirm("確定要選擇此會員為領養者嗎"))
+            {
+                let btn = this;
+                $.get("@Url.Content("~/BK_pet/ChooseAdopter")", { orderid: $(btn).attr("orderid"), productid: $(btn).attr("productid") }, function (data)
+                {
+                    if (data == true)
+                    {
+                        alert("處理成功")
+                        window.location.href = "@Url.Content("~/BK_pet/NewPetList")";
+                    }
+                    else alert("處理失敗")
+                })
+            }
+        })
+    </script>
+}

@@ -145,16 +145,12 @@
                         @Html.DisplayFor(modelItem => item.CategoryName)
                     </td>
                     <td>
-                        @{
-                            if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
-                            {
-                                <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" />
-                            }
-                            else
-                            {
-                                <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" />
-                            }
-                        }
+                        @{ if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
+                                            {
+                            <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" /> }
+                                            else
+                                            {
+                            <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" /> } }
                     </td>
                     <td hidden>
                         @Html.DisplayFor(modelItem => item.SubCategoryId)
@@ -226,6 +222,15 @@
                             明細
                             @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
                         </button>
+                    </td>
+                    <td>
+                        @Html.ActionLink("領養申請", "AdoptList", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px" })
+                        @{ 
+                            if(item._prod.OrderDetails.Count>0)
+                {
+                    <span>!!!!!!!!</span>
+                }
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("下架", "Discontinued", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要下架?')" })
