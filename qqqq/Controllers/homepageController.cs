@@ -38,7 +38,10 @@ namespace qqqq.Controllers
         {
             return View();
         }
-
+        public IActionResult chatbox()
+        {
+            return PartialView();
+        }
         public IActionResult Privacy()
         {
             return View();
