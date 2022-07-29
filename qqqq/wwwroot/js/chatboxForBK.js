@@ -7,8 +7,7 @@ $(document).ready(() =>
         $(".chat-box").slideToggle("slow")
     })
 })
-/*$("body").on("click", "img", () => alert("test"));*/
-
+$("body").on("click", "img", () => alert("test"));
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //與Server建立連線
