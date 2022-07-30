@@ -21911,7 +21911,7 @@ code {
                         content: "\e648";
                         color: #ffffff;
                     }
-
+                    #ff
                 .accordion.accordion-filled .card .card-header a[aria-expanded="false"]:before {
                     content: "\e64b";
                 }
@@ -30148,10 +30148,11 @@ div.tagsinput {
 
     .sidebar .nav:not(.sub-menu) > .nav-item {
         margin-top: .2rem;
+        background: linear-gradient(to bottom,#EAA636 0%,transparent 50%,#EAA636);
     }
 
         .sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded="true"] {
-            background: #EAA636;
+            background: linear-gradient(to bottom,#EAA636 0%,transparent 50%,#EAA636);
             color: #fff;
         }
 
@@ -30165,9 +30166,9 @@ div.tagsinput {
                 color: #fff;
             }
 
-    /*    .sidebar .nav:not(.sub-menu) > .nav-item.active {
-            background: #4B49AC;
-        }*/
+        .sidebar .nav:not(.sub-menu) > .nav-item.active {
+            background: linear-gradient(to bottom,#7C4428 0%,transparent 50%,#7C4428);
+        }
 
 .sidebar .nav.sub-menu {
     margin-bottom: 0;
@@ -30212,7 +30213,7 @@ div.tagsinput {
             }
 
         .sidebar .nav.sub-menu .nav-item:hover {
-            background: transparent;
+            background: linear-gradient(to bottom,#EAA636 0%,transparent 50%,#EAA636);
         }
 
 .sidebar-dark .sidebar {
@@ -30319,7 +30320,7 @@ div.tagsinput {
 }
 
 .navbar .navbar-brand-wrapper {
-    background: #ffffff;
+    background: linear-gradient(to bottom,#EAA636 0%,transparent 50%,#EAA636);
     transition: width 0.25s ease, background 0.25s ease;
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;
@@ -30366,7 +30367,7 @@ div.tagsinput {
     }
 
 .navbar .navbar-menu-wrapper {
-    background: #ffffff;
+    background: linear-gradient(to bottom,#EAA636 0%,transparent 50%,#EAA636);
     transition: width 0.25s ease;
     -webkit-transition: width 0.25s ease;
     -moz-transition: width 0.25s ease;
