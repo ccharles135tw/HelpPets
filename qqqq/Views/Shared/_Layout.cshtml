@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using prjMVCDemo.vModel
+@using qqqq.ViewModels
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -44,6 +47,7 @@
 </head>
 
 <body>
+
     <!-- Spinner Start -->
     <!-- 標題欄 -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
@@ -149,6 +153,25 @@
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 
+        @{
+        if(Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+        {
+            CLoginViewModel member = System.Text.Json.JsonSerializer.Deserialize<CLoginViewModel>(Context.Session.GetString(CDictionary.SK_LOGIN_USER));
+            int memberID = member.MemberID;
+                                        <div style="display:none" id="divMemString">member/@memberID</div>
+        }
+        else
+        {
+                                        <div style="display:none" id="divMemString"></div>
+                                        <script>
+    $.get("@Url.Content("~/Product/GetCountForCharBox")", {}, (count) => { $("#divMemString").text(`random/${count}`);selfID=`random/${count}`})
+                                        </script>
+        }
+
+    }
+         @*chatbox*@
+     <script src="~/js/signalr/dist/browser/signalr.js"></script>
+     <script src="~/js/chatbox.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
@@ -157,13 +180,13 @@
 @{
     if (CDictionary.SK_LOGIN_USER != null)
     {
-        <script>
+    <script>
 
-            $("b").empty();
-            $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("b").html(datas); })
+                                        $("b").empty();
+                                        $.post("@Url.Content("~/MemberArea/mName")", {}, function (datas) { $("b").html(datas); })
 
 
-        </script>
+    </script>
     }
 }
 

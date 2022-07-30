@@ -21,7 +21,27 @@ namespace Pet.Controllers
         {
             _enviroment = p;
         }
-
+        static int countForChatBox = 0;
+        public int GetCountForCharBox()
+        {
+            countForChatBox++;
+            return countForChatBox;
+        }
+        public string GetNameForChatBox(string userString)
+        {
+            string[] user = userString.Split('/');
+            if (user[0] == "random") return $"訪客{user[1]}號";
+            if (user[0]=="member")
+            {
+                var q = db.Members.AsEnumerable().Where(m => m.MemberId == int.Parse(user[1])).FirstOrDefault();
+                return q.Name;
+            }
+            else
+            {
+                var q = db.Employees.AsEnumerable().Where(e=>e.EmpoyeeId == int.Parse(user[1])).FirstOrDefault();
+                return q.Name;
+            }
+        }
         public IActionResult List()
         {
 

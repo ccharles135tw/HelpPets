@@ -1,5 +1,5 @@
 ﻿
-var selfID = $("#divEmpString").text();
+
 $(document).ready(() =>
 {
   
@@ -7,6 +7,7 @@ $(document).ready(() =>
         $(".chat-box").slideToggle("slow")
     })
 })
+var selfID = $("#divEmpString").text();
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //與Server建立連線
@@ -36,9 +37,9 @@ connection.on("UpdSelfID", function (id)
 $('.send-btn').on('click', function ()
 {
     let message = $(this).siblings(":text").val();
-    //  let sendToID = $('.chats :visible').attr("clientID");
+     // let sendToID = $('.chats:visible').attr("clientID");
     let sendToID = $(".chat-btn").attr("clientID");
-    $(this).siblings(":text")val("");
+    $(this).siblings(":text").val("");
     connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err)
     {
         alert('傳送錯誤: ' + err.toString());
@@ -54,11 +55,19 @@ connection.on("ReceiveMessage", function (clientID, msg)
 {
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
-        $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+
+        let name = null;
+        $.post("/Product/GetNameForChatBox", { userString: clientID }, function (data)
+        {
+            console.log(data);
+            $(".ul-client").append(`<li clientID="${clientID}">${data}</li>`)
+            $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+         })
     }
     else
     {
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
+        //$("ul-client").append(`<li clientID="${clientID}">ChatBox</li>`)
     }
 });
 //點擊li切換對象
