@@ -17,6 +17,29 @@
             color: black;
             font-weight: 900;
         }
+        .divfile {
+/*            transform: translate(-50%.-50%);
+*/            margin-bottom: 20px;
+        }
+
+        #file1 {
+            width: 100%;
+            outline: none;
+/*            justify-content:center;
+            align-items:center;*/
+            padding:0;
+        }
+
+        ::-webkit-file-upload-button {
+            color: #fff;
+            background-color: #EAA636;
+            border-radius: 20px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            margin: 0;
+            padding: 15px;
+        }
     </style>
 }
 <h1 style="font-weight: 900; text-align:center; margin-top: 30px; margin-bottom: 10px">新增活動</h1>
@@ -74,11 +97,11 @@
                     <input asp-for="PeopleInNeed" class="form-control input" />
                     <span asp-validation-for="PeopleInNeed" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="divfile">
                 <i class="fa-solid fa-paw">
                     <label class="control-label">活動照片</label>
                 </i>
-                    <input type="file" class="form-control input" name="photo" />
+                    <input id="file1" type="file" class="form-control input" name="photo" />
             </div>
             <div class="form-group">
                 <i class="fa-solid fa-paw">

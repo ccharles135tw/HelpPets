@@ -22,6 +22,18 @@
             font-size: 16px;
             font-weight: 600;
         }
+        .imgdiv {
+            transition: transform .2s;
+            margin: 0 auto;
+            flex: none;
+            background-color: transparent;
+            overflow:hidden;
+        }
+
+            .imgdiv:hover {
+                transform: scale(3);
+                background-color:transparent;
+            }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -82,7 +94,7 @@
                 foreach (var item in Model)
                 {
                     cnt++;
-                    <tr>
+                    <tr >
                         <td hidden id="id@(cnt)">
                             @Html.DisplayFor(modelItem => item.ActivityId)
                         </td>
@@ -104,7 +116,7 @@
                         <td id="need@(cnt)">
                             @Html.DisplayFor(modelItem => item.PeopleInNeed)
                         </td>
-                        <td id="photo">
+                        <td id="photo" class="imgdiv">
                             <img src="~/img/volunteer/@item.ActivityPhoto" style="width:60px; height:40px;" />
                         </td>
                         <td id="description@(cnt)">
@@ -134,5 +146,6 @@
                 x.html($("#text").val())
             })
         })
+
     </script>
 }

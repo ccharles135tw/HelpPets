@@ -28,7 +28,7 @@
 <h1 style="text-align:center; font-weight:900">浪浪管理系統</h1>
 <div style="text-align:left; font-size:16px ; font-weight:600">
     <form method="post" action="@Url.Content("~/BK_pet/KeyWord")">
-       
+
         關鍵字<input type="text" value="@ViewBag.keyword" name="keyword" />
         <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
 
@@ -37,8 +37,8 @@
         <a asp-action="DiscountinueList" class="fa-solid fa-arrow-down-short-wide" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 下架浪浪 / </a>
 
     </form>
-    
-      
+
+
 </div>
 <br />
 
@@ -47,7 +47,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -131,117 +130,119 @@
                     <th hidden>
                         @Html.DisplayNameFor(model => model.LigationType)
                     </th>
-                    <th colspan="4"></th>
+                    <th colspan="6"></th>
                 </tr>
             </thead>
             <tbody id="tbody" style="text-align:center;">
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.CategoryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CategoryName)
-                    </td>
-                    <td>
-                        @{ if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
-                                            {
-                            <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" /> }
-                                            else
-                                            {
-                            <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" /> } }
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.SubCategoryId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SubCategoryName)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.ProductId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
-                    </td>
+                    <tr>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryName)
+                        </td>
+                        <td>
+                            @{ if (item.Product.Photos.FirstOrDefault(ph => ph.IsDefault == true) != null)
+                                {
+                                    <img src="~/Images/@item.Product.Photos.FirstOrDefault(ph=>ph.IsDefault==true).PictureName" style="border-radius:50% ; height:75px ; width:75px" /> }
+                                else
+                                {
+                                    <img src="~/Images/Default.jpg" style="border-radius:50% ; height:75px ; width:75px" /> } }
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.SubCategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubCategoryName)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.ProductId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
 
-                    <td class="Description@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.Continued)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.GenderId)
-                    </td>
-                    <td class="GenderType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.GenderType)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.ColorId)
-                    </td>
-                    <td class="ColorName@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.ColorName)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.CityId)
-                    </td>
-                    <td class="CityName@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.CityName)
-                    </td>
-                    <td class="YearCost@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.YearCost)
-                    </td>
-                    <td class="Space@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.Space)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.SizeId)
-                    </td>
-                    <td class="SizeType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.SizeType)
-                    </td>
-                    <td hidden>
-                        @Html.DisplayFor(modelItem => item.AgeId)
-                    </td>
-                    <td class="AgeType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.AgeType)
-                    </td>
-                    <td class="AccompanyTimeWeek@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.AccompanyTimeWeek)
-                    </td>
-                    <td class="LigationId@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.LigationId)
-                    </td>
-                    <td class="LigationType@(item.ProductId)" hidden>
-                        @Html.DisplayFor(modelItem => item.LigationType)
-                    </td>
-                    <td>
-                        <button data-toggle="modal" data-target="#myModal" Class="fa-solid fa-list detail" id="detail@(item.ProductId)" @*onclick="test(this.id)"*@
-                                style="border:none; background-color:transparent;color:chocolate;font-size:16px">
-                            明細
-                            @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
-                        </button>
-                    </td>
-                    <td>
-                        @Html.ActionLink("領養申請", "AdoptList", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px" })
-                        @{ 
-                            if(item._prod.OrderDetails.Count>0)
-                {
-                    <span>!!!!!!!!</span>
-                }
-                        }
-                    </td>
-                    <td>
-                        @Html.ActionLink("下架", "Discontinued", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要下架?')" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
-                    </td>
-                    <td>
-                        @Html.ActionLink("刪除", "Delete", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-trash-can", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要刪除?')" })
-                    </td>
-                </tr>
+                        <td class="Description@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.Continued)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.GenderId)
+                        </td>
+                        <td class="GenderType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.GenderType)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.ColorId)
+                        </td>
+                        <td class="ColorName@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.ColorName)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.CityId)
+                        </td>
+                        <td class="CityName@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.CityName)
+                        </td>
+                        <td class="YearCost@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.YearCost)
+                        </td>
+                        <td class="Space@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.Space)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.SizeId)
+                        </td>
+                        <td class="SizeType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.SizeType)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.AgeId)
+                        </td>
+                        <td class="AgeType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.AgeType)
+                        </td>
+                        <td class="AccompanyTimeWeek@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.AccompanyTimeWeek)
+                        </td>
+                        <td class="LigationId@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.LigationId)
+                        </td>
+                        <td class="LigationType@(item.ProductId)" hidden>
+                            @Html.DisplayFor(modelItem => item.LigationType)
+                        </td>
+                        <td>
+                            <button data-toggle="modal" data-target="#myModal" Class="fa-solid fa-list detail" id="detail@(item.ProductId)" @*onclick="test(this.id)"*@
+                                    style="border:none; background-color:transparent;color:chocolate;font-size:16px">
+                                明細
+                                @*@Html.ActionLink("", "Detail", "Member", new { id = item.MemberID }, new { Class = "fa-solid fa-list" })*@
+                            </button>
+                        </td>
+                        <td>
+                            @Html.ActionLink("領養申請", "AdoptList", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px" })
+                            @{
+                                if (item._prod.OrderDetails.Count > 0)
+                                {
+                                    <span>!!!!!!!!</span>
+                                }
+                            }
+
+                        </td>
+
+                        <td>
+                                @Html.ActionLink("下架", "Discontinued", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-arrow-down-short-wide", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要下架?')" })
+                         </td>
+                        <td>
+                            @Html.ActionLink("修改", "NewEdit", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", @style = "color:chocolate;font-size:16px" })
+                        </td>
+                        <td>
+                            @Html.ActionLink("刪除", "Delete", "BK_pet", new { id = item.ProductId }, new { Class = "fa-solid fa-trash-can", @style = "color:chocolate;font-size:16px", onclick = "return confirm('請確認是否要刪除?')" })
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -271,6 +272,7 @@
                     </div>
                     <div class="modal-footer" style="background-color:wheat">
                         <button type="button" style="color:chocolate; border:none;background-color:transparent" class="fa-solid fa-right-from-bracket" data-dismiss="modal"> 返回</button>
+
                     </div>
                 </div>
             </div>
@@ -278,8 +280,8 @@
     </div>
 </body>
 </html>
-
 @section Scripts{
+
     <script>
         $(".detail").click((event) => {
             let id = event.target.id.replace(/[^0-9]/ig, "")
@@ -296,5 +298,7 @@
             $("#LigationType").html(`狀態:${$(`.LigationType${id}`).text()}`)
             $("#Description").html(`描述:${$(`.Description${id}`).text()}`)
         })
+  })
+        }
     </script>
 }
