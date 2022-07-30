@@ -10,28 +10,25 @@ namespace qqqq.Hubs
     public class ChatHub : Hub
     {
         // 用戶連線 ID 列表
-        public static List<string> ConnIDList = new List<string>();
+        //key回connectionID，value為member/1或employee/1
+        public static Dictionary<string, string> ConnDict = new Dictionary<string, string>();
 
-        /// <summary>
-                /// 連線事件
-                /// </summary>
-                /// <returns></returns>
+
+        /// 連線事件
         public override async Task OnConnectedAsync()
         {
 
-            if (ConnIDList.Where(p => p == Context.ConnectionId).FirstOrDefault() == null)
+            if (ConnDict.ContainsKey(Context.ConnectionId)==false)
             {
-                ConnIDList.Add(Context.ConnectionId);
+                ConnDict.Add(Context.ConnectionId, null);
             }
-            // 更新連線 ID 列表
-            string jsonString = JsonConvert.SerializeObject(ConnIDList);
-            await Clients.All.SendAsync("UpdList", jsonString);
+
+            // 更新連線 ID 狀態  其他人會看到他上線
+            //string jsonString = JsonConvert.SerializeObject(ConnIDList);
+            //await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新個人 ID
             await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfID", Context.ConnectionId);
-
-            // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "新連線 ID: " + Context.ConnectionId);
 
             await base.OnConnectedAsync();
         }
@@ -43,17 +40,18 @@ namespace qqqq.Hubs
                 /// <returns></returns>
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-            string id = ConnIDList.Where(p => p == Context.ConnectionId).FirstOrDefault();
-            if (id != null)
+           if(ConnDict.ContainsKey(Context.ConnectionId))
             {
-                ConnIDList.Remove(id);
+                ConnDict.Remove(Context.ConnectionId);
             }
-            // 更新連線 ID 列表
-            string jsonString = JsonConvert.SerializeObject(ConnIDList);
-            await Clients.All.SendAsync("UpdList", jsonString);
+           else
+            {
+                throw new Exception();
+            }
+            // 更新連線 ID 狀態  其他人會看到他下線
+            //string jsonString = JsonConvert.SerializeObject(ConnIDList);
+            //await Clients.All.SendAsync("UpdList", jsonString);
 
-            // 更新聊天內容
-            await Clients.All.SendAsync("UpdContent", "已離線 ID: " + Context.ConnectionId);
 
             await base.OnDisconnectedAsync(ex);
         }
@@ -69,15 +67,22 @@ namespace qqqq.Hubs
         {
             if (string.IsNullOrEmpty(sendToID))
             {
-                await Clients.All.SendAsync("UpdContent", selfID + " 說: " + message);
+                throw new Exception("sendToID為空") ;
             }
             else
             {
-                // 接收人
-                await Clients.Client(sendToID).SendAsync("UpdContent", selfID + " 私訊向你說: " + message);
+                if(ConnDict.ContainsValue(sendToID))
+                {
+                    // 接收人
+                    await Clients.Client(sendToID).SendAsync("ReceiveMessage", selfID, message);
 
-                // 發送人
-                await Clients.Client(Context.ConnectionId).SendAsync("UpdContent", "你向 " + sendToID + " 私訊說: " + message);
+                    // 發送人
+                    await Clients.Client(Context.ConnectionId).SendAsync("SendMessage",sendToID,message);
+                }
+                else
+                {
+                    throw new Exception("ConnDist沒有sendToID");
+                }
             }
         }
 
