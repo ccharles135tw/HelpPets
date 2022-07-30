@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using qqqq.ViewModels
+@using qqqq.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,18 +28,24 @@
 
     <link href="~/css/jquery-ui-1.13.1.custom/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/css/chatboxStyleForBK.css" rel="stylesheet" />
+@*        <link href="~/css/style1.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">*@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     @{
+        我救浪Context db = new 我救浪Context();
+        CEmp employee = null;
         if(Context.Session.Keys.Contains(CDictionary.SK_LOGIN_EMP))
         {
-                    CEmp employee = System.Text.Json.JsonSerializer.Deserialize<CEmp>(Context.Session.GetString(CDictionary.SK_LOGIN_EMP));
+                    employee = System.Text.Json.JsonSerializer.Deserialize<CEmp>(Context.Session.GetString(CDictionary.SK_LOGIN_EMP));
         int employeeID = employee.EmpoyeeId;
             <div style="display:none" id="divEmpString">employee/@employeeID</div>
         }
         else
         {
+            var q=db.Employees.Where(e => e.EmpoyeeId == 6).FirstOrDefault();
+            employee = new CEmp(q);
             <div style="display:none" id="divEmpString">employee/6</div>
         }
 
@@ -329,7 +336,7 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
-                    <partial name="chatboxForBK" />
+                    <partial name="chatboxForBK"  model="@employee"/>
                 </div>
             </div>
         </div>

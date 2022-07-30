@@ -23,6 +23,12 @@
             <th>
                 會員願望清單
             </th>
+            <th>
+                即時訊息
+            </th>
+            <th>
+                
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -45,7 +51,11 @@
                     查看
                 </button>
             </td>
-
+            <td>
+                <div class="divAdoptChat" clientID="member/@item.MemeberID" clientName="@item.MemberName">
+                    <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+                </div>
+            </td>
             <td>
                 <button orderid="@item.order.OrderId" productid="@item.order.OrderDetails.FirstOrDefault().ProductId"  class="btn btn-primary btnChooseAdopter">確定為領養者</button>
             </td>
@@ -113,5 +123,24 @@
                 })
             }
         })
+    </script>
+    @*Chat*@
+    <script>
+$("table").on("click", ".divAdoptChat", function() 
+    {
+
+         let clientID = $(this).attr("clientID");
+         let data = $(this).attr("clientName");
+        if ($(`.ul-client li[clientID="${clientID}"]`).length == 0) {
+             $(".ul-client").append(`<li clientID="${clientID}">${data}</li>`);
+        }
+
+  
+    if ($(".chat-box").is(":hidden")) {
+           $(".chat-btn").click();
+    }
+ 
+    $(`.ul-client li[clientID="${clientID}"]`).click();
+    })
     </script>
 }

@@ -94,7 +94,7 @@ function ClickToClient(clientID,clientName)
 {
   
     $(".chats").hide();
-    $("#clientName").text(`${clientName}`);
+    $("#clientName").text(`TO:${clientName}`);
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)

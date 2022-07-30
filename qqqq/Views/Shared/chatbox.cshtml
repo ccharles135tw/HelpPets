@@ -1,4 +1,4 @@
-﻿
+﻿@model string
 
 <div class="divbody nav-bar-bottom">
         <div class="chatcontainer">
@@ -8,7 +8,7 @@
                 <div class="client">
                     <img src="~/img/cat.png" alt="logo" />
                     <div class="client-info">
-                        <h5 id="clientName">客服人員</h5>
+                        <h5 id="clientName">Hello!! @Model</h5>
                          <ul class="ul-client">
                         @{
                             我救浪Context db = new 我救浪Context();

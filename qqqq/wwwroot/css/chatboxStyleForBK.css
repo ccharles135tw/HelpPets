@@ -157,9 +157,17 @@
         transform: rotate(30deg);
     }
 
-.ul-client li {
-    cursor: pointer
+.ul-client {
+    list-style-type: none;
+    margin: 0;
+    padding: 0
 }
+    .ul-client li {
+        display: inline;
+        list-style: none;
+        cursor: pointer ;
+        margin-left: 20px;
+    }
 
 
 .blink {

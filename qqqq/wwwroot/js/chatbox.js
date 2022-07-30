@@ -4,6 +4,7 @@ $(document).ready(() =>
    
     $(".chat-btn").click(() => {
         $(".chat-box").slideToggle("slow")
+        $(".chat-btn").removeClass("breath");
     })
 })
 
@@ -53,35 +54,47 @@ connection.on("SendMessage", function (clientID, msg)
 // 接受訊息事件
 connection.on("ReceiveMessage", function (clientID, msg)
 {
-    if ($(`.chats[clientID='${clientID}']`).length == 0)
+    if ($(`.ul-client li[clientID="${clientID}"]`).length == 0)//ul沒有就加入
     {
-        let name = null;
         $.post("/Product/GetNameForChatBox", { userString: clientID }, function (data)
         {
-            $(".ul-client").append(`<li clientID="${clientID}">${data}</li>`)
-            $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+            $(".ul-client").append(`<li clientID="${clientID}" class="blink">${data}</li>`);
+            $(`.ul-client li[clientID="${clientID}"]`).addClass("blink");
         })
+    }
+    if ($(".chat-btn").attr("clientID") != clientID)//判斷目前的訊息對象是否為傳訊息的
+    {
+        $(`.ul-client li[clientID="${clientID}"]`).addClass("blink");//目前的訊息對象並非現在傳訊息的，加入閃爍效果
+    }
+    if ($(".chat-box ").is(":hidden"))
+    {
+        $(".chat-btn").addClass("breath");
+    }
+    if ($(`.chats[clientID='${clientID}']`).length == 0)
+    {
+        $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
     }
     else
     {
-
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
+        //$("ul-client").append(`<li clientID="${clientID}">ChatBox</li>`)
     }
 });
 //點擊li切換對象
 $(".ul-client").on("click", "li", function ()
 {
+    $(this).removeClass("blink");//已讀>>移除閃爍
     let clientID = $(this).attr("clientID");
     let clientName = $(this).text();
     ClickToClient(clientID, clientName);
-    $(".chat-btn").attr("clientID", clientID);
+    $(".chat-btn").attr("clientID", clientID);//更改目前的訊息對象
 })
 
 function ClickToClient(clientID, clientName)
 {
 
     $(".chats").hide();
-    $("#clientName").text(`${clientName}`);
+    $("#clientName").text(`TO:${clientName}`);
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
