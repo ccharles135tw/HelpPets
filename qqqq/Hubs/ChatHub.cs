@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using qqqq.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace qqqq.Hubs
         // 用戶連線 ID 列表
         //key回connectionID，value為member/1或employee/1
         public static Dictionary<string, string> ConnDict = new Dictionary<string, string>();
-
+        我救浪Context db = new 我救浪Context();
 
         /// 連線事件
         public override async Task OnConnectedAsync()
@@ -28,11 +29,21 @@ namespace qqqq.Hubs
             //await Clients.All.SendAsync("UpdList", jsonString);
 
             // 更新個人 ID
-            await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfID", Context.ConnectionId);
+            //await Clients.Client(Context.ConnectionId).SendAsync("UpdSelfConnectionID", Context.ConnectionId);
 
             await base.OnConnectedAsync();
         }
-
+        public void AddValueInConnDist(string selfID)
+        {
+            if(ConnDict.ContainsKey(Context.ConnectionId))
+            {
+                ConnDict[Context.ConnectionId] = selfID;
+            }
+            else
+            {
+                throw new Exception("ConnDist無此ConnectionID");
+            }
+        }
         /// <summary>
                 /// 離線事件
                 /// </summary>
@@ -79,10 +90,7 @@ namespace qqqq.Hubs
                     // 發送人
                     await Clients.Client(Context.ConnectionId).SendAsync("SendMessage",sendToID,message);
                 }
-                else
-                {
-                    throw new Exception("ConnDist沒有sendToID");
-                }
+                //存入資料庫
             }
         }
 
