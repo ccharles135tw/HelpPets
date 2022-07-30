@@ -1,5 +1,5 @@
 ﻿
-
+var selfID = $("#divEmpString").text();
 $(document).ready(() =>
 {
   
@@ -12,8 +12,8 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //與Server建立連線
 connection.start().then(function ()
 {
-    connection.invoke("AddValueInConnDist", $(".chat-btn").attr("selfID"));
-    console.log("Hub 連線完成");
+    connection.invoke("AddConnDist", selfID).then(() => { console.log("Hub 連線完成"); });
+
 }).catch(function (err)
 {
     alert('連線錯誤: ' + err.toString());
@@ -30,33 +30,57 @@ connection.on("UpdSelfID", function (id)
 
 });
 
-// 更新聊天內容事件
-connection.on("ReceiveMessage", function (clientID,msg)
+
+
+//傳送訊息
+$('.send-btn').on('click', function ()
+{
+    let message = $(this).siblings(":text").val();
+    //  let sendToID = $('.chats :visible').attr("clientID");
+    let sendToID = $(".chat-btn").attr("clientID");
+    $(this).siblings(":text")val("");
+    connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err)
+    {
+        alert('傳送錯誤: ' + err.toString());
+    });
+});
+//傳送信息事件
+connection.on("SendMessage", function (clientID, msg)
+{
+    $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${msg}</div>`);
+});
+// 接受訊息事件
+connection.on("ReceiveMessage", function (clientID, msg)
 {
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
-        $(".chat-box").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+        $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
     }
     else
     {
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
     }
 });
-
-//傳送訊息
-$('.send-btn').on('click', function ()
+//點擊li切換對象
+$(".ul-client").on("click", "li", function ()
 {
-    let selfID = $(this).attr("selfID");
-    let message = $(this).siblings(":text").val();
-    let sendToID = $('.chats :visible').attr("clientID");
-    connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err)
+    let clientID = $(this).attr("clientID");
+    let clientName = $(this).text();
+    ClickToClient(clientID, clientName);
+    $(".chat-btn").attr("clientID", clientID);
+})
+
+function ClickToClient(clientID,clientName)
+{
+  
+    $(".chats").hide();
+    $("#clientName").text(`${clientName}`);
+    if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
-        alert('傳送錯誤: ' + err.toString());
-    });
-});
-
-//傳送信息時
-connection.on("SendMessage", function (clientID, msg)
-{
-    $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${msg}</div>`);
-});
+        $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
+    }
+    else
+    {
+        $(`.chats[clientID='${clientID}']`).show();
+    }
+}

@@ -54,9 +54,9 @@ namespace qqqq
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    //pattern: "{controller=homepage}/{action=enterpage}/{id?}");
+                    pattern: "{controller=homepage}/{action=enterpage}/{id?}");
                     //pattern: "{controller=Volunteer}/{action=Index}/{id?}");
-                    pattern: "{controller=BK_pet}/{action=NewPetList}/{id?}");
+                    //pattern: "{controller=BK_pet}/{action=NewPetList}/{id?}");
                 endpoints.MapHub<ChatHub>("/chatHub");
             });
         }

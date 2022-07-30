@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-
+﻿@using Microsoft.AspNetCore.Http
+@using qqqq.ViewModels
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -29,7 +30,20 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
+    @{
+        if(Context.Session.Keys.Contains(CDictionary.SK_LOGIN_EMP))
+        {
+                    CEmp employee = System.Text.Json.JsonSerializer.Deserialize<CEmp>(Context.Session.GetString(CDictionary.SK_LOGIN_EMP));
+        int employeeID = employee.EmpoyeeId;
+            <div style="display:none" id="divEmpString">employee/@employeeID</div>
+        }
+        else
+        {
+            <div style="display:none" id="divEmpString">employee/6</div>
+        }
 
+    }
+    
 
 
     <div class="container-scroller">

@@ -11,7 +11,7 @@ namespace qqqq.Hubs
     public class ChatHub : Hub
     {
         // 用戶連線 ID 列表
-        //key回connectionID，value為member/1或employee/1
+        //key為member/1或employee/1，value為ConnectionID
         public static Dictionary<string, string> ConnDict = new Dictionary<string, string>();
         我救浪Context db = new 我救浪Context();
 
@@ -19,10 +19,10 @@ namespace qqqq.Hubs
         public override async Task OnConnectedAsync()
         {
 
-            if (ConnDict.ContainsKey(Context.ConnectionId)==false)
-            {
-                ConnDict.Add(Context.ConnectionId, null);
-            }
+            //if (ConnDict.ContainsKey(Context.ConnectionId)==false)
+            //{
+            //    ConnDict.Add(Context.ConnectionId, null);
+            //}
 
             // 更新連線 ID 狀態  其他人會看到他上線
             //string jsonString = JsonConvert.SerializeObject(ConnIDList);
@@ -33,15 +33,15 @@ namespace qqqq.Hubs
 
             await base.OnConnectedAsync();
         }
-        public void AddValueInConnDist(string selfID)
+        public void AddConnDist(string selfID)
         {
-            if(ConnDict.ContainsKey(Context.ConnectionId))
+            if(ConnDict.ContainsKey(selfID)==false)
             {
-                ConnDict[Context.ConnectionId] = selfID;
+                ConnDict[selfID] = Context.ConnectionId;
             }
             else
             {
-                throw new Exception("ConnDist無此ConnectionID");
+                throw new Exception("ConnDist已有此selfID");
             }
         }
         /// <summary>
@@ -51,9 +51,10 @@ namespace qqqq.Hubs
                 /// <returns></returns>
         public override async Task OnDisconnectedAsync(Exception ex)
         {
-           if(ConnDict.ContainsKey(Context.ConnectionId))
+           if(ConnDict.ContainsValue(Context.ConnectionId))
             {
-                ConnDict.Remove(Context.ConnectionId);
+                string key = ConnDict.Where(cd => cd.Value == Context.ConnectionId).FirstOrDefault().Key;
+                ConnDict.Remove(key);
             }
            else
             {
@@ -82,13 +83,13 @@ namespace qqqq.Hubs
             }
             else
             {
-                if(ConnDict.ContainsValue(sendToID))
+
+                // 發送人
+                await Clients.Client(ConnDict[selfID]).SendAsync("SendMessage", sendToID, message);
+                if (ConnDict.ContainsKey(sendToID))
                 {
                     // 接收人
-                    await Clients.Client(sendToID).SendAsync("ReceiveMessage", selfID, message);
-
-                    // 發送人
-                    await Clients.Client(Context.ConnectionId).SendAsync("SendMessage",sendToID,message);
+                    await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, message);
                 }
                 //存入資料庫
             }
