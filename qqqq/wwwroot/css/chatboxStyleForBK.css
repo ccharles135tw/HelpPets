@@ -156,3 +156,43 @@
     .chat-btn:hover img {
         transform: rotate(30deg);
     }
+
+.ul-client li {
+    cursor: pointer
+}
+
+
+.blink {
+    animation-duration: 0.5s;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+    0% {
+        color: blue;
+    }
+    50% {
+        color: red;
+    }
+}
+
+.breath {
+    animation-duration: 0.5s;
+    animation-name: breath;
+    animation-iteration-count: infinite;
+}
+@keyframes breath {
+    from {
+        opacity: 0.1;
+    }
+    /* 動畫開始時的不透明度*/
+    50% {
+        opacity: 1;
+    }
+    /* 動畫50% 時的不透明度*/
+    to {
+        opacity: 0.1;
+    }
+    /* 動畫結束時的不透明度*/
+}

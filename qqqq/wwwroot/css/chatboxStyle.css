@@ -184,3 +184,5 @@
     -webkit-animation-iteration-count: infinite; /*動畫播放的次數*/
     -webkit-animation-duration: 5s; /*動畫所花費的時間*/
 }
+
+.ul-client li{cursor:pointer}

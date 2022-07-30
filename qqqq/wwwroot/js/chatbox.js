@@ -55,10 +55,16 @@ connection.on("ReceiveMessage", function (clientID, msg)
 {
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
-        $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+        let name = null;
+        $.post("/Product/GetNameForChatBox", { userString: clientID }, function (data)
+        {
+            $(".ul-client").append(`<li clientID="${clientID}">${data}</li>`)
+            $(".client").after(`<div class="chats" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+        })
     }
     else
     {
+
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
     }
 });
