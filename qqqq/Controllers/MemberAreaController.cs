@@ -159,5 +159,12 @@ namespace prjHomeLess_R.Controllers
 
             return ViewComponent("VCemembername");
         }
+
+        //charles
+        public IActionResult mVActivity()
+        {
+
+            return ViewComponent("VCvactivity");
+        }
     }
 }
