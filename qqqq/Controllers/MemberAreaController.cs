@@ -140,10 +140,10 @@ namespace prjHomeLess_R.Controllers
 
             return ViewComponent("VCmfavorite");
         }
-        public IActionResult mPet()
+        public IActionResult mPet(int id)
         {
 
-            return ViewComponent("VCmpet");
+            return ViewComponent("VCmpet",id);
         }
         public IActionResult mCommon()
         {

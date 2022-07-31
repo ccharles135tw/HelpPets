@@ -31,19 +31,18 @@
                             </td>
 
                             <td>
-                                @*<img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />*@
+                                <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
 
                             </td>
 
                             <td>
-                           @*@item.ProductName*@
-                            </td>
+                    @item.ProductName
                             <td>
-                                @*@item.Gender*@
+                               @item.Gender
                             </td>
                           
                             <td class="quantity">
-                                @*@item.Lagition*@
+                                @item.Lagition
                             </td>
 
 
@@ -85,24 +84,21 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body ">
-                    <p style="text-align:left">寵物編號:123123</p>
-                    <p style="text-align:left">寵物顏色:123123</p>
-                    <p style="text-align:left">寵物年花費:123123</p>
-                    <p style="text-align:left">寵物:很乖巧不會亂叫不會咬人很好動重點會在尿布墊上小號與大號</p>
-                    <p style="text-align:left">寵物編號:123123</p>
-                    <p style="text-align:left">寵物編號:123123</p>
-
-                    @*<ul style="list-style:none; display:block" >
-                            編號:
-                            <li>Coffee</li>
-                            顏色:
-                            <li>Tea</li>
-                            描述:
-                            <li>很乖巧不會亂叫不會咬人很好動重點會在尿布墊上小號與大號</li>
-                        </ul>*@
-                </div>
-
+                @{ foreach (var pet in Model)
+                    {
+                                <div class="modal-body ">
+                                    <p style="text-align:left">寵物編號:@pet.ProductId</p>
+                                    <p style="text-align:left">寵物性別:@pet.Gender</p>
+                                    <p style="text-align:left">寵物顏色: @pet.Color</p>       
+                                    <p style="text-align:left">寵物年花費:@pet.YearCost</p>
+                                    <p style="text-align:left">建議活動空間:@pet.Space</p>
+                                    <p style="text-align:left">寵物體型:@pet.Size</p>
+                                    <p style="text-align:left">寵物年齡:@pet.Age</p>
+                                    <p style="text-align:left">寵物描述:@pet.Description</p>
+                                   
+                                </div>
+                        }
+                    }
 
 
 
