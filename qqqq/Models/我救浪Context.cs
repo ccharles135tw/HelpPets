@@ -43,6 +43,7 @@ namespace qqqq.Models
         public virtual DbSet<VactivityCategory> VactivityCategories { get; set; }
         public virtual DbSet<VallowTime> VallowTimes { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
+        public virtual DbSet<Vstatus> Vstatuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -50,7 +51,6 @@ namespace qqqq.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=我救浪;Integrated Security=True");
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=.;Initial Catalog=我救浪;Integrated Security=True");
             }
         }
 
@@ -369,7 +369,7 @@ namespace qqqq.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.ProductId, e.IsDonate })
+                entity.HasKey(e => new { e.OrderId, e.ProductId })
                     .HasName("PK_Order_Detail_1");
 
                 entity.ToTable("Order_Detail");
@@ -631,6 +631,8 @@ namespace qqqq.Models
 
                 entity.Property(e => e.VerificationCode).HasMaxLength(50);
 
+                entity.Property(e => e.VstatusId).HasColumnName("VStatusID");
+
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.Volunteers)
                     .HasForeignKey(d => d.ActivityId)
@@ -645,6 +647,20 @@ namespace qqqq.Models
                     .WithMany(p => p.Volunteers)
                     .HasForeignKey(d => d.MemberId)
                     .HasConstraintName("FK_Volunteer_Member");
+
+                entity.HasOne(d => d.Vstatus)
+                    .WithMany(p => p.Volunteers)
+                    .HasForeignKey(d => d.VstatusId)
+                    .HasConstraintName("FK_Volunteer_VStatus");
+            });
+
+            modelBuilder.Entity<Vstatus>(entity =>
+            {
+                entity.ToTable("VStatus");
+
+                entity.Property(e => e.VstatusId).HasColumnName("VStatusID");
+
+                entity.Property(e => e.StatusType).HasMaxLength(50);
             });
 
             OnModelCreatingPartial(modelBuilder);

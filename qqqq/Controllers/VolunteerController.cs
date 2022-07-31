@@ -272,39 +272,36 @@ namespace final_test.Controllers
             {
                 v.Waiting = false;
             }
-            v.OrderDate = DateTime.Now.AddMinutes(20).ToString();
+            v.OrderDate = DateTime.Now.ToString();
             v.VerificationCode = random;
             db.Volunteers.Add(v);
             db.SaveChanges();
-
-            //var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
-            //CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
-            //if (memberview.Email == Email && db.Volunteers.Where(x=>x.AllowDate == actDate).Count() == 0)
-            //{
-            //    EmailTest(Email);
-            //}
         }
-        //public ActionResult checkRemaining(DateTime date, int actID, string time)
-        //{
-        //    int timeid = db.VallowTimes.Where(x => x.TimeRange == time).Select(y => y.AllowTimeId).FirstOrDefault();
-        //    string dateFormat = $"{date.Year}-{String.Format("{0:00}", date.Month)}-{String.Format("{0:00}", date.Day)}";
-        //}
-
-       public void EmailTest(string random)
+       public IActionResult EmailTest(string random)
         {
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress("helppetqqq@gmail.com");
 
             var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
-
+            var list = db.Volunteers.Where(x => x.VerificationCode == random).ToList();
             mail.To.Add(memberview.Email);
             //主旨
             mail.SubjectEncoding = System.Text.Encoding.UTF8;
             mail.BodyEncoding = System.Text.Encoding.UTF8;
             mail.Subject = "我救浪-志工活動驗證";
             //內文
-            string body = $"<html><body><h1>郵件送出時間{DateTime.Now}<br>請於20分鐘內完成驗證</h1><a href='https://localhost:44318/Volunteer/Verification?ver={random}'>點擊</a></body></html>";
+            string title = db.Vactivities.Where(x => x.ActivityId == list[0].ActivityId).Select(y => y.Title).FirstOrDefault();
+            string body = "<html><head><style>tr,td,th,tbody,thead,table{border:solid 1px black;border-collapse: collapse;}</style></head>";
+            body += $"<body><h1>郵件送出時間{DateTime.Now}<br>確認以下資料，並於20分鐘內完成驗證</h1>";
+            body += $"<h3>{title}</h3>";
+            body += "<table><thead><tr><th>日期</th><th>時段</th><th>姓名</th><th>電話</th><th>電子信箱</th></tr></thead><tbody>";
+            foreach(var i in list)
+            {
+                body += $"<tr><td>{i.AllowDate}</td><td>{db.VallowTimes.Where(x=>x.AllowTimeId==i.AllowTimeId).Select(y=>y.TimeRange).FirstOrDefault()}</td><td>{i.Name}</td><td>{i.Phone}</td><td>{i.Email}</td></tr>";
+            }
+
+            body += "</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
             mail.Body = body;
 
             //內文是否為html
@@ -327,15 +324,43 @@ namespace final_test.Controllers
                 Console.WriteLine(ex);
             }
             client.Dispose();
+            return RedirectToAction("successPage",new { id = random });
             //todo email
         }
-        public void Verification(string ver) {
+        public IActionResult Verification(string ver) {
             var a = db.Volunteers.Where(x => x.VerificationCode == ver).ToList();
-            foreach(var i in a)
+            if(a == null)
+            {
+                return Content("查無此預約。");
+            }
+            var time = DateTime.Parse(a[0].OrderDate);
+            if (time.AddMinutes(20) < DateTime.Now)
+            {
+                return Content("驗證失敗，超過時間。");
+            }
+            foreach (var i in a)
             {
                 i.CheckEmail = true;
+                i.VstatusId = 2;
             }
             db.SaveChanges();
+            return Content("信箱驗證成功");
+        }
+        public IActionResult successPage(string id) {
+            var a = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(a);
+            ViewBag.Email = memberview.Email;
+            ViewBag.ver = id;
+            return View();
+        }
+        public IActionResult checkDate(string dateSelected,int actID,int memID)
+        {
+            var a = db.Volunteers.Where(x => x.MemberId == memID && x.AllowDate == dateSelected && x.ActivityId == actID).ToList().Count;
+            if (a > 0)
+            {
+                return Json("exist");
+            }
+            return Json("");
         }
     }
 }

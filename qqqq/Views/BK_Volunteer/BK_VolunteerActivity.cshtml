@@ -47,9 +47,6 @@
 <div style="text-align:left; font-size:16px ; font-weight:600">
     @using (Html.BeginForm())
     {
-        @:關鍵字 @Html.TextBox("txtKeyword", (object)@ViewBag.keyword, new { @style = "border-radius:30px;" })
-        <button class="fa-solid fa-magnifying-glass" style=" border:none; background-color:transparent;"></button>
-
         <a asp-action="Create" class="fa-solid fa-user-plus" style="margin-top:8PX; float:right;font-size:20px;color:chocolate;"> 新增志工活動</a>
     }
 </div>
@@ -57,7 +54,7 @@
 <div class="row mb-5">
     <table class="table">
         <thead id="thead" style="text-align:center;">
-            <tr width="70%" style="font-size:20px">
+            <tr width="60%" style="font-size:20px">
                 <th hidden>
                     @Html.DisplayNameFor(model => model.ActivityId)
                 </th>
@@ -119,7 +116,7 @@
                         <td id="photo" class="imgdiv">
                             <img src="~/img/volunteer/@item.ActivityPhoto" style="width:60px; height:40px;" />
                         </td>
-                        <td id="description@(cnt)">
+                        <td id="description@(cnt)" style="white-space: normal; ">
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>

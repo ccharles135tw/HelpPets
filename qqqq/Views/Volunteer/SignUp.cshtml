@@ -1,11 +1,4 @@
-﻿@section Styles{ 
-<style>
-    input[type=radio] {
-        accent-color: #EAA636;
-    }
-</style>
-}
-<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
+﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h2 class="display-4 text-white animated slideInDown mb-3">您選擇的志工活動為 @Model.Title</h2>
     </div>
@@ -191,7 +184,18 @@
         let flag = true;
         let morningA = 0, morningB = 0, afternoonA = 0, afternoonB = 0, need = 3;
         let morningAadd = 0, morningBadd = 0, afternoonAadd = 0, afternoonBadd = 0;
+        let existDate = false;
         function selectDate(date) {
+            $.post('@Url.Content("~/Volunteer/checkDate")', { dateSelected: selectedDate, actID:@Model.ActivityID, memID: @Model.MemberID}, (result) => {
+                if (result != "") {
+                    existDate = true;
+                    return alert("選中日期已完成預約，請至會員專區進行修改。");
+                }
+            })
+            if (existDate) {
+                existDate = !existDate;
+                return;
+            }
             $("input[name=time]").prop('checked', false)
             //post 算空位
             $.post('@Url.Content("~/Volunteer/getBySession")', { dateSelected: selectedDate, actID:@Model.ActivityID }, (result) => {
@@ -276,16 +280,8 @@
                         $(`#${event.target.id}`).removeClass("bi-toggle-off");
                         $(`#${event.target.id}`).addClass("bi-toggle-on");
                         flag = false;
-                        let optionstr = "";
 
-                        /*let signed = $(`#tb${id} tbody tr`).length)*/
                         $.each($(`#tb${id} td`), (x, item) => {
-                            //if (x == 0) {
-                            //    let old = $(`#time${id}`).text()
-
-                            //    item.innerHTML = `<select id='editTime${id}'><option id="editfullDay" value="全天">全天</option><option id="editmorning" value="上午(0900-1200)">上午(0900-1200)</option><option id="editafternoon" value="下午(1400-1700)">下午(1400-1700)</option></select>`;
-                            //    $(`#editTime${id} option[value="${old}"]`).attr("selected", "selected");
-                            //} else if (x <= 4 || x == 8) {
                             if (x <= 6 || x == 11) {
                                 return;
                             } else {
@@ -304,20 +300,12 @@
                         flag = true;
                         $.each($(`#tb${id} td`), (x, item) => {
                             item.setAttribute("contenteditable", "false");
-                            //if (x == 0) {
-                            //    item.innerText = $(`#editTime${id} :selected`).text();
-                            //} else if (x <= 4 || x == 8) {
-                            //    return;
-                            //} else {
-                            //    item.setAttribute("contenteditable", "false");
-                            //}
                         })
                         editTarget = "";
                     } else {
                         confirm("尚有修改未完成。")
                     }
                 })
-
                 $(".delete").click((event) => {
                     event.target.parentNode.remove();
                     addTable--;
@@ -396,7 +384,7 @@
                             removeDisabled();
                         }
                         if ($(".waiting").length != 0 && $(".nowaiting").length != 0) {
-                            if (confirm("請先刪除備取名額")) {
+                            if (confirm("請先刪除候補名額")) {
                                 $(".waiting").remove();
                             } else {
                                 addCnt++
@@ -429,7 +417,7 @@
                             removeDisabled();
                         }
                         if ($(".waiting").length != 0 && $(".nowaiting").length != 0) {
-                            if (confirm("請先刪除備取名額")) {
+                            if (confirm("請先刪除候補名額")) {
                                 $(".waiting").remove();
                             } else {
                                 addCnt++
@@ -459,9 +447,7 @@
                     setPerson2();
                 })
             }
-
         })
-
 
         //demo
         function setPerson1() {
@@ -471,17 +457,14 @@
         }
         function setPerson2() {
             $("#friend2Name").val("朋友二")
-            $("#friend2Phone").val("092222222")
+            $("#friend2Phone").val("0922222222")
             $("#friend2Email").val("billsagi0002@gmail.com")
         }
-
-
 
         //sendToDB
         $("#send").click(() => {
             let random = Math.random().toString(36).substring(2);
             $(".dataArea").each((index, item) => {
-                //console.log(item);
                 let MemID = @Model.MemberID;
                 let actID = @Model.ActivityID;
                 let actDate = item.firstChild.textContent;
@@ -511,9 +494,7 @@
                     }
                 }
             })
-            $.post('@Url.Content("~/Volunteer/EmailTest")', { random: random })
-
-            document.location.href = '@Url.Content("~/Volunteer/Index")';
+            document.location.href = `../EmailTest?random=${random}`;
         })
     </script>
 }

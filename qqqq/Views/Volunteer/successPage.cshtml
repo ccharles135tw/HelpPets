@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "";
+}
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../../img/head-5.jpg) center center no-repeat; background-size: cover;">
+    <div class="container text-center pt-5 pb-3">
+        <h2 class="display-4 text-white animated slideInDown mb-3">信箱驗證</h2>
+    </div>
+</div>
+
+<!-- Spinner Start -->
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" role="status"></div>
+</div>
+<div class="container">
+    <h3>已送出驗證信至@(ViewBag.Email)</h3>
+    <h3>請點擊郵件中提供連結，完成信箱驗證。</h3>
+    <br /><br />
+    <a href="~/Volunteer/EmailTest?random=@(ViewBag.ver)" style="color: #fff; background-color: #EAA636; border-radius: 10px; border: none; margin-top: 10px; padding: 10px;" id="email">重寄驗證信</a>
+    <a href="~/Volunteer/Index" style="color:#fff;background-color:#EAA636;border-radius:10px;border:none;margin-top:10px;padding:10px;">回志工首頁</a>
+</div>
