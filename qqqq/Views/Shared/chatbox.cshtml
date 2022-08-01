@@ -1,28 +1,28 @@
 ﻿@model string
 
 <div class="divbody nav-bar-bottom">
-        <div class="chatcontainer">
-            <!-- chat box -->
-            <div class="chat-box">
-                <!-- client -->
-                <div class="client">
-                    <img src="~/img/cat.png" alt="logo" />
-                    <div class="client-info">
-                        <h5 id="clientName">Hello!! @Model</h5>
-                         <ul class="ul-client">
+    <div class="chatcontainer">
+        <!-- chat box -->
+        <div class="chat-box">
+            <!-- client -->
+            <div class="client">
+                <img src="~/img/cat.png" alt="logo" />
+                <div class="client-info">
+                    <h5 id="clientName">Hello!! @Model</h5>
+                    <ul class="ul-client">
                         @{
                             我救浪Context db = new 我救浪Context();
                             var q = db.Employees.ToList();
-                            foreach(var e in q)
+                            foreach (var e in q)
                             {
                                 <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
                             }
                         }
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-                <!-- main chat section -->
-@*                <div class="chats" clientID="">
+            </div>
+            <!-- main chat section -->
+            @*                <div class="chats" clientID="">
                     <div class="client-chat">Hi!</div>
                     <div class="my-chat">Hi!</div>
                     <div class="client-chat">How can i help you?</div>
@@ -30,19 +30,19 @@
                     <div class="client-chat">Watch complete video for your answer.</div>
                 </div>*@
 
-                <!-- input field section -->
-                <div class="chat-input">
-                    <input type="text" placeholder="Enter Message" />
-                    <button class="send-btn">
-                        <img src="~/img/home/send.png" alt="send-btn" />
-                    </button>
-                </div>
-
+            <!-- input field section -->
+            <div class="chat-input">
+                <input id="iuputtext" type="text" placeholder="請輸入訊息" />
+                <button id="send-btn" class="send-btn">
+                    <img src="~/img/home/send.png" alt="send-btn" />
+                </button>
             </div>
 
-            <!-- button -->
-            <div class="chat-btn" clientID="">
-                <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
-            </div>
+        </div>
+
+        <!-- button -->
+        <div class="chat-btn" clientID="">
+            <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
         </div>
     </div>
+</div>
