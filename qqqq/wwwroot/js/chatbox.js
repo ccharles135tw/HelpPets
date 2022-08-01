@@ -1,7 +1,6 @@
 ﻿
 $(document).ready(() =>
 {
-   
     $(".chat-btn").click(() => {
         $(".chat-box").slideToggle("slow")
         $(".chat-btn").removeClass("breath");

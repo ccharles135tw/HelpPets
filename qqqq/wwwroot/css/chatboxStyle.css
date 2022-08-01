@@ -11,19 +11,18 @@
     align-items: center;
     position: absolute;
 }
-
-
 /* chat box section */
-
 .chat-box {
     width: 400px;
     height: 450px;
-    background-color: #fff;
+/*    overflow-y: scroll;
+*/    background-color: #fff;
     overflow: hidden;
     border-radius: 10px;
     position: relative;
     display: none;
 }
+
 
 
 /* about client */
@@ -59,8 +58,10 @@
     width: 100%;
     padding: 0 15px;
     color: #fff;
+    height:300px;
     position: relative;
     font-size: 0.9em;
+    overflow-y:scroll;
 }
 
 .client-chat {
