@@ -13,6 +13,7 @@ namespace qqqq.Models
         public string Message { get; set; }
         public DateTime? MsgTime { get; set; }
 
+        public virtual Employee EmpReceive { get; set; }
         public virtual Employee EmpSend { get; set; }
     }
 }

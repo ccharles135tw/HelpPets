@@ -161,11 +161,11 @@
     <div class="container">
         <div class="row g-5">
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="row img-twice position-relative h-100" >
-                    <div class="col-6" data-wow-delay="0.5s">
+                <div class="row img-twice position-relative h-100">
+                    <div class="col-6">
                         <img class="img-fluid rounded" src="~/img/family1.jpg" alt="">
                     </div>
-                    <div class="col-6 align-self-end" data-wow-delay="0.5s">
+                    <div class="col-6 align-self-end">
                         <img class="img-fluid rounded" src="~/img/family2.jpg" alt="">
                     </div>
                 </div>
@@ -190,25 +190,24 @@
     <div class="container">
         <div class="bg-primary text-light rounded-bottom p-5 my-6 mt-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-4 align-items-center">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h3 class="text-primary text-uppercase mb-2">//關於產品</h3>
-                    <h1 class="display-6 mb-4">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</h1>
+                <div class="col-lg-6">
+                    <h1 class="display-4 text-light mb-0" href="shopping.html">我救浪<br />嚴選商品</h1>
                 </div>
-                @*<div class="col-lg-6">
-            <h1 class="display-4 text-light mb-0" href="shopping.html">我救浪<br />嚴選商品</h1>
-        </div>
-        <div class="col-lg-6 text-lg-end">
-            <div class="d-inline-flex align-items-center text-start">
-                <i class="fa fa-phone-alt fa-4x flex-shrink-0"></i>
-                <div class="ms-4">
-                    <p class="fs-5 fw-bold mb-0">連絡電話:</p>
-                    <p class="fs-1 fw-bold mb-0">+012 345 6789</p>
+                <div class="col-lg-6 text-lg-end">
+                    <div class="d-inline-flex align-items-center text-start">
+                        <i class="fa fa-phone-alt fa-4x flex-shrink-0"></i>
+                        <div class="ms-4">
+                            <p class="fs-5 fw-bold mb-0">連絡電話:</p>
+                            <p class="fs-1 fw-bold mb-0">+012 345 6789</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>*@
-            </div>
         </div>
-   
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h3 class="text-primary text-uppercase mb-2">//關於產品</h3>
+            <h1 class="display-6 mb-4">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</h1>
+        </div>
         <div class="row g-4">
             @{
                 var list = db.Products.Where(p => p.IsPet == false).ToList();

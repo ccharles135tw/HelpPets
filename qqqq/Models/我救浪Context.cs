@@ -53,7 +53,6 @@ namespace qqqq.Models
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=我救浪;Integrated Security=True");
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Data Source=.;Initial Catalog=我救浪;Integrated Security=True");
             }
         }
 
@@ -351,10 +350,15 @@ namespace qqqq.Models
 
                 entity.Property(e => e.MsgTime).HasColumnType("datetime");
 
+                entity.HasOne(d => d.EmpReceive)
+                    .WithMany(p => p.MsgEmpToEmpEmpReceives)
+                    .HasForeignKey(d => d.EmpReceiveId)
+                    .HasConstraintName("FK_MsgEmpToEmp_Employee2");
+
                 entity.HasOne(d => d.EmpSend)
-                    .WithMany(p => p.MsgEmpToEmps)
+                    .WithMany(p => p.MsgEmpToEmpEmpSends)
                     .HasForeignKey(d => d.EmpSendId)
-                    .HasConstraintName("FK_MsgEmpToEmp_Employee");
+                    .HasConstraintName("FK_MsgEmpToEmp_Employee1");
             });
 
             modelBuilder.Entity<MyFavorite>(entity =>

@@ -1,9 +1,8 @@
 .divbody {
     position: fixed;
-/*    right: 20px;
-*/    top: 43%;
+    right: 20px;
+    top: 43%;
     z-index: 999;
-    cursor:pointer;
 }
 
 .chatcontainer {

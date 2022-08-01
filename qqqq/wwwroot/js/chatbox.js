@@ -46,19 +46,6 @@ $('.send-btn').on('click', function ()
         alert('傳送錯誤: ' + err.toString());
     });
 });
-////傳送訊息Enter
-//var input = document.getElementById("iuputtext");
-//input.addEventListener("keypress", function () {
-//    if (event.key === "Enter") {
-//        let message = $(this).siblings(":text").val();
-//        // let sendToID = $('.chats:visible').attr("clientID");
-//        let sendToID = $(".chat-btn").attr("clientID");
-//        $(this).siblings(":text").val("");
-//        connection.invoke("SendMessage", selfID, message, sendToID).catch(function (err) {
-//            alert('傳送錯誤: ' + err.toString());
-//        });
-//    }
-//});
 //傳送信息事件
 connection.on("SendMessage", function (clientID, msg)
 {
@@ -103,31 +90,17 @@ $(".ul-client").on("click", "li", function ()
     $(".chat-btn").attr("clientID", clientID);//更改目前的訊息對象
 })
 
-function ClickToClient(clientID, clientName) {
+function ClickToClient(clientID, clientName)
+{
 
     $(".chats").hide();
     $("#clientName").text(`TO:${clientName}`);
-    if ($(`.chats[clientID='${clientID}']`).length == 0) {
+    if ($(`.chats[clientID='${clientID}']`).length == 0)
+    {
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
     }
-    else {
+    else
+    {
         $(`.chats[clientID='${clientID}']`).show();
     }
 }
-//滑鼠移動視窗
-const chatcontainer = document.querySelector(".chatcontainer");
-function onDrag({ movementX, movementY }) {
-    let getStyle = window.getComputedStyle(chatcontainer);
-    let left = parseInt(getStyle.left);
-    let top = parseInt(getStyle.top);
-    chatcontainer.style.left = `${left + movementX}px`;
-    chatcontainer.style.top = `${top + movementY}px`;
-}
-
-chatcontainer.addEventListener("mousedown", () => {
-    chatcontainer.addEventListener("mousemove", onDrag);
-})
-document.addEventListener("mouseup", () => {
-    chatcontainer.removeEventListener("mousemove", onDrag);
-})
-   

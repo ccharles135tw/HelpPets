@@ -92,14 +92,36 @@ namespace qqqq.Hubs
                     await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, message);
                 }
                 //存入資料庫
-                if(selfID.Contains("member")||sendToID.Contains("member"))
+            }
+        }
+        public void SaveMseeage(string selfID, string message, string sendToID)
+        {
+
+            if(selfID.Contains("member")|| sendToID.Contains("member"))
+            {
+                MsgEmpAndMem meam = new MsgEmpAndMem();
+                meam.Mseeage = message;
+                meam.MsgTime = DateTime.Now;
+                if (selfID.Contains("member"))
                 {
 
+                    meam.IsMemSend = true;
+                    meam.MemberId = int.Parse(selfID.Split('/')[1]);
+                    meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
                 }
-                else
+                else if (sendToID.Contains("member"))
                 {
-
+                    meam.IsMemSend = false;
+                    meam.MemberId = int.Parse(selfID.Split('/')[1]);
+                    meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
                 }
+            }
+            else
+            {
+                MsgEmpToEmp mete = new MsgEmpToEmp();
+                mete.Message = message;
+                mete.MsgTime = DateTime.Now;
+                
             }
         }
 
