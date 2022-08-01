@@ -98,6 +98,24 @@ function ClickToClient(clientID,clientName)
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
+        $.post("/Product/GetMessageForChat",{ selfID: selfID, clientID: clientID }, function (datas)
+        {
+            console.log(datas);
+            console.log(clientID);
+            console.log(selfID);
+            let chatbox = $(`.chats[clientID="${clientID}"] `);
+            for (let m of datas)
+            {
+                if (m.selfID == selfID)
+                {
+                    chatbox.append(`<div class="my-chat">${m.message}</div>`);
+                }
+                else if (m.selfID == clientID)
+                {
+                    chatbox.append(`<div class="client-chat">${m.message}</div>`);
+                }
+            }
+        })
     }
     else
     {

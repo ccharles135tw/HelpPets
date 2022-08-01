@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using qqqq.ViewModels;
 
 namespace Pet.Controllers
 {
@@ -40,6 +41,31 @@ namespace Pet.Controllers
             {
                 var q = db.Employees.AsEnumerable().Where(e=>e.EmpoyeeId == int.Parse(user[1])).FirstOrDefault();
                 return q.Name;
+            }
+        }
+        public IActionResult GetMessageForChat(string selfID,string clientID)
+        {
+            if (selfID.Contains("random") || selfID.Contains("random"))
+            {
+                return null;
+            }
+            int sID=int.Parse(selfID.Split('/')[1]);
+            int cID = int.Parse(clientID.Split('/')[1]);
+            if (selfID.Contains("member") || clientID.Contains("member"))
+            {
+
+                    var q = db.MsgEmpAndMems.Where(m =>   m.MemberId == sID && m.EmployeeId == cID).ToList();
+                    var q2 = MessageView.MessageViews(q);
+                    return Json( q2);
+            }
+            else
+            {
+                var q = db.MsgEmpToEmps.Where(m => 
+                (m.EmpSendId == sID && m.EmpReceiveId == cID)||
+                (m.EmpSendId == cID && m.EmpReceiveId == sID)
+                ).ToList();
+                var q2 = MessageView.MessageViews(q);
+                return Json(q2);
             }
         }
         public IActionResult List()
