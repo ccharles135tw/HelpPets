@@ -49,7 +49,9 @@ $('.send-btn').on('click', function ()
 //傳送信息事件
 connection.on("SendMessage", function (clientID, msg)
 {
+    let chatbox = $(`.chats[clientID="${clientID}"] `);
     $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${msg}</div>`);
+    chatbox.scrollTop(chatbox.prop("scrollHeight"));
 });
 // 接受訊息事件
 connection.on("ReceiveMessage", function (clientID, msg)
@@ -76,7 +78,9 @@ connection.on("ReceiveMessage", function (clientID, msg)
     }
     else
     {
-        $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
+        let chatbox = $(`.chats[clientID="${clientID}"] `);
+        chatbox.eq(0).append(`<div class="client-chat">${msg}</div>`);
+        chatbox.scrollTop(chatbox.prop("scrollHeight"));
         //$("ul-client").append(`<li clientID="${clientID}">ChatBox</li>`)
     }
 });
@@ -117,6 +121,7 @@ function ClickToClient(clientID,clientName)
                     chatbox.append(`<div class="client-chat">${m.Message}</br>${m.MsgTime}</div>`);
                 }
             }
+            chatbox.scrollTop(chatbox.prop("scrollHeight"));
         })
     }
     else
