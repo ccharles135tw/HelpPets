@@ -43,7 +43,7 @@ namespace Pet.Controllers
                 return q.Name;
             }
         }
-        public IActionResult GetMessageForChat(string selfID,string clientID)
+        public string GetMessageForChat(string selfID,string clientID)
         {
             if (selfID.Contains("random") || selfID.Contains("random"))
             {
@@ -56,7 +56,7 @@ namespace Pet.Controllers
 
                     var q = db.MsgEmpAndMems.Where(m =>   m.MemberId == sID && m.EmployeeId == cID).ToList();
                     var q2 = MessageView.MessageViews(q);
-                    return Json( q2);
+                    return System.Text.Json.JsonSerializer.Serialize( q2);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Pet.Controllers
                 (m.EmpSendId == cID && m.EmpReceiveId == sID)
                 ).ToList();
                 var q2 = MessageView.MessageViews(q);
-                return Json(q2);
+                return System.Text.Json.JsonSerializer.Serialize(q2);
             }
         }
         public IActionResult List()

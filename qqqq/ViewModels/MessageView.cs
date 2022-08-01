@@ -65,6 +65,6 @@ namespace qqqq.ViewModels
         }
     
         public string Message { get { return meam != null ? meam.Mseeage : mete.Message; } }
-        public DateTime? MsgTime { get { return meam != null ? meam.MsgTime : mete.MsgTime; } }
+        public string MsgTime { get { return meam != null ? ((DateTime)meam.MsgTime).ToString("yyyy/MM/dd/HH:mm:ss") : ((DateTime)mete.MsgTime).ToString("yyyy/MM/dd/HH:mm:ss"); } }
     }
 }

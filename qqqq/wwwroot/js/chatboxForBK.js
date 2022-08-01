@@ -1,4 +1,5 @@
-﻿
+﻿//const { json } = require("node:stream/consumers");
+
 
 $(document).ready(() =>
 {
@@ -100,6 +101,7 @@ function ClickToClient(clientID,clientName)
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
         $.post("/Product/GetMessageForChat",{ selfID: selfID, clientID: clientID }, function (datas)
         {
+            datas = JSON.parse(datas);
             console.log(datas);
             console.log(clientID);
             console.log(selfID);
@@ -108,11 +110,11 @@ function ClickToClient(clientID,clientName)
             {
                 if (m.selfID == selfID)
                 {
-                    chatbox.append(`<div class="my-chat">${m.message}</div>`);
+                    chatbox.append(`<div class="my-chat">${m.Message}</br>${m.MsgTime}</div>`);
                 }
                 else if (m.selfID == clientID)
                 {
-                    chatbox.append(`<div class="client-chat">${m.message}</div>`);
+                    chatbox.append(`<div class="client-chat">${m.Message}</br>${m.MsgTime}</div>`);
                 }
             }
         })
