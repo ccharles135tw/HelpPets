@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using qqqq.ViewModels;
+using System.Diagnostics;
 
 namespace qqqq.Hubs
 {
@@ -33,15 +35,19 @@ namespace qqqq.Hubs
 
             await base.OnConnectedAsync();
         }
-        public void AddConnDist(string selfID)
+        public async void  AddConnDist(string selfID)
         {
             if(ConnDict.ContainsKey(selfID)==false)
             {
                 ConnDict[selfID] = Context.ConnectionId;
+                string j = System.Text.Json.JsonSerializer.Serialize(ConnDict.Keys.ToArray());
+                await Clients.Client(Context.ConnectionId).SendAsync("UpdSelf",j);
+                await Clients.All.SendAsync("UpListOn", selfID);
             }
             else
             {
-                throw new Exception("ConnDist已有此selfID");
+                Debug.WriteLine("ConnDist已有此selfID");
+                //throw new Exception("ConnDist已有此selfID");
             }
         }
         /// <summary>
@@ -53,7 +59,9 @@ namespace qqqq.Hubs
         {
            if(ConnDict.ContainsValue(Context.ConnectionId))
             {
+                
                 string key = ConnDict.Where(cd => cd.Value == Context.ConnectionId).FirstOrDefault().Key;
+                await Clients.All.SendAsync("UpListOff", key);
                 ConnDict.Remove(key);
             }
            else
@@ -83,20 +91,54 @@ namespace qqqq.Hubs
             }
             else
             {
-
+                MessageView msgV = IntoMessageView(selfID, message, sendToID);
+                string j = System.Text.Json.JsonSerializer.Serialize(msgV);
                 // 發送人
-                await Clients.Client(ConnDict[selfID]).SendAsync("SendMessage", sendToID, message);
+                await Clients.Client(ConnDict[selfID]).SendAsync("SendMessage", sendToID, j);
                 if (ConnDict.ContainsKey(sendToID))
                 {
                     // 接收人
-                    await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, message);
+                    await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, j);
                 }
                 //存入資料庫
-                if(selfID.Contains("random")==false&& selfID.Contains("random")==false)
+                if(selfID.Contains("random")==false&& sendToID.Contains("random")==false)
                 {
                     SaveMseeage(selfID, message, sendToID);
                 }
 
+            }
+        }
+        public MessageView IntoMessageView(string selfID, string message, string sendToID)
+        {
+            if (selfID.Contains("member") || sendToID.Contains("member"))
+            {
+                MsgEmpAndMem meam = new MsgEmpAndMem();
+                meam.Mseeage = message;
+                meam.MsgTime = DateTime.Now;
+                if (selfID.Contains("member"))
+                {
+                    meam.IsMemSend = true;
+                    meam.MemberId = int.Parse(selfID.Split('/')[1]);
+                    meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
+                    return new MessageView(meam);
+                }
+                else
+                {
+                    meam.IsMemSend = false;
+                    meam.MemberId = int.Parse(sendToID.Split('/')[1]);
+                    meam.EmployeeId = int.Parse(selfID.Split('/')[1]);
+                    return new MessageView(meam);
+                }
+
+            }
+            else
+            {
+                MsgEmpToEmp mete = new MsgEmpToEmp();
+                mete.Message = message;
+                mete.MsgTime = DateTime.Now;
+                mete.EmpSendId = int.Parse(selfID.Split('/')[1]);
+                mete.EmpReceiveId = int.Parse(sendToID.Split('/')[1]);
+                return new MessageView(mete);
             }
         }
         public void SaveMseeage(string selfID, string message, string sendToID)

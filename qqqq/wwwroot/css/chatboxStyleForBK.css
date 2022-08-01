@@ -169,6 +169,12 @@
         list-style: none;
         cursor: pointer ;
         margin-left: 20px;
+        text-decoration:solid;
+        text-decoration-color:black;
+        text-decoration-line:line-through;
+    }
+    .ul-client li.online{
+        text-decoration:none;
     }
 
 

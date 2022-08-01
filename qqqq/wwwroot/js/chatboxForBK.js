@@ -21,15 +21,22 @@ connection.start().then(function ()
     alert('連線錯誤: ' + err.toString());
 });
 
-// 更新連線 ID 列表事件
-connection.on("UpdList", function (jsonList)
+connection.on("UpdSelf", function (jsonList)
 {
+    jsonList = JSON.parse(jsonList);
+    for (let j of jsonList)
+    {
+        $(`.ul-client li[clientID="${j}"] `).addClass("online")
+    }
 });
-
-// 更新用戶個人連線 ID 事件
-connection.on("UpdSelfID", function (id)
+connection.on("UpListOn", function (id)
 {
-
+    $(`.ul-client li[clientID="${id}"] `).addClass("online")
+});
+connection.on("UpListOff", function (id)
+{
+    
+    $(`.ul-client li[clientID="${id}"] `).removeClass("online")
 });
 
 
@@ -47,21 +54,23 @@ $('.send-btn').on('click', function ()
     });
 });
 //傳送信息事件
-connection.on("SendMessage", function (clientID, msg)
+connection.on("SendMessage", function (clientID, j)
 {
+    j = JSON.parse(j);
     let chatbox = $(`.chats[clientID="${clientID}"] `);
-    $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${msg}</div>`);
+    $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${j.Message}</br>${j.MsgTime}</div>`);
     chatbox.scrollTop(chatbox.prop("scrollHeight"));
 });
 // 接受訊息事件
-connection.on("ReceiveMessage", function (clientID, msg)
+connection.on("ReceiveMessage", function (clientID, j)
 {
+    j = JSON.parse(j)
     if ($(`.ul-client li[clientID="${clientID}"]`).length == 0)//ul沒有就加入
     {
         $.post("/Product/GetNameForChatBox", { userString: clientID }, function (data)
         {
-            $(".ul-client").append(`<li clientID="${clientID}" class="blink">${data}</li>`);
-            $(`.ul-client li[clientID="${clientID}"]`).addClass("blink");
+            $(".ul-client").append(`<li clientID="${clientID}" class="blink online">${data}</li>`);
+       //     $(`.ul-client li[clientID="${clientID}"]`).addClass("blink");
         })
     }
     if ($(".chat-btn").attr("clientID") != clientID)//判斷目前的訊息對象是否為傳訊息的
@@ -74,12 +83,12 @@ connection.on("ReceiveMessage", function (clientID, msg)
     }
     if ($(`.chats[clientID='${clientID}']`).length == 0 && clientID.includes("random"))
     {
-        $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+        $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${j.Message}</br>${j.MsgTime}</div></div>`)
     }
     else
     {
         let chatbox = $(`.chats[clientID="${clientID}"] `);
-        chatbox.eq(0).append(`<div class="client-chat">${msg}</div>`);
+        chatbox.eq(0).append(`<div class="client-chat">${j.Message}</br>${j.MsgTime}</div>`);
         chatbox.scrollTop(chatbox.prop("scrollHeight"));
         //$("ul-client").append(`<li clientID="${clientID}">ChatBox</li>`)
     }
