@@ -61,6 +61,7 @@
     color: #fff;
     position: relative;
     font-size: 0.9em;
+    overflow-y: scroll;
 }
 
 .client-chat {
