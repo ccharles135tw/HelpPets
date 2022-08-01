@@ -1,5 +1,4 @@
-﻿//const { json } = require("node:stream/consumers");
-
+﻿
 
 $(document).ready(() =>
 {
@@ -71,10 +70,6 @@ connection.on("ReceiveMessage", function (clientID, msg)
     {
         $(".chat-btn").addClass("breath");
     }
-    if ($(`.chats[clientID='${clientID}']`).length == 0)
-    {
-            $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
-    }
     else
     {
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
@@ -93,18 +88,17 @@ $(".ul-client").on("click", "li", function ()
 
 function ClickToClient(clientID,clientName)
 {
-  
+    console.log(1);
     $(".chats").hide();
     $("#clientName").text(`TO:${clientName}`);
     if ($(`.chats[clientID='${clientID}']`).length == 0)
     {
+        console.log(2);
         $(".client").after(`<div class="chats" clientID="${clientID}"></div>`)
         $.post("/Product/GetMessageForChat",{ selfID: selfID, clientID: clientID }, function (datas)
         {
             datas = JSON.parse(datas);
-            console.log(datas);
-            console.log(clientID);
-            console.log(selfID);
+            console.log(datas)
             let chatbox = $(`.chats[clientID="${clientID}"] `);
             for (let m of datas)
             {
@@ -121,6 +115,7 @@ function ClickToClient(clientID,clientName)
     }
     else
     {
+        console.log(3);
         $(`.chats[clientID='${clientID}']`).show();
     }
 }

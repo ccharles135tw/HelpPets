@@ -51,12 +51,18 @@ namespace Pet.Controllers
             }
             int sID=int.Parse(selfID.Split('/')[1]);
             int cID = int.Parse(clientID.Split('/')[1]);
-            if (selfID.Contains("member") || clientID.Contains("member"))
+            if (selfID.Contains("member"))
             {
 
                     var q = db.MsgEmpAndMems.Where(m =>   m.MemberId == sID && m.EmployeeId == cID).ToList();
                     var q2 = MessageView.MessageViews(q);
                     return System.Text.Json.JsonSerializer.Serialize( q2);
+            }
+            else if(clientID.Contains("member"))
+            {
+                var q = db.MsgEmpAndMems.Where(m => m.MemberId == cID && m.EmployeeId == sID).ToList();
+                var q2 = MessageView.MessageViews(q);
+                return System.Text.Json.JsonSerializer.Serialize(q2);
             }
             else
             {
