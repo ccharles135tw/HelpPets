@@ -92,6 +92,11 @@ namespace qqqq.Hubs
                     await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, message);
                 }
                 //存入資料庫
+                if(selfID.Contains("random")==false&& selfID.Contains("random")==false)
+                {
+                    SaveMseeage(selfID, message, sendToID);
+                }
+
             }
         }
         public void SaveMseeage(string selfID, string message, string sendToID)
@@ -112,17 +117,22 @@ namespace qqqq.Hubs
                 else if (sendToID.Contains("member"))
                 {
                     meam.IsMemSend = false;
-                    meam.MemberId = int.Parse(selfID.Split('/')[1]);
-                    meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
+                    meam.MemberId = int.Parse(sendToID.Split('/')[1]);
+                    meam.EmployeeId = int.Parse(selfID.Split('/')[1]);
                 }
+                
+                db.MsgEmpAndMems.Add(meam);
             }
             else
             {
                 MsgEmpToEmp mete = new MsgEmpToEmp();
                 mete.Message = message;
                 mete.MsgTime = DateTime.Now;
-                
+                mete.EmpSendId = int.Parse(selfID.Split('/')[1]);
+                mete.EmpReceiveId = int.Parse(sendToID.Split('/')[1]);
+                db.MsgEmpToEmps.Add(mete);
             }
+            db.SaveChanges();
         }
 
     }
