@@ -56,9 +56,7 @@ $('.send-btn').on('click', function ()
 connection.on("SendMessage", function (clientID, j)
 {
     j = JSON.parse(j)
-    let chatbox = $(`.chats[clientID="${clientID}"] `);
-    $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="my-chat">${j.Message}</br>${j.MsgTime}`);
-    chatbox.scrollTop(chatbox.prop("scrollHeight"));
+    appendMessage(clientID, j, "my-chat");
 });
 // 接受訊息事件
 connection.on("ReceiveMessage", function (clientID, j)
@@ -69,7 +67,6 @@ connection.on("ReceiveMessage", function (clientID, j)
         $.post("/Product/GetNameForChatBox", { userString: clientID }, function (data)
         {
             $(".ul-client").append(`<li clientID="${clientID}" class="blink online">${data}</li>`);
-          //  $(`.ul-client li[clientID="${clientID}"]`).addClass("blink");
         })
     }
     if ($(".chat-btn").attr("clientID") != clientID)//判斷目前的訊息對象是否為傳訊息的
@@ -82,9 +79,7 @@ connection.on("ReceiveMessage", function (clientID, j)
     }
     if ($(`.chats[clientID='${clientID}']`).length> 0)
     {
-        let chatbox = $(`.chats[clientID="${clientID}"] `);
-        chatbox.eq(0).append(`<div class="client-chat">${j.Message}</br>${j.MsgTime}</div>`);
-        chatbox.scrollTop(chatbox.prop("scrollHeight"));
+        appendMessage(clientID,j, "client-chat");
     }
 });
 //點擊li切換對象
@@ -112,18 +107,16 @@ function ClickToClient(clientID, clientName)
         $.post("/Product/GetMessageForChat", { selfID: selfID, clientID: clientID }, function (datas)
         {
             datas = JSON.parse(datas);
-            let chatbox = $(`.chats[clientID="${clientID}"] `);
             for (let m of datas)
             {
                 if (m.selfID == selfID)
                 {
-                    chatbox.append(`<div class="my-chat">${m.Message}</br>${m.MsgTime}</div>`);
+                    appendMessage(clientID,m, "my-chat");
                 }
                 else if (m.selfID == clientID)
                 {
-                    chatbox.append(`<div class="client-chat">${m.Message}</br>${m.MsgTime}</div>`);
+                    appendMessage(clientID,m, "client-chat");
                 }
-                chatbox.scrollTop(chatbox.prop("scrollHeight"));
             }
         })
     }
@@ -131,4 +124,10 @@ function ClickToClient(clientID, clientName)
     {
         $(`.chats[clientID='${clientID}']`).show();
     }
+}
+function appendMessage(clientID, jMessageView, chatType)
+{
+    let chatbox = $(`.chats[clientID="${clientID}"] `);
+    chatbox.append(`<div class="${chatType}">${jMessageView.Message}</br>${jMessageView.MsgTime}</div>`);
+    chatbox.scrollTop(chatbox.prop("scrollHeight"));
 }
