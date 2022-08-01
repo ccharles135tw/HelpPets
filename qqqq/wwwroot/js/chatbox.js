@@ -69,14 +69,9 @@ connection.on("ReceiveMessage", function (clientID, msg)
     {
         $(".chat-btn").addClass("breath");
     }
-    if ($(`.chats[clientID='${clientID}']`).length == 0)
-    {
-        $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
-    }
-    else
+    if ($(`.chats[clientID='${clientID}']`).length> 0)
     {
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
-        //$("ul-client").append(`<li clientID="${clientID}">ChatBox</li>`)
     }
 });
 //點擊li切換對象
@@ -103,19 +98,17 @@ function ClickToClient(clientID, clientName)
         }
         $.post("/Product/GetMessageForChat", { selfID: selfID, clientID: clientID }, function (datas)
         {
-            console.log(datas);
-            console.log(clientID);
-            console.log(selfID);
+            datas = JSON.parse(datas);
             let chatbox = $(`.chats[clientID="${clientID}"] `);
             for (let m of datas)
             {
                 if (m.selfID == selfID)
                 {
-                    chatbox.append(`<div class="my-chat">${m.message}</div>`);
+                    chatbox.append(`<div class="my-chat">${m.Message}</br>${m.MsgTime}</div>`);
                 }
                 else if (m.selfID == clientID)
                 {
-                    chatbox.append(`<div class="client-chat">${m.message}</div>`);
+                    chatbox.append(`<div class="client-chat">${m.Message}</br>${m.MsgTime}</div>`);
                 }
             }
         })

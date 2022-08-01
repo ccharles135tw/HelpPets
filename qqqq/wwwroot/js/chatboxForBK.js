@@ -70,6 +70,10 @@ connection.on("ReceiveMessage", function (clientID, msg)
     {
         $(".chat-btn").addClass("breath");
     }
+    if ($(`.chats[clientID='${clientID}']`).length == 0 && clientID.includes("random"))
+    {
+        $(".client").after(`<div class="chats" style="display:none;" clientID="${clientID}"><div class="client-chat">${msg}</div></div>`)
+    }
     else
     {
         $(`.chats[clientID='${clientID}']`).eq(0).append(`<div class="client-chat">${msg}</div>`);
@@ -100,8 +104,10 @@ function ClickToClient(clientID,clientName)
             datas = JSON.parse(datas);
             console.log(datas)
             let chatbox = $(`.chats[clientID="${clientID}"] `);
+            console.log(chatbox);
             for (let m of datas)
             {
+                
                 if (m.selfID == selfID)
                 {
                     chatbox.append(`<div class="my-chat">${m.Message}</br>${m.MsgTime}</div>`);
