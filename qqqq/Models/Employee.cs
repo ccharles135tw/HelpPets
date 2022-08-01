@@ -10,6 +10,8 @@ namespace qqqq.Models
         public Employee()
         {
             CommentResponses = new HashSet<CommentResponse>();
+            MsgEmpAndMems = new HashSet<MsgEmpAndMem>();
+            MsgEmpToEmps = new HashSet<MsgEmpToEmp>();
             Orders = new HashSet<Order>();
             Suppliers = new HashSet<Supplier>();
         }
@@ -20,6 +22,8 @@ namespace qqqq.Models
         public string Password { get; set; }
 
         public virtual ICollection<CommentResponse> CommentResponses { get; set; }
+        public virtual ICollection<MsgEmpAndMem> MsgEmpAndMems { get; set; }
+        public virtual ICollection<MsgEmpToEmp> MsgEmpToEmps { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Supplier> Suppliers { get; set; }
     }
