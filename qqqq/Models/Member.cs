@@ -11,6 +11,7 @@ namespace qqqq.Models
         {
             CommentResponses = new HashSet<CommentResponse>();
             MemberComments = new HashSet<MemberComment>();
+            MsgEmpAndMems = new HashSet<MsgEmpAndMem>();
             MyFavorites = new HashSet<MyFavorite>();
             Orders = new HashSet<Order>();
             Volunteers = new HashSet<Volunteer>();
@@ -33,6 +34,7 @@ namespace qqqq.Models
         public virtual MemberWish MemberWish { get; set; }
         public virtual ICollection<CommentResponse> CommentResponses { get; set; }
         public virtual ICollection<MemberComment> MemberComments { get; set; }
+        public virtual ICollection<MsgEmpAndMem> MsgEmpAndMems { get; set; }
         public virtual ICollection<MyFavorite> MyFavorites { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Volunteer> Volunteers { get; set; }

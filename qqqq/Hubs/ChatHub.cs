@@ -92,6 +92,14 @@ namespace qqqq.Hubs
                     await Clients.Client(ConnDict[sendToID]).SendAsync("ReceiveMessage", selfID, message);
                 }
                 //存入資料庫
+                if(selfID.Contains("member")||sendToID.Contains("member"))
+                {
+
+                }
+                else
+                {
+
+                }
             }
         }
 
