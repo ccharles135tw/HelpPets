@@ -15,7 +15,7 @@ namespace qqqq.ViewComponents
     public class VClist : ViewComponent
     {
         我救浪Context _context = new 我救浪Context();
-        public async Task<IViewComponentResult> InvokeAsync(int id)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
 
             var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);

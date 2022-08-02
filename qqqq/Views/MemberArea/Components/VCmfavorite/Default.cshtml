@@ -9,7 +9,7 @@
                     <th>序</th>
                     <th>產品照片</th>
                     <th>商品名稱</th>
-                    @*<th>&nbsp;</th>*@
+ 
                     <th>單價</th>
                     <th>庫存</th>
                     <th>評價</th>
@@ -30,7 +30,7 @@
                         </td>
 
                         <td>
-                            @*<img src="@Url.Content($"~/Images/{item.PictureName}")~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />*@
+                            <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
 
                         </td>
                         <td>
@@ -40,7 +40,7 @@
                             </div>
                         </td>
                   
-                        <td>@item.Unprice</td>
+                        <td>@String.Format("{0:C2}",item.Unprice)</td>
                         <td class="quantity">
                             <div class="input-group">
                             @item.Unstock
@@ -50,7 +50,7 @@
                             @{
                                 for (int i = 0; i < Math.Floor(item.Rate); i++)
                                 {
-                                    <img width="10" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" />
+                                    <img width="20" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" />
                                 }
                             }
 

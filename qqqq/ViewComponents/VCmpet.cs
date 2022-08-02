@@ -17,10 +17,10 @@ namespace qqqq.ViewComponents
         我救浪Context _context = new 我救浪Context();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-           // var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-           // CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-           
-            var q = await _context.Orders.Include(o=>o.OrderDetails).Where(o => o.MemberId == /*memberview.MemberID*/39 && o.OrderDetails.All(od => od.Product.IsPet == true)).Select(o=>o).ToListAsync();
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+
+            var q = await _context.Orders.Include(o=>o.OrderDetails).Where(o => o.MemberId ==memberview.MemberID && o.OrderDetails.All(od => od.Product.IsPet == true)).Select(o=>o).ToListAsync();
 
             var list = CMempetView.CMempetViews(q);
             return View(list);

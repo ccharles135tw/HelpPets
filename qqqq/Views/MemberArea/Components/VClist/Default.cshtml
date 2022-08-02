@@ -30,9 +30,14 @@
                         </td>
                         <td>
                             <div class="email">
-                                @{var detail = db.OrderDetails.Where(x => x.OrderId == item.OrderId).Select(y => y.Product.ProductName).ToList(); }
+                                @{var detail = db.OrderDetails.Where(x => x.OrderId == item.OrderId).Select(y => y.Product.ProductName).ToList();
+                                    int count = 0;
+                                    if (detail.Count < 1) { count = 1; } else { count = detail.Count - 1; }}
                                 <span>@detail.FirstOrDefault()</span>
-                                <span>尚有其他@(detail.Count - 1 )筆資料</span>
+                                <span>
+                                    尚有其他@(count)  筆資料
+
+                                </span>
                             </div>
                         </td>
                         @{
@@ -91,7 +96,7 @@
         $.post("@Url.Content("~/MemberArea/detailList")", {
             id: orderid
 
-           }, function (datas) { console.log(datas); $("#viewChange").html(datas); })
+           }, function (datas) { $("#viewChange").html(datas); })
 
 
         })
