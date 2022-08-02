@@ -10,47 +10,66 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <style>
         * {
-            width: 100vw;
-            height: 100%;
+       margin:0;
+       padding:0;
+
+        }
+        body{
+            width:100%;
+            height:100vh;
+            background-color:#dedede;
+            display:flex;
+            align-items:center;
+            justify-content:center;
         }
 
-        .div1 {
-        }
 
         .dog {
+            flex:none;
+            width: 800px;
+            height: 800px;
             position: absolute;
-            width: 3000px;
+                       width: 3000px;
             opacity: 0.3;
             top: 0;
             bottom: -2000px;
             left: -2000px;
             right: auto;
-            display: none;
         }
 
         .cat {
+            flex: none;
+            width: 800px;
+            height: 800px;
             position: absolute;
-            width: 3000px;
+                      width: 3000px;
             opacity: 0.3;
             top: -5000px;
             bottom: 0;
             left: auto;
             right: -5000px;
-            display: none;
         }
 
         .bird {
+            flex: none;
             position: absolute;
-                        width: 3000px;
+            width: 800px;
+            height: 800px;
+                                width: 3000px;
             opacity: 0.3;
             top: 5000px;
             bottom: 0;
             left: auto;
             right: -5000px;
-            display: none;
         }
+/*        .logo {
+            flex: none;
+            position: absolute;
+            width: 800px;
+            height: 800px;
+        }*/
 
-        .divimg {
+/*        .divimg {
             display: inline-block;
             justify-content: center;
             align-content: center;
@@ -58,7 +77,7 @@
             top: 50vh;
             left: 33vw;
             float: left;
-        }
+        }*/
 
 /*        .typ {
             top: 180px;
@@ -77,14 +96,12 @@
     <title></title>
 </head>
 <body>
-    <div>
-        <div class="div1">
-            <div>
-                <img class="dog" id="dog1" src="~/img/home/newlogod.png" onClick="window.location.href=('enterpage.html');" />
-                <img class="cat" id="cat2" src="~/img/home/newlogoc.png" onClick="window.location.href=('enterPage.html');" />
-                <img class="bird" id="bird3" src="~/img/home/newlogob.png" onClick="window.location.href=('enterPage.html');" />
-                <img class="bird" id="logo4" src="~/img/home/newlogoMark.png" onClick="window.location.href=('enterPage.html');" />
-            </div>
+    <div class="div1">
+            <img class="dog" id="dog1" src="~/img/home/newlogod.png" onClick="window.location.href=('enterpage.html');" />
+            <img class="cat" id="cat2" src="~/img/home/newlogoc.png" onClick="window.location.href=('enterPage.html');" />
+            <img class="bird" id="bird3" src="~/img/home/newlogob.png" onClick="window.location.href=('enterPage.html');" />
+            @*<img class="logo" id="logo4" src="~/img/home/newlogobak.png" onClick="window.location.href=('enterPage.html');" />*@
+    </div>
 
             <!--<div class="divimg">
             <img class="word" id="wordi" src="images/logoPage/77logoi.png" />
@@ -94,7 +111,6 @@
         <div class="typ">
             <h1 class="typping">ANIMAL SHELTER</h1>
         </div>-->
-        </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
@@ -106,30 +122,30 @@
                     "top": "10%",
                     "left": "30%",
                     width: "800px",
-                    height: "790px",
+                    height: "800px",
                     opacity: 1  
                 }, 500);
                 $("#cat2").animate({
                     "top": "10%",
                     "left": "30%",
                     width: "800px",
-                    height: "790px",
+                    height: "800px",
                     opacity: 1
                 }, 1000);
                 $("#bird3").animate({
                     "top": "10%",
                     "left": "30%",
                     width: "800px",
-                    height: "790px",
+                    height: "800px",
                     opacity: 1
                 }, 1500);
-                $("#logo4").animate({
-                    "top": "10%",
-                    "left": "30%",
-                    width: "800px",
-                    height: "790px",
-                    opacity: 1
-                }, 2000);
+                //$("#logo4").animate({
+                //    "top": "10%",
+                //    "left": "30%",
+                //    width: "800px",
+                //    height: "790px",
+                //    opacity: 1
+                //}, 2000);
             });
 
             ////打字javascript
@@ -147,11 +163,10 @@
 
             //});
             ////定時轉跳進入頁面
-            //setTimeout(function () {
-            //    location.href = "/homepage/homepage"
-            //}, 1000)
+            setTimeout(function () {
+                location.href = "/homepage/homepage"
+            }, 1000)
         </script>
-    </div>
 </body>
 
 </html>
