@@ -165,8 +165,10 @@ namespace prjHomeLess_R.Controllers
         }
         public IActionResult mPetdetail(int id)
         {
+            return ViewComponent("VCmpetdetail", id);
+        }
 
-        //charles
+        //charles================================================================================
         public IActionResult mVactivity()
         {
             var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
