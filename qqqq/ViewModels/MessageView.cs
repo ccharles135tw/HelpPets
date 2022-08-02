@@ -66,5 +66,15 @@ namespace qqqq.ViewModels
     
         public string Message { get { return meam != null ? meam.Mseeage : mete.Message; } }
         public string MsgTime { get { return meam != null ? ((DateTime)meam.MsgTime).ToString("yyyy/MM/dd/HH:mm:ss") : ((DateTime)mete.MsgTime).ToString("yyyy/MM/dd/HH:mm:ss"); } }
+        public string IsReceiveRead { get { 
+                if(meam!=null)
+                {
+                    return meam.IsReceiveRead == true ? "已讀" : "未讀";
+                }
+                else
+                {
+                    return mete.IsReceiveRead == true ? "已讀" : "未讀";
+                }
+            } }
     }
 }

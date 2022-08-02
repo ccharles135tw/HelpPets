@@ -10,15 +10,33 @@
                         <h5 id="clientName">HeLLo!!@Model.Name</h5>
                         <ul class="ul-client">
                             @{
+                                bool isMessage = false;
                                 我救浪Context db = new 我救浪Context();
                                 var q = db.Employees.ToList();
                                 foreach (var e in q)
                                 {
                                     if (e.EmpoyeeId != Model.EmpoyeeId)
                                     {
-                                        <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
+                                        var q2 = db.MsgEmpToEmps.Where(m => m.IsReceiveRead == false && m.EmpSendId == e.EmpoyeeId && m.EmpReceiveId == Model.EmpoyeeId).ToList();
+                                        if (q2.Count > 0)
+                                        {
+                                            isMessage = true;
+                                            <li clientID="employee/@e.EmpoyeeId" class="blink">@e.Name</li>
+                                        }
+                                        else
+                                        {
+                                            <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
+                                        }
+
                                     }
 
+                                }
+
+                                var q3 = db.MsgEmpAndMems.Where(m => m.IsReceiveRead == false && m.IsMemSend == true && m.EmployeeId == Model.EmpoyeeId).Select(m => new { m.MemberId, m.Member.Name }).Distinct().ToList();
+                                foreach (var m in q3)
+                                {
+                                    isMessage = true;
+                                    <li clientID="member/@m.MemberId" class="blink">@m.Name</li>
                                 }
                             }
                         </ul>
@@ -36,9 +54,24 @@
             </div>
 
             <!-- button -->
-            <div class="chat-btn" clientID="">
-                <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
-            </div>
+            @{
+                @*if (isMessage == true)
+                {
+                    <div class="chat-btn breath" clientID="">
+                        <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+                    </div>
+                }
+                else
+                {
+                    <div class="chat-btn" clientID="">
+                        <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+                    </div>
+                }*@
+                <div class="chat-btn @(isMessage==true?"breath":null)" clientID="">
+                    <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+                </div>
+            }
+
         </div>
     </div>
    

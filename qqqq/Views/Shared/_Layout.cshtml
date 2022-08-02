@@ -167,21 +167,19 @@
     <script src="~/js/main.js"></script>
 
     @{
-        string name = null;
         if(Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
         {
             CLoginViewModel member = System.Text.Json.JsonSerializer.Deserialize<CLoginViewModel>(Context.Session.GetString(CDictionary.SK_LOGIN_USER));
             int memberID = member.MemberID;
             <div style="display:none" id="divMemString">member/@memberID</div>
             我救浪Context db = new 我救浪Context();
-            name = db.Members.Where(m => m.MemberId == memberID).FirstOrDefault().Name;
-            <partial name="chatbox.cshtml" model="@name"/>
+            var q= db.Members.Where(m => m.MemberId == memberID).FirstOrDefault();
+            <partial name="chatbox.cshtml" model="@q"/>
         }
         else
         {
-            name = "訪客";
             <div style="display:none" id="divMemString"></div>
-                                        <partial name="chatbox.cshtml" model="@name"/>
+                                        <partial name="chatbox.cshtml" model="@null"/>
                                         <script>
     $.get("@Url.Content("~/Product/GetCountForCharBox")", {}, (count) => { $("#divMemString").text(`random/${count}`);selfID=`random/${count}`})
                                         </script>

@@ -25,7 +25,7 @@
             bottom: -2000px;
             left: -2000px;
             right: auto;
-            /*display: none;*/
+            display: none;
         }
 
         .cat {
@@ -36,7 +36,18 @@
             bottom: 0;
             left: auto;
             right: -5000px;
-            /*display: none;*/
+            display: none;
+        }
+
+        .bird {
+            position: absolute;
+                        width: 3000px;
+            opacity: 0.3;
+            top: 5000px;
+            bottom: 0;
+            left: auto;
+            right: -5000px;
+            display: none;
         }
 
         .divimg {
@@ -49,14 +60,7 @@
             float: left;
         }
 
-/*            .divimg > .word {
-                margin: 50px;
-                width: 180px;
-                left: 0px;
-                flex: none;
-            }*/
-
-        .typ {
+/*        .typ {
             top: 180px;
             top: auto;
             left: auto;
@@ -68,7 +72,7 @@
             text-align: center;
             color: black;
             left: 0px;
-        }
+        }*/
     </style>
     <title></title>
 </head>
@@ -76,8 +80,10 @@
     <div>
         <div class="div1">
             <div>
-                <img class="dog" id="dog1" src="~/enterpage/images/anime/logodog.png" onClick="window.location.href=('enterpage.html');" />
-                <img class="cat" id="cat2" src="~/enterpage/images/anime/logocat.png" onClick="window.location.href=('enterPage.html');" />
+                <img class="dog" id="dog1" src="~/img/home/newlogod.png" onClick="window.location.href=('enterpage.html');" />
+                <img class="cat" id="cat2" src="~/img/home/newlogoc.png" onClick="window.location.href=('enterPage.html');" />
+                <img class="bird" id="bird3" src="~/img/home/newlogob.png" onClick="window.location.href=('enterPage.html');" />
+                <img class="bird" id="logo4" src="~/img/home/newlogoMark.png" onClick="window.location.href=('enterPage.html');" />
             </div>
 
             <!--<div class="divimg">
@@ -100,16 +106,30 @@
                     "top": "10%",
                     "left": "30%",
                     width: "800px",
-                    height: "800px",
-                    opacity: 1
+                    height: "790px",
+                    opacity: 1  
                 }, 500);
                 $("#cat2").animate({
                     "top": "10%",
                     "left": "30%",
                     width: "800px",
-                    height: "800px",
+                    height: "790px",
                     opacity: 1
-                }, 800);
+                }, 1000);
+                $("#bird3").animate({
+                    "top": "10%",
+                    "left": "30%",
+                    width: "800px",
+                    height: "790px",
+                    opacity: 1
+                }, 1500);
+                $("#logo4").animate({
+                    "top": "10%",
+                    "left": "30%",
+                    width: "800px",
+                    height: "790px",
+                    opacity: 1
+                }, 2000);
             });
 
             ////打字javascript
@@ -127,9 +147,9 @@
 
             //});
             ////定時轉跳進入頁面
-            setTimeout(function () {
-                location.href = "/homepage/homepage"
-            }, 1000)
+            //setTimeout(function () {
+            //    location.href = "/homepage/homepage"
+            //}, 1000)
         </script>
     </div>
 </body>

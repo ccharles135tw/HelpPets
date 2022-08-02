@@ -1,47 +1,72 @@
-﻿@model string
+﻿@model qqqq.Models.Member
 
 <div class="divbody nav-bar-bottom">
-        <div class="chatcontainer">
-            <!-- chat box -->
-            <div class="chat-box">
-                <!-- client -->
-                <div class="client">
-                    <img src="~/img/cat.png" alt="logo" />
-                    <div class="client-info">
-                        <h5 id="clientName">Hello!! @Model</h5>
-                         <ul class="ul-client">
+    <div class="chatcontainer">
+        <!-- chat box -->
+        <div class="chat-box">
+            <!-- client -->
+            <div class="client">
+
+                <img src="~/img/cat.png" alt="logo" />
+                <div class="client-info">
+                    <h5 id="clientName">Hello!! @(Model==null ? "訪客":Model.Name)</h5>
+                    @{ 
+                        if(Model==null)
+            {
+                                        <h5>請先登入才能確保我們可以看到妳的訊息喔</h5>
+            }
+                    }
+                    <ul class="ul-client">
                         @{
+                            bool isMessage = false;
                             我救浪Context db = new 我救浪Context();
                             var q = db.Employees.ToList();
-                            foreach(var e in q)
+                            foreach (var e in q)
                             {
-                                <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
+                                if (Model == null)
+                                {
+                                    <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
+                                }
+                                else
+                                {
+                                    var q2 = db.MsgEmpAndMems.Where(m => m.IsReceiveRead == false && m.IsMemSend == false && m.MemberId == Model.MemberId && m.EmployeeId == e.EmpoyeeId).ToList();
+                                    if (q2.Count > 0)
+                                    {
+                                        isMessage = true;
+                                        <li clientID="employee/@e.EmpoyeeId" class="blink">@e.Name</li>
+                                    }
+                                    else
+                                    {
+                                        <li clientID="employee/@e.EmpoyeeId">@e.Name</li>
+                                    }
+                                }
+
                             }
                         }
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-                <!-- main chat section -->
-@*                <div class="chats" clientID="">
-                    <div class="client-chat">Hi!</div>
-                    <div class="my-chat">Hi!</div>
-                    <div class="client-chat">How can i help you?</div>
-                    <div class="my-chat">How you create this chat box?</div>
-                    <div class="client-chat">Watch complete video for your answer.</div>
-                </div>*@
-
-                <!-- input field section -->
-                <div class="chat-input">
-                    <input type="text" placeholder="Enter Message" />
-                    <button class="send-btn">
-                        <img src="~/img/home/send.png" alt="send-btn" />
-                    </button>
-                </div>
-
             </div>
-            <!-- button -->
-            <div class="chat-btn" clientID="">
-                <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+            <!-- main chat section -->
+            @*                <div class="chats" clientID="">
+            <div class="client-chat">Hi!</div>
+            <div class="my-chat">Hi!</div>
+            <div class="client-chat">How can i help you?</div>
+            <div class="my-chat">How you create this chat box?</div>
+            <div class="client-chat">Watch complete video for your answer.</div>
+        </div>*@
+
+            <!-- input field section -->
+            <div class="chat-input">
+                <input type="text" placeholder="Enter Message" />
+                <button class="send-btn">
+                    <img src="~/img/home/send.png" alt="send-btn" />
+                </button>
             </div>
+
         </div>
+        <!-- button -->
+        <div class="chat-btn @(isMessage==true?"breath":null)" clientID="">
+            <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
+        </div>
+    </div>
     </div>

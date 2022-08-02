@@ -4,6 +4,7 @@ $(document).ready(() =>
     $(".chat-btn").click(() => {
         $(".chat-box").slideToggle("slow")
         $(".chat-btn").removeClass("breath");
+        $(`.ul-client li[clientID="${$(".chat-btn").attr("clientID")}"]`).click();//打開訊息的時候模擬點擊目前的li(觸發已讀)
     })
 })
 
@@ -81,7 +82,16 @@ connection.on("ReceiveMessage", function (clientID, j)
     {
         appendMessage(clientID,j, "client-chat");
     }
+
+    if ($(".chat-box ").is(":hidden") == false && $(".chat-btn").attr("clientID") == clientID) //如果訊息視窗是開啟並且訊息對象正確，Invoke已讀
+    {
+        connection.invoke("UpIsRead", selfID, clientID);
+    }
 });
+connection.on("UpIsRead", function (clientID)
+{
+    ReadMessage(clientID);
+})
 //點擊li切換對象
 $(".ul-client").on("click", "li", function ()
 {
@@ -90,6 +100,7 @@ $(".ul-client").on("click", "li", function ()
     let clientName = $(this).text();
     ClickToClient(clientID, clientName);
     $(".chat-btn").attr("clientID", clientID);//更改目前的訊息對象
+    connection.invoke("UpIsRead", selfID, clientID);
 })
 
 function ClickToClient(clientID, clientName)
@@ -118,6 +129,7 @@ function ClickToClient(clientID, clientName)
                     appendMessage(clientID,m, "client-chat");
                 }
             }
+       
         })
     }
     else
@@ -128,6 +140,23 @@ function ClickToClient(clientID, clientName)
 function appendMessage(clientID, jMessageView, chatType)
 {
     let chatbox = $(`.chats[clientID="${clientID}"] `);
-    chatbox.append(`<div class="${chatType}">${jMessageView.Message}</br>${jMessageView.MsgTime}</div>`);
+    if (chatType == "my-chat")
+    {
+        chatbox.append(`<div class="${chatType}">${jMessageView.Message}</br>${jMessageView.MsgTime}</br>${jMessageView.IsReceiveRead}</div>`);
+    }
+    else
+    {
+        chatbox.append(`<div class="${chatType}">${jMessageView.Message}</br>${jMessageView.MsgTime}</div>`);
+    }
     chatbox.scrollTop(chatbox.prop("scrollHeight"));
+}
+
+function ReadMessage(clientID)
+{
+    let chatbox = $(`.chats[clientID="${clientID}"] `);
+    let mc = chatbox.find("div.my-chat")
+    for (let m of mc)
+    {
+        m.innerHTML = m.innerHTML.replace("未讀", "已讀");
+    }
 }
