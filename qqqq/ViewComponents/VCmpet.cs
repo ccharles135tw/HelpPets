@@ -20,7 +20,7 @@ namespace qqqq.ViewComponents
            // var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
            // CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
            
-            var q = await _context.Orders.Where(o => o.MemberId == /*memberview.MemberID*/39&&o.OrderDetails.All(od=>od.Product.IsPet==true)).ToListAsync();
+            var q = await _context.Orders.Include(o=>o.OrderDetails).Where(o => o.MemberId == /*memberview.MemberID*/39 && o.OrderDetails.All(od => od.Product.IsPet == true)).Select(o=>o).ToListAsync();
 
             var list = CMempetView.CMempetViews(q);
             return View(list);
