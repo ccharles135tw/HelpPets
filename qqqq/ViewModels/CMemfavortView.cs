@@ -38,7 +38,9 @@ namespace qqqq.ViewModels
 
         public int Unstock { get { return (int)_prod.UnitsInStock; } }
 
-        public  string Rate { get { return ((double)_prod.MemberComments.Average(mc => mc.Grade)).ToString("#.0"); } }
+        public string describe { get { return _prod.Description; } }
+
+        public  decimal Rate { get { return ((decimal)_prod.MemberComments.Average(mc => mc.Grade)); } }
     }
 }
 

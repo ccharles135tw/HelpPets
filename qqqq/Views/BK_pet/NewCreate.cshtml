@@ -18,7 +18,23 @@
         color: black;
         font-weight: 900;
     }
+    .divfile{
+        transform:translate(-50%.-50%);
+        margin-bottom:20px;
     }
+    #file1{
+        width:100%;
+        outline:none;
+    }
+    ::-webkit-file-upload-button{
+        color:#fff;
+        background-color:#EAA636;
+        border-radius:50px;
+        outline:none;
+        border:none;
+        cursor:pointer;
+    }
+}
     </style>
 
     <h1 style="font-weight: 900; text-align:center; margin-top: 30px; margin-bottom: 10px">浪浪新增</h1>
@@ -49,11 +65,11 @@
                     <span asp-validation-for="ProductId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="divfile">
                     <i class="fa-solid fa-paw">
-                        <label asp-for="Photo" class="control-label"></label>
+                        <label asp-for="Photo" class="control-label     "></label>
                     </i>
-                    <input type="file" name="file" asp-for="Photo" class="form-control-file input" />
+                    <input id="file1" type="file" name="file" asp-for="Photo" class="form-control-file input" />
                     @*<input asp-for="Photo" class="form-control input" />*@
                     <span asp-validation-for="Photo" class="text-danger"></span>
                 </div>

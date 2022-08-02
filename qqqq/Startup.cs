@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using qqqq.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace qqqq
         {
             services.AddControllersWithViews();
             services.AddSession();
-
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,9 +54,10 @@ namespace qqqq
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    //pattern: "{controller=homepage}/{action=enterpage}/{id?}");
-                    //pattern: "{controller=Volunteer}/{action=Index}/{id?}");
                     pattern: "{controller=homepage}/{action=enterpage}/{id?}");
+                    //pattern: "{controller=Volunteer}/{action=Index}/{id?}");
+                    //pattern: "{controller=BK_pet}/{action=NewPetList}/{id?}");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

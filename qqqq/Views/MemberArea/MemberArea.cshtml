@@ -41,7 +41,7 @@
 
 
                     <div style="width:96px">
-                        <a class="+1U02e" href="#" id="donelist" >
+                        <a class="+1U02e" href="#" id="donelist">
                             <div class="bfikuD">
                                 <i class="fa fa-archive" aria-hidden="true"></i>
                             </div>
@@ -51,7 +51,7 @@
                         </a>
                     </div>
 
-              
+
 
                     <div style="width:96px">
                         <a class="+1U02e" href="#" id="memFavorite">
@@ -65,7 +65,7 @@
                     </div>
 
                     <div style="width:96px">
-                        <a class="+1U02e" href="#" id="memPet" >
+                        <a class="+1U02e" href="#" id="memPet">
                             <!--todo-->
                             <div class="bfikuD">
                                 <i class="fa fa-paw" aria-hidden="true"></i>
@@ -98,6 +98,18 @@
                             </div>
                             <div class="DlL0zX">
                                 <span class="adF7Xs">我的志工</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    @*charles*@
+                    <div style="width:96px">
+                        <a class="+1U02e" href="#" id="memVActivity">
+                            <div class="bfikuD">
+                                <i class="bi bi-table"></i>
+                            </div>
+                            <div class="DlL0zX">
+                                <span class="adF7Xs">志工活動</span>
                             </div>
                         </a>
                     </div>
@@ -167,7 +179,7 @@
 
         $("#memPet").click(function (e) {
 
-          
+
             e.preventDefault();
 
             $("#viewChange").empty();
@@ -182,6 +194,15 @@
 
              })
         $("#memVolunteer").click((e) => {
+            e.preventDefault();
+
+            $("#viewChange").empty();
+            $.post("@Url.Content("~/MemberArea/mVolunteer")", {}, function (datas)  { $("#viewChange").html(datas);})
+
+        })
+
+        //charles
+        $("#memVActivity").click((e) => {
             e.preventDefault();
 
             $("#viewChange").empty();

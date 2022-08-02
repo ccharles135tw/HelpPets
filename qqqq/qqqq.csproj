@@ -86,7 +86,6 @@
     <None Include="Views\shopping\shoppingRow.cshtml" />
     <None Include="Views\shopping\ShowProduct.cshtml" />
     <None Include="Views\Volunteer\Index.cshtml" />
-    <None Include="Views\Volunteer\Info.cshtml" />
     <None Include="Views\Volunteer\SignUp.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
@@ -130,6 +129,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DB\" />
     <Folder Include="wwwroot\doc\assets\img\" />
   </ItemGroup>
 

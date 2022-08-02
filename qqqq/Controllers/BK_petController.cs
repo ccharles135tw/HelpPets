@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pet.ViewModels;
 using prjHomeLess.ViewModel;
 using qqqq.Models;
 using qqqq.ViewModels;
@@ -16,6 +17,7 @@ namespace qqqq.Controllers
     public class BK_petController : Controller
     {
 
+        我救浪Context db = new 我救浪Context();
         public IWebHostEnvironment _environment;
         public BK_petController(IWebHostEnvironment pet)
         {
@@ -24,7 +26,7 @@ namespace qqqq.Controllers
 
         public IActionResult NewPetList()
         {
-            我救浪Context db = new 我救浪Context();
+   
             var subcate = db.SubCategories.Select(x => x).ToList();
             var petdetail = db.PetDetails.Select(x => x).ToList();
             var cate = db.Categories.Select(x => x).ToList();
@@ -58,7 +60,7 @@ namespace qqqq.Controllers
         //已下架浪浪
         public IActionResult DiscountinueList()
         {
-            我救浪Context db = new 我救浪Context();
+       
             var subcate = db.SubCategories.Select(x => x).ToList();
             var petdetail = db.PetDetails.Select(x => x).ToList();
             var cate = db.Categories.Select(x => x).ToList();
@@ -89,10 +91,6 @@ namespace qqqq.Controllers
             }
             return View(list);
         }
-
-      
-
-
         //新增浪浪
         //todo Demo
         public IActionResult NewCreate()
@@ -100,12 +98,11 @@ namespace qqqq.Controllers
             return View();
         }
         [HttpPost]
-
         public IActionResult NewCreate(Product pro, PetDetail detail, IFormFile file)
         {
             //try
             //{
-            我救浪Context db = new 我救浪Context();
+  
 
             pro.Price = 0;
             pro.SupplierId = 1;
@@ -150,14 +147,13 @@ namespace qqqq.Controllers
             //}
 
         }
-
         //刪除浪浪
         //todo 刪除前面會有衝突
         public IActionResult Delete(int? id)
         {
             try
             {
-                我救浪Context db = new 我救浪Context();
+                
                 Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == id);
                 PetDetail petDetail = db.PetDetails.FirstOrDefault(p => p.ProductId == id);
                 Product product = db.Products.FirstOrDefault(p => p.ProductId == id);
@@ -181,12 +177,11 @@ namespace qqqq.Controllers
 
         }
 
-
         //修改浪浪
         public IActionResult NewEdit(int? id)
         {
             CPet cPet = new CPet();
-            我救浪Context db = new 我救浪Context();
+           
             PetDetail petDetail = db.PetDetails.FirstOrDefault(p => p.ProductId == id);
             cPet._petDetail = petDetail;
             Product product = db.Products.FirstOrDefault(p => p.ProductId == id);
@@ -200,7 +195,7 @@ namespace qqqq.Controllers
         [HttpPost]
         public IActionResult NewEdit(Product pro,PetDetail detail,IFormFile file)
         {
-            我救浪Context db = new 我救浪Context();
+            
             //pet = new CPet();
             var q = db.PetDetails.FirstOrDefault(p => p.ProductId == detail.ProductId);
             if (q != null)
@@ -257,7 +252,7 @@ namespace qqqq.Controllers
         public IActionResult Discontinued(int? id)
         {
 
-            我救浪Context db = new 我救浪Context();
+       
             Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == id);
             PetDetail petDetail = db.PetDetails.FirstOrDefault(p => p.ProductId == id);
             Product product = db.Products.FirstOrDefault(p => p.ProductId == id);
@@ -289,7 +284,7 @@ namespace qqqq.Controllers
         //關鍵字
         public IActionResult KeyWord(string keyword)
         {
-            我救浪Context db = new 我救浪Context();
+          
             List<CPet> datas = null;
             ViewBag.keyword = keyword;
             if (string.IsNullOrEmpty(keyword))
@@ -309,6 +304,51 @@ namespace qqqq.Controllers
             }
 
             return View("NewPetList", datas);
+        }
+
+        //申請人列表頁面
+        public IActionResult AdoptList(int id)
+        {
+            
+            var q = db.Orders.Include(o => o.OrderDetails).Where(o => o.OrderDetails.FirstOrDefault().ProductId == id).ToList();
+            var q2 = CAdoptListForPetView.CAdoptListForPetViews(q);
+            return View(q2);
+        }
+        public IActionResult MemberDetail(int id)
+        {
+            var q = db.Members.Where(m => m.MemberId == id).FirstOrDefault();
+            CMemberView cMemberView = new CMemberView(q);
+            return PartialView("MemberDetail", cMemberView);
+        }
+        public IActionResult MemberWish(int id)
+        {
+            var q = db.MemberWishes.Where(m => m.MemberId == id).FirstOrDefault();
+            if(q!= null)
+            {
+                return PartialView("MemberWishView", q);
+            }
+          else
+            {
+                return Content("無願望清單");
+            }
+        }
+        public bool ChooseAdopter(int orderid,int productid)
+        {
+            try
+            {
+                var q = db.Orders.Include(o => o.OrderDetails).AsEnumerable().Where(o => o.OrderDetails.Any(od=>od.ProductId==productid) && o.OrderId != orderid).ToList();
+                var q2 = db.Orders.Where(o => o.OrderId == orderid).FirstOrDefault();
+                foreach (var o in q) o.OrderStatusId = 3;
+                q2.OrderStatusId = 1;
+                var q3 = db.Products.Where(p => p.ProductId == productid).FirstOrDefault();
+                q3.Continued = false;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 

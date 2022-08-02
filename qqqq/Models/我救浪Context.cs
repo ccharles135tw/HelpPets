@@ -29,6 +29,8 @@ namespace qqqq.Models
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<MemberComment> MemberComments { get; set; }
         public virtual DbSet<MemberWish> MemberWishes { get; set; }
+        public virtual DbSet<MsgEmpAndMem> MsgEmpAndMems { get; set; }
+        public virtual DbSet<MsgEmpToEmp> MsgEmpToEmps { get; set; }
         public virtual DbSet<MyFavorite> MyFavorites { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
@@ -43,6 +45,7 @@ namespace qqqq.Models
         public virtual DbSet<VactivityCategory> VactivityCategories { get; set; }
         public virtual DbSet<VallowTime> VallowTimes { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
+        public virtual DbSet<Vstatus> Vstatuses { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -309,6 +312,54 @@ namespace qqqq.Models
                     .HasForeignKey(d => d.SubCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Member_Wish_SubCategory");
+            });
+
+            modelBuilder.Entity<MsgEmpAndMem>(entity =>
+            {
+                entity.HasKey(e => e.MsgEmpAndMem1);
+
+                entity.ToTable("MsgEmpAndMem");
+
+                entity.Property(e => e.MsgEmpAndMem1).HasColumnName("MsgEmpAndMem");
+
+                entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
+
+                entity.Property(e => e.MemberId).HasColumnName("MemberID");
+
+                entity.Property(e => e.MsgTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Employee)
+                    .WithMany(p => p.MsgEmpAndMems)
+                    .HasForeignKey(d => d.EmployeeId)
+                    .HasConstraintName("FK_MsgEmpAndMem_Employee");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.MsgEmpAndMems)
+                    .HasForeignKey(d => d.MemberId)
+                    .HasConstraintName("FK_MsgEmpAndMem_Member");
+            });
+
+            modelBuilder.Entity<MsgEmpToEmp>(entity =>
+            {
+                entity.ToTable("MsgEmpToEmp");
+
+                entity.Property(e => e.MsgEmpToEmpId).HasColumnName("MsgEmpToEmpID");
+
+                entity.Property(e => e.EmpReceiveId).HasColumnName("EmpReceiveID");
+
+                entity.Property(e => e.EmpSendId).HasColumnName("EmpSendID");
+
+                entity.Property(e => e.MsgTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.EmpReceive)
+                    .WithMany(p => p.MsgEmpToEmpEmpReceives)
+                    .HasForeignKey(d => d.EmpReceiveId)
+                    .HasConstraintName("FK_MsgEmpToEmp_Employee2");
+
+                entity.HasOne(d => d.EmpSend)
+                    .WithMany(p => p.MsgEmpToEmpEmpSends)
+                    .HasForeignKey(d => d.EmpSendId)
+                    .HasConstraintName("FK_MsgEmpToEmp_Employee1");
             });
 
             modelBuilder.Entity<MyFavorite>(entity =>
@@ -631,6 +682,8 @@ namespace qqqq.Models
 
                 entity.Property(e => e.VerificationCode).HasMaxLength(50);
 
+                entity.Property(e => e.VstatusId).HasColumnName("VStatusID");
+
                 entity.HasOne(d => d.Activity)
                     .WithMany(p => p.Volunteers)
                     .HasForeignKey(d => d.ActivityId)
@@ -645,6 +698,22 @@ namespace qqqq.Models
                     .WithMany(p => p.Volunteers)
                     .HasForeignKey(d => d.MemberId)
                     .HasConstraintName("FK_Volunteer_Member");
+
+                entity.HasOne(d => d.Vstatus)
+                    .WithMany(p => p.Volunteers)
+                    .HasForeignKey(d => d.VstatusId)
+                    .HasConstraintName("FK_Volunteer_VStatus");
+            });
+
+            modelBuilder.Entity<Vstatus>(entity =>
+            {
+                entity.ToTable("VStatus");
+
+                entity.Property(e => e.VstatusId).HasColumnName("VStatusID");
+
+                entity.Property(e => e.StatusType)
+                    .HasMaxLength(50)
+                    .IsFixedLength(true);
             });
 
             OnModelCreatingPartial(modelBuilder);

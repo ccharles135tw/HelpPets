@@ -44,5 +44,13 @@ namespace prjHomeLess.ViewModel
         public string OrderStaus { get { return _order.OrderStatus.StatusType; } }
 
         public string OrderDate { get { return ((DateTime)_order.OrderDate).ToString("yyyy/MM/dd"); } }
+
+        public int ProductId { get { return _order.OrderDetails.FirstOrDefault().ProductId; } }
+        public string Color { get { return _order.OrderDetails.FirstOrDefault().Product.PetDetail.Color.ColorName; } }
+        public int YearCost { get { return (int)_order.OrderDetails.FirstOrDefault().Product.PetDetail.YearCost; } }
+        public int Space { get { return (int)_order.OrderDetails.FirstOrDefault().Product.PetDetail.Space; } }
+        public string Size { get { return _order.OrderDetails.FirstOrDefault().Product.PetDetail.Size.SizeType; } }
+        public string Age { get { return _order.OrderDetails.FirstOrDefault().Product.PetDetail.Age.AgeType; } }
+        public string Description { get { return _order.OrderDetails.FirstOrDefault().Product.PetDetail.Description; } }
     }
 }

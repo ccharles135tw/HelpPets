@@ -19,9 +19,11 @@ namespace qqqq.Models
         public bool? Waiting { get; set; }
         public string OrderDate { get; set; }
         public string VerificationCode { get; set; }
+        public int? VstatusId { get; set; }
 
         public virtual Vactivity Activity { get; set; }
         public virtual VallowTime AllowTime { get; set; }
         public virtual Member Member { get; set; }
+        public virtual Vstatus Vstatus { get; set; }
     }
 }

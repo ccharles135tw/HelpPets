@@ -26,11 +26,27 @@
         memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
     }
 }
+@section Styles{
+    <style>
+/*        .imgdiv {
+            transition: transform .2s; 
+            margin: 0 auto;
+            z-index:999;
+            
+        }
+              .imgdiv:hover {
+                transform: scale(1.5); 
+            }*/
+
+    </style>
+
+}
 <div class="container text-center col-md-6 col-sm-12">
     <div>
         <form class="text-left" style="display: flex; align-items: center">
-            <div style="flex:none;">
-                <img id="prodImg" width="400" height="400" src="/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
+            <div class="imgdiv" style="flex:none;display:block">
+                <input type="range" min="1" max="5" value="1" step="0.5" >
+                <img id="prodImg"  src="/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName"/>
             </div>
             <div style="flex:none;text-align:left;margin-left:10px;">
                 <hr />
@@ -108,12 +124,12 @@
                     if (memberview != null)
                     {
                         <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
-                    我要評估領養
-                </button>
+                            我要評估領養
+                        </button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-primary m-1" id="login" >
+                        <button type="button" class="btn btn-primary m-1" id="login">
                             請登入或註冊會員
                         </button>
                     }
@@ -228,21 +244,13 @@
     }*@
 @section Scripts{
     <script>
-        //function alertlist() {
-        //    let timerInterval
-        //    Swal.fire({
-        //        title: '請註冊或登入會員!',
-        //        html: '將在 <b></b> 毫秒後回會員登入頁面',
-        //        timer: 1000,
-        //        timerProgressBar: true,
-        //        didOpen: () => {
-        //            Swal.showLoading()
-        //            const b = Swal.getHtmlContainer().querySelector('b')
-        //            timerInterval = setInterval(() => { b.textContent = Swal.getTimerLeft()}, 100);
-        //            setTimeout(function () { location.href = "/Home/Login" }, 1000)
-        //        }
-        //    })
-        //}
+        $(function () {
+            $(".xzoom").xzoom({
+                zoomWidth: 400,
+                tint: "#333",
+                Xoffset:15,
+            })
+        })
         $("#login").click(() => {
             document.location.href = "@Url.Content("~/home/login/")"
         })

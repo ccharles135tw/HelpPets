@@ -48,13 +48,13 @@ h6,
     margin-bottom: 6rem;
 }
 
-.back-to-top {
+/*.back-to-top {
     position: fixed;
     display: none;
     right: 30px;
     bottom: 30px;
     z-index: 99;
-}
+}*/
 
 
 /*** Spinner ***/

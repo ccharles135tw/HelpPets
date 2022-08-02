@@ -1,84 +1,94 @@
-﻿
+﻿@model List<qqqq.ViewModels.CMemfavortView>
 
 
-<h3 class="h5 mb-4 text-center">我的最愛</h3>
-<div class="table-wrap">
-    <table class="table">
-        <thead class="thead-primary">
-            <tr>
-                <th>序</th>
-                <th>產品照片</th>
-                <th>商品名稱</th>
-                @*<th>&nbsp;</th>*@
-                <th>單價</th>
-                <th>庫存</th>
-                <th>評價</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="alert" role="alert">
+    <h3 class="h5 mb-4 text-center">我的最愛</h3>
+    <div class="table-wrap">
+        <table class="table">
+            <thead class="thead-primary">
+                <tr>
+                    <th>序</th>
+                    <th>產品照片</th>
+                    <th>商品名稱</th>
+                    @*<th>&nbsp;</th>*@
+                    <th>單價</th>
+                    <th>庫存</th>
+                    <th>評價</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                        int count = 0;
+                        foreach (var item in Model)
+                        {
+                            count++;
+                    <tr class="alert" role="alert">
 
-                <td>
-                    1
-                    @*<div class="img" style="        background-image: url(~/images/bg_1.jpg);"></div>*@
-                </td>
+                        <td>
+                        @count
+                        </td>
 
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                        <td>
+                            @*<img src="@Url.Content($"~/Images/{item.PictureName}")~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />*@
 
-                </td>
-                <td>
-                    <div class="email">
-                        <span>貓砂鏟 </span>
-                        <span>規格:粉色  尺寸:L</span>
-                    </div>
-                </td>
-                @*<td>星等</td>*@
-                <td>$120</td>
-                <td class="quantity">
-                    <div class="input-group">
-                       87
-                        @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                    </div>
-                </td>
-                <td> 
-                <img src="~/Images/memstar.jpg" style="width:100px;height:20px" />
-                </td>
+                        </td>
+                        <td>
+                            <div class="email">
+                                <span>@item.ProductName </span>
+                                <span>描述:@item.describe</span>
+                            </div>
+                        </td>
+                  
+                        <td>@item.Unprice</td>
+                        <td class="quantity">
+                            <div class="input-group">
+                            @item.Unstock
+                            </div>
+                        </td>
+                        <td>
+                            @{
+                                for (int i = 0; i < Math.Floor(item.Rate); i++)
+                                {
+                                    <img width="10" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" />
+                                }
+                            }
 
-                <td>
-                    <div>
-                        <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
-                            <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
-                            <span>加入購物車</span>
-                        </button>
-                        <div>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                <span>移除我的最愛</span>
-                            </button>
-                        </div>
-                    </div>
-                </td>
-          
+                        </td>
 
-
-            </tr>
-            <!--=========================================================================================-->
-
+                        <td>
+                            <div>
+                                <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
+                                    <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
+                                    <span>加入購物車</span>
+                                </button>
+                                <div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" action="">
+                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                        <span>移除我的最愛</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
 
 
-       
 
-        </tbody>
-    </table>
-    <!-- The Modal -->
-  
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
-    $("#btn1").on("click", function () { alert("Test") })
-    let b = document.querySelector("#btn2");
-    b.addEventListener("click", () => { alert("Test") })
-</script>
+                    </tr>
+                <!--=========================================================================================-->
+                        }
+                    }
+
+
+
+
+            </tbody>
+        </table>
+        <!-- The Modal -->
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $("#btn1").on("click", function () { alert("Test") })
+        let b = document.querySelector("#btn2");
+        b.addEventListener("click", () => { alert("Test") })
+    </script>

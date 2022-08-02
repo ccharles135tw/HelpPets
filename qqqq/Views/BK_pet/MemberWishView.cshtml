@@ -1,0 +1,79 @@
+﻿@model qqqq.Models.MemberWish
+
+@{
+    ViewData["Title"] = "MemberWishView";
+}
+
+<h1>寵物願望清單</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            城市
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.City.CityName
+        </dd>
+        <dt class = "col-sm-2">
+            年花費
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearCost)
+        </dd>
+        <dt class = "col-sm-2">
+            空間
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Space)
+        </dd>
+        <dt class = "col-sm-2">
+            年齡
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Age.AgeType
+        </dd>
+        <dt class = "col-sm-2">
+            每周陪伴時間
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AccompanyTimeWeek)
+        </dd>
+        <dt class = "col-sm-2">
+            是否結紮
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Ligation.LigationType
+        </dd>
+        <dt class = "col-sm-2">
+            品種
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.SubCategory.SubCategoryName;
+        </dd>
+        <dt class = "col-sm-2">
+            性別
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Gender.GenderType
+        </dd>
+        <dt class = "col-sm-2">
+            體型
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Size.SizeType
+        </dd>
+        <dt class = "col-sm-2">
+            類型
+        </dt>
+        <dd class = "col-sm-10">
+          @Model.Category.CategoryName
+        </dd>
+        <dt class = "col-sm-2">
+            毛色
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Color.ColorName
+        </dd>
+    </dl>
+</div>
