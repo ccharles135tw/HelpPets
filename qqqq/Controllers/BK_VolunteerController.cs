@@ -4,6 +4,9 @@ using qqqq.Models;
 using qqqq.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -118,6 +121,76 @@ namespace qqqq.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("BK_VolunteerActivity");
+        }
+        public IActionResult actList()
+        {
+            return View();
+        }
+        public class Vlist
+        {
+            public string actName;
+            public string name;
+            public string introducer;
+            public string time;
+            public string phone;
+            public string ver;
+        }
+        public IActionResult showResult(string date)
+        {
+            List<Vlist> list = new List<Vlist>();
+            var a = db.Volunteers.Where(x => x.AllowDate == date && x.Waiting == false && x.CheckEmail == true).Select(y => y).OrderBy(z=>z.ActivityId).ThenBy(w=>w.AllowTimeId).ToList();
+            foreach(var i in a)
+            {
+                Random ran = new Random(Guid.NewGuid().GetHashCode());
+                i.VerificationCode = ran.Next().ToString();
+                list.Add(new Vlist
+                {
+                    actName = db.Vactivities.Where(x=>x.ActivityId == i.ActivityId).Select(y=>y.Title).FirstOrDefault(),
+                    name = i.Name,
+                    introducer = db.Members.Where(x=>x.MemberId == i.MemberId).Select(y=>y.Name).FirstOrDefault(),
+                    time = db.VallowTimes.Where(x=>x.AllowTimeId == i.AllowTimeId).Select(y=>y.TimeRange).FirstOrDefault(),
+                    phone = i.Phone,
+                    ver = i.VerificationCode
+                });
+            }
+            db.SaveChanges();
+            return Json(list.Select(x=> new { x.actName,x.name,x.time,x.introducer,x.phone,x.ver }));
+        }
+        public IActionResult register(string ver)
+        {
+            if (db.Volunteers.Where(y => y.VerificationCode==ver && y.VstatusId == 1).Count() != 0)
+            {
+                var a = db.Volunteers.Where(x => x.VerificationCode == ver).Select(y => y.Name).FirstOrDefault();
+                return Content($"{a}，報到已完成，如有疑問請詢問現場工作人員。");
+            }
+            if (db.Volunteers.Select(y=>y.VerificationCode).Contains(ver))
+            {
+                var a = db.Volunteers.Where(x => x.VerificationCode == ver).Select(y => y).FirstOrDefault();
+                a.VstatusId = 1;
+                db.SaveChanges();
+                return Content($"{a.Name}，報到成功。");
+            }
+            return Content("失敗??");
+        }
+        public void toPDF(string htmlString)
+        {
+
+            Debug.WriteLine(htmlString);
+            StreamWriter sw = new StreamWriter("D:\\Test.html");
+            sw.WriteLine("<style>table,td,th {border: 1px solid #ddd;text-align: left;}th {background-color: darkgray;} table {border-collapse: collapse;width: 100 %;}th, td {padding: 15px;}</style>");
+            sw.WriteLine(htmlString);
+            sw.Close();
+
+            var url = "D:\\Test.html";
+            var chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            var output = Path.Combine(Environment.CurrentDirectory, "printout.pdf");
+            using (var p = new Process())
+            {
+                p.StartInfo.FileName = chromePath;
+                p.StartInfo.Arguments = $"--headless --disable-gpu --print-to-pdf={output} {url}";
+                p.Start();
+                p.WaitForExit();
+            }
         }
     }
 }

@@ -28,7 +28,6 @@
     <None Include="Views\BK_SubCategory\sbEdit.cshtml" />
     <None Include="Views\BK_SubCategory\sbpetList.cshtml" />
     <None Include="Views\BK_talk\BK_talk.cshtml" />
-    <None Include="Views\BK_Volunteer\BK_Volunteer.cshtml" />
     <None Include="Views\BK_Volunteer\BK_VolunteerActivity.cshtml" />
     <None Include="Views\BK_Volunteer\Create.cshtml" />
     <None Include="Views\BK_Volunteer\Edit.cshtml" />
@@ -128,7 +127,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

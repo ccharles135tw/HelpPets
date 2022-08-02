@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = "_BackLayout";
+}
+@section Styles{
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: darkgray;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 15px;
+        }
+    </style>
+}
+<a asp-action="BK_VolunteerActivity" style="color:chocolate;float:right;" class="fa-solid fa-right-from-bracket">回到志工管理</a>
+
+<br />
+<div id="area">
+    <div>
+        <i class="fa-solid fa-paw">
+            <label>請選擇要列出的活動日期 : </label>
+        </i>
+        <input class="form-control input datepicker" id="date" style="float:left;" />
+        <input type="button" id="pdf" style="float:left;" value="輸出pdf" />
+    </div>
+    <br />
+    <br />
+    <br />
+    <div id="list">
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $.datepicker.regional['zh-TW'] = {
+                dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+                dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"],
+                monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                prevText: "上月",
+                nextText: "次月",
+                weekHeader: "週"
+            };
+            $.datepicker.setDefaults($.datepicker.regional["zh-TW"]);
+            $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        });
+        let str = "";
+        $("#date").change(() => {
+            $("#list").html("");
+            $.ajaxSetup({ async: false });
+            $.post('@Url.Content("~/BK_Volunteer/showResult")', { date: $("#date").val() }, (result) => {
+                if (result.length == 0) {
+                    str += `${$("#date").val()}無報名志工。`;
+                }
+                let table_str_start = "<table><thead style='text-align: center;'><tr><th>姓名</th><th>服務時間</th><th>電話</th><th>介紹人</th><th>簽到QR</th></tr></thead><tbody style='text-align: center;'>";
+                let table_str_end = "</tbody></table><hr /><br />";
+                let actName_tmp = "";
+
+                let actFlag = true;
+                result.forEach(item => {
+                    if (actName_tmp != item.actName) {
+                        if (!actFlag) {
+                            str += table_str_end;
+                            actFlag = !actFlag;
+                        }
+                        if (actFlag) {
+                            str += `<h3>${item.actName}</h3>`;
+                            actFlag = !actFlag;
+                            str += table_str_start;
+                            str += `<tr><td>${item.name}</td><td>${item.time}</td><td>${item.phone}</td><td>${item.introducer}</td><td class="qr" ver="${item.ver}"></td></tr>`;
+                        }
+
+                            actName_tmp = item.actName;
+                    }
+                    else {
+                        str += `<tr><td>${item.name}</td><td>${item.time}</td><td>${item.phone}</td><td>${item.introducer}</td><td class="qr" ver="${item.ver}"></td></tr>`;
+                    }
+                    console.log(item.name)
+                })
+                    str += table_str_end;
+                    console.log(str);
+            })
+            console.log(str);
+            $("#list").html(str);
+            $(".qr").each((index, element) => {
+                element.innerHTML = `<img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}&chld=L|4" />`;
+            })
+            //$("#list").prepend(`<img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/actList&chld=L|4">`)
+            str = "";
+        })
+        $("#pdf").click(() => {
+            console.log($("#list").html())
+            $.ajaxSetup({ async: false });
+            $.post('@Url.Content("~/BK_Volunteer/toPDF")', { htmlString: $("#list").html()})
+        })
+    </script>
+}
