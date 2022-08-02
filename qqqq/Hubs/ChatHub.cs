@@ -108,6 +108,37 @@ namespace qqqq.Hubs
 
             }
         }
+        public async Task UpIsRead(string selfID,string SendID)
+        {
+            int sfID = int.Parse(selfID.Split('/')[1]);
+            int sdID = int.Parse(SendID.Split('/')[1]);
+            if (selfID.Contains("member") || SendID.Contains("member"))
+            {
+                if(selfID.Contains("member"))
+                {
+                    var q = db.MsgEmpAndMems.Where(m => m.IsMemSend == false && m.MemberId == sfID && m.EmployeeId == sdID&&m.IsReceiveRead==false).ToList();
+                    foreach(var m in q)
+                    {
+                        m.IsReceiveRead = true;
+                    }
+                }
+                else
+                {
+                    var q = db.MsgEmpAndMems.Where(m => m.IsMemSend == true && m.MemberId == sdID && m.EmployeeId == sfID && m.IsReceiveRead == false).ToList();
+                    foreach (var m in q)
+                    {
+                        m.IsReceiveRead = true;
+                    }
+                }
+            }
+            else
+            {
+                var q = db.MsgEmpToEmps.Where(m => m.IsReceiveRead == false && m.EmpSendId ==sdID && m.EmpReceiveId == sfID).ToList();
+                foreach (var m in q) m.IsReceiveRead = true;
+            }
+            db.SaveChanges();
+            await Clients.Clients(ConnDict[SendID]).SendAsync("UpIsRead", selfID);
+        }
         public MessageView IntoMessageView(string selfID, string message, string sendToID)
         {
             if (selfID.Contains("member") || sendToID.Contains("member"))
@@ -115,6 +146,7 @@ namespace qqqq.Hubs
                 MsgEmpAndMem meam = new MsgEmpAndMem();
                 meam.Mseeage = message;
                 meam.MsgTime = DateTime.Now;
+                meam.IsReceiveRead = false;
                 if (selfID.Contains("member"))
                 {
                     meam.IsMemSend = true;
@@ -138,6 +170,7 @@ namespace qqqq.Hubs
                 mete.MsgTime = DateTime.Now;
                 mete.EmpSendId = int.Parse(selfID.Split('/')[1]);
                 mete.EmpReceiveId = int.Parse(sendToID.Split('/')[1]);
+                mete.IsReceiveRead = false;
                 return new MessageView(mete);
             }
         }
@@ -149,13 +182,12 @@ namespace qqqq.Hubs
                 MsgEmpAndMem meam = new MsgEmpAndMem();
                 meam.Mseeage = message;
                 meam.MsgTime = DateTime.Now;
+                meam.IsReceiveRead = false;
                 if (selfID.Contains("member"))
                 {
-
                     meam.IsMemSend = true;
                     meam.MemberId = int.Parse(selfID.Split('/')[1]);
                     meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
-                    
                 }
                 else if (sendToID.Contains("member"))
                 {
@@ -173,6 +205,7 @@ namespace qqqq.Hubs
                 mete.MsgTime = DateTime.Now;
                 mete.EmpSendId = int.Parse(selfID.Split('/')[1]);
                 mete.EmpReceiveId = int.Parse(sendToID.Split('/')[1]);
+                mete.IsReceiveRead = false;
                 db.MsgEmpToEmps.Add(mete);
             }
             db.SaveChanges();
