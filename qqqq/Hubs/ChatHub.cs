@@ -155,6 +155,7 @@ namespace qqqq.Hubs
                     meam.IsMemSend = true;
                     meam.MemberId = int.Parse(selfID.Split('/')[1]);
                     meam.EmployeeId = int.Parse(sendToID.Split('/')[1]);
+                    
                 }
                 else if (sendToID.Contains("member"))
                 {

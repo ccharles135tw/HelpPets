@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using qqqq.Models;
 using qqqq.ViewModels;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace qqqq.Controllers
 {
@@ -14,6 +15,7 @@ namespace qqqq.Controllers
     {
         我救浪Context db = new 我救浪Context();
         int delayTime = 1000;
+        CEmp employee = null;
         public IActionResult List(int id,string sortString)
         {
             string[] sortArray = null;
@@ -73,9 +75,10 @@ namespace qqqq.Controllers
         }
         public IActionResult AddResponse(int id,string response)
         {
+            employee = System.Text.Json.JsonSerializer.Deserialize<CEmp>(HttpContext.Session.GetString(CDictionary.SK_LOGIN_EMP));
             CommentResponse commentResponse=new CommentResponse();
             commentResponse.CommentDate=DateTime.Now;
-            commentResponse.EmployeeId = 1;//之後要用session修改////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            commentResponse.EmployeeId = employee.EmpoyeeId;//之後要用session修改////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             commentResponse.Description = response;
             commentResponse.CommentId = id;
             commentResponse.IsEmployee=true;
