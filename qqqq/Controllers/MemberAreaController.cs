@@ -168,6 +168,16 @@ namespace prjHomeLess_R.Controllers
             return ViewComponent("VCmpetdetail", id);
         }
 
+        public IActionResult mRemove(int id)
+
+        {
+            var q = _context.MyFavorites.FirstOrDefault(p=>p.MyFavorite1==id);
+
+            _context.Remove(q);
+            _context.SaveChanges();
+
+                return ViewComponent("VCmfavorite",id);
+        }
         //charles================================================================================
         public IActionResult mVactivity()
         {

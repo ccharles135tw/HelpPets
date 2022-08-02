@@ -16,11 +16,12 @@ namespace qqqq.ViewComponents
         我救浪Context _context = new 我救浪Context();
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            //var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-            //CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-            //var mName = await _context.MemberComments.Where(m => m.MemberId == memberview.MemberID).FirstOrDefaultAsync();
-         
-            return View();
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            var q = await _context.Products.Where(m => m.MemberComments.FirstOrDefault().MemberId == memberview.MemberID).ToListAsync();
+
+            var list = CMemfavortView.CMemfavortViewS(q);
+            return View(list);
 
          
         }

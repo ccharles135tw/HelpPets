@@ -80,10 +80,17 @@ namespace prjHomeLess_R.Controllers
           var sUser=HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
             var mName=_context.Members.Where(m => m.Email == memberview.Email).FirstOrDefault();
-            ViewBag.MEM = mName.Name;
+ 
             return View();
 
         }
+
+        public IActionResult LogOut()
+        {
+       
+            HttpContext.Session.Remove(CDictionary.SK_LOGIN_USER);
+            return RedirectToAction("Login");
+        }    
 
         public IActionResult Login()
         {
@@ -166,7 +173,7 @@ namespace prjHomeLess_R.Controllers
         //    return View(Vmodel);
         //    //todo
         //}
-
+        
 
         public IActionResult Register(Member mem, IFormFile File)
         {

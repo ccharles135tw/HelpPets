@@ -271,6 +271,16 @@ namespace qqqq.Controllers
                 return PartialView(list);
             }
         }
+        //public IActionResult ShowProduct1(string id)
+        //{
+        //    CProductShow CprodShow = new CProductShow();
+        //    Product cProd = (new 我救浪Context()).Products.FirstOrDefault(p => p.ProductId == id);
+        //    CprodShow.product = cProd;
+        //    if (cProd.Photos.Any())
+        //        CprodShow.Photos = cProd.Photos.ToList();
+        //    int proId = int.Parse(id);
+        //    return RedirectToAction("ShowProduct", proId);
+        //}
         public IActionResult ShowProduct(int id)
         {
             CProductShow CprodShow = new CProductShow();

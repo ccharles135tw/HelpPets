@@ -21,6 +21,13 @@ namespace qqqq.Controllers
 
         public IActionResult homepage()
         {
+            //if (!HttpContext.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+
+            //{
+            //    return RedirectToAction("Login");
+            //}
+
+      
             我救浪Context db = new 我救浪Context();
             var datas = db.Products.Where(p => p.IsPet == true).ToList();
             List<CProductShow> list = new List<CProductShow>();
