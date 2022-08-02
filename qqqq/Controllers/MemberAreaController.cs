@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using final_test.Controllers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using prjMVCDemo.vModel;
 using qqqq.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -161,10 +163,56 @@ namespace prjHomeLess_R.Controllers
         }
 
         //charles
-        public IActionResult mVActivity()
+        public IActionResult mVactivity()
         {
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            return ViewComponent("VCmvactivity", new { id = memberview.MemberID });
+        }
+        public IActionResult cancelAct(string AllowDate,string memName)
+        {
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            var a = _context.Volunteers.Where(x => x.MemberId == memberview.MemberID && x.AllowDate == AllowDate).ToList();
+            string name = _context.Members.Where(x => x.MemberId == memberview.MemberID).Select(y => y.Name).FirstOrDefault();
+            int count = 0;
+            int actID = (int)a[0].ActivityId;
+            if(memName == name)
+            {
+                foreach (var i in a)
+                {
+                    count++;
+                    _context.Remove(i);
+                }
+            }
+            else
+            {
+                count++;
+                _context.Remove(a.Where(x => x.Name == memName).FirstOrDefault());
+            }
+            _context.SaveChanges();
+            checkSpace(count, AllowDate,actID);
 
-            return ViewComponent("VCvactivity");
+            return ViewComponent("VCmvactivity",new{id = memberview.MemberID});
+        }
+        public void checkSpace(int count ,string AllowDate,int actID)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var a = _context.Volunteers.Where(x => x.ActivityId == actID && x.AllowDate == AllowDate&& x.Waiting == true).Select(y=>y).FirstOrDefault();
+                if (a != null)
+                {
+                    string str = (DateTime.Now.AddMinutes(1420)).ToString();
+                    Random ran = new Random();
+                    a.Waiting = false;
+                    a.CheckEmail = false;
+                    a.OrderDate = str;
+                    a.VerificationCode = ran.Next().ToString();
+                    _context.SaveChanges();
+                    VolunteerController volunteer = new VolunteerController();
+                    volunteer.EmailToWaiting(a.VerificationCode, (int)a.MemberId);
+                }
+            }
         }
     }
 }
