@@ -13,6 +13,7 @@ namespace qqqq.Models
         public bool? IsMemSend { get; set; }
         public string Mseeage { get; set; }
         public DateTime? MsgTime { get; set; }
+        public bool? IsReceiveRead { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual Member Member { get; set; }

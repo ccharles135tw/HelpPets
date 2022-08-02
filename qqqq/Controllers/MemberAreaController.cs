@@ -165,7 +165,8 @@ namespace prjHomeLess_R.Controllers
         }
         public IActionResult mPetdetail(int id)
         {
-
+            return ViewComponent("VCpetdetail",id);
+        }
         //charles
         public IActionResult mVactivity()
         {
