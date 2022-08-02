@@ -189,7 +189,7 @@
             $.post('@Url.Content("~/Volunteer/checkDate")', { dateSelected: selectedDate, actID:@Model.ActivityID, memID: @Model.MemberID}, (result) => {
                 if (result != "") {
                     existDate = true;
-                    return alert("選中日期已完成預約，請至會員專區進行修改。");
+                    return alert("選中日期已完成預約，請至會員專區查看。");
                 }
             })
             if (existDate) {
@@ -210,12 +210,30 @@
                     $("#morning").attr("disabled", "disabled")
                     $("#morningLabel").text("早上已滿")
                 }
+                else {
+                    $("#fullDay").removeAttr("disabled")
+                    $("#morning").removeAttr("disabled")
+                    $("#morningLabel").text("早上")
+                }
                 if (`${afternoonA}` == 0 && `${afternoonB}` == 0) {
                     $("#fullDay").attr("disabled", "disabled")
                     $("#afternoon").attr("disabled", "disabled")
                     $("#afternoonLabel").text("下午已滿")
                 }
-                if (`${morningA}` == 0 && `${afternoonA}`) {
+                else {
+                    $("#fullDay").removeAttr("disabled")
+                    $("#afternoon").removeAttr("disabled")
+                    $("#afternoonLabel").text("下午")
+                }
+                if ((`${morningA}` == 0 && `${morningB}` == 0)||(`${afternoonA}` == 0 && `${afternoonB}` == 0)) {
+                    $("#fullDay").attr("disabled", "disabled")
+                    $("#fullDayLabel").text("全天已滿")
+                }
+                else {
+                    $("#fullDay").removeAttr("disabled")
+                    $("#fullDayLabel").text("全天")
+                }
+                if (`${morningA}` == 0 && `${afternoonA}`==0) {
                     $("#AllowTime").text('可參與時段(候補):')
                     $("#MemberStatus").text('候補')
                 } else {
@@ -224,6 +242,55 @@
                 }
             })//post end
 
+            $("input[name=time]").off("click");
+            $("input[id=fullDay]").click(() => {
+                console.log("test")
+                if (`${morningA}` == 0 || `${afternoonA}` == 0) {
+                    console.log("test")
+                    let boo = confirm("選擇時段無名額，報名候補人員?")
+                    if (boo) {
+                        $("#AllowTime").text('可參與時段(候補):')
+                        $("#MemberStatus").text('候補')
+                    }
+                    else {
+                        $("input[name=time]").prop('checked', false)
+                        $("#AllowTime").text('可參與時段 :')
+                        $("#MemberStatus").text('正取')
+                    }
+                }
+            })
+            $("input[id=morning]").click(() => {
+                console.log("test")
+                if (`${morningA}` == 0) {
+                    console.log("test")
+                    let boo = confirm("選擇時段無名額，報名候補人員?")
+                    if (boo) {
+                        $("#AllowTime").text('可參與時段(候補):')
+                        $("#MemberStatus").text('候補')
+                    }
+                    else {
+                        $("input[name=time]").prop('checked', false)
+                        $("#AllowTime").text('可參與時段 :')
+                        $("#MemberStatus").text('正取')
+                    }
+                }
+            })
+            $("input[id=afternoon]").click(() => {
+                console.log("test")
+                if (`${afternoonA}` == 0) {
+                    console.log("test")
+                    let boo = confirm("選擇時段無名額，報名候補人員?")
+                    if (boo) {
+                        $("#AllowTime").text('可參與時段(候補):')
+                        $("#MemberStatus").text('候補')
+                    }
+                    else {
+                        $("input[name=time]").prop('checked', false)
+                        $("#AllowTime").text('可參與時段 :')
+                        $("#MemberStatus").text('正取')
+                    }
+                }
+            })
             //找重複日期
             let h3 = $("h3");
             let existH3 = false
@@ -453,17 +520,18 @@
         function setPerson1() {
             $("#friend1Name").val("朋友一")
             $("#friend1Phone").val("0911111111")
-            $("#friend1Email").val("billsagi0001@gmail.com")
+            $("#friend1Email").val("billsagi0002@gmail.com")
         }
         function setPerson2() {
             $("#friend2Name").val("朋友二")
             $("#friend2Phone").val("0922222222")
-            $("#friend2Email").val("billsagi0002@gmail.com")
+            $("#friend2Email").val("billsagi0003@gmail.com")
         }
 
         //sendToDB
         $("#send").click(() => {
             let random = Math.random().toString(36).substring(2);
+            console.log(random)
             $(".dataArea").each((index, item) => {
                 let MemID = @Model.MemberID;
                 let actID = @Model.ActivityID;
