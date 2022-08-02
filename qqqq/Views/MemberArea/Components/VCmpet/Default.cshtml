@@ -57,7 +57,7 @@
                             </td>
                             <td>
                                 <div class="email">
-                                    <a href="#" id="viewDoneList" data-toggle="modal" data-target="#myModal">
+                                    <a href="#" class="viewDoneList" data-toggle="modal" data-target="#myModal" petdetail="@item.ProductId">
                                         <span aria-hidden="true"><i class="fa-solid fa-list" style="margin-left:40%"></i></span>
                                         <span>寵物細節描述</span>
                                     </a>
@@ -73,50 +73,49 @@
         </tbody>
     </table>
     <!-- The Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
 
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">寵物細節描述</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">寵物細節描述</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+              
+                                        <div class="modal-body ">
+                                        
+                                        </div> 
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">關閉</button>
+                    </div>
+
                 </div>
-
-                <!-- Modal body -->
-                @{ foreach (var pet in Model)
-                    {
-                                <div class="modal-body ">
-                                    <p style="text-align:left">寵物編號:@pet.ProductId</p>
-                                    <p style="text-align:left">寵物性別:@pet.Gender</p>
-                                    <p style="text-align:left">寵物顏色: @pet.Color</p>       
-                                    <p style="text-align:left">寵物年花費:@pet.YearCost</p>
-                                    <p style="text-align:left">建議活動空間:@pet.Space</p>
-                                    <p style="text-align:left">寵物體型:@pet.Size</p>
-                                    <p style="text-align:left">寵物年齡:@pet.Age</p>
-                                    <p style="text-align:left">寵物描述:@pet.Description</p>
-                                   
-                                </div>
-                        }
-                    }
-
-
-
-
-
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">關閉</button>
-                </div>
-
             </div>
         </div>
     </div>
 
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
+      $(".viewDoneList").click(function (eve) {
 
+          let petdetail = $(this).attr("petdetail");
+          console.log(petdetail);
+           eve.preventDefault();
+       
+          $.post("@Url.Content("~/MemberArea/mPetdetail")", {
+
+            id: petdetail
+
+          }, function (datas) { console.log(datas); $(".modal-body").html(datas); })
+
+
+        })
 </script>

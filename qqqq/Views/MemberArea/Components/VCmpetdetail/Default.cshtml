@@ -1,0 +1,14 @@
+﻿@model prjHomeLess.ViewModel.CPet
+
+
+
+<p style="text-align:left">寵物編號:@Model.ProductId</p>
+<p style="text-align:left">寵物性別:@Model.GenderType</p>
+<p style="text-align:left">寵物顏色: @Model.ColorName</p>
+<p style="text-align:left">寵物年花費:    @(String.Format("{0:$#,0}", Model.YearCost))
+<p style="text-align:left">建議活動空間:@Model.Space 坪</p>
+<p style="text-align:left">寵物體型:@Model.SizeType</p>
+<p style="text-align:left">寵物年齡:@Model.AgeType</p>
+<p style="text-align:left">寵物描述:@Model.Description</p>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

@@ -161,21 +161,7 @@
             $.post("@Url.Content("~/MemberArea/mFavorit")", {}, function (datas)  { $("#viewChange").html(datas);})
 
         })
-        //-----------------------------------------------------------------------
-          @*$(".viewDoneList").click(function (eve) {
-
-        let orderid = $(this).attr("orderid");
-        console.log(orderid);
-           eve.preventDefault();
-           $("#viewChange").empty();
-        $.post("@Url.Content("~/MemberArea/detailList")", {
-            id: orderid
-
-           }, function (datas) { console.log(datas); $("#viewChange").html(datas); })
-
-
-          })*@
-        //-----------------------------------------------------------------------
+     
 
         $("#memPet").click(function (e) {
 

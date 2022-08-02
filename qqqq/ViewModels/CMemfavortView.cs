@@ -40,7 +40,9 @@ namespace qqqq.ViewModels
 
         public string describe { get { return _prod.Description; } }
 
-        public  decimal Rate { get { return ((decimal)_prod.MemberComments.Average(mc => mc.Grade)); } }
+        public  string RateS { get { return (_prod.MemberComments.Count()==0?"尚未有評價":((double)_prod.MemberComments.Average(mc => mc.Grade)).ToString()); } }
+
+        public  double Rate { get { return ((double)_prod.MemberComments.Count() == 0 ? 0 : Math.Ceiling((double)_prod.MemberComments.Average(mc => mc.Grade))); } }
     }
 }
 

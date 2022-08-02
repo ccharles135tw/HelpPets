@@ -45,6 +45,16 @@ namespace prjHomeLess.ViewModel
             _prod = p;
 
         }
+        public static List<CPet> CPets(List<Product> list_p)
+        {
+            List < CPet > list= new List<CPet>();
+            foreach(var p in list_p)
+            {
+                CPet cPet = new CPet(p);
+                list.Add(cPet);
+            }
+            return list;
+        }
         //public CPet(Product product)
         //{
         //    Product = product;

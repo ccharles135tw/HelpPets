@@ -154,13 +154,19 @@ namespace prjHomeLess_R.Controllers
         {
 
             return ViewComponent("VCmvolunteer");
-        }  public IActionResult mName()
+        }  
+        
+        public IActionResult mName()
         {
 
             return ViewComponent("VCemembername");
         }
+        public IActionResult mPetdetail(int id)
+        {
 
-        //charles
+            return ViewComponent("VCmpetdetail", id);
+        }
+        //charles查爾斯寶寶
         public IActionResult mVActivity()
         {
 
