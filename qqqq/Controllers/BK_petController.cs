@@ -148,7 +148,7 @@ namespace qqqq.Controllers
 
         }
         //刪除浪浪
-        //todo 刪除前面會有衝突
+       
         public IActionResult Delete(int? id)
         {
             try
@@ -188,7 +188,7 @@ namespace qqqq.Controllers
             cPet._prod = product;
             Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == id);
             cPet._photo = photo;
-            if (product == null || petDetail == null || photo == null)
+            if (product == null || petDetail == null )
                 return RedirectToAction("NewPetList");
             return View(cPet);
         }
@@ -231,7 +231,7 @@ namespace qqqq.Controllers
             }
 
             Photo photo = db.Photos.FirstOrDefault(p => p.ProductId == pro.ProductId);
-            if (photo != null && file != null)
+            if ( file != null)
             {
                 Photo ph = new Photo();
                 string photoName = Guid.NewGuid().ToString() + ".jpg";
