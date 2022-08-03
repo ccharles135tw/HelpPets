@@ -141,11 +141,11 @@
 
                             @{ if (item.Photos.Count == 0)
                                 {
-                                    <img src="/Images/notfound.jpg" width="300" height="300" zoom />
+                                    <img src="~/Images/notfound.jpg" width="300" height="300" zoom />
                                 }
                                 else
                                 {
-                                    <img src="/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
+                                    <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
                             <h5 style="color:#fff;">@item.ProductName</h5>

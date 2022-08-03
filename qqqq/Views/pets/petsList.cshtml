@@ -207,7 +207,7 @@
                                     </div>
                                     <div>
                                         結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="LigationId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>@user.MemberWish.LigationId==1</option>
+                                                <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var ligation = db.Ligations.ToList();
                                                 foreach (Ligation l in ligation)

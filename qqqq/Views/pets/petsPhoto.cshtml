@@ -13,7 +13,7 @@
                 <div class="col-md-10 col-lg-4">
                     <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="petsphoto" width="300" height="300" src="/Images/@(p.product.Photos.Where(ph=>ph.IsDefault==true).Count()==0?null:p.product.Photos.FirstOrDefault().PictureName)" alt="" style="border:3px solid #EAA636;">
+                            <img class="petsphoto" width="300" height="300" src="~/Images/@(p.product.Photos.Where(ph=>ph.IsDefault==true).Count()==0?null:p.product.Photos.FirstOrDefault().PictureName)" alt="" style="border:3px solid #EAA636;">
                             <div class="card-product__imgOverlay" style="display:block">
                                 <h5 style="color:#000;">性別:<span>@(p.GenderType)</span></h5>
                                 <h5 style="color:#000;">體型:<span>@(p.SizeType)</span></h5>

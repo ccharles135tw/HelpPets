@@ -18,11 +18,11 @@
         @{
             if (Model.Photos.Count == 0)
             {
-                <img id="prodImg" width="400" height="400" src="/Images/notfound.jpg" />
+                <img id="prodImg" width="400" height="400" src="~/Images/notfound.jpg" />
             }
             else
             {
-                <img id="prodImg" width="400" height="400" src="/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
+                <img id="prodImg" width="400" height="400" src="~/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
             }
         }
     </div>
