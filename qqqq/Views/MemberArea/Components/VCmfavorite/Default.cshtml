@@ -1,97 +1,111 @@
 ﻿@model List<qqqq.ViewModels.CMemfavortView>
 
 
-    <h3 class="h5 mb-4 text-center">我的最愛</h3>
-    <div class="table-wrap">
-        <table class="table">
-            <thead class="thead-primary">
-                <tr>
-                    <th>序</th>
-                    <th>產品照片</th>
-                    <th>商品名稱</th>
- 
-                    <th>單價</th>
-                    <th>庫存</th>
-                    <th>評價</th>
-                    <th>&nbsp;</th>
-               
-                </tr>
-            </thead>
-            <tbody>
-                @{ 
+<h3 class="h5 mb-4 text-center">我的最愛</h3>
+<div class="table-wrap">
+    <table class="table">
+        <thead class="thead-primary">
+            <tr>
+                <th>序</th>
+                <th>產品照片</th>
+                <th>商品名稱</th>
+
+                <th>單價</th>
+                <th>庫存</th>
+                <th>評價</th>
+                <th>&nbsp;</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="6"class="text-center">
+                            <h2>
+                                目前尚無收藏商品
+                                <a href="~/shopping/shopping" class="btn p-2 btn-dark" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前往商城</i></a>
+
+                        </h2></td>
+                    </tr>
+
+                }
+                else
+                {
                     int count = 0;
                     foreach (var item in Model)
                     {
                         count++;
-                    <tr class="alert" role="alert">
+                        <tr class="alert" role="alert">
 
-                        <td>
-                        @count
-                        </td>
+                            <td>
+                                @count
+                            </td>
 
-                        <td>
-                            <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
+                            <td>
+                                <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
 
-                        </td>
-                        <td>
-                            <div class="email">
-                                <span>@item.ProductName </span>
-                                <span>描述:@item.describe</span>
-                            </div>
-                        </td>
-                  
-                        <td>@String.Format("{0:C2}", item.Unprice)</td>
-                        <td class="quantity">
-                            <div class="input-group">
-                            @item.Unstock
-                            </div>
-                        </td>
-
-                        <td>
-
-                            @{
-                                for (int i = 0; i < Math.Floor(item.Rate); i++)
-                                {
-                                    <span> <img width="20" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
-                                }
-                            } <span>(@item.RateS)</span>
-
-                        
-
-                        </td>
-
-                        <td>
-                            <div>
-                                <button class="close bbb" type="button" style="color:gray" data-toggle="modal" data-target="#myModal" addtocart="@item.ProductID" >
-                                    <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
-                                    <span>查看商品</span>
-                                </button>
-                                <div>
-                                    <button type="button" class="close aaa" data-dismiss="alert" aria-label="Close" remove="@item.MyfavID">
-                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                        <span>移除我的最愛</span>
-                                    </button>
+                            </td>
+                            <td>
+                                <div class="email">
+                                    <span>@item.ProductName </span>
+                                    <span>描述:@item.describe</span>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+
+                            <td>@String.Format("{0:C2}", item.Unprice)</td>
+                            <td class="quantity">
+                                <div class="input-group">
+                                    @item.Unstock
+                                </div>
+                            </td>
+
+                            <td>
+
+                                @{
+                                    for (int i = 0; i < Math.Floor(item.Rate); i++)
+                                    {
+                                        <span> <img width="20" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
+                                    }
+                                } <span>(@item.RateS)</span>
 
 
 
-                    </tr>
-                <!--=========================================================================================-->
-                        }
+                            </td>
+
+                            <td>
+                                <div>
+                                    <button class="close bbb" type="button" style="color:gray" data-toggle="modal" data-target="#myModal" addtocart="@item.ProductID">
+                                        <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
+                                        <span>查看商品</span>
+                                    </button>
+                                    <div>
+                                        <button type="button" class="close aaa" data-dismiss="alert" aria-label="Close" remove="@item.MyfavID">
+                                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                            <span>移除我的最愛</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+
+
+
+                        </tr>
+                        <!--=========================================================================================-->
                     }
+                }
+            }
 
 
 
+        </tbody>
+    </table>
+    <!-- The Modal -->
 
-            </tbody>
-        </table>
-        <!-- The Modal -->
-
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
         $(".bbb").click(function (eve) {
 
             let addtocart =$(this).attr("addtocart");
@@ -110,4 +124,4 @@
 
 
         })
-    </script>
+</script>

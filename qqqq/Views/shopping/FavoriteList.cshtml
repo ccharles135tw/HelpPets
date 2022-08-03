@@ -3,106 +3,121 @@
 @{
     ViewData["Title"] = "我的收藏清單";
 }
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="~/css_Q/css/style_A.css">
+@*<br />
 <br />
 <br />
 <br />
 <br />
-<div class="filter-bar d-flex flex-wrap align-items-center text-center row">
-    <div class="col-1"></div>
-    <div class="col-10">
-        <h2>我的收藏清單</h2>
+<br />*@
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-5.jpg) center center no-repeat; background-size: cover;">
+    <div class="filter-bar d-flex flex-wrap align-items-center text-center row" id="alert">
+        @*<div class="col-1"></div>
+            <div class="col-10">
+                <h2>我的收藏清單</h2>*@
 
 
-        <table class="table">
-            
-            <thead>
-                <tr>
-                    <th>產品圖片</th>
-                    <th hidden>
-                        @Html.DisplayNameFor(model => model.ProductId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ProductName)
-                    </th>
+        @*<table class="table">
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
+                <thead>
+                    <tr>
+                        <th>產品圖片</th>
+                        <th hidden>
+                            @Html.DisplayNameFor(model => model.ProductId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ProductName)
+                        </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.UnitsInStock)
-                    </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Price)
+                        </th>
 
-                    <th>
-                        分類
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SupplierName)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ if (Model.Count() == 0)
-                    {
-                        <tr>
-                            <td>
-                                <h2>找不到符合條件之商品</h2>
-                            </td>
-                        </tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UnitsInStock)
+                        </th>
 
-                    }
-                    else
-                    {
-                        foreach (var item in Model)
+                        <th>
+                            分類
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SupplierName)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ if (Model.Count() == 0)
                         {
-
-
-
-                            <tr class="align-center">
-
+                            <tr>
                                 <td>
-                                    @{ if (item.Photos.Count == 0)
-                                        {
-                                            <img src="/Images/notfound.jpg" width="120" height="120" />
-                                        }
-                                        else
-                                        {
-                                            <img src="/Images/@item.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" width="120" height="120" />
-                                        }
-                                    }
-
-                                </td>
-                                <td>
-                                    <h4> @Html.DisplayFor(modelItem => item.ProductName)</h4>
-                                </td>
-
-                                <td>
-                                    <h5>  @Html.DisplayFor(modelItem => item.Price)</h5>
-                                </td>
-                                <td>
-                                    庫存:  @Html.DisplayFor(modelItem => item.UnitsInStock)
-                                </td>
-                                <td>
-                                    @item.CategoryName/@item.SubCategoryName
-                                </td>
-                                <td>
-                                    @item.SupplierName
-                                </td>
-                                <td>
-                                    <button id="favorite" onclick="addFavorite(@item.ProductId)" class="btn btn-info">
-                                        <b>取消收藏</b>
-                                    </button>
-                                    <button id="addToCart" class="btn btn-warning">
-                                        @Html.ActionLink("查看產品", "showproduct", new { id = item.ProductId })
-
-                                    </button>
+                                    <h2>找不到符合條件之商品</h2>
                                 </td>
                             </tr>
+
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+
+
+
+                                <tr class="align-center">
+
+                                    <td>
+                                        @{ if (item.Photos.Count == 0)
+                                            {
+                                                <img src="/Images/notfound.jpg" width="120" height="120" />
+                                            }
+                                            else
+                                            {
+                                                <img src="/Images/@item.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" width="120" height="120" />
+                                            }
+                                        }
+
+                                    </td>
+                                    <td>
+                                        <h4> @Html.DisplayFor(modelItem => item.ProductName)</h4>
+                                    </td>
+
+                                    <td>
+                                        <h5>  @Html.DisplayFor(modelItem => item.Price)</h5>
+                                    </td>
+                                    <td>
+                                        庫存:  @Html.DisplayFor(modelItem => item.UnitsInStock)
+                                    </td>
+                                    <td>
+                                        @item.CategoryName/@item.SubCategoryName
+                                    </td>
+                                    <td>
+                                        @item.SupplierName
+                                    </td>
+                                    <td>
+                                        <button id="favorite" onclick="addFavorite(@item.ProductId)" class="btn btn-info">
+                                            <b>取消收藏</b>
+                                        </button>
+                                        <button id="addToCart" class="btn btn-warning">
+                                            @Html.ActionLink("查看產品", "showproduct", new { id = item.ProductId })
+
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>*@
+        @*</div>*@
     </div>
 </div>
+
+@section scripts{
+    <script>
+    $("#alert").empty();
+            $.post("@Url.Content("~/MemberArea/mFavorit")", {}, function (datas) { console.log(datas); $("#alert").html(datas); })
+    </script>
+}
