@@ -311,35 +311,19 @@
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav" style="line-height:30px;" >
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon6.png" />@Html.ActionLink("管理系統首頁", "BK_employee", "BK_employee")</span>
-                    </li>
-
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon1.png" />@Html.ActionLink("商城管理", "List", "Product")</span>
-                    </li>
-
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon7.png" />@Html.ActionLink("訂單管理", "List", "Order")</span>
-                    </li>
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon2.png" />@Html.ActionLink("浪浪管理", "newpetList", "BK_pet")</span>
-                    </li>
-
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon3.png" />@Html.ActionLink("會員管理", "memList", "BK_member")</span>
-                    </li>
-
-                    <li class="nav-item mt-4">
-                        <span><img src="~/back/images/icon4.png" />@Html.ActionLink("志工管理", "BK_VolunteerActivity", "BK_Volunteer")</span>
-                    </li>
-                </ul>
+                <div class="nav" style="line-height:30px;">
+                    <a href="@Url.Content("~/BK_employee/BK_employee")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon6.png" />管理系統首頁</a>
+                    <a href="@Url.Content("~/Product/List")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon1.png" />商城管理</a>
+                    <a href="@Url.Content("~/Order/List")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon7.png" />訂單管理</a>
+                    <a href="@Url.Content("~/BK_pet/newpetList")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon2.png" />浪浪管理</a>
+                    <a href="@Url.Content("~/BK_member/memList")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon3.png" />會員管理</a>
+                    <a href="@Url.Content("~/BK_Volunteer/BK_VolunteerActivity")" class="nav-item mt-4" style="font-size:20px; font-weight:700;"><img src="~/back/images/icon4.png" />志工管理</a>
+                </div>
             </nav>
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
-                    <partial name="chatboxForBK"  model="@employee"/>
+                    <partial name="chatboxForBK" model="@employee" />
                 </div>
             </div>
         </div>
