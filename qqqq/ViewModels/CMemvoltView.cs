@@ -30,7 +30,7 @@ namespace qqqq.ViewModels
             return list;
         }
 
-     public string ActPhotoName { get { return _vou.Activity.ActivityPhoto; }}
+     public string ActPhotoName { get { return _vou.Activity.ActivityPhoto.Count() > 0 ? _vou.Activity.ActivityPhoto : null; } }
 
         public string HelpDiscription { get { return _vou.Activity.Description; } }
 
@@ -42,7 +42,7 @@ namespace qqqq.ViewModels
 
         public string Vstaus { get { return _vou.Vstatus.StatusType; } }
 
-        //public int TotalTime { get { return _vou.AllowTime.hou} }
+        public int TotalTime { get { return (int)_vou.AllowTime.Hour; } }
 
         
     }
