@@ -125,9 +125,10 @@
             $.post("@Url.Content("~/pets/AdoptOrder")", { memID: @(user.MemberId), productID:@Model.ProductId})
             Swal.fire(
                 '成功',
-                '將進行評估,請耐心等待回復',
+                '請至信箱收取確認訊息',
                 'success'
             )/*, setTimeout(function () { location.href = "/pets/petsList" }, 1000)*/
+            $.post("@Url.Content("~/pets/EmailTest")", {})
         }
         function alertlist1() {
             document.location.href="@Url.Content("~/MemberArea/MemberEdoit/")"
