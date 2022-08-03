@@ -362,7 +362,7 @@ namespace final_test.Controllers
                 i.VstatusId = 2;
             }
             db.SaveChanges();
-            return Content("信箱驗證成功");
+            return Content("信箱驗證成功，你已完成報名。");
         }
         public IActionResult successPage(string id) {
             var a = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));

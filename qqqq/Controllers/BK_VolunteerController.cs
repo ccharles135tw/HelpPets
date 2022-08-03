@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace qqqq.Controllers
@@ -191,6 +192,9 @@ namespace qqqq.Controllers
                 p.Start();
                 p.WaitForExit();
             }
+
+            WebClient wc = new WebClient();
+            wc.DownloadFile(Path.Combine(Environment.CurrentDirectory, "printout.pdf"), "C:\\new\\printout.pdf");
         }
     }
 }
