@@ -10,11 +10,6 @@
 @using System.Net;
 @using System.Net.Mail;
 @using System.Text.Json;.
-<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
-    <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">浪浪配對</h1>
-    </div>
-</div>
 
 @model IEnumerable<qqqq.ViewModels.CAdoptView>
 
@@ -78,6 +73,12 @@
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
     </style>
+    <div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+        <div class="container text-center pt-5 pb-3">
+            <h1 class="display-4 text-white animated slideInDown mb-3">浪浪配對</h1>
+        </div>
+    </div>
+
 }<body>
     <div>
         <!-- Swiper -->
@@ -99,7 +100,7 @@
                                     <img src="/Images/@item.product.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
-                            <i class="fa-solid fa-list-alt" style="color:#EAA636">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = item.ProductId })</i>
+                            <i class="fa-solid fa-list-alt" style="color:#EAA636;font-size:20px;">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = item.ProductId })</i>
                         </div>
                     </div>
                 }
@@ -111,14 +112,7 @@
         <div class="form-group m-3" style="text-align: center" ;>
             <h5 style="color: gray ">滑鼠滑動翻頁</h5>
             <div style="display:flex;justify-content:center;align-items:center;">
-                @*Button trigger modal*@
-
-                <button class="btn btn-success " onclick="backpets" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">@Html.ActionLink("維持原條件", "petsList", null)</button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                        style="flex:none;width:120px;margin:10px;align-items:center;justify-content:center">
-                    調整清單
-                </button>
-                @*Modal*@
+                <a class="btn btn-success " href="@Url.Content("~/pets/petsList")" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">返回</a>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content" style="display:flex;">
@@ -294,9 +288,9 @@
                                 </form>
 
                             </div>
-                            <div class="modal-footer " id="alert1">
-                                <button type="button" class="btn btn-primary" onclick="alertlist()">調整並儲存清單</button>
-                            </div>
+                            @*<div class="modal-footer " id="alert1">
+                                    <button type="button" class="btn btn-primary" onclick="alertlist()">調整並儲存清單</button>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -313,7 +307,7 @@
 @section Scripts {
 
     <script>
-        function alertlist() {
+        @*function alertlist() {
             let timerInterval
             $.post("@Url.Content("~/pets/WishSaveChange")", $("#formMW").serialize())
             Swal.fire({
@@ -344,7 +338,7 @@
                     setTimeout(function () { location.href = "/pets/petsList" }, 1000)
                 }
             })
-        }
+        }*@
 
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",

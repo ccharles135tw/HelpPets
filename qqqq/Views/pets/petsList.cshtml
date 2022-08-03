@@ -40,13 +40,13 @@
 
 
 }
-@section Styles{ 
-<style>
-    label{
-        font-weight:700;
-        font-size:20px;
-    }
-</style>
+@section Styles{
+    <style>
+        label {
+            font-weight: 700;
+            font-size: 20px;
+        }
+    </style>
 }
 <div class="filter-bar flex-wrap align-items-center text-center vw-100" style="justify-content:center;align-items:center">
     <div class="text-center" style="display: flex;flex:none; justify-content: flex-start; align-items: center;padding-top:10px"
@@ -110,7 +110,7 @@
 
                 }
                 @*<button type="button" id="listRow" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-bars" style="color: rgb(246,135,4);"></i></button>
-        <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>*@
+                    <button type="button" id="listCol" style="margin-left: 10px; border-color: rgba(246,135,4,0.5);"><i class="fa-solid fa-table-cells" style="color: rgb(246,135,4);"></i></button>*@
             </div>
             <div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -124,6 +124,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action="@Url.Content("~/pets/petsMatch")" method="post" id="formMW">
+                                    <input type="number" value="@user.MemberId" name="MemberId" hidden />
                                     <div class="text-center">
                                         <label>種類:</label><select name="CategoryId" id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
                                             <option value="none" selected disabled hidden>請選擇選項</option>
@@ -148,7 +149,7 @@
                                         <label>品種:</label><select id="petSubcatel" name="SubCategoryId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
-                                                var subcategories = db.SubCategories.Where(sc => sc.CategoryId == user.MemberWish.CategoryId || sc.SubCategoryName == "不限").ToList();
+                                                var subcategories = db.SubCategories.Where(sc => sc.CategoryId == (user.MemberWish == null ? 1 : user.MemberWish.CategoryId) || sc.SubCategoryName == "不限").ToList();
                                                 foreach (SubCategory s in subcategories.ToList())
                                                 {
                                                     if (user.MemberWish == null ? false : (s.SubCategoryId == user.MemberWish.SubCategoryId))
@@ -206,7 +207,7 @@
                                     </div>
                                     <div>
                                         結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="LigationId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
+                                            <option value="none" selected disabled hidden>@user.MemberWish.LigationId==1</option>
                                             @{
                                                 var ligation = db.Ligations.ToList();
                                                 foreach (Ligation l in ligation)
@@ -284,7 +285,7 @@
                                             }
                                         </select>
                                     </div>
-                           
+
                                 </form>
 
                             </div>

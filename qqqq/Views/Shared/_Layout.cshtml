@@ -65,7 +65,7 @@
                     <li>@Html.ActionLink("最新消息", "service", "service")</li>
                     <li>@Html.ActionLink("購物商城", "shopping", "shopping")</li>
                     <li>@Html.ActionLink("領養專區", "petsList", "pets")</li>
-                    <li>@Html.ActionLink("推薦", "about", "about")</li>
+                    @*<li>@Html.ActionLink("推薦", "about", "about")</li>*@
                     <li>@Html.ActionLink("聯繫我們", "contact", "contact")</li>
                     <li>@Html.ActionLink("志工", "Index", "Volunteer")</li>
                 </ul>
@@ -97,7 +97,7 @@
 
             </div>
             <div>
-                <a class="fa-solid fa-cart-shopping fa-2x" href="~/shopping/CartView"></a>
+                <a class="fa-solid fa-cart-shopping fa-2x" href="@Url.Content("~/shopping/CartView")"></a>
             </div>
         </div>
     </nav>
@@ -125,11 +125,11 @@
 
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="~/homepage/homepage">首頁</a>
-                    <a class="btn btn-link" href="~/pets/petsList">領養中心</a>
-                    <a class="btn btn-link" href="~/shopping/shopping">購物商城</a>
-                    <a class="btn btn-link" href="~/Volunteer/Index">關於志工</a>
-                    <a class="btn btn-link" href="~/contact/contact">聯繫我們</a>
+                    <a class="btn btn-link" href="@Url.Content("~/homepage/homepage")">首頁</a>
+                    <a class="btn btn-link" href="@Url.Content("~/pets/petsList")">領養中心</a>
+                    <a class="btn btn-link" href="@Url.Content("~/shopping/shopping")">購物商城</a>
+                    <a class="btn btn-link" href="@Url.Content("~/Volunteer/Index")">關於志工</a>
+                    <a class="btn btn-link" href="@Url.Content("~/contact/contact")">聯繫我們</a>
                 </div>
             </div>
         </div>
