@@ -113,23 +113,26 @@
         </div>
     </div>
 
-    <div class="col-8" id="divAlert">
+    <div class="col-8" >
+        <div><h6 id="searchKey"></h6></div>
+        <div class="col-12" id="divAlert">
 
+        </div>
+        </div>
+        <div class="col-1 ">
+            <ul class="navbar-dark list-unstyled float-right " style="position:fixed">
+                <li>
+                    <a class="btn btn-secondary border-0" title="Popover title" style="width: 100%; background: rgba(244,126,1,0.8); "
+                       data-container="body" data-toggle="popover" data-placement="right"
+                       data-content="右側的 Popover 中的一些内容" href="~/shopping/CartView">
+                        <i class="fa-solid fa-cart-shopping" id="cartCount">(0)</i>
+                    </a><br />
+                </li>
+                <li><a href="~/shopping/FavoriteList" id="favoriteList" style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="追蹤商品"><i class="fa-solid fa-star">收藏</i></a><br /></li>
+                @*<li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="回到頂端"><i class="fa-solid fa-circle-arrow-up">TOP</i></button><br /></li>*@
+            </ul>
+        </div>
     </div>
-    <div class="col-1 ">
-        <ul class="navbar-dark list-unstyled float-right " style="position:fixed">
-            <li>
-                <a class="btn btn-secondary border-0" title="Popover title" style="width: 100%; background: rgba(244,126,1,0.8); "
-                        data-container="body" data-toggle="popover" data-placement="right"
-                        data-content="右側的 Popover 中的一些内容" href="~/shopping/CartView">
-                        <i class="fa-solid fa-cart-shopping"id="cartCount">(0)</i>
-                </a><br />
-            </li>
-            <li><a  href="~/shopping/FavoriteList" id="favoriteList" style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="追蹤商品"><i class="fa-solid fa-star">收藏</i></a><br /></li>
-            @*<li><button style="width: 100%; background: rgba(244,126,1,0.8); " class="btn btn-secondary border-0" data-toggle="tooltip" data-placement="right" title="回到頂端"><i class="fa-solid fa-circle-arrow-up">TOP</i></button><br /></li>*@
-        </ul>
-    </div>
-</div>
 
 @section scripts{
     <script>
@@ -137,7 +140,7 @@
         let list = true;
         let ParentCategory =0;
         let Category =0;
-        let SubCategory = [];
+        let SubCategory = [];  
         let Keyword = "";
         let search = null;
 
@@ -157,23 +160,26 @@
         })
         $(".filter").on("change", (event) => {
             if (search == false) {
-                SubCategory=[]
+                SubCategory = []
+               
             }
             $("#keyword").text=""
             search = true;
-            console.log(SubCategory)
             if (event.target.checked) {
                 ParentCategory = 0;
                 Category = 0
                 SubCategory.push(event.target.value)
+              
                 filter()
             }
             else {
                 SubCategory = SubCategory.filter(function (item) {
                     return item != event.target.value
                 })
+       
                 filter();
             }
+
         })
 
         //$(".Category").on("change", (event) => {
