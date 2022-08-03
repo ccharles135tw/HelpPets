@@ -149,6 +149,69 @@ namespace qqqq.Controllers
 
 
         }
+        //public IActionResult EmailTest(string random)
+        //{
+        //    MailMessage mail = new MailMessage();
+        //    //mail.From = new MailAddress("helppetqqq@gmail.com");
+        //    mail.From = new MailAddress("billsagi0002@gmail.com");
+        //    Debug.WriteLine(random);
+        //    var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
+        //    CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+        //    var list = db.Volunteers.Where(x => x.VerificationCode == random).Select(y => y).ToList();
+        //    mail.To.Add(memberview.Email);
+        //    //主旨
+        //    mail.SubjectEncoding = System.Text.Encoding.UTF8;
+        //    mail.BodyEncoding = System.Text.Encoding.UTF8;
+        //    mail.Subject = "我救浪-志工活動驗證";
+        //    //內文
+        //    string title = db.Vactivities.Where(x => x.ActivityId == list[0].ActivityId).Select(y => y.Title).FirstOrDefault();
+
+        //    string body = "<html><head><style>tr,td,th,tbody,thead,table{border:solid 1px black;border-collapse: collapse;}</style></head>";
+        //    body += $"<body><h1>郵件送出時間{DateTime.Now}<br>確認以下資料，並於20分鐘內完成驗證</h1>";
+        //    body += $"<h3>{title}</h3>";
+        //    body += "<table><thead><tr><th>日期</th><th>時段</th><th>狀態</th><th>姓名</th><th>電話</th><th>電子信箱</th></tr></thead><tbody>";
+        //    foreach (var i in list)
+        //    {
+        //        string status = "";
+        //        if (i.Waiting == true)
+        //        {
+        //            status = "候補";
+        //        }
+        //        else
+        //        {
+        //            status = "正取";
+        //        }
+        //        body += $"<tr><td>{i.AllowDate}</td><td>{db.VallowTimes.Where(x => x.AllowTimeId == i.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()}</td><td>{status}</td><td>{i.Name}</td><td>{i.Phone}</td><td>{i.Email}</td></tr>";
+        //    }
+
+        //    body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+        //    mail.Body = body;
+
+        //    //內文是否為html
+        //    mail.IsBodyHtml = true;
+        //    //優先權
+        //    mail.Priority = MailPriority.Normal;
+        //    //設定smtpclient
+        //    SmtpClient client = new SmtpClient();
+        //    //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+        //    client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "deodtmemzhjqqcox");
+        //    client.Host = "smtp.gmail.com";
+        //    client.Port = 587;
+        //    //client.Port = 25;
+        //    client.EnableSsl = true;
+        //    //client.UseDefaultCredentials = true;
+        //    try
+        //    {
+        //        client.Send(mail);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex);
+        //    }
+        //    client.Dispose();
+        //    return RedirectToAction("successPage", new { id = random });
+        //    //todo email
+        //}
     }
 }
 
