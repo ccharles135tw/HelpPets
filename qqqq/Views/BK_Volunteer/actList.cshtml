@@ -32,7 +32,8 @@
             <label>請選擇要列出的活動日期 : </label>
         </i>
         <input class="form-control input datepicker" id="date" style="float:left;" />
-        <input type="button" id="pdf" style="float:left;" value="輸出pdf" />
+        <input type="button" id="pdf" style="float:left;" value="輸出pdf" hidden/>
+        <a href="~/BK_Volunteer/download" id="ah">輸出pdf</a>
     </div>
     <br />
     <br />
@@ -43,7 +44,7 @@
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+<script>
         $(function () {
             $.datepicker.regional['zh-TW'] = {
                 dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -100,11 +101,13 @@
             })
             //$("#list").prepend(`<img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/actList&chld=L|4">`)
             str = "";
-        })
-        $("#pdf").click(() => {
-            console.log($("#list").html())
             $.ajaxSetup({ async: false });
-            $.post('@Url.Content("~/BK_Volunteer/toPDF")', { htmlString: $("#list").html()})
+            $.post('@Url.Content("~/BK_Volunteer/toPDF")', { htmlString: $("#list").html() })
         })
-    </script>
+        //$("#pdf").click(() => {
+        //    console.log($("#list").html())
+
+
+        //})
+</script>
 }

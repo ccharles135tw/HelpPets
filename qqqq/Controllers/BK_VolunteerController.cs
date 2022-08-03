@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace qqqq.Controllers
@@ -183,7 +184,7 @@ namespace qqqq.Controllers
             sw.Close();
 
             var url = Path.Combine(Environment.CurrentDirectory, "Test.html");
-            var chromePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+            var chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
             var output = Path.Combine(Environment.CurrentDirectory, "printout.pdf");
             using (var p = new Process())
             {
@@ -193,8 +194,16 @@ namespace qqqq.Controllers
                 p.WaitForExit();
             }
 
-            WebClient wc = new WebClient();
-            wc.DownloadFile(Path.Combine(Environment.CurrentDirectory, "printout.pdf"), "C:\\new\\printout.pdf");
+            //WebClient wc = new WebClient();
+            //wc.DownloadFile(Path.Combine(Environment.CurrentDirectory, "printout.pdf"), "C:\\new\\printout.pdf");
+        }
+        public FileResult download()
+        {
+            //string fileName = "printout.pdf";
+            //string filePath = "C:\\Users\\Charles\\Desktop\\qqqq\\qqqq" + "\\" + fileName;
+            //var fileExists = System.IO.File.Exists(Path.Combine(Environment.CurrentDirectory, "printout.pdf"));
+            FileStream fs = System.IO.File.OpenRead(Path.Combine(Environment.CurrentDirectory, "printout.pdf"));
+            return File(fs, "application/pdf", "tttt.pdf");
         }
     }
 }
