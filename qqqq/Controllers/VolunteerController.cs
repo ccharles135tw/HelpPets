@@ -386,7 +386,7 @@ namespace final_test.Controllers
             var a = db.Volunteers.Where(x =>x.CheckEmail == false).Select(y => y).ToList();
             if(a!= null)
             {
-                foreach (var i in a.Where(x => DateTime.Parse(x.OrderDate).AddMinutes(1) < DateTime.Now && x.CheckEmail == false))
+                foreach (var i in a.Where(x => DateTime.Parse(x.OrderDate).AddSeconds(30) < DateTime.Now && x.CheckEmail == false))
                 {
                     db.Remove(i);
                     db.SaveChanges();
