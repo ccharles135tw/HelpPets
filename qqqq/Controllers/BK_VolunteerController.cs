@@ -176,12 +176,12 @@ namespace qqqq.Controllers
         {
 
             Debug.WriteLine(htmlString);
-            StreamWriter sw = new StreamWriter("D:\\Test.html");
+            StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Test.html"));
             sw.WriteLine("<style>table,td,th {border: 1px solid #ddd;text-align: left;}th {background-color: darkgray;} table {border-collapse: collapse;width: 100 %;}th, td {padding: 15px;}</style>");
             sw.WriteLine(htmlString);
             sw.Close();
 
-            var url = "D:\\Test.html";
+            var url = Path.Combine(Environment.CurrentDirectory, "Test.html");
             var chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
             var output = Path.Combine(Environment.CurrentDirectory, "printout.pdf");
             using (var p = new Process())

@@ -528,5 +528,19 @@ namespace qqqq.Controllers
             db.SaveChanges();
                 return Content("訂單已成立");
         }
+
+        public IActionResult CartCount()
+        {
+            if (HttpContext.Session.Keys.Contains(CDictionary.SK_購物車商品列表))
+            {
+               var jsonCart= HttpContext.Session.GetString(CDictionary.SK_購物車商品列表);
+                var cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
+                return Content(cart.Count().ToString());
+            }
+            else
+            {
+                return Content("0");
+            }
+        }
     }
 }
