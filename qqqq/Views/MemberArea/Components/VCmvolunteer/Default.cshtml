@@ -10,7 +10,7 @@
                 <th>活動照片</th>
                 <th>協助內容</th>
                 @*<th>&nbsp;</th>*@
-            <th>日期時程</th>
+                <th>日期時程</th>
                 <th>時數</th>
                 <th>活動狀態</th>
                 <th>&nbsp;</th>
@@ -19,74 +19,79 @@
             </tr>
         </thead>
         <tbody>
-            @{   
+            @{ 我救浪Context db = new 我救浪Context();
+                int totalhour = 0;
                 foreach (var item in Model)
                 {
-                <tr class="alert" role="alert">
+                    <tr class="alert" role="alert">
 
-                
-                    <td>
-                        1
-                    </td>
 
-                    <td>
-                        <img src="@Url.Content($"~/img/volunteer/{item.ActPhotoName}")" style="width:60px;height:60px;" />
+                        <td>
+                            1
+                        </td>
 
-                    </td>
-                    <td>
-                        <div class="email">
-                            <span>@item.ActTital </span>
-                            <span>@item.HelpDiscription</span>
-                        </div>
-                    </td>
+                        <td>
+                            <img src="@Url.Content($"~/img/volunteer/{item.ActPhotoName}")" style="width:60px;height:60px;" />
 
-                    <td>
-                        <div class="email">
-                            <span>@item.AllowDate</span>
-                            <span>時程表:@item.AllowTime </span>
-                        </div>
-                    </td>
-
-                    <td>
-                        3hr
-                    </td>
-
-                    <td>
-                        @item.Vstaus
-                    </td>
-
-                    <td>
-                        <div>
-                            <form action="@Url.Content("~/contact/contact")">
-                                <!-- todo 連接 -->
-                                <button class="close" type="button" id="contact">
-                                    <span aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                    <span>聯繫我們</span>
-                                </button>
-                            </form>
-                            <div>
-
-                                <button class="close" type="button" id="list" data-toggle="modal" data-target="#myModal">
-                                    <span aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
-                                    <span>聯繫智能客服</span>
-                                </button>
+                        </td>
+                        <td>
+                            <div class="email">
+                                <span>@item.ActTital </span>
+                                <span>@item.HelpDiscription</span>
                             </div>
+                        </td>
 
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="7" class="text-right ">
-                        累計時數:80hr
-                    </td>
-                </tr>
+                        <td>
+                            <div class="email">
+                                <span>@item.AllowDate</span>
+                                <span>時程表:@item.AllowTime </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            @item.Hour hr
+                        </td>
+
+                        <td>
+                            @item.Vstaus
+                        </td>
+
+                        <td>
+                            <div>
+                                <form>
+                                    <!-- todo 連接 -->
+                                    <button class="close" type="button" id="contact" action="@Url.Content("~/contact/contact")">
+                                        <span aria-hidden="true"><i class="fas fa-phone"></i></span>
+                                        <span>聯繫我們</span>
+                                    </button>
+                                </form>
+                                <div>
+
+                                    <button class="close" type="button" id="list" data-toggle="modal" data-target="#myModal">
+                                        <span aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
+                                        <span>聯繫智能客服</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+
+
+
+                }
+
             }
             }
-
+            <tr>
+                <td colspan="7" class="text-right ">
+                    累計時數:@(Model[0]._vou.Member.Volunteers.Where(v=>v.VstatusId==1).Sum(v=>v.AllowTime.Hour))hr
+                </td>
+            </tr>
         </tbody>
-    
-          
-  
+
+
+
     </table>
     <!-- The Modal -->
 

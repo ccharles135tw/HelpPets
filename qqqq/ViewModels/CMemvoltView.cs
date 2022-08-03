@@ -8,11 +8,12 @@ namespace qqqq.ViewModels
 {
     public class CMemvoltView
     {
-        Volunteer _vou;
+        public Volunteer _vou;
 
-    public    CMemvoltView() {
+        public CMemvoltView()
+        {
             _vou = new Volunteer();
-        
+
         }
         public CMemvoltView(Volunteer v)
         {
@@ -25,12 +26,12 @@ namespace qqqq.ViewModels
             {
                 CMemvoltView cMemvoltView = new CMemvoltView(v);
                 list.Add(cMemvoltView);
-            
+
             }
             return list;
         }
 
-     public string ActPhotoName { get { return _vou.Activity.ActivityPhoto.Count() > 0 ? _vou.Activity.ActivityPhoto : null; } }
+        public string ActPhotoName { get { return _vou.Activity.ActivityPhoto.Count() > 0 ? _vou.Activity.ActivityPhoto : null; } }
 
         public string HelpDiscription { get { return _vou.Activity.Description; } }
 
@@ -42,8 +43,12 @@ namespace qqqq.ViewModels
 
         public string Vstaus { get { return _vou.Vstatus.StatusType; } }
 
-        public int TotalTime { get { return (int)_vou.AllowTime.Hour; } }
+        public int Hour { get { return (int)_vou.AllowTime.Hour; } }
+        public int MemberId { get { return (int)_vou.MemberId; } }
+        public string MemberEmail { get { return _vou.Email; } }
 
-        
+
+
+
     }
 }
