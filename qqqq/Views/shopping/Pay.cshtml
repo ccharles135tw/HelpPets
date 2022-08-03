@@ -46,68 +46,69 @@
                     if (Model[i].CartPay == true)
                     {
 
-                        <tr>
-                            <td hidden>
-                                @Html.DisplayFor(item => item[i].CartId)
-                            </td>
+                <tr>
+                    <td hidden>
+                        @Html.DisplayFor(item => item[i].CartId)
+                    </td>
 
-                            <td>
-                                <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].CartName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].CartPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].CartCount)
-                                @*<input type="number" min="1" value="@item[i].CartCount" onchange="ChangeItemCount('@item[i].CartId',this.value,false)" />*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].TotalPrice)
-                            </td>
+                    <td>
+                        <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].CartName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].CartPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].CartCount)
+                        @*<input type="number" min="1" value="@item[i].CartCount" onchange="ChangeItemCount('@item[i].CartId',this.value,false)" />*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].TotalPrice)
+                    </td>
 
-                        </tr>
+                </tr>
                     }
                     if (Model[i].DonatePay == true)
                     {
 
-                        <tr>
-                            <td hidden>
+                <tr>
+                    <td hidden>
 
-                                @Html.DisplayFor(item => item[i].CartId)
-                            </td>
+                        @Html.DisplayFor(item => item[i].CartId)
+                    </td>
 
-                            <td>
-                                <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].CartName)
-                                <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].CartPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].Donate)
+                    <td>
+                        <img width="100" height="100" src="~/Images/@Model[i].CartPhoto" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].CartName)
+                        <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].CartPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].Donate)
 
-                                @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
-                            </td>
-                            <td>
-                                @Html.DisplayFor(item => item[i].DonatePrice)
-                            </td>
+                        @*<input type="number" min="1" value="@item[i].Donate" onchange="ChangeItemCount('@item[i].CartId',this.value,true )" />*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(item => item[i].DonatePrice)
+                    </td>
 
-                        </tr>
-                        @*@(pay=pay+ Model[i].DonatePrice);*@
+                </tr>
+                @*@(pay=pay+ Model[i].DonatePrice);*@
                     }
                 }
             }
         </tbody>
+            
         <tfoot>
             <tr>
-                <td colspan="5" class="text-center "><h5>總價:@(Model.Where(x=>x.CartPay).Sum(x=>x.TotalPrice)+ Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice))</h5></td>
-
+                <td colspan="5" class="text-center "><h5>總價:@((Model.Where(x=>x.CartPay).Sum(x=>x.TotalPrice)+ Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice)).ToString("0.00"))</h5></td>
+                @{ decimal allPrice = Model.Where(x => x.CartPay).Sum(x => x.TotalPrice) + Model.Where(x => x.DonatePay).Sum(x => x.DonatePrice);}
 
 
 
@@ -152,26 +153,27 @@
         <br />
         <div class="form-group alert alert-success ">
             <h5>
-                <label class="control-label col-12">購買人資料      <input type="checkbox" />同會員資料</label>
+                <label class="control-label col-12">購買人資料      <input type="checkbox" id="addMember" />同會員資料</label>
             </h5>
-            <label class="col-md-4 col-sm-12">姓名: <input type="text" /></label>
+            <label class="col-md-4 col-sm-12">姓名: <input type="text"id="name"/></label>
 
-            <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /></label>
-            <label class="col-md-6 col-sm-12 mt-3">聯絡電話(非必填): <input type="tel" /></label>
+
+            <label class="col-md-6 col-sm-12 mt-3">聯絡電話: <input type="tel" id="phone"/></label>
             <br />
-            <label class="col-md-10 col-sm-12 mt-3"> Email: <input type="text" name="pay" class="col-10" /></label>
-            <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" /></label>
+            <label class="col-md-10 col-sm-12 mt-3"> Email: <input type="text" name="pay" class="col-10" id="mail" /></label>
+            <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" id="address"/></label>
             <span for="Pay" class="text-danger"></span>
         </div><br />
-        <div class="form-group alert alert-success">
-            <h5>
-                <label class="control-label">收件人資料        <input type="checkbox" />同購買人</label>
-            </h5>
-            <label class="col-md-4 col-sm-12">行動電話: <input type="tel" /><b></b></label>
+              <div class="form-group alert alert-success">
+                  <h5>
+                      <label class="control-label">收件人資料        <input type="checkbox" id="send" />同購買人</label>
+                  </h5>
+                  <label class="col-md-4 col-sm-12">姓名: <input type="text" id="sendName" /></label>
+                  <label class="col-md-4 col-sm-12">行動電話: <input type="tel" id="sendPhone" /><b></b></label>
 
-            <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" id="address" /><b></b></label>
-            <span for="Pay" class="text-danger"></span>
-        </div>
+                  <label class="col-md-10 col-sm-12 mt-3"> 地址:  <input type="text" name="pay" class="col-10" id="sendAddress" /><b></b></label>
+                  <span for="Pay" class="text-danger"></span>
+              </div>
     </fieldset>
     <hr />
     <fieldset>
@@ -184,9 +186,9 @@
         <hr />
         <div class="form-group alert alert-danger mt-4 ">
             <h5>
-                <label class="control-label">商品金額:100</label><br />
+                <label class="control-label">商品金額: @allPrice.ToString("0.00")</label><br />
                 <label class="control-label">運      費  : 60</label><br />
-                <label class="control-label">總金額  : 60)</label>
+                <label class="control-label">總金額  : @((allPrice+60).ToString("0.00"))</label>
             </h5>
         </div>
     </fieldset>
@@ -240,7 +242,38 @@
             })
 
         }
-    }
+        }
+    $("#addMember") .on(   "change",function(e) {
+            if (e.target.checked) {
+                $.getJSON('@Url.Content("~/shopping/getMember")', {}, function (data) {
+                    let member = JSON.parse(data)
+                    $("#name").val(member.Name)
+                    $("#phone").val(member.MemberPhone)
+                    $("#mail").val(member.Email)
+                    $("#address").val(member.Address)
+                })
+            }
+            else {
+                $("#name").val("")
+                $("#phone").val("")
+                $("#mail").val("")
+                $("#address").val("")
+            }
+    })
+         $("#send") .on(   "change",function(e) {
+            if (e.target.checked) {
+           
+                $("#sendName").val($("#name").val())
+                $("#sendPhone").val($("#phone").val())
+                $("#sendAddress").val($("#address").val())
+                
+            }
+            else {
+                $("#sendName").val("")
+                $("#sendPhone").val("")
+                $("#sendAddress").val("")
 
+            }
+        })
     </script>
 }

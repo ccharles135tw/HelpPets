@@ -8,6 +8,7 @@ using qqqq.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using prjMVCDemo.vModel;
+using Pet.ViewModels;
 
 namespace qqqq.Controllers
 {
@@ -541,6 +542,15 @@ namespace qqqq.Controllers
             {
                 return Content("0");
             }
+        }
+        public IActionResult getMember() {
+           var jsonUser= HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            var user = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
+          var member=  db.Members.First(p => p.MemberId == user.MemberID && p.Email == user.Email);
+            CMemberView cMember = new CMemberView();
+            cMember.Member = member;
+          var data=  JsonSerializer.Serialize(cMember);
+            return Json(data);
         }
     }
 }
