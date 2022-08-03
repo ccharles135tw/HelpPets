@@ -182,7 +182,7 @@ namespace qqqq.Controllers
             sw.Close();
 
             var url = Path.Combine(Environment.CurrentDirectory, "Test.html");
-            var chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            var chromePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
             var output = Path.Combine(Environment.CurrentDirectory, "printout.pdf");
             using (var p = new Process())
             {
