@@ -70,7 +70,7 @@
     <div>
         <form class="text-left" style="display: flex; align-items: center">
             <div class="magnify">
-                <div class="magnifier" style="background-image:url(~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
+                <div class="magnifier" style="background-image:url(/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
                 <div class="magnified">
                     <img id="prodImg" src="~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
                 </div>
