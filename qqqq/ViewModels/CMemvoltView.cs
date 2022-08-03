@@ -30,7 +30,20 @@ namespace qqqq.ViewModels
             return list;
         }
 
-     
+     public string ActPhotoName { get { return _vou.Activity.ActivityPhoto; }}
 
+        public string HelpDiscription { get { return _vou.Activity.Description; } }
+
+        public string AllowDate { get { return _vou.AllowDate; } }
+
+        public string AllowTime { get { return _vou.AllowTime.TimeRange; } }
+
+        public string ActTital { get { return _vou.Activity.Title; } }
+
+        public string Vstaus { get { return _vou.Vstatus.StatusType; } }
+
+        //public int TotalTime { get { return _vou.AllowT} }
+
+        
     }
 }

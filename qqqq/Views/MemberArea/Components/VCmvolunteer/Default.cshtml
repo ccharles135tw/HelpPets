@@ -1,4 +1,4 @@
-﻿
+﻿@model List<qqqq.ViewModels.CMemvoltView>
 
 
 <h3 class="h5 mb-4 text-center">我的評論</h3>
@@ -10,7 +10,7 @@
                 <th>活動照片</th>
                 <th>協助內容</th>
                 @*<th>&nbsp;</th>*@
-                <th>日期時程</th>
+            <th>日期時程</th>
                 <th>時數</th>
                 <th>活動狀態</th>
                 <th>&nbsp;</th>
@@ -19,66 +19,69 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="alert" role="alert">
-                @{
-                    foreach () {
-                <td>
-                    1
-                </td>
+            @{   
+                foreach (var item in Model)
+                {
+                <tr class="alert" role="alert">
 
-                <td>
-                    <img src="~/css_Q/Images/bg_1.jpg" style="width:60px;height:60px;" />
+                
+                    <td>
+                        1
+                    </td>
 
-                </td>
-                <td>
-                    <div class="email">
-                        <span>【長期招募】​接送志工 </span>
-                        <span>接送犬隻往返醫院絕育、原地放回及交還飼主。</span>
-                    </div>
-                </td>
+                    <td>
+                        <img src="@Url.Content($"~/img/volunteer/{item.ActPhotoName}")" style="width:60px;height:60px;" />
 
-                <td>
-                    <div class="email">
-                        <span>2022/02/02</span>
-                        <span>時程表:0900-1200 </span>
-                    </div>
-                </td>
+                    </td>
+                    <td>
+                        <div class="email">
+                            <span>@item.ActTital </span>
+                            <span>@item.HelpDiscription</span>
+                        </div>
+                    </td>
 
-                <td>
-                    3hr
-                </td>
+                    <td>
+                        <div class="email">
+                            <span>@item.AllowDate</span>
+                            <span>時程表:@item.AllowTime </span>
+                        </div>
+                    </td>
 
-                <td>
-                    已完成
-                </td>
+                    <td>
+                        3hr
+                    </td>
 
-                <td>
-                    <div>
-                        <form action="@Url.Content("~/contact/contact")">
-                            <!-- todo 連接 -->
-                            <button class="close" type="button" id="contact">
-                                <span aria-hidden="true"><i class="fas fa-phone"></i></span>
-                                <span>聯繫我們</span>
-                            </button>
-                        </form>
+                    <td>
+                        @item.Vstaus
+                    </td>
+
+                    <td>
+                        <div>
+                            <form action="@Url.Content("~/contact/contact")">
+                                <!-- todo 連接 -->
+                                <button class="close" type="button" id="contact">
+                                    <span aria-hidden="true"><i class="fas fa-phone"></i></span>
+                                    <span>聯繫我們</span>
+                                </button>
+                            </form>
                             <div>
-                     
-                        <button class="close" type="button" id="list" data-toggle="modal" data-target="#myModal">
-                            <span aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
-                            <span>聯繫智能客服</span>
-                        </button>
-                    </div>
-                        
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="7" class="text-right ">
-                    累計時數:80hr
-                </td>
-            </tr>
-                        } 
-                    }
+
+                                <button class="close" type="button" id="list" data-toggle="modal" data-target="#myModal">
+                                    <span aria-hidden="true"><i class="fa-solid fa-robot"></i></span>
+                                    <span>聯繫智能客服</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="7" class="text-right ">
+                        累計時數:80hr
+                    </td>
+                </tr>
+            }
+            }
 
         </tbody>
     
