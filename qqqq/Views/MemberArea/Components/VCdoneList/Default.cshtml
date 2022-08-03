@@ -33,8 +33,8 @@
                         </td>
                         @{var photo = db.Photos.Where(p => p.ProductId == item.ProductId).Select(p => p.PictureName).FirstOrDefault();}
                         <td>
-        
-                            <img  src="@Url.Content($"~/Images/{photo}")" style="width:60px;height:60px;" />
+
+                            <img src="@Url.Content($"~/Images/{photo}")" style="width:60px;height:60px;" />
 
                         </td>
                         <td>
@@ -63,7 +63,7 @@
 
                         <td>
                             <div>
-                                <button class="close" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal">
+                                <button class="close commoning" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal"  common="@item.ProductId">
                                     <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
                                     <span>產品評論</span>
                                 </button>
@@ -83,37 +83,18 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
 
-                <!-- Modal Header -->
+                @*Modal Header*@
                 <div class="modal-header">
                     <h4 class="modal-title">評論此商品</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- Modal body -->
+                @*Modal body*@
                 <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row justify-content-lg-evenly">
+                    @*try===================================================================*@
 
-                            <div id="star" class="d-flex justify-center " style="width:60px">
-
-
-                                <img class="mw-100" id="1" src="@Url.Content("~/Images/Common_sad.jpg")" />
-                                <img class="mw-100" id="2" src="@Url.Content("~/Images/Common_sad.jpg")" />
-                                <img class="mw-100" id="3" src="@Url.Content("~/Images/Common_sad.jpg")" />
-                                <img class="mw-100" id="4" src="@Url.Content("~/Images/Common_sad.jpg")" />
-                                <img class="mw-100" id="5" src="@Url.Content("~/Images/Common_sad.jpg")" />
-
-                            </div>
-                        </div>
-                        <p>請為此商品評分</p>
-                        <p id="count"></p>
-
-                        <textarea placeholder="請在此區 評論商品" maxlength="100" style="max-width:250px"></textarea>
-
-
-                    </div>
                 </div>
-                <!-- Modal footer -->
+                @*Modal footer*@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee">送出</button>
                 </div>
@@ -123,7 +104,7 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
+@*<script>
     //評價星等
     let flag = true;
 
@@ -151,4 +132,20 @@
         flag = true
     });
 
-</script>
+</script>*@
+@*<script>
+    $(".commoning").click(function (eve) {
+
+        let common = $(this).attr("common");
+        console.log(common);
+           eve.preventDefault();
+
+          $.post("@Url.Content("~/MemberArea/mCommondetail")", {
+
+              id: common
+
+          }, function (datas) { console.log(datas); $(".modal-body").html(datas); })
+
+
+        })
+</script>*@

@@ -167,7 +167,18 @@ namespace prjHomeLess_R.Controllers
         {
             return ViewComponent("VCmpetdetail", id);
         }
+        public IActionResult mCommondetail(int id)
+        {
+            return ViewComponent("VCcommonmodal", id);
+        }
+        //public IActionResult    EdiotmCommondetail(int id , int grat, string Description)
+        //{
+        //    _context.MemberComments.Where(c => c.CommentId == id);
 
+
+
+        //    return RedirectToAction("VCmcommon");
+        //}
         public IActionResult mRemove(int id)
 
         {

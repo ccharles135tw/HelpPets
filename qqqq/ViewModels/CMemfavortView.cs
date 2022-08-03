@@ -30,6 +30,8 @@ namespace qqqq.ViewModels
             return list;
         }
         public string MemberCommon { get { return _prod.MemberComments.FirstOrDefault().Description; } }
+
+        public int CommonId { get { return _prod.MemberComments.FirstOrDefault().CommentId; } }
         public string PictureName { get { return _prod.Photos.FirstOrDefault().PictureName; } }
         public int MyfavID { get { return _prod.MyFavorites.FirstOrDefault().MyFavorite1; } }
 
