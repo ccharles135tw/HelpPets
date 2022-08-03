@@ -42,7 +42,7 @@ namespace qqqq.ViewModels
 
         public string Vstaus { get { return _vou.Vstatus.StatusType; } }
 
-        //public int TotalTime { get { return _vou.AllowT} }
+        //public int TotalTime { get { return _vou.AllowTime.hou} }
 
         
     }
