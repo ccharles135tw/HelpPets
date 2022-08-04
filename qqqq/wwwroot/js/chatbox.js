@@ -53,6 +53,12 @@ $('.send-btn').on('click', function ()
         alert('傳送錯誤: ' + err.toString());
     });
 });
+
+//$(".chattext").on('keypress', function (e) {
+//    if (e.which == 13) {
+//        alert('You pressed enter!');
+//    }
+//});
 //傳送信息事件
 connection.on("SendMessage", function (clientID, j)
 {
