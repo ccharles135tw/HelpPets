@@ -215,6 +215,10 @@ namespace qqqq.Controllers
             //return RedirectToAction("successPage", new { id = 1 });
             //todo email
         }
+        public IActionResult petCompare()
+        {
+            return View();
+        }
     }
 }
 

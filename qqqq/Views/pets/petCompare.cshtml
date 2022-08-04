@@ -1,0 +1,177 @@
+﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+    <div class="container text-center pt-5 pb-3">
+        <h1 class="display-4 text-white animated slideInDown mb-3">寵物比較</h1>
+    </div>
+</div>
+@{
+    ViewData["Title"] = "petCompare";
+}
+@section Styles{ 
+<style>
+    .divtbody1 {
+        width: 100vw;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content:center; 
+    }
+/*    .divtbody2 {
+        justify-content: center;
+        align-items: center;
+    }*/
+    table, tr, th, td {
+/*        border: 3px solid #EAA636;
+*/        font-size: 20px;
+        padding: 10px;
+        margin-top: 50px;
+        /*margin-left: 50%;*/
+    }
+    .tbtitle{
+        font-weight:700;
+    }
+</style>
+
+}
+<div  class="divtbody1">
+    <div class="divtbody2" style ="text-align: center; ">
+        <table class="table table-hover">
+            <tr>
+                <th class="tbtitle">照片</th>
+                <th>
+                    會員照片
+                    <br />
+                    <img src="~/img/customer2.jpg" />
+                </th>
+                <th>
+                    寵物1~3照片
+                    <br />
+                    <img src="~/img/favicon.ico" />
+                </th>
+            </tr>
+            <tr>
+                <td class="tbtitle">項目</td>
+                <td>
+                    會員願望清單
+                </td>
+                <td>
+                    寵物詳細資料1~3
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    種類
+                </td>
+                <td>
+                    會員種類
+                </td>
+                <td>
+                    寵物種類
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    品種
+                </td>
+                <td>
+                    會員品種
+                </td>
+                <td>
+                    寵物品種
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    性別
+                </td>
+                <td>
+                    會員性別
+                </td>
+                <td>
+                    寵物性別
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    毛色
+                </td>
+                <td>
+                    會員毛色
+                </td>
+                <td>
+                    寵物毛色
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    體型
+                </td>
+                <td>
+                    會員體型
+                </td>
+                <td>
+                    寵物體型
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    結紮
+                </td>
+                <td>
+                    會員結紮
+                </td>
+                <td>
+                    寵物結紮
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    體型
+                </td>
+                <td>
+                    會員體型
+                </td>
+                <td>
+                    寵物體型
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    年齡層
+                </td>
+                <td>
+                    會員年齡層
+                </td>
+                <td>
+                    寵物年齡層
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    區域
+                </td>
+                <td>
+                    會員區域
+                </td>
+                <td>
+                    寵物區域
+                </td>
+            </tr>
+            <tr>
+                <td class="tbtitle">
+                    選項
+                </td>
+                <td>
+                    <input type="button" class="btn btn-primary" value="隱藏" />
+                </td>
+                <td>
+                    <input type="button" class="btn btn-success" value="領養" />
+                    <input type="button" class="btn btn-warning" value="隱藏" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
