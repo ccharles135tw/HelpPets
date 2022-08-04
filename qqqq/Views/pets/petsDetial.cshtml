@@ -68,7 +68,7 @@
         }
     </style>
 }
-<div class="container text-center col-md-6 col-sm-12 d-flex">
+<div class="container text-center col-md-6 col-sm-12 d-flex mt-5  table table-hover">
     <div style="flex:none;">
         <form class="text-left" style="display: flex; align-items: center">
             <div class="magnify">
@@ -101,12 +101,6 @@
                     <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
                 </h5>
                 <hr />
-
-                <h5>
-                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
-                </h5>
-                <hr />
-
                 <h5>
                     <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
                 </h5>
@@ -116,6 +110,10 @@
                     <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
                 </h5>
                 <hr />
+                <h5>
+                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
+                </h5>
+                <hr />
 
                 <h5>
                     <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
@@ -123,30 +121,12 @@
 
                 <hr />
                 <h5>
-                    <label class="control-label">最低活動空間:<span>@Model.PetDetail.Space</span> 坪</label>
+                    <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
                 </h5>
-
                 <hr />
                 <h5>
-                    <label class="control-label">所在城市:<span>@Model.PetDetail.City.CityName</span></label>
+                    共X項符合,媒合度:XX%
                 </h5>
-
-                <hr />
-                <h5>
-                    <label class="control-label">基本開銷費用約:<span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月</label>
-                </h5>
-
-                <hr />
-                <h5>
-                    <label class="control-label">每周陪伴時間:<span>@Model.PetDetail.AccompanyTimeWeek</span> 小時/週</label>
-                </h5>
-
-                <hr />
-                <h5>
-                    <label class="control-label">簡介:<span>@Model.Description</span></label>
-                </h5>
-
-                <hr />
             </div>
         </form>
     </div>
@@ -182,12 +162,6 @@
                     <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
                 </h5>
                 <hr />
-
-                <h5>
-                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
-                </h5>
-                <hr />
-
                 <h5>
                     <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
                 </h5>
@@ -197,6 +171,10 @@
                     <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
                 </h5>
                 <hr />
+                <h5>
+                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
+                </h5>
+                <hr />
 
                 <h5>
                     <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
@@ -204,15 +182,16 @@
 
                 <hr />
                 <h5>
+                    <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
+                </h5>
+                <hr />
+                <h2>生活基本條件</h2>
+                <h5>
                     <label class="control-label">最低活動空間:<span>@Model.PetDetail.Space</span> 坪</label>
                 </h5>
 
                 <hr />
-                <h5>
-                    <label class="control-label">所在城市:<span>@Model.PetDetail.City.CityName</span></label>
-                </h5>
 
-                <hr />
                 <h5>
                     <label class="control-label">基本開銷費用約:<span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月</label>
                 </h5>
@@ -303,6 +282,7 @@
                     </div>
                 </div>
                 <button class="btn btn-success m-1">@Html.ActionLink("返回", "petsList", null)</button>
+                <button class="btn btn-info m-1">@Html.ActionLink("加入比較", "petsCompare", null)</button>
             </div>
         </div>
     </div>
