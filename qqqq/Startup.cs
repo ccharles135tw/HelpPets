@@ -27,6 +27,7 @@ namespace qqqq
         {
             services.AddControllersWithViews();
             services.AddSession();
+            services.AddCors();
             services.AddSignalR();
 
             // Add Hangfire services.
@@ -56,6 +57,10 @@ namespace qqqq
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(a => true);
+            });
             app.UseRouting();
 
             app.UseHangfireDashboard();
