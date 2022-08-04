@@ -1,19 +1,19 @@
 ﻿@model List<qqqq.ViewModels.CMemvoltView>
 
 
-<h3 class="h5 mb-4 text-center">我的評論</h3>
+<h3 class="h5 mb-4 text-center">我的志工</h3>
 <div class="table-wrap">
     <table class="table">
         <thead class="thead-primary">
             <tr>
-                <th>序</th>
+                @*<th>序</th>*@
                 <th>活動照片</th>
                 <th>協助內容</th>
                 @*<th>&nbsp;</th>*@
                 <th>日期時程</th>
-                <th>時數</th>
-                <th>活動狀態</th>
-                <th>&nbsp;</th>
+                <th width="10%">時數 </th>
+                <th width="15%">活動狀態 </th>
+                <th  width="15%">&nbsp;</th>
 
 
             </tr>
@@ -26,9 +26,9 @@
                     <tr class="alert" role="alert">
 
 
-                        <td>
+                        @*<td>
                             1
-                        </td>
+                        </td>*@
 
                         <td>
                             <img src="@Url.Content($"~/img/volunteer/{item.ActPhotoName}")" style="width:60px;height:60px;" />
@@ -81,7 +81,7 @@
 
                 }
 
-            }
+            
             }
             <tr>
                 <td colspan="7" class="text-right ">

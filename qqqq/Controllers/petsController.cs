@@ -196,8 +196,8 @@ namespace qqqq.Controllers
             mail.Priority = MailPriority.Normal;
             //設定smtpclient
             SmtpClient client = new SmtpClient();
-            //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
-            client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "deodtmemzhjqqcox");
+            client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+            //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "deodtmemzhjqqcox");
             client.Host = "smtp.gmail.com";
             client.Port = 587;
             //client.Port = 25;

@@ -100,6 +100,11 @@ connection.on("UpIsRead", function (clientID)
 {
     ReadMessage(clientID);
 })
+connection.on("RepeatLogin", function ()
+{
+    alert("重複登入，即將跳回首頁");
+    window.location.href = "/homepage/homepage";
+})
 //點擊li切換對象
 $(".ul-client").on("click", "li", function ()
 {
