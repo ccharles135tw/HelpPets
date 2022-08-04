@@ -47,7 +47,8 @@ namespace qqqq.Hubs
             else
             {
                 Debug.WriteLine("ConnDist已有此selfID");
-                //throw new Exception("ConnDist已有此selfID");
+                await Clients.Client(Context.ConnectionId).SendAsync("RepeatLogin");
+                //throw new Exception("重複登入ㄌ87");
             }
         }
         /// <summary>
