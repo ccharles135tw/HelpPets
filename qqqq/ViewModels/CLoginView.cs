@@ -52,6 +52,7 @@ namespace Pet.ViewModels
         public string Address { get { return _Member.Address; } set { _Member.Address = value; } }
         [DisplayName("性別"), Required()]
         public int? HgenderId { get { return (int)_Member.HgenderId; } set { _Member.HgenderId = value; } }
+        public string Hgendertype { get { return _Member.Hgender.GenderType; } set { _Member.Hgender.GenderType = value; } }
         //看資料庫新增的欄位取什麼
         //[DisplayName("志工時數")]
         //public string Member志工時數 { get { return Member.志工時數; } set { Member.志工時數= value; } }
