@@ -153,7 +153,7 @@ namespace qqqq.Controllers
         }
         public void EmailTest()
         {
-            Debug.WriteLine("123");
+            //Debug.WriteLine("123");
             MailMessage mail = new MailMessage();
             //mail.From = new MailAddress("helppetqqq@gmail.com");
             mail.From = new MailAddress("billsagi0002@gmail.com");
