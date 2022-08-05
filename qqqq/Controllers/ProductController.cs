@@ -191,9 +191,16 @@ namespace Pet.Controllers
             string[] PictureIDs = Delete_Images.TrimEnd('/').Split('/');
             foreach (var d in PictureIDs)
             {
+                
                 var q = db.Photos.AsEnumerable().FirstOrDefault(ph => ph.PictureId == int.Parse(d));
+                string photoName = q.PictureName;
                 db.Photos.Remove(q);
                 db.SaveChanges();
+                System.IO.FileInfo file = new FileInfo(_enviroment.WebRootPath + "/Images/" +photoName);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
             }
             return RedirectToAction("Edit", new { id=ProductId});
         }
