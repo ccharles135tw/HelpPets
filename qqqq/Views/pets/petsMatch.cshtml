@@ -88,7 +88,7 @@
                 
                 @foreach (var item in Model)
                 {
-                    <div class="swiper-slide" width="100%">
+                    <div class="swiper-slide" productid="@item.ProductId" width="100%">
                         <div id="addToList" style="background-color: #734226">
                             <h5 style="color:#fff;">@item.ProductName</h5>
                             <h5 style="color:lightgray">媒合度<span>@item.MatchScore</span>%</h5>
@@ -112,191 +112,186 @@
 
         <div class="form-group m-3" style="text-align: center" ;>
             <h5 style="color: gray ">滑鼠滑動翻頁</h5>
+
+            <div class="row">
+                
+                <div class="col-5">
+                    <form action="@Url.Content("~/pets/petsMatch")" method="post" id="formMW">
+                        <input type="number" value="@user.MemberId" name="MemberId" hidden />
+                        <div class="text-center">
+                            <label>種類:</label><select name="CategoryId" id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var qpl = from p in db.Categories where p.IsPet == true select p;
+                                    foreach (Category p in qpl.ToList())
+                                    {
+                                        if (user.MemberWish == null ? false : (p.CategoryId == user.MemberWish.CategoryId))
+                                        {
+                                            <option value="@p.CategoryId" selected>@p.CategoryName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@p.CategoryId">@p.CategoryName</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label>品種:</label><select id="petSubcatel" name="SubCategoryId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var subcategories = db.SubCategories.Where(sc => sc.CategoryId == (user.MemberWish == null ? 1 : user.MemberWish.CategoryId) || sc.SubCategoryName == "不限").ToList();
+                                    foreach (SubCategory s in subcategories.ToList())
+                                    {
+                                        if (user.MemberWish == null ? false : (s.SubCategoryId == user.MemberWish.SubCategoryId))
+                                        {
+                                            <option value="@s.SubCategoryId" selected>@s.SubCategoryName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@s.SubCategoryId">@s.SubCategoryName</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="GenderId" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var gender = db.Genders.ToList();
+                                    foreach (Gender p in gender)
+                                    {
+                                        if (user.MemberWish == null ? false : (p.GenderId == user.MemberWish.GenderId))
+                                        {
+                                            <option value="@p.GenderId" selected>@p.GenderType</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@p.GenderId">@p.GenderType</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="ColorId" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var color = db.Colors.ToList();
+                                    foreach (Color c in color)
+                                    {
+                                        if (user.MemberWish == null ? false : (c.ColorId == user.MemberWish.ColorId))
+                                        {
+                                            <option value="@c.ColorId" selected>@c.ColorName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@c.ColorId">@c.ColorName</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="LigationId" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var ligation = db.Ligations.ToList();
+                                    foreach (Ligation l in ligation)
+                                    {
+                                        if (user.MemberWish == null ? false : (l.LigationId == user.MemberWish.LigationId))
+                                        {
+                                            <option value="@l.LigationId " selected>@l.LigationType</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@l.LigationId ">@l.LigationType</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="SizeId" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var size = db.Sizes.ToList();
+                                    foreach (Size z in size)
+                                    {
+                                        if (user.MemberWish == null ? false : (z.SizeId == user.MemberWish.SizeId))
+                                        {
+                                            <option value="@z.SizeId " selected>@z.SizeType</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@z.SizeId ">@z.SizeType</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="AgeId" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var age = db.Ages.ToList();
+                                    foreach (Age e in age)
+                                    {
+                                        if (user.MemberWish == null ? false : (e.AgeId == user.MemberWish.AgeId))
+                                        {
+                                            <option value="@e.AgeId " selected>@e.AgeType</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@e.AgeId ">@e.AgeType</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            區域: <select name="CityId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                <option value="none" selected disabled hidden>請選擇選項</option>
+                                @{
+                                    var city = db.Cities.ToList();
+                                    foreach (City c in city)
+                                    {
+                                        if (user.MemberWish == null ? false : (c.CityId == user.MemberWish.CityId))
+                                        {
+                                            <option value="@c.CityId" selected>@c.CityName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@c.CityId">@c.CityName</option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" id="btnSumbmitMW" class="btn btn-primary" form="formMW">重新配對</button>
+                    </form>
+                </div>
+                <div class="col-5" id="divPetDetail">
+
+                </div>
+            </div>
+
+
+
+
+
             <div style="display:flex;justify-content:center;align-items:center;">
                 <a class="btn btn-success " href="@Url.Content("~/pets/petsList")" style="flex: none; width: 120px; margin: 10px; align-items: center; justify-content: center ">返回</a>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content" style="display:flex;">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">配對條件</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="@Url.Content("~/pets/petsMatch")" method="post" id="formMW">
-                                    <div class="text-center">
-                                        <label>種類:</label><select name="CategoryId" id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var qpl = from p in db.Categories where p.IsPet == true select p;
-                                                foreach (Category p in qpl.ToList())
-                                                {
-                                                    if (user.MemberWish == null ? false : (p.CategoryId == user.MemberWish.CategoryId))
-                                                    {
-                                                        <option value="@p.CategoryId" selected>@p.CategoryName</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@p.CategoryId">@p.CategoryName</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label>品種:</label><select id="petSubcatel" name="SubCategoryId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var subcategories = db.SubCategories.Where(sc => sc.CategoryId == user.MemberWish.CategoryId || sc.SubCategoryName == "不限").ToList();
-                                                foreach (SubCategory s in subcategories.ToList())
-                                                {
-                                                    if (user.MemberWish == null ? false : (s.SubCategoryId == user.MemberWish.SubCategoryId))
-                                                    {
-                                                        <option value="@s.SubCategoryId" selected>@s.SubCategoryName</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@s.SubCategoryId">@s.SubCategoryName</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="text-center">
-                                        性別: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="GenderId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var gender = db.Genders.ToList();
-                                                foreach (Gender p in gender)
-                                                {
-                                                    if (user.MemberWish == null ? false : (p.GenderId == user.MemberWish.GenderId))
-                                                    {
-                                                        <option value="@p.GenderId" selected>@p.GenderType</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@p.GenderId">@p.GenderType</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        毛色: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="ColorId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var color = db.Colors.ToList();
-                                                foreach (Color c in color)
-                                                {
-                                                    if (user.MemberWish == null ? false : (c.ColorId == user.MemberWish.ColorId))
-                                                    {
-                                                        <option value="@c.ColorId" selected>@c.ColorName</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@c.ColorId">@c.ColorName</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        結紮: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="LigationId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var ligation = db.Ligations.ToList();
-                                                foreach (Ligation l in ligation)
-                                                {
-                                                    if (user.MemberWish == null ? false : (l.LigationId == user.MemberWish.LigationId))
-                                                    {
-                                                        <option value="@l.LigationId " selected>@l.LigationType</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@l.LigationId ">@l.LigationType</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        體型: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="SizeId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var size = db.Sizes.ToList();
-                                                foreach (Size z in size)
-                                                {
-                                                    if (user.MemberWish == null ? false : (z.SizeId == user.MemberWish.SizeId))
-                                                    {
-                                                        <option value="@z.SizeId " selected>@z.SizeType</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@z.SizeId ">@z.SizeType</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        年齡層: <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="AgeId" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var age = db.Ages.ToList();
-                                                foreach (Age e in age)
-                                                {
-                                                    if (user.MemberWish == null ? false : (e.AgeId == user.MemberWish.AgeId))
-                                                    {
-                                                        <option value="@e.AgeId " selected>@e.AgeType</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@e.AgeId ">@e.AgeType</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                    <div>
-                                        區域: <select name="CityId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
-                                            <option value="none" selected disabled hidden>請選擇選項</option>
-                                            @{
-                                                var city = db.Cities.ToList();
-                                                foreach (City c in city)
-                                                {
-                                                    if (user.MemberWish == null ? false : (c.CityId == user.MemberWish.CityId))
-                                                    {
-                                                        <option value="@c.CityId" selected>@c.CityName</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@c.CityId">@c.CityName</option>
-                                                    }
-
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-
-                                </form>
-
-                            </div>
-                            @*<div class="modal-footer " id="alert1">
-                                    <button type="button" class="btn btn-primary" onclick="alertlist()">調整並儲存清單</button>
-                                </div>*@
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
     </div>
@@ -351,7 +346,20 @@
                 stretch: 0,
                 depth: 100,
                 modifier: 1,
-                slideShadows: true,
+                slideShadows: true
+            },
+            on: {
+                slideChange: function (e)
+                {
+                    let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
+                    console.log(e.activeIndex);
+                    console.log(divSelect.attr("productid"));
+                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid") }, function (datas)
+                    {
+                        $("#divPetDetail").html(datas)
+                    })
+
+                }
             },
             pagination: {
                 el: ".swiper-pagination",
@@ -373,7 +381,9 @@
                     select.append(opt);
                 })
             })
-        })
+          })
+
+        $()
     </script>
 
 }

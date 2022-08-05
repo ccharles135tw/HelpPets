@@ -88,6 +88,13 @@ namespace qqqq.Controllers
 
             return View(a);
         }
+        public IActionResult petsDetial2(int id)
+        {
+
+            var a = db.Products.Where(x => x.ProductId == id).FirstOrDefault();
+
+            return PartialView("petsDetial", a);
+        }
 
         public IActionResult petsAdopt(int id)
         {
@@ -103,6 +110,18 @@ namespace qqqq.Controllers
                (p.SubCategory.CategoryId==memberWish.CategoryId||memberWish.CategoryId==1))
                 .Select(p => new CAdoptView(p, memberWish)).ToList();
             datas=datas.Where(p=>p.MatchScore>=55).OrderByDescending(p => p.MatchScore).ToList();
+
+
+            var q = db.MemberWishes.Where(mw => mw.MemberId == memberWish.MemberId).FirstOrDefault();
+            q.AgeId = memberWish.AgeId;
+            q.SizeId=memberWish.SizeId;
+            q.CategoryId=memberWish.CategoryId;
+            q.SubCategoryId= memberWish.SubCategoryId;
+            q.GenderId=memberWish.GenderId;
+            q.CityId=memberWish.CityId;
+            q.ColorId=memberWish.ColorId;
+            q.LigationId=memberWish.LigationId;
+            db.SaveChanges();
             return View(datas);
         }
         public void WishSaveChange(PetDetail petDetail, Product product, int categoryid)
