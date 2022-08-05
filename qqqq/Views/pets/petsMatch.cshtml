@@ -102,11 +102,11 @@
 
                             @{ if (item.product.Photos.Count == 0)
                                 {
-                                    <img src="~/Images/notfound.jpg" height="300" zoom />
+                                                <img src="~/Images/notfound.jpg" height="300" zoom />
                                 }
                                 else
                                 {
-                                    <img src="~/Images/@item.product.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
+                                                <img src="~/Images/@item.product.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
                             <h5 style="color:#fff;">@item.ProductName</h5>
@@ -143,11 +143,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (p.CategoryId == user.MemberWish.CategoryId))
                                                     {
-                                                        <option value="@p.CategoryId" selected>@p.CategoryName</option>
+                                                                    <option value="@p.CategoryId" selected>@p.CategoryName</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@p.CategoryId">@p.CategoryName</option>
+                                                                    <option value="@p.CategoryId">@p.CategoryName</option>
                                                     }
 
                                                 }
@@ -168,11 +168,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (s.SubCategoryId == user.MemberWish.SubCategoryId))
                                                     {
-                                                        <option value="@s.SubCategoryId" selected>@s.SubCategoryName</option>
+                                                                    <option value="@s.SubCategoryId" selected>@s.SubCategoryName</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@s.SubCategoryId">@s.SubCategoryName</option>
+                                                                    <option value="@s.SubCategoryId">@s.SubCategoryName</option>
                                                     }
 
                                                 }
@@ -193,11 +193,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (p.GenderId == user.MemberWish.GenderId))
                                                     {
-                                                        <option value="@p.GenderId" selected>@p.GenderType</option>
+                                                                    <option value="@p.GenderId" selected>@p.GenderType</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@p.GenderId">@p.GenderType</option>
+                                                                    <option value="@p.GenderId">@p.GenderType</option>
                                                     }
 
                                                 }
@@ -218,11 +218,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (c.ColorId == user.MemberWish.ColorId))
                                                     {
-                                                        <option value="@c.ColorId" selected>@c.ColorName</option>
+                                                                    <option value="@c.ColorId" selected>@c.ColorName</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@c.ColorId">@c.ColorName</option>
+                                                                    <option value="@c.ColorId">@c.ColorName</option>
                                                     }
 
                                                 }
@@ -243,11 +243,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (l.LigationId == user.MemberWish.LigationId))
                                                     {
-                                                        <option value="@l.LigationId " selected>@l.LigationType</option>
+                                                                    <option value="@l.LigationId " selected>@l.LigationType</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@l.LigationId ">@l.LigationType</option>
+                                                                    <option value="@l.LigationId ">@l.LigationType</option>
                                                     }
 
                                                 }
@@ -268,11 +268,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (z.SizeId == user.MemberWish.SizeId))
                                                     {
-                                                        <option value="@z.SizeId " selected>@z.SizeType</option>
+                                                                    <option value="@z.SizeId " selected>@z.SizeType</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@z.SizeId ">@z.SizeType</option>
+                                                                    <option value="@z.SizeId ">@z.SizeType</option>
                                                     }
 
                                                 }
@@ -293,11 +293,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (e.AgeId == user.MemberWish.AgeId))
                                                     {
-                                                        <option value="@e.AgeId " selected>@e.AgeType</option>
+                                                                    <option value="@e.AgeId " selected>@e.AgeType</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@e.AgeId ">@e.AgeType</option>
+                                                                    <option value="@e.AgeId ">@e.AgeType</option>
                                                     }
 
                                                 }
@@ -318,11 +318,11 @@
                                                 {
                                                     if (user.MemberWish == null ? false : (c.CityId == user.MemberWish.CityId))
                                                     {
-                                                        <option value="@c.CityId" selected>@c.CityName</option>
+                                                                    <option value="@c.CityId" selected>@c.CityName</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@c.CityId">@c.CityName</option>
+                                                                    <option value="@c.CityId">@c.CityName</option>
                                                     }
 
                                                 }
@@ -403,17 +403,8 @@
                 slideShadows: true
             },
             on: {
-                slideChange: function (e)
-                {
-                    let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
-                    console.log(e.activeIndex);
-                    console.log(divSelect.attr("productid"));
-                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid"), memberid:@user.MemberId}, function (datas)
-                    {
-                        $("#divPetDetail").html(datas)
-                    })
-
-                }
+                slideChange: swiperSlide,
+                init:swiperSlide
             },
             pagination: {
                 el: ".swiper-pagination",
@@ -436,11 +427,14 @@
                 })
             })
           })
-
-        $.post("@Url.Content("~/pets/petsDetial2")", { id: $(".swiper-slide").eq(0).attr("productid"), memberid:@user.MemberId}, function (datas)
+function swiperSlide(e)
+                {
+                    let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
+                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid"), memberid:@user.MemberId}, function (datas)
                     {
                         $("#divPetDetail").html(datas)
                     })
+                }
     </script>
 
 }
