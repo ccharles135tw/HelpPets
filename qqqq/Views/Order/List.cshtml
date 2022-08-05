@@ -61,7 +61,7 @@
                 @{
                     foreach (var os in db.OrderStatuses.ToList())
                     {
-                        <label>@os.StatusType</label><input type="checkbox" value="@os.OrderStatusId" name="orderStatus" class="check-orderStatus" />
+                                    <label>@os.StatusType</label><input type="checkbox" value="@os.OrderStatusId" name="orderStatus" class="check-orderStatus" />
                     }
                 }
             <br />
@@ -224,13 +224,13 @@
         @{//SearchForm
             if (ViewBag.orderStatus != null)
             {
-                <script>
-                    let a = @ViewBag.orderStatus;
-                for (let index of a)
-                {
-                    $(`#searchForm .check-orderStatus[value=${index}]`).trigger("click");
-                }
-                </script>
+                            <script>
+                                let a = @ViewBag.orderStatus;
+                            for (let index of a)
+                            {
+                                $(`#searchForm .check-orderStatus[value=${index}]`).trigger("click");
+                            }
+                            </script>
             }
         }
         <script>
@@ -255,6 +255,10 @@
 
                         let ele_price = all.eq(i).children("td").eq(index).text();
                         let pre_price = preAll.eq(j).children("td").eq(index).text();
+                        if (index == 1) {
+                            ele_price = parseInt(ele_price);
+                            pre_price = parseInt(pre_price);
+                        }
                         if (isNaN(ele_price) == false)
                         {
                             ele_price = parseInt(ele_price);

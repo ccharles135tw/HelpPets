@@ -25,7 +25,7 @@
     </style>
 }
 <div>
-    <h1 style="font-weight:900; text-align:center; margin-top: 30px; margin-bottom: 10px">會員修改</h1>
+    <h1 style="font-weight:900; text-align:center; margin-top: 30px; margin-bottom: 10px">商品編輯</h1>
 </div>
 <div style="text-align:right; margin-right:10px; text-decoration:none">
     <a asp-action="List" style="color:chocolate;" class="fa-solid fa-right-from-bracket"> 返回</a>
@@ -242,7 +242,7 @@
                     <input type="hidden" name="ProductId" value="@Model.ProductId" />
                     <input type="hidden" name="Delete_Images" id="Delete_Images" />
                     <input type="button" onclick="SetDefault()" value="設定預設" class="col-4 btn-success" />
-                    <input type="submit" value="刪除預設" onclick="Delete_Image_Submit()" class="col-4 btn-danger" /><br />
+                    <input type="submit" value="刪除選擇圖片" onclick="Delete_Image_Submit()" class="col-4 btn-danger" /><br />
                 </div>
                 </form>
                 
@@ -265,9 +265,9 @@
                 <input type="hidden" name="ProductId" value="@Model.ProductId" />
                 <div style="text-align:center;height:50px"></div>
                 <input type="file" name="File" accept=".png, .jpg, .jpeg" required multiple id="File" />
-
+                 <input class="btn-success" type="submit" value="上傳" style="display:block;margin:auto" />
             </div>
-                <input class="btn-success" type="submit" value="上傳" style="display:block;margin:auto" />
+               
 </form>
         
     </div>
