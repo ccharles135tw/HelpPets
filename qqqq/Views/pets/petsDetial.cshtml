@@ -274,9 +274,19 @@
                 @{
                     if (memberview != null)
                     {
-                        <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
+                        if(db.OrderDetails.Where(od=>od.ProductId==Model.ProductId&&od.Order.MemberId==memberview.MemberID).ToList().Count>0)
+                        {
+                        <button type="button" class="btn btn-primary m-1">
+                            您已經申請領養了
+                        </button>
+                        }
+                        else
+                        {
+                         <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
                             我要評估領養
                         </button>
+                        }
+
                     }
                     else
                     {

@@ -410,6 +410,14 @@
                 el: ".swiper-pagination",
             },
         });
+        function swiperSlide(e)
+                {
+                    let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
+                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid"), memberid:@user.MemberId}, function (datas)
+                    {
+                        $("#divPetDetail").html(datas)
+                    })
+                }
           $("#petCatel").on('change', function () {
             $.getJSON('@Url.Content("~/pets/petsSubcategory")', { "id":this.value}, (data) => {
                 let list = JSON.parse(data);
@@ -427,14 +435,6 @@
                 })
             })
           })
-function swiperSlide(e)
-                {
-                    let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
-                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid"), memberid:@user.MemberId}, function (datas)
-                    {
-                        $("#divPetDetail").html(datas)
-                    })
-                }
     </script>
 
 }
