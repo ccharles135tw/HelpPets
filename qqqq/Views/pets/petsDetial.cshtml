@@ -26,7 +26,7 @@
 }
 @section Styles{
     <style>
-        .magnify {
+       /* .magnify {
             flex: none;
             position: absolute;
             top: 50%;
@@ -63,136 +63,213 @@
             margin-left: -100px !important;
             margin-top: -100px !important;
             z-index: 90;
+        }*/
+        td {
+            vertical-align: middle;
+            text-align: center;
         }
     </style>
 }
 <div class="container text-center col-md-6 col-sm-12 d-flex mt-5  table table-hover">
-    <div style="flex:none;">
-        <form class="text-left" style="display: flex; align-items: center">
+    <div>
+        <form class="text-left" style="display:block; align-items: center">
             @*<div class="magnify">
                 <div class="magnifier" style="background-image:url(/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
                 <div class="magnified">
                     <img id="prodImg" src="~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
                 </div>
             </div>*@
-            <div style="flex:none;text-align:left;margin-left:10px;">
-                <p>
-                    <label class="control-label">名字:<span>@Model.ProductName</span></label>
-                </p>
-                <hr />
-                <p>
-                    <label class="control-label">種類:<span>@Model.SubCategory.Category.CategoryName</span></label>
-                    @{
-                        if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
+            <div style=" text-align: left; margin-left: 10px;  " class="divp">
+                <table class="table table-hover" style="table-layout: fixed;">
+                    <tr>
+                        <td>
+                            <label class="control-label" style="text-align:center;">名字:</label>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.ProductName</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">種類:</label>
 
-                    }
-                </p>
-                <hr />
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.Category.CategoryName</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
 
-                <p>
-                    <label class="control-label">品種:<span>@Model.SubCategory.SubCategoryName</span></label>
-                    @{
-                        if (memberWish.SubCategory.SubCategoryName==Model.SubCategory.SubCategoryName)
-            {
-                <i class="fa-solid fa-check" ></i>
-            }
-                       
-                    }
-                </p>
-                <hr />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">品種:</label>
 
-                <p>
-                    <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
-                    @{
-                        if (memberWish.GenderId == Model.PetDetail.GenderId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
-                <hr />
-                <p>
-                    <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
-                    @{
-                        if (memberWish.ColorId == Model.PetDetail.ColorId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.SubCategoryName</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.SubCategory.SubCategoryName == Model.SubCategory.SubCategoryName)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
 
-                <hr />
-                <p>
-                    <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
-                    @{
-                        if (memberWish.LigationId == Model.PetDetail.LigationId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
-                <hr />
-                <p>
-                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
-                    @{
-                        if (memberWish.SizeId == Model.PetDetail.SizeId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
-                <hr />
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">性別:</label>
 
-                <p>
-                    <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
-                    @{
-                        if (memberWish.AgeId == Model.PetDetail.AgeId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Gender.GenderType</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.GenderId == Model.PetDetail.GenderId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">毛色:</label>
 
-                <hr />
-                <p>
-                    <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
-                    @{
-                        if (memberWish.CityId == Model.PetDetail.CityId)
-                        {
-                            <i class="fa-solid fa-check"></i>
-                        }
-                    }
-                </p>
-                <hr />
-                <h2>生活基本條件</h2>
-                <p>
-                    <label class="control-label">最低活動空間:<span>@Model.PetDetail.Space</span> 坪</label>
-                </p>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Color.ColorName</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.ColorId == Model.PetDetail.ColorId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">結紮:</label>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Ligation.LigationType</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.LigationId == Model.PetDetail.LigationId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">體型:</label>
 
-                <hr />
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Size.SizeType</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.SizeId == Model.PetDetail.SizeId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">年齡層:</label>
 
-                <p>
-                    <label class="control-label">基本開銷費用約:<span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月</label>
-                </p>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Age.AgeType</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.AgeId == Model.PetDetail.AgeId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">區域:</label>
 
-                <hr />
-                <p>
-                    <label class="control-label">每周陪伴時間:<span>@Model.PetDetail.AccompanyTimeWeek</span> 小時/週</label>
-                </p>
+                        </td>
+                        <td>
+                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.City.CityName</span>
+                        </td>
+                        <td>
+                            @{
+                                if (memberWish.CityId == Model.PetDetail.CityId)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h2>生活基本條件</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">最低活動空間:</label>
+                        </td>
 
-                <hr />
-                <p>
-                    <label class="control-label">簡介:<span>@Model.Description</span></label>
-                </p>
+                        <td>
+                            <span>@Model.PetDetail.Space</span>坪
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">基本開銷費用約:</label>
+                        </td>
+                        <td>
+                            <span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="control-label">每周陪伴時間:</label>
 
-                <hr />
+                        </td>
+                        <td>
+                            <span>@Model.PetDetail.AccompanyTimeWeek</span> 小時/週
+                        </td>
+                    </tr>
+
+                </table>
+
+
             </div>
-        </form>
 
-        <div class="m-2" >
+
+        </form>
+        <div style="text-align:left ;height:150px;">
+            <label class="control-label">簡介:</label>
+            <span>@Model.Description</span>
+        </div>
+        <div class="m-2">
             <div class="form-group">
                 @{
                     if (memberview != null)

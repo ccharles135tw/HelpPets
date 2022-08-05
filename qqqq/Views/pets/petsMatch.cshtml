@@ -44,8 +44,8 @@
             color: #000;
             margin: 0;
             padding: 0;
-            user-select: none;
-        }
+/*            user-select: none;
+*/        }
 
         .swiper {
             width: 100%;
@@ -72,6 +72,15 @@
         #alert1 {
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .sel {
+            border: none;
+            background-color: #EEEEEE;
+            font-size:20px;
+        }
     </style>
     <div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style="  background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
         <div class="container text-center pt-5 pb-3">
@@ -82,16 +91,15 @@
 }<body>
     <div>
         <!-- Swiper -->
-        <div class="swiper mySwiper " style="justify-content:center;text-align:center;">
+        <div class="swiper mySwiper row" style="justify-content:center;text-align:center;">
             <h3 id="serchcnt" style="margin-bottom:50px;">共搜尋到@(Model.Count())個符合</h3>
-            <div class="swiper-wrapper" style="text-align:center">
+            <div class="swiper-wrapper" style="text-align: center;">
                 
                 @foreach (var item in Model)
                 {
-                    <div class="swiper-slide" productid="@item.ProductId" width="100%">
-                        <div id="addToList" style="background-color: #734226">
-                            <h5 style="color:#fff;">@item.ProductName</h5>
-                            <h5 style="color:lightgray">媒合度<span>@item.MatchScore</span>%</h5>
+                    <div class="swiper-slide" productid="@item.ProductId" width="100%" style="border: 5px solid #734226; background-color: #734226 ">
+                        <div id="addToList" style="">
+
                             @{ if (item.product.Photos.Count == 0)
                                 {
                                     <img src="~/Images/notfound.jpg" height="300" zoom />
@@ -101,7 +109,9 @@
                                     <img src="~/Images/@item.product.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
-                            <i class="fa-solid fa-list-alt" style="color:#EAA636;font-size:20px;">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = item.ProductId })</i>
+                            <h5 style="color:#fff;">@item.ProductName</h5>
+                            <h5 style="color:lightgray">媒合度<span>@item.MatchScore</span>%</h5>
+                            @*<i class="fa-solid fa-list-alt" style="color:#EAA636;font-size:20px;">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = item.ProductId })</i>*@
                         </div>
                     </div>
                 }
@@ -113,19 +123,19 @@
         <div class="form-group m-3" style="text-align: center;" ;>
             <h5 style="color: gray ">滑鼠滑動翻頁</h5>
 
-            <div  style="display: flex;justify-content:center;">
+            <div class="row"  style="justify-content:center;">
                 
-                <div  style="flex:none;margin-top:100px;">
+                <div class="col-3" style="margin-top:100px;">
                     <form action="@Url.Content("~/pets/petsMatch")" method="post" id="formMW">
                         <input type="number" value="@user.MemberId" name="MemberId" hidden />
-                        <div class="text-center">
+                        <div class="text-center" style=" align-items: center; justify-content: center;width:450px;">
                             <table class="table table-hover">
                                 <tr>
                                     <td>
                                         種類:
                                     </td>
                                     <td>
-                                        <select name="CategoryId" id="petCatel" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right: 10px;">
+                                        <select name="CategoryId" id="petCatel" class="sorting mr-auto  dropdown-toggle sel" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var qpl = from p in db.Categories where p.IsPet == true select p;
@@ -150,7 +160,7 @@
                                         品種:
                                     </td>
                                     <td>
-                                        <select id="petSubcatel" name="SubCategoryId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <select id="petSubcatel" name="SubCategoryId" class="sorting mr-auto dropdown-toggle sel" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var subcategories = db.SubCategories.Where(sc => sc.CategoryId == (user.MemberWish == null ? 1 : user.MemberWish.CategoryId) || sc.SubCategoryName == "不限").ToList();
@@ -175,7 +185,7 @@
                                         性別:
                                     </td>
                                     <td>
-                                        <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="GenderId" style="margin-left: 10px; margin-right:10px;">
+                                        <select class="sorting mr-auto dropdown-toggle sel" name="GenderId" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var gender = db.Genders.ToList();
@@ -200,7 +210,7 @@
                                         毛色:
                                     </td>
                                     <td>
-                                        <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="ColorId" style="margin-left: 10px; margin-right:10px;">
+                                        <select class="sorting mr-auto  dropdown-toggle sel" name="ColorId" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var color = db.Colors.ToList();
@@ -225,7 +235,7 @@
                                         結紮:
                                     </td>
                                     <td>
-                                        <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="LigationId" style="margin-left: 10px; margin-right:10px;">
+                                        <select class="sorting mr-auto  dropdown-toggle sel" name="LigationId" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var ligation = db.Ligations.ToList();
@@ -250,7 +260,7 @@
                                         體型:
                                     </td>
                                     <td>
-                                        <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="SizeId" style="margin-left: 10px; margin-right:10px;">
+                                        <select class="sorting mr-auto  dropdown-toggle sel" name="SizeId" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var size = db.Sizes.ToList();
@@ -275,7 +285,7 @@
                                         年齡層:
                                     </td>
                                     <td>
-                                        <select class="sorting mr-auto btn btn-warning dropdown-toggle" name="AgeId" style="margin-left: 10px; margin-right:10px;">
+                                        <select class="sorting mr-auto dropdown-toggle sel" name="AgeId" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var age = db.Ages.ToList();
@@ -300,7 +310,7 @@
                                         區域:
                                     </td>
                                     <td>
-                                        <select name="CityId" class="sorting mr-auto btn btn-warning dropdown-toggle" style="margin-left: 10px; margin-right:10px;">
+                                        <select name="CityId" class="sorting mr-auto dropdown-toggle sel" >
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var city = db.Cities.ToList();
@@ -325,7 +335,7 @@
                         <button type="submit" id="btnSumbmitMW" class="btn btn-primary" form="formMW">重新配對</button>
                     </form>
                 </div>
-                <div  id="divPetDetail" style="flex:none;">
+                <div  id="divPetDetail" class="col-3"  style=" width:450px; ">
 
                 </div>
             </div>
