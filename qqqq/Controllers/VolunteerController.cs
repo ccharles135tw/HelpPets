@@ -326,6 +326,8 @@ namespace final_test.Controllers
             mail.Priority = MailPriority.Normal;
             //設定smtpclient
             SmtpClient client = new SmtpClient();
+            //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+            client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
             client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
             //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "yhmkxyrfnipepfor");
             client.Host = "smtp.gmail.com";
@@ -498,6 +500,8 @@ namespace final_test.Controllers
             mail.Priority = MailPriority.Normal;
             //設定smtpclient
             SmtpClient client = new SmtpClient();
+            //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
+            client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
             client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
             //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "yhmkxyrfnipepfor");
             client.Host = "smtp.gmail.com";

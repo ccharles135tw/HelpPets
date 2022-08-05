@@ -12,137 +12,143 @@
 
 
 
-<div class="container  col-md-6 col-sm-12">
-
-    <div class="text-center">
-        @{
-            if (Model.Photos.Count == 0)
-            {
-                <img id="prodImg" width="400" height="400" src="~/Images/notfound.jpg" />
-            }
-            else
-            {
-                <img id="prodImg" width="400" height="400" src="~/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
-            }
-        }
-    </div>
-    <br />
-    <div class=" col-md-12 col-sm-12 row list-group-item-primary">
-        @*<table class="table table-light table-striped-columns col-auto">
-                <thead >
-                    <tr >
-                        @foreach (var p in Model.Photos)
-                        {
-                            <td class="col-1">
-                                <img src="~/Images/@p.PictureName" class="col-11" width="100" height="100" />
-                            </td>
-
-                        }
-                    </tr>
-                </thead>
-            </table>*@
-
-        @foreach (var p in Model.Photos)
-        {
-            <img src="~/Images/@p.PictureName" class="imgOption col-2 product-item" />
-        }
-
-
-    </div>
-</div>
-<hr />
-<div class="container text-center col-md-6 col-sm-12">
-    <div class=" text-center">
-        <form asp-action="ShowProduct">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductId" name="Cartid" />
-
-            <div class="form-group">
+<div class="container  col-md-7 col-sm-12 ">
+    <div class="row">
+        <div class="col-6  ">
+            <div>
                 @{
                     if (Model.Photos.Count == 0)
                     {
-                        <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="notfound.jpg" />
+                        <img id="prodImg" width="400" height="400" src="~/Images/notfound.jpg" />
                     }
                     else
                     {
-                        <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
-
+                        <img id="prodImg" width="400" height="400" src="~/Images/@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
                     }
                 }
-
-            </div>
-            <div class="form-group">
-                <h5>
-                    <label asp-for="ProductName" class="control-label">產品名稱</label>
-                </h5>
-                <input asp-for="ProductName" name="CartName" class="form-control text-center" readonly />
-
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <h5>
-                    <label asp-for="SubCategoryId" class="control-label">種類</label>
-                </h5>
-                <label disabled value=" " class="form-control" asp-items="ViewBag.SubCategoryId" readonly>@Model.CategoryName / @Model.SubCategoryName</label>
-
-            </div>
-            <div class="form-group">
-                <h5>
-                    <label asp-for="Price" class="control-label">售價</label>
-                </h5>
-                <input asp-for="Price" class="form-control text-center" readonly name="CartPrice" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <h5>
-                    <label asp-for="SupplierId" class="control-label ">品牌</label>
-                </h5>
-                <input disabled value="@Model.SupplierName" class="form-control text-center" asp-items="ViewBag.SupplierId" id="sup" readonly>
-
-            </div>
-
-            <div class="form-group ">
-                <h5>
-                    <label asp-for="Description" class="control-label">產品介紹</label>
-                </h5>
-                <input disabled asp-for="Description" class="form-control text-center" readonly />
-
-            </div>
-            <div class="form-group">
-                <h5>
-                    <label asp-for="UnitsInStock" class="control-label">庫存</label>
-                </h5>
-                <input disabled asp-for="UnitsInStock" class="form-control text-center" readonly />
-
-            </div>
-
-            <div class="form-group">
-                <h5>
-                    <label class="product">數量</label>
-                </h5>
-                <input type="number" class="form-control text-center" name="CartCount" min="0" max="@Model.UnitsInStock" value="0" />
-                <span class="text-danger"></span>
             </div>
             <br />
+            <div class=" col-md-12 col-sm-12 row list-group-item-primary overflow-auto" >
+                @*<table class="table table-light table-striped-columns col-auto">
+                    <thead >
+                        <tr >
+                            @foreach (var p in Model.Photos)
+                            {
+                                <td class="col-1">
+                                    <img src="~/Images/@p.PictureName" class="col-11" width="100" height="100" />
+                                </td>
+
+                            }
+                        </tr>
+                    </thead>
+                </table>*@
+
+                @foreach (var p in Model.Photos)
+                {
+                    <img src="~/Images/@p.PictureName" class="imgOption col-3 product-item" />
+                }
 
 
-            <div class="form-group">
-                <h5>
-                    <label class="product alert-danger">捐贈我救浪</label>
-                </h5>
-                <input type="number" class="form-control text-center" name="Donate" min="0" max="@Model.UnitsInStock" value="0" />
-                <span class="text-danger"></span>
             </div>
-            <br />
+        </div>
+        @*<div class="text-center">
+        </div>*@
 
-            <div class="form-group">
-                <button type="submit"  class="btn btn-primary"> <i class="fa-solid fa-plus">加入購物車</i></button>
-                <a href="~/shopping/shopping" class="btn-success p-2" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前往商城</i></a>
+        <div class="container text-center col-md-6 col-sm-12">
+            <div class=" text-center">
+                <form asp-action="ShowProduct">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ProductId" name="Cartid" />
+
+                    <div class="form-group">
+                        @{
+                            if (Model.Photos.Count == 0)
+                            {
+                                <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="notfound.jpg" />
+                            }
+                            else
+                            {
+                                <input hidden asp-for="ProductName" class="form-control" readonly name="CartPhoto" value="@Model.Photos.FirstOrDefault(p => p.IsDefault == true).PictureName" />
+
+                            }
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <h5>
+                            <label asp-for="ProductName" class="control-label">產品名稱</label>
+                        </h5>
+                        <input asp-for="ProductName" name="CartName" class="form-control text-center" readonly />
+
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <h5>
+                            <label asp-for="SubCategoryId" class="control-label">種類</label>
+                        </h5>
+                        <label disabled value=" " class="form-control" asp-items="ViewBag.SubCategoryId" readonly>@Model.CategoryName / @Model.SubCategoryName</label>
+
+                    </div>
+                    <div class="form-group">
+                        <h5>
+                            <label asp-for="Price" class="control-label">售價</label>
+                        </h5>
+                        <input asp-for="Price" class="form-control text-center" readonly name="CartPrice" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <h5>
+                            <label asp-for="SupplierId" class="control-label ">品牌</label>
+                        </h5>
+                        <input disabled value="@Model.SupplierName" class="form-control text-center" asp-items="ViewBag.SupplierId" id="sup" readonly>
+
+                    </div>
+
+                    <div class="form-group ">
+                        <h5>
+                            <label asp-for="Description" class="control-label">產品介紹</label>
+                        </h5>
+                        <input disabled asp-for="Description" class="form-control text-center" readonly />
+
+                    </div>
+                    <div class="form-group">
+                        <h5>
+                            <label asp-for="UnitsInStock" class="control-label">庫存</label>
+                        </h5>
+                        <input disabled asp-for="UnitsInStock" class="form-control text-center" readonly />
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5>
+                            <label class="product">數量</label>
+                        </h5>
+                        <input type="number" class="form-control text-center" name="CartCount" min="0" max="@Model.UnitsInStock" value="0" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <br />
+
+
+                    <div class="form-group">
+                        <h5>
+                            <label class="product alert-danger">捐贈我救浪</label>
+                        </h5>
+                        <input type="number" class="form-control text-center" name="Donate" min="0" max="@Model.UnitsInStock" value="0" />
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary"> <i class="fa-solid fa-plus">加入購物車</i></button>
+                        <a href="~/shopping/shopping" class="btn-success p-2" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前往商城</i></a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     <br /><br />
-    <div>
+    <div class="text-center">
         <div><h2>評論</h2></div>
         <hr />
         @{
@@ -151,8 +157,10 @@
                 foreach (var c in Model.product.MemberComments)
                 {
                     <div>
-                        <div class="text-left row"><img src="~/Images/02.png" width="40" height="40" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
-                        <img src="~/Images/@(c.Grade)s.jpg" width="110" height="25" class="col-3 " /> @c.CommentDate</div>
+                        <div class="text-left row">
+                            <img src="~/Images/@c.Member.Photo" width="40" height="50" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
+                            <img src="~/Images/@(c.Grade)s.jpg" width="110" height="25" class="col-3 " /> @c.CommentDate
+                        </div>
                         <div class="text-left row"><p><h4 class="text">@c.Description</h4></p></div>
                         <div></div>
                     </div>
@@ -164,22 +172,20 @@
                 <h3 class="text-primary">目前暫無評論</h3>
             }
         }
-       
+
     </div>
 </div>
 
-<div>
-    <a href="~/shopping/shopping" class="btn-primary p-2" style="color:#fff;border-radius:10px;"><i class="fa-solid fa-circle-right">前去購物</i></a>
-</div>
+
 
 @section Scripts {
- 
+
     <script>
 
         $(".imgOption").click((event) => {
             $("#prodImg").attr("src", event.target.src)
-           
+
         })
-      
+
     </script>
 }
