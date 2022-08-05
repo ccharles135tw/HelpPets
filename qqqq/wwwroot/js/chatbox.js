@@ -54,6 +54,14 @@ $('.send-btn').on('click', function ()
     });
 });
 
+$("#messageText").keypress(function (e)
+{
+    if (e.which == 13)
+    {
+        $(".send-btn").click();
+    }
+})
+
 //$(".chattext").on('keypress', function (e) {
 //    if (e.which == 13) {
 //        alert('You pressed enter!');

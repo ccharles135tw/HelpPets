@@ -53,6 +53,13 @@ $('.send-btn').on('click', function ()
         alert('傳送錯誤: ' + err.toString());
     });
 });
+$("#messageText").keypress(function (e)
+{
+    if (e.which == 13)
+    {
+        $(".send-btn").click();
+    }
+})
 //傳送信息事件
 connection.on("SendMessage", function (clientID, j)
 {
@@ -99,11 +106,6 @@ connection.on("ReceiveMessage", function (clientID, j)
 connection.on("UpIsRead", function (clientID)
 {
     ReadMessage(clientID);
-})
-connection.on("RepeatLogin", function ()
-{
-    alert("重複登入，即將跳回首頁");
-    window.location.href = "/homepage/homepage";
 })
 //點擊li切換對象
 $(".ul-client").on("click", "li", function ()

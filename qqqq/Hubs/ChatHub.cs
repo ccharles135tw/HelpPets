@@ -47,7 +47,11 @@ namespace qqqq.Hubs
             else
             {
                 Debug.WriteLine("ConnDist已有此selfID");
-                await Clients.Client(Context.ConnectionId).SendAsync("RepeatLogin");
+
+                ConnDict.Remove(selfID);
+                ConnDict.Add(selfID,Context.ConnectionId);
+                
+                //await Clients.Client(Context.ConnectionId).SendAsync("RepeatLogin");
                 //throw new Exception("重複登入ㄌ87");
             }
         }
@@ -62,8 +66,9 @@ namespace qqqq.Hubs
             {
                 
                 string key = ConnDict.Where(cd => cd.Value == Context.ConnectionId).FirstOrDefault().Key;
-                await Clients.All.SendAsync("UpListOff", key);
                 ConnDict.Remove(key);
+                await Clients.All.SendAsync("UpListOff", key);
+                
             }
            else
             {
