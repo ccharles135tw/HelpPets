@@ -10,11 +10,6 @@
 @using System.Net;
 @using System.Net.Mail;
 @using System.Text.Json;
-<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
-    <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">寵物詳細資料</h1>
-    </div>
-</div>
 @model qqqq.Models.Product
 
 @{
@@ -71,140 +66,74 @@
 <div class="container text-center col-md-6 col-sm-12 d-flex mt-5  table table-hover">
     <div style="flex:none;">
         <form class="text-left" style="display: flex; align-items: center">
-            <div class="magnify">
+            @*<div class="magnify">
                 <div class="magnifier" style="background-image:url(/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
                 <div class="magnified">
                     <img id="prodImg" src="~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
                 </div>
-            </div>
+            </div>*@
             <div style="flex:none;text-align:left;margin-left:10px;">
-
-                <h5>
-                    <label class="control-label">會員:<span>某某某的願望清單</span></label>
-                </h5>
-                <hr />
-                <h5>
+                <p>
                     <label class="control-label">名字:<span>@Model.ProductName</span></label>
-                </h5>
+                </p>
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">種類:<span>@Model.SubCategory.Category.CategoryName</span></label>
-                </h5>
+                </p>
                 <hr />
 
-                <h5>
+                <p>
                     <label class="control-label">品種:<span>@Model.SubCategory.SubCategoryName</span></label>
-                </h5>
+                </p>
                 <hr />
 
-                <h5>
+                <p>
                     <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
-                </h5>
+                </p>
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
-                </h5>
+                </p>
 
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
-                </h5>
+                </p>
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
-                </h5>
+                </p>
                 <hr />
 
-                <h5>
+                <p>
                     <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
-                </h5>
+                </p>
 
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
-                </h5>
-                <hr />
-                <h5>
-                    共X項符合,媒合度:XX%
-                </h5>
-            </div>
-        </form>
-    </div>
-    <div style="flex:none;">
-        <form class="text-left" style="display: flex; align-items: center">
-            <div class="magnify">
-                <div class="magnifier" style="background-image:url(/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
-                <div class="magnified">
-                    <img id="prodImg" src="~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
-                </div>
-            </div>
-            <div style="flex:none;text-align:left;margin-left:10px;">
-
-                <h5>
-                    <label class="control-label">浪浪:<span>某某某的詳細資訊</span></label>
-                </h5>
-                <hr />
-                <h5>
-                    <label class="control-label">名字:<span>@Model.ProductName</span></label>
-                </h5>
-                <hr />
-                <h5>
-                    <label class="control-label">種類:<span>@Model.SubCategory.Category.CategoryName</span></label>
-                </h5>
-                <hr />
-
-                <h5>
-                    <label class="control-label">品種:<span>@Model.SubCategory.SubCategoryName</span></label>
-                </h5>
-                <hr />
-
-                <h5>
-                    <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
-                </h5>
-                <hr />
-                <h5>
-                    <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
-                </h5>
-
-                <hr />
-                <h5>
-                    <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
-                </h5>
-                <hr />
-                <h5>
-                    <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
-                </h5>
-                <hr />
-
-                <h5>
-                    <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
-                </h5>
-
-                <hr />
-                <h5>
-                    <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
-                </h5>
+                </p>
                 <hr />
                 <h2>生活基本條件</h2>
-                <h5>
+                <p>
                     <label class="control-label">最低活動空間:<span>@Model.PetDetail.Space</span> 坪</label>
-                </h5>
+                </p>
 
                 <hr />
 
-                <h5>
+                <p>
                     <label class="control-label">基本開銷費用約:<span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月</label>
-                </h5>
+                </p>
 
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">每周陪伴時間:<span>@Model.PetDetail.AccompanyTimeWeek</span> 小時/週</label>
-                </h5>
+                </p>
 
                 <hr />
-                <h5>
+                <p>
                     <label class="control-label">簡介:<span>@Model.Description</span></label>
-                </h5>
+                </p>
 
                 <hr />
             </div>
@@ -281,8 +210,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-success m-1">@Html.ActionLink("返回", "petsList", null)</button>
-                <button class="btn btn-info m-1">@Html.ActionLink("加入比較", "petsCompare", null)</button>
             </div>
         </div>
     </div>
