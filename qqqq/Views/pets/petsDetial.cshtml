@@ -20,6 +20,9 @@
         var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
         memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
     }
+    我救浪Context db = new 我救浪Context();
+    int a = ViewBag.memberid;
+    var memberWish = db.MemberWishes.Where(mw => mw.MemberId == a).FirstOrDefault();
 }
 @section Styles{
     <style>
@@ -79,39 +82,89 @@
                 <hr />
                 <p>
                     <label class="control-label">種類:<span>@Model.SubCategory.Category.CategoryName</span></label>
+                    @{
+                        if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+
+                    }
                 </p>
                 <hr />
 
                 <p>
                     <label class="control-label">品種:<span>@Model.SubCategory.SubCategoryName</span></label>
+                    @{
+                        if (memberWish.SubCategory.SubCategoryName==Model.SubCategory.SubCategoryName)
+            {
+                <i class="fa-solid fa-check" ></i>
+            }
+                       
+                    }
                 </p>
                 <hr />
 
                 <p>
                     <label class="control-label">性別:<span>@Model.PetDetail.Gender.GenderType</span></label>
+                    @{
+                        if (memberWish.GenderId == Model.PetDetail.GenderId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
                 <hr />
                 <p>
                     <label class="control-label">毛色:<span>@Model.PetDetail.Color.ColorName</span></label>
+                    @{
+                        if (memberWish.ColorId == Model.PetDetail.ColorId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
 
                 <hr />
                 <p>
                     <label class="control-label">結紮:<span>@Model.PetDetail.Ligation.LigationType</span></label>
+                    @{
+                        if (memberWish.LigationId == Model.PetDetail.LigationId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
                 <hr />
                 <p>
                     <label class="control-label">體型:<span>@Model.PetDetail.Size.SizeType</span></label>
+                    @{
+                        if (memberWish.SizeId == Model.PetDetail.SizeId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
                 <hr />
 
                 <p>
                     <label class="control-label">年齡層:<span>@Model.PetDetail.Age.AgeType</span></label>
+                    @{
+                        if (memberWish.AgeId == Model.PetDetail.AgeId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
 
                 <hr />
                 <p>
                     <label class="control-label">區域:<span>@Model.PetDetail.City.CityName</span></label>
+                    @{
+                        if (memberWish.CityId == Model.PetDetail.CityId)
+                        {
+                            <i class="fa-solid fa-check"></i>
+                        }
+                    }
                 </p>
                 <hr />
                 <h2>生活基本條件</h2>

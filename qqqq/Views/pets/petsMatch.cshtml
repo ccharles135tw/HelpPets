@@ -398,7 +398,7 @@
                     let divSelect = $(".swiper-slide").eq(`${e.activeIndex}`);
                     console.log(e.activeIndex);
                     console.log(divSelect.attr("productid"));
-                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid") }, function (datas)
+                    $.post("@Url.Content("~/pets/petsDetial2")", { id: divSelect.attr("productid"), memberid:@user.MemberId}, function (datas)
                     {
                         $("#divPetDetail").html(datas)
                     })
@@ -427,7 +427,10 @@
             })
           })
 
-        $()
+        $.post("@Url.Content("~/pets/petsDetial2")", { id: $(".swiper-slide").eq(0).attr("productid"), memberid:@user.MemberId}, function (datas)
+                    {
+                        $("#divPetDetail").html(datas)
+                    })
     </script>
 
 }

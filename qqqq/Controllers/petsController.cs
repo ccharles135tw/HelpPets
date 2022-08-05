@@ -88,11 +88,11 @@ namespace qqqq.Controllers
 
             return View(a);
         }
-        public IActionResult petsDetial2(int id)
+        public IActionResult petsDetial2(int id, int memberid)
         {
 
             var a = db.Products.Where(x => x.ProductId == id).FirstOrDefault();
-
+            ViewBag.memberid = memberid;
             return PartialView("petsDetial", a);
         }
 
