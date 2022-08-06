@@ -15,96 +15,96 @@
                 <th>單價</th>
                 <th>評論</th>
                 <th>星等</th>
-                <th>&nbsp;</th>    
+                <th>&nbsp;</th>
                 <th>&nbsp;</th>
 
 
             </tr>
         </thead>
         <tbody>
-    @{ 
-            int count = 0;
-            foreach (var item in Model)
-            {
-                count++;
-                <tr class="alert" role="alert">
+            @{
+                int count = 0;
+                foreach (var item in Model)
+                {
+                    count++;
+                    <tr class="alert" role="alert">
 
-                    <td>
-                        @count;
-                    </td>
+                        <td>
+                            @count;
+                        </td>
 
-                    <td>
-                        <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
+                        <td>
+                            <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
 
-                    </td>
-                    <td>
-                        <div class="email">
-                            <span>@item.ProductName </span>
-                            <span>描述:@item.describe</span>
-                        </div>
-                    </td>
-
-                    <td>@String.Format("{0:C2}", item.Unprice)</td>
-
-                    <td>
-                        <div>
-                        @item.MemberCommon
-
-                        </div>
-                    </td>
-
-                    <td>
-
-                        @{
-                            for (int i = 0; i < Math.Floor(item.Rate); i++)
-                            {
-                                <span> <img width="10" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
-                            }
-                        } <span>(@item.RateS)</span>
-
-
-
-                    </td>
-
-                    <td  colspan="2">
-                        <div>
-                            <button class="close commoning" type="button" style="color:gray" data-toggle="modal" common="@item.CommonId" data-target="#myModal">
-                                <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                                <span>修改評論</span>
-                            </button>
-                            <div>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                    <span>刪除評論</span>
-                                </button>
+                        </td>
+                        <td>
+                            <div class="email">
+                                <span>@item.ProductName </span>
+                                <span>描述:@item.describe</span>
                             </div>
-                        </div>
-                    </td>
-                
-                </tr>
-            } }
+                        </td>
+
+                        <td>@String.Format("{0:C2}", item.Unprice)</td>
+
+                        <td>
+                            <div>
+                                @item.MemberCommon
+
+                            </div>
+                        </td>
+
+                        <td>
+
+                            @{
+                                for (int i = 0; i < Math.Floor(item.Rate); i++)
+                                {
+                                    <span> <img width="10" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
+                                }
+                            } <span name="rate" rate="@item.RateS">(@item.RateS)</span>
+
+
+
+                        </td>
+
+                        <td colspan="2">
+                            <div>
+                                <button class="close commoning" type="button" style="color:gray" data-toggle="modal" common="@item.CommonId" data-target="#myModal">
+                                    <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                    <span>修改評論</span>
+                                </button>
+                                <div>
+                                    <button type="button" class="close delete" data-dismiss="alert" aria-label="Close" delecommon="@item.CommonId">
+                                        <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                        <span>刪除評論</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                } }
         </tbody>
     </table>
     <!-- The Modal -->
 
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content ">
 
-                 @*Modal Header*@ 
+                @*Modal Header*@
                 <div class="modal-header">
                     <h4 class="modal-title">評論此商品</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                 @*Modal body*@ 
+                @*Modal body*@
                 <div class="modal-body">
-                     @*try===================================================================*@ 
+                    @*try===================================================================*@
 
                 </div>
-                 @*Modal footer*@ 
+                @*Modal footer*@
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee" >送出</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee" @*CommonId="@.CommonId"*@>送出</button>
                 </div>
 
             </div>
@@ -114,22 +114,68 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
+    $(".delete").click(function (eve)
+    {
+        eve.preventDefault();
+        let delecommon = $(this).attr("delecommon");
+
+        $.post("@Url.Content("~/MemberArea/DeleCommon")", {
+
+            id: delecommon
+        })
+    })
+
+</script>
+<script>
     $(".commoning").click(function (eve) {
 
         let common = $(this).attr("common");
-        console.log(common);
-           eve.preventDefault();
+        //console.log(common);
+
+        eve.preventDefault();
+
 
           $.post("@Url.Content("~/MemberArea/mCommondetail")", {
 
               id: common
 
-          }, function (datas) { console.log(datas); $(".modal-body").html(datas); })
+          }, function (datas) {
+              //console.log(datas);
+              $(".modal-body").html(datas);
+          })
 
 
         })
 </script>
 <script>
+    $("#sendee").click(function () {
 
+        let CommonId = $("input[name='CommentID']").attr("CommonId");
+        //console.log(CommonId);
+        //var rating = $("span[name='rate']").attr("rate");
+        //console.log(rating);
+
+        var ratingValue = parseInt($('#stars li.hover').last().data('value'), 10);
+        console.log(ratingValue)
+        if (isNaN(ratingValue)) {
+            ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        }
+
+        let Description = $("textarea[name='Description']").val();
+
+
+        $.post("@Url.Content("~/MemberArea/EdiotmCommondetail")", {
+            id: CommonId,
+            Rate: ratingValue,
+            Description: Description
+        }, function () {
+            $.post("@Url.Content("~/MemberArea/mCommon")", {}, function (datas)  { $("#viewChange").html(datas);})
+        })
+
+
+
+
+
+    })
 
 </script>

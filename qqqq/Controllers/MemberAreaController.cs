@@ -171,14 +171,49 @@ namespace prjHomeLess_R.Controllers
         {
             return ViewComponent("VCcommonmodal", id);
         }
-        //public IActionResult    EdiotmCommondetail(int id , int grat, string Description)
-        //{
-        //    _context.MemberComments.Where(c => c.CommentId == id);
+        public void EdiotmCommondetail(int id, int Rate, string Description)
+        {
+         MemberComment  mComm  =_context.MemberComments.FirstOrDefault(c => c.CommentId == id);
+            Debug.WriteLine(mComm.Description);
+            if (mComm != null)
+            {
+                mComm.Description = Description;
+                mComm.Grade = Rate;
+            }
+            _context.SaveChanges();
+           
+        }
+        public void DeleCommon(int id)
+        {
+            var q = _context.MemberComments.Where(m => m.CommentId == id).FirstOrDefault();
 
+            _context.Remove(q);
+            _context.SaveChanges();
 
+        }
+        public void CreatCommond(int id,string Description,int Rate) 
+        {
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
 
-        //    return RedirectToAction("VCmcommon");
-        //}
+            MemberComment comm = new MemberComment();
+            comm.ProductId = id;
+            comm.CommentDate = DateTime.Now;
+            comm.Description = Description;
+            comm.Grade = Rate;
+            comm.MemberId = memberview.MemberID;
+
+            _context.MemberComments.Add(comm);
+            _context.SaveChanges();
+
+        
+
+        }
+
+        public IActionResult mCreatCommondModal(int id)
+        {
+            return ViewComponent("VCcreatcommonmodal", id);
+        }
         public IActionResult mRemove(int id)
 
         {
@@ -188,6 +223,17 @@ namespace prjHomeLess_R.Controllers
             _context.SaveChanges();
 
                 return ViewComponent("VCmfavorite",id);
+        }
+
+        public IActionResult check(int id)
+        {
+            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
+            if (_context.MemberComments.Where(m => m.MemberId == memberview.MemberID && m.ProductId == id).Any())
+            {
+                return Json("a");
+            }
+            return Json("");
         }
         //charles================================================================================
         public IActionResult mVactivity()
