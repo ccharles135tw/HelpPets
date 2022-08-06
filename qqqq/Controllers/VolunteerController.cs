@@ -316,8 +316,8 @@ namespace final_test.Controllers
                 }
                 body += $"<tr><td>{i.AllowDate}</td><td>{db.VallowTimes.Where(x=>x.AllowTimeId==i.AllowTimeId).Select(y=>y.TimeRange).FirstOrDefault()}</td><td>{status}</td><td>{i.Name}</td><td>{i.Phone}</td><td>{i.Email}</td></tr>";
             }
-            body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
-            //body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            //body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
             mail.Body = body;
 
             //內文是否為html
@@ -326,10 +326,8 @@ namespace final_test.Controllers
             mail.Priority = MailPriority.Normal;
             //設定smtpclient
             SmtpClient client = new SmtpClient();
-            //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
-            client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
+            //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
             client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
-            //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "yhmkxyrfnipepfor");
             client.Host = "smtp.gmail.com";
             client.Port = 587;
             //client.Port = 25;
@@ -349,22 +347,25 @@ namespace final_test.Controllers
         }
         public IActionResult Verification(string ver) {
             var a = db.Volunteers.Where(x => x.VerificationCode == ver).ToList();
-            if(a == null)
+            if(a!= null)
+            {
+                var time = DateTime.Parse(a.Select(x => x.OrderDate).FirstOrDefault());
+                if (time.AddMinutes(20) < DateTime.Now)
+                {
+                    return Content("驗證失敗，超過時間。");
+                }
+                foreach (var i in a)
+                {
+                    i.CheckEmail = true;
+                    i.VstatusId = 2;
+                }
+                db.SaveChanges();
+                return Content("信箱驗證成功，你已完成報名。");
+            }
+            else
             {
                 return Content("查無此預約。");
             }
-            var time = DateTime.Parse(a.Select(x=>x.OrderDate).FirstOrDefault());
-            if (time.AddMinutes(20) < DateTime.Now)
-            {
-                return Content("驗證失敗，超過時間。");
-            }
-            foreach (var i in a)
-            {
-                i.CheckEmail = true;
-                i.VstatusId = 2;
-            }
-            db.SaveChanges();
-            return Content("信箱驗證成功，你已完成報名。");
         }
         public IActionResult successPage(string id) {
             var a = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
@@ -490,8 +491,8 @@ namespace final_test.Controllers
             body += "<table><thead><tr><th>日期</th><th>時段</th><th>狀態</th><th>姓名</th><th>電話</th><th>電子信箱</th></tr></thead><tbody>";
             body += $"<tr><td>{a.AllowDate}</td><td>{db.VallowTimes.Where(x => x.AllowTimeId == a.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()}</td><td>{status}</td><td>{a.Name}</td><td>{a.Phone}</td><td>{a.Email}</td></tr>";
 
-            body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
-            //body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            //body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
             mail.Body = body;
 
             //內文是否為html
@@ -500,10 +501,8 @@ namespace final_test.Controllers
             mail.Priority = MailPriority.Normal;
             //設定smtpclient
             SmtpClient client = new SmtpClient();
-            //client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
-            client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
+            //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "mobhanhugmtoswkr");
             client.Credentials = new NetworkCredential("helppetqqq@gmail.com", "mzlytybmvfbzskan");
-            //client.Credentials = new NetworkCredential("billsagi0002@gmail.com", "yhmkxyrfnipepfor");
             client.Host = "smtp.gmail.com";
             client.Port = 587;
             client.EnableSsl = true;
