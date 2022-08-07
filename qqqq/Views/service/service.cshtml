@@ -5,62 +5,38 @@
 </div>
 @section Styles{
     <style>
-        #news {
-            color: #000;
-            font-size: 30px;
+        td>a:link {
+            color: black;
         }
-
-/*        a:hover {
-            background-color: #EAA636;
-        }*/
-
+        td>a:visited {
+            color: blue;
+        }
+        td>a:hover {
+            color: #EAA636;
+        }
         td {
-            font-size: 30px;
+            font-size: 25px;
         }
 
         th {
-            font-size: 35px;
+            font-size: 30px;
+            text-align:center;
         }
     </style>
 }
 
 <div class="container-xxl py-6">
-    <table class="table">
+    <div>資料來源<a href="https://www.tcapo.gov.taipei/Default.aspx" style="color:blue;" target="_blank" rel="noreferrer">台北市動物保護處</a></div>
+    <table class="table col-md-12">
         <thead>
             <tr>
-                <th scope="col">發布日期</th>
-                <th scope="col">新聞</th>
+                <th scope="col">圖</th>
+                <th scope="col" class="col-md-2">發布日期</th>
+                <th scope="col" class="col-md-7">標題</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>2022/07/26</td>
-                <td><a id="news" href="https://pets.ettoday.net/news/2302706">新竹縣「566人搶16隻品種貓」擠爆現場　獸醫看收容所嘆氣了</a></td>
-            </tr>
-            <tr>
-                <td>2022/07/25</td>
-                <td><a id="news" href="https://www.peopo.org/news/593714">台灣耗費鉅資流浪動物依舊嚴重 監委田秋堇：農委會要加強源頭管控</a></td>
-            </tr>
-            <tr>
-                <td>2022/07/25</td>
-                <td><a id="news" href="https://news.ltn.com.tw/news/politics/breakingnews/4001501">犬貓數量源頭管制措施失當 監院促農委會與地方政府改進</a></td>
-            </tr>
-            <tr>
-                <td>2022/07/11</td>
-                <td><a id="news" href="https://ctee.com.tw/industrynews/socialwelfare/676052.html">相信動物協會絕育遍北台 浪犬有感減少</a></td>
-            </tr>
-            <tr>
-                <td>2022/07/08</td>
-                <td><a id="news" href="https://tw.news.yahoo.com/%E6%BE%8E%E6%B9%96%E5%BA%9C%E6%9C%83%E8%80%83%E5%AF%9F%E6%B5%81%E6%B5%AA%E5%8B%95%E7%89%A9%E6%94%B6%E5%AE%B9%E6%89%80-%E8%B3%B4%E5%B3%B0%E5%81%89%E8%A6%81%E6%B1%82%E8%90%BD%E5%AF%A6%E5%AE%B6%E6%88%B6%E5%AF%B5%E7%89%A9%E7%99%BB%E8%A8%98-165300798.html">澎湖府會考察流浪動物收容所 賴峰偉要求落實家戶寵物登記</a></td>
-            </tr>
-            <tr>
-                <td>2022/06/30</td>
-                <td><a id="news" href="https://newtalk.tw/news/view/2022-06-30/778555">3年半節育1.6萬隻 新北動保處號召愛媽幫浪浪絕育</a></td>
-            </tr>
-            <tr>
-                <td>2022/06/27</td>
-                <td><a id="news" href="https://tw.news.yahoo.com/%E3%80%8C%E4%BB%A5%E9%A0%98%E9%A4%8A%E4%BB%A3%E6%9B%BF%E8%B3%BC%E8%B2%B7%E3%80%8D%E7%9A%84%E8%8B%B1%E6%96%87%E6%98%AF%EF%BC%9F%E5%A6%82%E4%BD%95%E7%94%A8%E8%8B%B1%E6%96%87%E8%81%8A%E9%A0%98%E9%A4%8A-072801750.html">「以領養代替購買」的英文是？如何用英文聊領養</a></td>
-            </tr>
+        <tbody id="tbody">
+           
         </tbody>
     </table>
 </div>
@@ -131,3 +107,17 @@
         </div>
     </div>
 </div>
+
+@section Scripts{ 
+    <script>
+    $(function () {
+        let str = "";
+        $.post('@Url.Content("~/service/getNews")', {}, (result) => {
+            result.forEach(item => {
+                str += `<tr><td><img src="${item.picture}" height="200" width="160" style="display:block; margin:auto;" /></td><td style="text-align:center;">${item.date}</td><td><a href="${item.source}" target="_blank" rel="noreferrer">${item.title}</a></td></tr>`;
+            })
+            $("#tbody").html(str);
+        })
+    })
+    </script>
+}
