@@ -2,7 +2,7 @@
 @model IEnumerable<qqqq.ViewModels.CAdoptView>
 
 <section class="section-margin--small mb-5">
-    
+
     <!-- End Filter Bar -->
     <!-- Start Best Seller -->
     <section class="lattest-product-area pb-40 category-list">
@@ -20,15 +20,15 @@
                                 <h5 style="color:#000;">年齡層:<span>@(p.AgeType)</span></h5>
                                 <h5 style="color:#000;">描述 :@p.Description</h5>
                                 <button id="addToList" style=" background: #734226; border: none; border-radius: 10px;">
-                                    <i class="fa-solid fa-list-alt" style="color:#fff;padding-right:5px;">@Html.ActionLink("詳細資料", "petsDetial", "pets",new { id=p.ProductId})</i>
+                                    <i class="fa-solid fa-list-alt" style="color:#fff;padding-right:5px;">@Html.ActionLink("詳細資料", "petsDetial", "pets", new { id = p.ProductId })</i>
                                 </button>
                             </div>
                         </div>
                         <div class="card-body">
-                        <p>品種:@p.SubCategoryName</p>
-                        <h4 class="card-product__title"><a href="/pets/petsDetial">@p.ProductName</a></h4>
+                            <p>品種:@p.SubCategoryName</p>
+                            <h4 class="card-product__title"><a href="/pets/petsDetial">@p.ProductName</a></h4>
 
-                    </div>
+                        </div>
                     </div>
                 </div>
             }
