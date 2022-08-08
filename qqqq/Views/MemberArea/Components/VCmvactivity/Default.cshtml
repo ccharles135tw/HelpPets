@@ -1,163 +1,160 @@
 ﻿@model IEnumerable<qqqq.Models.Volunteer>
-@section Styles{
-
-}
 <h3 class="h5 mb-4 text-center">志工活動</h3>
 <div class="table-wrap">
-        <table class="table">
-            <thead class="thead-primary">
-                <tr>
-                    <th>
-                        活動名稱
-                    </th>
-                    <th>
-                        服務時間
-                    </th>
-                    <th>
-                        狀態
-                    </th>
-                    <th>
-                        姓名
-                    </th>
-                    <th>
-                        聯絡資訊
-                    </th>
-                    <th>
-                        報名時間
-                    </th>
-                    <th>
-                        驗證
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody style="font-size:0.8em;">
-                @{
-                    我救浪Context db = new 我救浪Context();
-                    var actList = db.Vactivities.ToList();
-                    var timeList = db.VallowTimes.ToList();
-                    string dateStr = "";
-                    foreach (var item in Model)
+    <table class="table">
+        <thead class="thead-primary">
+            <tr>
+                <th>
+                    活動名稱
+                </th>
+                <th>
+                    服務時間
+                </th>
+                <th>
+                    狀態
+                </th>
+                <th>
+                    姓名
+                </th>
+                <th>
+                    聯絡資訊
+                </th>
+                <th>
+                    報名時間
+                </th>
+                <th>
+                    驗證
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="font-size:0.8em;">
+            @{
+                我救浪Context db = new 我救浪Context();
+                var actList = db.Vactivities.ToList();
+                var timeList = db.VallowTimes.ToList();
+                string dateStr = "";
+                foreach (var item in Model)
+                {
+                    if (dateStr != item.AllowDate)
                     {
-                        if (dateStr != item.AllowDate)
-                        {
-                            dateStr = item.AllowDate;
-                            <tr class="alert" role="alert">
-                                <td>
-                                    <i class="bi bi-chevron-right" AD="@(item.AllowDate)"></i>@actList.Where(x => x.ActivityId == item.ActivityId).Select(y => y.Title).FirstOrDefault()
-                                </td>
-                                <td>
-                                    @item.AllowDate<br />
-                                    @timeList.Where(x => x.AllowTimeId == item.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()
-                                </td>
-                                @{
-                                    string status = "";
-                                    if (item.Waiting == true)
-                                    {
-                                        status = "候補";
-                                    }
-                                    else
-                                    {
-                                        status = "正取";
-                                    }
+                        dateStr = item.AllowDate;
+                        <tr class="alert" role="alert">
+                            <td>
+                                <i class="bi bi-chevron-right" AD="@(item.AllowDate)"></i>@actList.Where(x => x.ActivityId == item.ActivityId).Select(y => y.Title).FirstOrDefault()
+                            </td>
+                            <td>
+                                @item.AllowDate<br />
+                                @timeList.Where(x => x.AllowTimeId == item.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()
+                            </td>
+                            @{
+                                string status = "";
+                                if (item.Waiting == true)
+                                {
+                                    status = "候補";
                                 }
-                                <td>
-                                    @status
-                                </td>
-                                <td>
-                                    @item.Name
-                                </td>
-                                <td>
-                                    @item.Email<br />
-                                    @item.Phone
-                                </td>
-                                @{
-                                    var i = DateTime.Parse(item.OrderDate);
+                                else
+                                {
+                                    status = "正取";
                                 }
-                                <td>
-                                    @i.Year-@i.Month-@i.Day
-                                </td>
-                                @{
-                                    string cEmail = "";
-                                    if (item.CheckEmail == true)
-                                    {
-                                        cEmail = "完成";
-                                    }
-                                    else
-                                    {
-                                        cEmail = "未完成";
-                                    }
+                            }
+                            <td>
+                                @status
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Email<br />
+                                @item.Phone
+                            </td>
+                            @{
+                                var i = DateTime.Parse(item.OrderDate);
+                            }
+                            <td>
+                                @i.Year-@i.Month-@i.Day
+                            </td>
+                            @{
+                                string cEmail = "";
+                                if (item.CheckEmail == true)
+                                {
+                                    cEmail = "完成";
                                 }
-                                <td class="email">
-                                    @cEmail
-                                </td>
-                                <td>
-                                    <input type="button" class="cancelAct" value="取消" allowDate="@item.AllowDate" memName="@item.Name" />
-                                </td>
-                            </tr>
-                        }
-                        else
-                        {
-                            dateStr = item.AllowDate;
-                            <tr class="alert friends" role="alert" AD="@(item.AllowDate)">
-                                <td>
-                                    @actList.Where(x => x.ActivityId == item.ActivityId).Select(y => y.Title).FirstOrDefault()
-                                </td>
-                                <td>
-                                    @item.AllowDate<br />
-                                    @timeList.Where(x => x.AllowTimeId == item.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()
-                                </td>
-                                @{
-                                    string status = "";
-                                    if (item.Waiting == true)
-                                    {
-                                        status = "候補";
-                                    }
-                                    else
-                                    {
-                                        status = "正取";
-                                    }
+                                else
+                                {
+                                    cEmail = "未完成";
                                 }
-                                <td>
-                                    @status
-                                </td>
-                                <td>
-                                    @item.Name
-                                </td>
-                                <td>
-                                    @item.Email<br />
-                                    @item.Phone
-                                </td>
-                                @{
-                                    var i = DateTime.Parse(item.OrderDate);
-                                }
-                                <td>
-                                    @i.Year-@i.Month-@i.Day
-                                </td>
-                                @{
-                                    string cEmail = "";
-                                    if (item.CheckEmail == true)
-                                    {
-                                        cEmail = "完成";
-                                    }
-                                    else
-                                    {
-                                        cEmail = "未完成";
-                                    }
-                                }
-                                <td class="email">
-                                    @cEmail
-                                </td>
-                                <td>
-                                    <input type="button" class="cancelAct" value="取消" allowDate="@item.AllowDate" memName="@item.Name" />
-                                </td>
-                            </tr>
-                        }
-
+                            }
+                            <td class="email">
+                                @cEmail
+                            </td>
+                            <td>
+                                <input type="button" class="cancelAct btn btn-outline-danger" value="取消" allowDate="@item.AllowDate" memName="@item.Name" />
+                            </td>
+                        </tr>
                     }
+                    else
+                    {
+                        dateStr = item.AllowDate;
+                        <tr class="alert friends" role="alert" AD="@(item.AllowDate)">
+                            <td>
+                                @actList.Where(x => x.ActivityId == item.ActivityId).Select(y => y.Title).FirstOrDefault()
+                            </td>
+                            <td>
+                                @item.AllowDate<br />
+                                @timeList.Where(x => x.AllowTimeId == item.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()
+                            </td>
+                            @{
+                                string status = "";
+                                if (item.Waiting == true)
+                                {
+                                    status = "候補";
+                                }
+                                else
+                                {
+                                    status = "正取";
+                                }
+                            }
+                            <td>
+                                @status
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Email<br />
+                                @item.Phone
+                            </td>
+                            @{
+                                var i = DateTime.Parse(item.OrderDate);
+                            }
+                            <td>
+                                @i.Year-@i.Month-@i.Day
+                            </td>
+                            @{
+                                string cEmail = "";
+                                if (item.CheckEmail == true)
+                                {
+                                    cEmail = "完成";
+                                }
+                                else
+                                {
+                                    cEmail = "未完成";
+                                }
+                            }
+                            <td class="email">
+                                @cEmail
+                            </td>
+                            <td>
+                                <input type="button" class="cancelAct btn btn-outline-danger" value="取消" allowDate="@item.AllowDate" memName="@item.Name" />
+                            </td>
+                        </tr>
+                    }
+
                 }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -182,7 +179,7 @@
         })
     })
 
-    $("i").click((event) => {
+    $("td>i").click((event) => {
         let AD = $(event.target).attr("AD");
         $(".friends").each((index, element) => {
             if ($(element).attr("AD") == AD) {
