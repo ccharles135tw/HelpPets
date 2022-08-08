@@ -43,6 +43,9 @@
 <div style="text-align:right; margin-right:10px; text-decoration:none">
     <a asp-action="BK_VolunteerActivity" class="fa-solid fa-right-from-bracket" style="color: chocolate;">上一頁</a>
 </div>
+<div>
+    <input type="button" value="Demo" id="Demo" />
+</div>
 <hr />
 <div class="row" style="padding-bottom:90px; display:flex;justify-content:center;align-items:center">
     <div class="col-md-4">
@@ -143,5 +146,13 @@
             })
         }
         loadCateName();
+
+        $("#Demo").click(() => {
+            $("#Title").val("【短期活動】2023 義賣期間協助");
+            $("#StartDate").val("2023-08-28");
+            $("#EndDate").val("2023-08-31");
+            $("#PeopleInNeed").val("8");
+            $("#Description").val("進行義賣為浪浪募集絕育經費，為了讓義賣活動能順利進行，從包裝到出貨都需要大家的協助。");
+        })
     </script>
 }

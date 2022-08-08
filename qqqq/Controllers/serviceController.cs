@@ -31,7 +31,6 @@ namespace qqqq.Controllers
 
             for(int i = 0; i < 20; i++)
             {
-                Debug.WriteLine(jsonArr[i]["相關圖片"][0]["url"].ToString());
                 list.Add(new newslist
                 {
                     picture = jsonArr[i]["相關圖片"][0]["url"].ToString(),

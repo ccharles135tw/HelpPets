@@ -184,7 +184,9 @@ namespace qqqq.Controllers
             sw.Close();
 
             var url = Path.Combine(Environment.CurrentDirectory, "Test.html");
-            var chromePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+            //var chromePath = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+            var chromePath = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe";
+            //var chromePath = Path.Combine(Environment.CurrentDirectory, "chromedriver.exe");
             var output = Path.Combine(Environment.CurrentDirectory, "printout.pdf");
             using (var p = new Process())
             {
@@ -203,7 +205,7 @@ namespace qqqq.Controllers
             //string filePath = "C:\\Users\\Charles\\Desktop\\qqqq\\qqqq" + "\\" + fileName;
             //var fileExists = System.IO.File.Exists(Path.Combine(Environment.CurrentDirectory, "printout.pdf"));
             FileStream fs = System.IO.File.OpenRead(Path.Combine(Environment.CurrentDirectory, "printout.pdf"));
-            return File(fs, "application/pdf", "tttt.pdf");
+            return File(fs, "application/pdf", "printout.pdf");
         }
     }
 }
