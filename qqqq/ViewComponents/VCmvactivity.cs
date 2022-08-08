@@ -18,7 +18,7 @@ namespace qqqq.ViewComponents
         {
             var user = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(user);
-            var a = await db.Volunteers.Where(x => x.MemberId == id).OrderBy(x => x.AllowDate).ToListAsync();
+            var a = await db.Volunteers.Where(x => x.MemberId == id&& x.VstatusId == 2).OrderBy(x => x.AllowDate).ToListAsync();
 
             return View(a);
         }
