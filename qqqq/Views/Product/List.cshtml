@@ -7,65 +7,67 @@
 }
 @section Styles{
     <style>
-        .thHover:hover {
-            cursor: pointer;
-        }
+                .thHover:hover {
+                    cursor: pointer;
+                }
 
-        .spanPage {
-            margin: 0 5px;
-            cursor: pointer;
-            color: #EAA636;
-        }
+                .spanPage {
+                    margin: 0 5px;
+                    cursor: pointer;
+                    color: #EAA636;
+                }
 
-            .spanPage:hover {
-/*                text-decoration-line: underline;
-*/                color: #754027;
-            }
+                    .spanPage:hover {
+                        /*                text-decoration-line: underline;
+        */ color: #754027;
+                    }
 
-            .spanPage.spanPageSelected {
-                text-decoration-line: underline;
-                color: #754027;
-            }
+                    .spanPage.spanPageSelected {
+                        text-decoration-line: underline;
+                        color: #754027;
+                    }
 
-        #thead > tr > th {
-            font-size: 18px;
-            font-weight: 800;
-            color: black;
-        }
+                #thead > tr > th {
+                    font-size: 18px;
+                    font-weight: 800;
+                    color: black;
+                }
 
-        #thead > tr {
-            border: solid antiquewhite 2px;
-            background-color: antiquewhite;
-        }
+                #thead > tr {
+                    border: solid antiquewhite 2px;
+                    background-color: antiquewhite;
+                }
 
-        #tbody > tr {
-            border: solid antiquewhite 2px;
-            background-color: antiquewhite;
-            font-size: 16px;
-            font-weight: 600;
-        }
+                #tbody > tr {
+                    border: solid antiquewhite 2px;
+                    background-color: antiquewhite;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
 
-        #ProductName, #Pet, #Category, #CreateSubmit, #SubCategory {
-            border: solid antiquewhite 2px;
-            border-radius: 20px;
-            color: black;
-            font-weight: 400;
-            background-color: antiquewhite;
-        }
+                #ProductName, #Pet, #Category, #CreateSubmit, #SubCategory {
+                    border: solid antiquewhite 2px;
+                    border-radius: 20px;
+                    color: black;
+                    font-weight: 400;
+                    background-color: antiquewhite;
+                }
 
-        #txtinput {
-            border: solid antiquewhite 2px;
-            border-radius: 20px;
-            color: black;
-            font-weight: 400;
-            background-color: antiquewhite;
-        }
-        input[type=radio] {
-            accent-color: #79392C;
-        }
-        input[type=checkbox] {
-            accent-color: #79392C;
-        }
+                #txtinput {
+                    border: solid antiquewhite 2px;
+                    border-radius: 20px;
+                    color: black;
+                    font-weight: 400;
+                    background-color: antiquewhite;
+                }
+
+                input[type=radio] {
+                    accent-color: #79392C;
+                }
+
+                input[type=checkbox] {
+                    accent-color: #79392C;
+                }
     </style>
 }
 
@@ -88,7 +90,7 @@
         關鍵字 <input type="text" name="Keyword" style="width:100px;border-radius:15px;border:2px solid #EAA636" class="text-center" value="@ViewBag.keyword" />
         價錢區間
         <input type="number" name="PriceLow" style="width: 80px; border-radius: 15px; border: 2px solid #EAA636" value="@ViewBag.low" class="text-center" />~<input type="number" name="PriceHigh" style="width: 80px; border-radius: 15px; border: 2px solid #EAA636" value="@ViewBag.high" class="text-center" /><span class="m-2">(單位:元)</span>
-        <label>上架中<input type="radio" value="True" name="Continued"  /></label>
+        <label>上架中<input type="radio" value="True" name="Continued" /></label>
         <label>已下架<input type="radio" value="False" name="Continued" /></label>
         <br />
         <label>品牌:</label>
@@ -97,10 +99,10 @@
             @{
                 foreach (var s in db.Suppliers.ToList())
                 {
-                    <sapn class="m-2"> <label >@s.Name</label><input  type="checkbox" value="@s.SupplierId" name="suppliers" /></sapn>
+                    <sapn class="m-2"> <label>@s.Name</label><input type="checkbox" value="@s.SupplierId" name="suppliers" /></sapn>
                 }
             }
-            <input  style=" background-color:#D2691E;border:none;border-radius:10px;font-weight:700;color:#fff" type="button" value="全部勾選" id="btnSupplier" />
+            <input style=" background-color:#D2691E;border:none;border-radius:10px;font-weight:700;color:#fff" type="button" value="全部勾選" id="btnSupplier" />
         </div>
 
 
@@ -206,9 +208,9 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.UnitsInStock)
                             </td>
-                            <td >
+                            <td>
                                 @Html.ActionLink("評論", "List", "BK_Comment", new { id = item.ProductId }, new { Class = "fa-solid fa-comments", style = "color:chocolate;font-size:16px;text-decoration-line:none;padding-bottom:10px" })
-                                <br/>
+                                <br />
                                 @Html.ActionLink("編輯", "Edit", "Product", new { id = item.ProductId }, new { Class = "fa-solid fa-wrench", style = "color:chocolate;font-size:16px;text-decoration-line:none;padding-bottom:10px" })
                                 <br />
                                 @*@Html.ActionLink("下架商品", "Delete", "Product", new { id = item.ProductId }, new { style = "white-space:nowrap;", onclick = "return confirm('確定要下架嗎')", Class = "btn btn-danger" })*@
@@ -313,14 +315,14 @@
                                     <i class="fa-solid fa-paw">
                                         <label class="control-label">價格</label>
                                     </i>
-                                    <input id="txtinput" name="Price" type="number" class="form-control" />
+                                    <input id="Price" name="Price" type="number" class="form-control" />
                                     @*<span asp-validation-for="Price" class="text-danger"></span>*@
                                 </div>
                                 <div class="form-group">
                                     <i class="fa-solid fa-paw">
                                         <label class="control-label">成本</label>
                                     </i>
-                                    <input id="txtinput" name="Cost" type="number" class="form-control" />
+                                    <input id="Cost" name="Cost" type="number" class="form-control" />
                                     @*<span asp-validation-for="Cost" class="text-danger"></span>*@
                                 </div>
                                 <div class="form-group">
@@ -328,7 +330,7 @@
                                         <label class="control-label">供應商</label>
                                     </i>
                                     <div class="col-md-10">
-                                        <select id="txtinput" name="SupplierId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                                        <select id="Supplier" name="SupplierId" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                             <option value="none" selected disabled hidden>請選擇選項</option>
                                             @{
                                                 var q = from s in db.Suppliers select s;
@@ -350,18 +352,19 @@
                                     <i class="fa-solid fa-paw">
                                         <label class="control-label">商品說明</label>
                                     </i>
-                                    <textarea id="txtinput" name="Description" class="form-control"></textarea>
+                                    <textarea id="Description" name="Description" class="form-control"></textarea>
                                     @*<span asp-validation-for="Description" class="text-danger"></span>*@
                                 </div>
                                 <div class="form-group">
                                     <i class="fa-solid fa-paw">
                                         <label class="control-label">庫存</label>
                                     </i>
-                                    <input id="txtinput" name="UnitsInStock" type="number" class="form-control" />
+                                    <input id="UnitsInStock" name="UnitsInStock" type="number" class="form-control" />
                                     @*<span asp-validation-for="UnitsInStock" class="text-danger"></span>*@
                                 </div>
                                 <br />
                                 <div class="form-group" style="text-align:right">
+                                    <input type="button" value="Demo" id="btnDemo" />
                                     <i class="fa-solid fa-floppy-disk">
                                         <button id="CreateSubmit" style="border:none;background-color:transparent;">儲存</button>
                                     </i>
@@ -467,6 +470,20 @@
                     }
                 })
             })
+
+        //CreateDemo
+        $("#btnDemo").click(function ()
+        {
+            $("#ProductName").val("資策會2022/8/12限定版專用狗糧");
+            $("#Pet").val("2");
+            $("#Category").val("4");
+            $("#SubCategory").val("4");
+            $("#Price").val("877");
+            $("#Cost").val("877");
+            $("#UnitsInStock").val("877");
+            $("#Supplier").val("75")
+            $("#Description").val("APEX第三季頂獵專用")
+        })
     </script>
     <script>
         //Page
@@ -501,7 +518,7 @@ $(".btn-delete").on("click", function()
             alert("商品無關聯紀錄，完全刪除")
         }
         else {
-           
+
             alert("商品下架成功");
         }
     })
@@ -518,7 +535,7 @@ $(".btn-undelete").on("click", function()
             alert("商品重新上架成功")
         }
         else {
-           
+
             alert("商品重新上架失敗");
         }
     })
@@ -541,15 +558,15 @@ $(":radio[value=@ViewBag.continued]").trigger("click");
 })
     </script>
     @{
-        if(ViewBag.suppliers!=null)
+        if (ViewBag.suppliers != null)
         {
-    <script>
+            <script>
                     let a = @ViewBag.suppliers;
                 for (let index of a)
                 {
                     $(`#searchForm :checkbox[value=${index}]`).trigger("click");
                 }
-    </script>
+            </script>
         }
     }
 }
