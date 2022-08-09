@@ -98,7 +98,7 @@
             $("#list").html(str);
             $(".qr").each((index, element) => {
                 /*element.innerHTML = `<a href="https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}">連結</a><img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}&chld=L|4" />`;*/
-                element.innerHTML = `<a href="https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}">連結</a><img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}&chld=L|4" />`;
+                element.innerHTML = `<a href=http://192.168.21.37/BK_Volunteer/register?ver=${element.getAttribute('ver')}">連結</a><img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=https://localhost:44318/BK_Volunteer/register?ver=${element.getAttribute('ver')}&chld=L|4" />`;
             })
             //$("#list").prepend(`<img src="https://chart.googleapis.com/chart?chs=180x180&cht=qr&chl=http://192.168.21.37/BK_Volunteer/actList&chld=L|4">`)
             str = "";
