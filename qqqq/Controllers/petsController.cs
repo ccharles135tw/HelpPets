@@ -113,14 +113,31 @@ namespace qqqq.Controllers
 
 
             var q = db.MemberWishes.Where(mw => mw.MemberId == memberWish.MemberId).FirstOrDefault();
-            q.AgeId = memberWish.AgeId;
-            q.SizeId=memberWish.SizeId;
-            q.CategoryId=memberWish.CategoryId;
-            q.SubCategoryId= memberWish.SubCategoryId;
-            q.GenderId=memberWish.GenderId;
-            q.CityId=memberWish.CityId;
-            q.ColorId=memberWish.ColorId;
-            q.LigationId=memberWish.LigationId;
+            if(q==null)
+            {
+                q = new MemberWish();
+                q.MemberId=memberWish.MemberId;
+                q.AgeId = memberWish.AgeId;
+                q.SizeId = memberWish.SizeId;
+                q.CategoryId = memberWish.CategoryId;
+                q.SubCategoryId = memberWish.SubCategoryId;
+                q.GenderId = memberWish.GenderId;
+                q.CityId = memberWish.CityId;
+                q.ColorId = memberWish.ColorId;
+                q.LigationId = memberWish.LigationId;
+                db.MemberWishes.Add(q);
+            }
+            else
+            {
+                q.AgeId = memberWish.AgeId;
+                q.SizeId = memberWish.SizeId;
+                q.CategoryId = memberWish.CategoryId;
+                q.SubCategoryId = memberWish.SubCategoryId;
+                q.GenderId = memberWish.GenderId;
+                q.CityId = memberWish.CityId;
+                q.ColorId = memberWish.ColorId;
+                q.LigationId = memberWish.LigationId;
+            }
             db.SaveChanges();
             return View(datas);
         }
