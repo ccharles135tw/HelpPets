@@ -110,6 +110,7 @@
                 if (result.length == 0) {
                     str = `<h2>無符合項目。</h2>`
                 } else {
+                    str += `<h3 id="len">相關活動共 ${result.length} 筆資料。</h3>`
                     result.forEach(item => {
                         str += `<div class="v_div" style="height:200px;">
 	                            <div class="v_pic_div">
