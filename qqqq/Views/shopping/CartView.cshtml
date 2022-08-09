@@ -10,22 +10,72 @@
     </div>
 </div>
 <div class="container" id="alert">
-  
+
 </div>
 @section scripts{
     <script>
+        let payCount=0
         alert();
         function alert() {
-            $("#alert").load('@Url.Content("~/shopping/carttable")', {  })
+            $("#alert").load('@Url.Content("~/shopping/carttable")', function () {
+                $(".chk").on("change", function (e) {
+                    if (e.target.checked) {
+                        payCount += 1
+                    }
+                    else {
+                        payCount-=1
+                    }
+                    console.log(payCount)
+                })
+            })
+
         }
         function ChangeItemCount(cartId, count, isDonate) {
-            //$('#hidCartId').val(cartId);
-            //$('#hidCount').val(count);
-            //$('#hidIsDonate').val(isDonate);
-            //$("#cartView").submit()
-            $("#alert").load('@Url.Content("~/shopping/carttable")', { "hidCartId": cartId, "hidCount": count,"hidIsDonate":isDonate})
+            payCount = 0
+            $("#alert").load('@Url.Content("~/shopping/carttable")', { "hidCartId": cartId, "hidCount": count, "hidIsDonate": isDonate }, function () {
+                $(".chk").on("change", function (e) {
+                    if (e.target.checked) {
+                        payCount += 1
+                    }
+                    else {
+                        payCount -= 1
+                    }
+                    console.log(payCount)
+                })
+            })
         }
-       
+        function pay() {
+            if (payCount == 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '未選擇商品結帳',
+                    text: '請勾選要結帳之商品',
+                })
+            }
+            else {
+                $("#payForm").submit();
+            }
+        }
+        $
+        function nopay() {
+                Swal.fire({
+                    icon: 'error',
+                    title: '購物車尚無商品',
+                    text: '請前往商城選購商品',
+                })
+        }
+
+        //function payItem(e) {
+        //    console.log(this)
+        //    if (this.value) {
+        //        payCount += 1
+        //    }
+        //    else {
+        //        payCount-=1
+        //    }
+        //    console.log(payCount)
+        //}
+
     </script>
 
 

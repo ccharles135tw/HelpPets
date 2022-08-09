@@ -4,7 +4,7 @@
 <p>
     <a class="btn btn-primary" asp-action="Shopping">前往產品列表</a>
 </p>
-<form action="@Url.Action("Pay", "shopping")" enctype="multipart/form-data" method="post">
+<form action="@Url.Action("Pay", "shopping")" enctype="multipart/form-data" method="post" id="payForm">
     <table class="table  ">
         <thead>
             <tr>
@@ -57,7 +57,7 @@
                             @Html.HiddenFor(item => item[i].CartId)
                         </td>
                         <td>
-                            @Html.CheckBoxFor(item => item[i].CartPay, new { @class = "chk" })
+                            @Html.CheckBoxFor(item => item[i].CartPay, new { @class = "chk"  })
 
                             @*<input type="checkbox" value="@item[i].CartPay" class="check" />*@
                         </td>
@@ -130,12 +130,12 @@
                 <td>
                     @if (Model.Count() != 0)
                     {
-                        <button class="btn btn-success" type="submit">結帳</button>
+                        <button class="btn btn-success" type="button" onclick="pay()">結帳</button>
                         @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
                     }
                     else
                     {
-                        <button class="btn btn-success" type="button">結帳</button>
+                        <button class="btn btn-success" type="button"onclick="nopay()">結帳</button>
                         @*<a>   @Html.ActionLink("結帳", "Pay", "shopping", new { price = (int)Model.Sum(p => p.TotalPrice) }, new { onclick = "return confirm('確定要結帳嗎?')", @class = "btn btn-success", disabled = "true" })</a>*@
                     }
                 </td>

@@ -36,7 +36,7 @@ namespace qqqq.Controllers
             if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
-                var datas = db.Products.Where(p => p.IsPet == false).ToList();
+                var datas = db.Products.Where(p => p.IsPet == false&&p.Continued==true).ToList();
                 List<CProductShow> list = new List<CProductShow>();
                 foreach (Product p in datas)
                 {
@@ -46,11 +46,11 @@ namespace qqqq.Controllers
                         cprod.Photos = p.Photos.ToList();
                     list.Add(cprod);
                 }
-                return PartialView(list);
+                return PartialView(list.OrderByDescending(f=>f.ProductId));
             }
             else if (key.Search == false)
             {
-                var list = db.Products.Where(p => p.IsPet == false).ToList();
+                var list = db.Products.Where(p => p.IsPet == false && p.Continued == true).ToList();
                 if (key.Category != 0)
                 {
                     list = list.Where(p => p.SubCategory.CategoryId == key.Category).ToList();
@@ -79,7 +79,7 @@ namespace qqqq.Controllers
                         cPro.Photos = p.Photos.ToList();
                     data.Add(cPro);
                 }
-                return PartialView(data);
+                return PartialView(data.OrderByDescending(f => f.ProductId));
             }
             else
             {
@@ -114,7 +114,7 @@ namespace qqqq.Controllers
                 {
                     foreach (var s in key.SubCategory)
                     {
-                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false).ToList();
+                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false && p.Continued == true).ToList();
                         foreach (var p in subCate)
                         {
                             CProductShow Cpro = new CProductShow();
@@ -150,7 +150,7 @@ namespace qqqq.Controllers
                 //}
                 if (key.Keyword != null)
                 {
-                    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false).ToList();
+                    var parCate = db.Products.Where(p => p.ProductName.Contains(key.Keyword) && p.IsPet == false && p.Continued == true).ToList();
                     foreach (var p in parCate)
                     {
                         CProductShow Cpro = new CProductShow();
@@ -162,7 +162,7 @@ namespace qqqq.Controllers
                     }
                 }
 
-                return PartialView(list);
+                return PartialView(list.OrderByDescending(f => f.ProductId));
             }
         }
 
@@ -174,7 +174,7 @@ namespace qqqq.Controllers
             if (key.ParentCategory == 0 && key.Category == 0 && key.SubCategory == null && key.Keyword == null)
             {
 
-                var datas = db.Products.Where(p => p.IsPet == false).ToList();
+                var datas = db.Products.Where(p => p.IsPet == false && p.Continued == true).ToList();
                 List<CProductShow> list = new List<CProductShow>();
                 foreach (Product p in datas)
                 {
@@ -184,11 +184,11 @@ namespace qqqq.Controllers
                         cprod.Photos = p.Photos.ToList();
                     list.Add(cprod);
                 }
-                return PartialView(list);
+                return PartialView(list.OrderByDescending(f => f.ProductId));
             }
             else if (key.Search == false)
             {
-                var list = db.Products.Where(p => p.IsPet == false).ToList();
+                var list = db.Products.Where(p => p.IsPet == false && p.Continued == true).ToList();
                 if (key.Category != 0)
                 {
                     list = list.Where(p => p.SubCategory.CategoryId == key.Category).ToList();
@@ -217,7 +217,7 @@ namespace qqqq.Controllers
                         cPro.Photos = p.Photos.ToList();
                     data.Add(cPro);
                 }
-                return PartialView(data);
+                return PartialView(data.OrderByDescending(f => f.ProductId));
             }
             else
             {
@@ -252,7 +252,7 @@ namespace qqqq.Controllers
                 {
                     foreach (var s in key.SubCategory)
                     {
-                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false).ToList();
+                        var subCate = db.Products.Where(p => p.SubCategoryId == s && p.IsPet == false && p.Continued == true).ToList();
                         foreach (var p in subCate)
                         {
                             CProductShow Cpro = new CProductShow();
@@ -277,7 +277,7 @@ namespace qqqq.Controllers
                     //    }
                     //}
                 }
-                return PartialView(list);
+                return PartialView(list.OrderByDescending(f => f.ProductId));
             }
         }
         //public IActionResult ShowProduct1(string id)
@@ -389,6 +389,9 @@ namespace qqqq.Controllers
                     }
                     list.Add(cProd);
                 }
+                var jsonList = JsonSerializer.Serialize(list);
+                HttpContext.Session.SetString(
+              CDictionary.SK_結帳商品, jsonList);
                 return View(list);
             }
             else
@@ -564,7 +567,49 @@ namespace qqqq.Controllers
 
         public ActionResult AllPay()
         {
-            return View();
+
+            string jsonCart = HttpContext.Session.GetString(CDictionary.SK_結帳商品);
+            List<CShoppingCart> cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
+
+            return View(cart);
+        }
+
+        public ActionResult CleanCart()
+        {
+            string jsonPay = HttpContext.Session.GetString(CDictionary.SK_結帳商品);
+            List<CShoppingCart> pay = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonPay);
+            string jsonCart = HttpContext.Session.GetString(CDictionary.SK_購物車商品列表);
+            List<CShoppingCart> cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
+            foreach (var p in pay)
+            {
+                if (p.CartPay && p.DonatePay)
+                {
+                    var delete = cart.First(c => c.CartId == p.CartId);
+                    cart.Remove(delete);
+                }
+                else
+                {
+                    var set0 = cart.First(c => c.CartId == p.CartId);
+                    if (p.CartPay)
+                    {
+                        set0.CartCount = 0;
+                        set0.CartPay = false;
+                    }
+                    if (p.DonatePay)
+                    {
+                        set0.Donate = 0;
+                        set0.DonatePay = false;
+                    }
+                    if (!set0.CartPay && !set0.DonatePay)
+                    {
+                        cart.Remove(set0);
+                    }
+                }
+            }
+            jsonCart = JsonSerializer.Serialize(cart);
+            HttpContext.Session.SetString(CDictionary.SK_購物車商品列表, jsonCart);
+            HttpContext.Session.Remove(CDictionary.SK_結帳商品);
+            return Ok();
         }
         //public ActionResult AllPayConfirm()
         //{
@@ -624,7 +669,7 @@ namespace qqqq.Controllers
         //        var body = JsonSerializer.Serialize(requestBody);
 
         //        string Signature = HashLinePayRequest(channelSecret, apiUrl, body, nonce, channelSecret);
-        
+
         //        //var request = (HttpWebRequest)WebRequest.Create(baseUri + apiUrl);
         //        //request.Method = "POST";
         //        //request.ContentType = "application/json";

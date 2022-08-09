@@ -11,7 +11,7 @@ namespace qqqq.Models
         static public readonly string SK_LOGIN_USER = "SK_LOGIN_USER";  
         static public readonly string SK_LOGIN_EMP = "SK_LOGIN_EMP";
         public static readonly string SK_寵物列表 = "SK_寵物列表";
-
+        public static readonly string SK_結帳商品 = "SK_結帳商品";
 
     }
 }

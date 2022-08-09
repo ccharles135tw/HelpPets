@@ -127,11 +127,11 @@
             <h5>
                 <label class="control-label col-12">付款方式</label>
             </h5>
-            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" />信用卡</label>
+            @*<label class="col-md-4 col-sm-12"> <input type="radio" name="pay" />信用卡</label>*@
 
             <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" />貨到付款</label>
 
-            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" />LinePay</label>
+            <label class="col-md-4 col-sm-12"> <input type="radio" name="pay" />歐付寶</label>
 
             <span for="Pay" class="text-danger"></span>
         </div><br />
@@ -227,15 +227,15 @@
                         },
                         success: function (response) {
                             console.log(response)
-                            Swal.fire({
+                            @*Swal.fire({
                                 position: 'top-end',
                                 icon: 'success',
                                 title: response,
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            setTimeout(function () { window.location.href = "@Url.Content("~/MemberArea/MemberArea")" },2000)
-
+                            setTimeout(function () { window.location.href = "@Url.Content("~/MemberArea/MemberArea")" },2000)*@
+                             window.location.href="@Url.Content("~/shopping/allpay")"
                 }
             });
                         }
@@ -262,11 +262,11 @@
     })
          $("#send") .on(   "change",function(e) {
             if (e.target.checked) {
-           
+
                 $("#sendName").val($("#name").val())
                 $("#sendPhone").val($("#phone").val())
                 $("#sendAddress").val($("#address").val())
-                
+
             }
             else {
                 $("#sendName").val("")
