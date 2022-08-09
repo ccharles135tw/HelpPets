@@ -77,16 +77,14 @@
 
 <div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-5.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">結帳</h1>
+        <h1 class="display-4 text-white animated slideInDown mb-3"></h1>
     </div>
 </div>
 <header class="header">
     <nav class="navbar navbar-expand-lg navbar-light py-3">
         <div class="container">
             <!-- Navbar Brand -->
-            <a href="#" class="navbar-brand">
-                <img src="https://bootstrapious.com/i/snippets/sn-registeration/logo.svg" alt="logo" width="150">
-            </a>
+          
         </div>
     </nav>
 </header>
@@ -102,7 +100,7 @@
             <p class="font-italic text-muted mb-0">建立會員後可進行購物以及領養程序</p>
             <p class="font-italic text-muted">
                 了解詳情 <a href="#我就浪首頁" class="text-muted">
-                    <u>Bootstrapious</u>
+                    <u>HELPPET</u>
                 </a>
             </p>
         </div>
@@ -218,7 +216,7 @@
                             <i class="fa-solid fa-genderless"></i>
                         </span>
                     </div>
-                    <select asp-for="HgenderId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
+                    <select id="sleGender" asp-for="HgenderId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
                         <option value="1">男性</option>
                         <option value="2">女性</option>
                         <option value="3">不透露</option>
@@ -344,13 +342,14 @@
         $("#demo").click((e) => {
             e.preventDefault();
 
-            $("#email").val("lin123123@gmail.com");
-            $("#Name").val("林西沙");
+            $("#email").val("billsagi0001@gmail.com");
+            $("#Name").val("陳方方");
             $("#password").val("azBnt1123");   
-            $("#passwordConfirmation").val("azBnt123");
+            $("#passwordConfirmation").val("azBnt1123");
       
             $("#MemberPhone").val("0987654321");
-            $("#selCity optiones").val(2);
+            $("#selCity").val('2');
+            $("#sleGender").val('2');
             $("#Address").val("中山路五段6號");    
             $("#BirthdayDate").val("2011-11-11");
 
@@ -359,6 +358,9 @@
 
 
     </script>
+<script>
+    $("#selCity").prepend("<option value='0'>請選擇</option>");
+</script>
 
 }
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
