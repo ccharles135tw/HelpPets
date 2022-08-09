@@ -316,8 +316,8 @@ namespace final_test.Controllers
                 }
                 body += $"<tr><td>{i.AllowDate}</td><td>{db.VallowTimes.Where(x=>x.AllowTimeId==i.AllowTimeId).Select(y=>y.TimeRange).FirstOrDefault()}</td><td>{status}</td><td>{i.Name}</td><td>{i.Phone}</td><td>{i.Email}</td></tr>";
             }
-            //body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
-            body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            //body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
             mail.Body = body;
 
             //內文是否為html
@@ -491,8 +491,8 @@ namespace final_test.Controllers
             body += "<table><thead><tr><th>日期</th><th>時段</th><th>狀態</th><th>姓名</th><th>電話</th><th>電子信箱</th></tr></thead><tbody>";
             body += $"<tr><td>{a.AllowDate}</td><td>{db.VallowTimes.Where(x => x.AllowTimeId == a.AllowTimeId).Select(y => y.TimeRange).FirstOrDefault()}</td><td>{status}</td><td>{a.Name}</td><td>{a.Phone}</td><td>{a.Email}</td></tr>";
 
-            //body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
-            body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            body += $"</tbody></table><br><br>確認後請點此<a href='http://192.168.21.37/Volunteer/Verification?ver={random}'>連結</a></body></html>";
+            //body += $"</tbody></table><br><br>確認後請點此<a href='https://localhost:44318/Volunteer/Verification?ver={random}'>連結</a></body></html>";
             mail.Body = body;
 
             //內文是否為html
