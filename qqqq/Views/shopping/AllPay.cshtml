@@ -1,0 +1,72 @@
+﻿@using System.Security.Cryptography;
+@using System.Text;
+@using System.Web;
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container">
+    @{
+        string time = DateTime.Now.ToString("yyyy/MM/dd") + " " + @DateTime.Now.ToString("HH:mm:ss");
+     }
+    <form id="formWebATM" method="post" accept-charset="UTF-8"
+          action="https://payment-stage.opay.tw/Cashier/AioCheckOut/V5">
+
+        MerchantID 商店代號:
+        <input type="text" name="MerchantID" value="2000132" /><br />
+        MerchantTradeNo 商店交易編號:
+        @{string randomNumber=Guid.NewGuid().ToString();
+            string TradeNo = "DX";
+            TradeNo+= randomNumber.Substring(0, 21).Replace("-","");
+                }
+        <input type="text" name="MerchantTradeNo" value="@TradeNo" /><br />
+        MerchantTradeDate 商店交易時間:
+        <input type="text" name="MerchantTradeDate" value="@time" /><br />
+        PaymentType 交易類型:
+        <input type="text" name="PaymentType" value="aio" /><br />
+        TotalAmount 交易金額:
+        <input type="text" name="TotalAmount" value="7" /><br />
+        TradeDesc 交易描述:
+        <input type="text" name="TradeDesc" value="建立TopUpUsed測試訂單" /><br />
+        ItemName 商品名稱:
+        <input type="text" name="ItemName" value="MacBook 30元X2#iPhone6s 40元X1" /><br />
+        ReturnURL 付款完成通知回傳網址:
+        <input type="text" name="ReturnURL" value="https://localhost:44318/shopping/shopping " /><br />
+        ChoosePayment 預設付款方式:
+        <input type="text" name="ChoosePayment" value="TopUpUsed" /><br />
+        會員商店代碼:
+        <input type="text" name="StoreID" value="" /><br />
+        ClientBackURL Client端返回廠商網址:
+        <input type="text" name="ClientBackURL" value="https://localhost:44318/shopping/Pay " /><br />
+        CheckMacValue 簽章類型:
+        <input type="text" name="EncryptType" value="1" /><br />
+        CheckMacValue 檢查碼:
+        @{
+            string value = "HashKey=5294y06JbISpM5x9&ChoosePayment=TopUpUsed&ClientBackURL=https://developers.opay.tw/AioMock/MerchantClientBackUrl" +
+                "&EncryptType=1&ItemName=MacBook 30元X2#iPhone6s 40元X1&MerchantID=2000132&MerchantTradeDate=2022/08/09 14:28:06" +
+                "&MerchantTradeNo=DX20220809142806f9c3&PaymentType=aio" +
+                "&ReturnURL=https://developers.opay.tw/AioMock/MerchantReturnUrl&StoreID=" +
+                "&TotalAmount=7&TradeDesc=建立TopUpUsed測試訂單&HashIV=v77hoKGq4kWxNNIS";
+
+            string codeValue = HttpUtility.UrlEncode(value, Encoding.Default);
+
+            codeValue = codeValue.ToLower();
+            Write(codeValue);
+            using var hashCode = SHA256.Create();
+            var byteVAlue = hashCode.ComputeHash(Encoding.UTF8.GetBytes(codeValue));
+            string resultValue = Convert.ToHexString(byteVAlue).ToUpper();
+            Write ("\n"+resultValue) ;
+            //https://developers.opay.tw/AioTopUpUsed/CreateOrder
+
+
+        }
+        
+        <input type="text" name="CheckMacValue" value="@resultValue" /><br />
+        <input type="submit" value="送出訂單" />
+
+    </form>
+
+</div>

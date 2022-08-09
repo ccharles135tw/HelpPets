@@ -93,20 +93,17 @@
 
 <div class="container-xxl py-6">
     <div class="container">
-        <div class="row g-4">
+        <div class="row g-5">
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-solid fa-dog fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在找家的狗</p>
-                            <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true&&p.Continued==true&&p.SubCategory.CategoryId==2 ).Count()</h1>
+                    <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true && p.Continued == true && p.SubCategory.CategoryId == 2).Count()</h1>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-solid fa-cat fa-4x text-primary mb-4"></i>
-                    <!--<i>
-                        <img src="~/img/cat.png" style="margin-bottom:20px" />
-                    </i>-->
                     <p class="mb-2">正在找家的貓</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true && p.Continued == true && p.SubCategory.CategoryId == 3).Count()</h1>
                 </div>
@@ -114,10 +111,17 @@
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-users fa-4x text-primary mb-4"></i>
+                    <p class="mb-2">合作的供應商</p>
+                    <h1 class="display-5 mb-0" data-toggle="counter-up">@(db.Suppliers.Count() -1)</h1>
+                </div>
+            </div>
+            @*<div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="fact-item bg-light rounded text-center h-100 p-5">
+                    <i class="fa fa-users fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在配對的會員</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Members.Count()</h1>
                 </div>
-            </div>
+            </div>*@
             <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
                 <div class="fact-item bg-light rounded text-center h-100 p-5">
                     <i class="fa fa-solid fa-house fa-4x text-primary mb-4"></i>
@@ -204,7 +208,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;align-items:center">
             <h3 class="text-primary text-uppercase mb-2">//關於產品</h3>
             <h1 class="display-6 mb-4">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</h1>
         </div>

@@ -5,8 +5,9 @@
     <!-- End Filter Bar -->
     <!-- Start Best Seller -->
     <section class="lattest-product-area pb-40 category-list">
+        <h4>共 @Model.Count() 筆</h4>
         <div class="row">
-
+            
             @foreach (var p in Model)
             {
                 <div class="col-md-10 col-lg-4">
@@ -21,7 +22,14 @@
                                     <img src="/Images/@p.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
                                 }
                             }
-
+                            <div>
+                                <img src="~/Images/6092_bookmark_favorite_rate_star_icon.png" width="25"height="25"/> <b class="fs-20"> @{string s = "0"; if (p.product.MemberComments.Count() != 0)
+                                    {
+                                      s= ((double) p.product.MemberComments.Average(p => p.Grade)).ToString("0.0");
+                                    }
+                                }
+                                @s</b>
+                            </div>
                             <ul class="card-product__imgOverlay">
                                 <li><button id="favorite" value="@p.ProductId" onclick="addFavorite(@p.ProductId)"><i class="fa-solid fa-star">收藏</i></button></li>
                                 <li>

@@ -1,10 +1,4 @@
-﻿@*<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-5.jpg) center center no-repeat; background-size: cover;">
-    <div class="container text-center pt-5 pb-3">
-        <h1 class="display-4 text-white animated slideInDown mb-3">購物商城</h1>*@
-
-
-@*</div>
-    </div>*@
+﻿
 @model IEnumerable<qqqq.ViewModels.CProductShow>
 
 @{
@@ -12,52 +6,10 @@
 }
 
 
-<!--<div class="row align-items-center">
-    <p class="col-4">-->
-@*<a asp-action="Create">Create New</a>*@
-<!--<img src="~/Images/001.png" class="col-11 " />
-    </p>
-    <h1 class="col-8">我救浪線上商城</h1>
-</div>-->
-@*<div class="row col-12">
-    <div class="col-2 alert alert-dark"></div>
-    <div class="col-9">b*@
+
+<h4>共 @Model.Count() 筆</h4>
 <table class="table ">
-    @*<thead>
-            <tr>
-                <th>
-                    產品圖片
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SubCategoryId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SupplierId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsPet)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UnitsInStock)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Continued)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cost)
-                </th>
-                <th></th>
-            </tr>
-        </thead>*@
+
     <tbody>
 
         @{ if (Model.Count() == 0)
@@ -92,6 +44,16 @@
                         </td>
                         <td>
                             <h4> @Html.DisplayFor(modelItem => item.ProductName)</h4>
+                            <div>
+                                <img src="~/Images/6092_bookmark_favorite_rate_star_icon.png" width="25" height="25" /> <b class="fs-20">
+                                    @{string s = "0"; if (item.product.MemberComments.Count() != 0)
+                                        {
+                                            s = ((double)item.product.MemberComments.Average(p => p.Grade)).ToString("0.0");
+                                        }
+                                    }
+                                    @s
+                                </b>
+                            </div>
                         </td>
                 
                         <td>
