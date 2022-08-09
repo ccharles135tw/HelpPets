@@ -1,5 +1,5 @@
 ﻿@model Pet.ViewModels.CLoginView
-    @{qqqq.Models.我救浪Context db = new 我救浪Context(); }
+@{qqqq.Models.我救浪Context db = new 我救浪Context(); }
 
 
 @ViewData["Title"] = "MemberEdoit";
@@ -137,14 +137,14 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
 
                     <!-- Last Name
-    <div class="input-group col-lg-6 mb-4">
-        <div class="input-group-prepend">
-            <span class="input-group-text bg-white px-4 border-md border-right-0">
-                <i class="fa-solid fa-location-dot"></i>
-            </span>
-        </div>
-        <input id="lastName" type="text" name="lastname" placeholder="Last Name" class="form-control bg-white border-left-0 border-md">
-    </div>-->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                        </div>
+                        <input id="lastName" type="text" name="lastname" placeholder="Last Name" class="form-control bg-white border-left-0 border-md">
+                    </div>-->
                     <!-- Email Address -->
                     <div class="input-group col-lg-12 mb-4">
                         <div class="input-group-prepend">
@@ -223,12 +223,12 @@
                             </span>
                         </div>
                         <select asp-for="HgenderId" style="max-width: 100px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
-                       
-                                    
-                                    <option value="1">男性</option>
-                                    <option value="2">女性</option>
-                                    <option value="3">不透露</option>
-                                
+
+
+                            <option value="1">男性</option>
+                            <option value="2">女性</option>
+                            <option value="3">不透露</option>
+
                         </select>
 
                     </div>
@@ -254,11 +254,11 @@
                         <span class="font-weight-bold"></span>
 
                     </div>
-                 
+
 
                     <!-- Already Registered -->
                     <div class="text-center w-100">
-                        <p class="text-muted font-weight-bold"> @Html.ActionLink("修改密碼", "MemberArea", "MemberArea")</p>
+                        <p class="text-muted font-weight-bold"> <a href="#" id="forget" data-toggle="modal" data-target="#exampleModal">修改密碼</a></p>
                         <p class="text-muted font-weight-bold"> @Html.ActionLink("取消編輯", "MemberArea", "MemberArea")</p>
                     </div>
 
@@ -267,21 +267,50 @@
         </div>
     </div>
 </div>
-@section Scripts {
-    <script src="https://kit.fontawesome.com/45dc82861e.js" crossorigin="anonymous"></script>
-    <script>
-        // For Demo Purpose [Changing input group text on focus]
-        $(function () {
-            $('input, select').on('focus', function () {
-                $(this).parent().find('.input-group-text').css('border-color', '#80bdff');
-            });
-            $('input, select').on('blur', function () {
-                $(this).parent().find('.input-group-text').css('border-color', '#ced4da');
-            });
-        });
 
-    </script>
-    <script>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">請輸入您的舊密碼</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group first ">
+                    舊密碼 :                <input type="password" id="opws1" />
+                </div>
+
+                <div class="form-group last mb-2">
+                    再次輸入舊密碼 : <input type="password" id="opws2" />
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="test" hidden>Close</button>
+                    <button type="button" class="btn btn-primary" id="sub">送出驗證</button>
+                    <button type="button" id="demoMail" class="btn btn-secondary">Demo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @section Scripts {
+        <script src="https://kit.fontawesome.com/45dc82861e.js" crossorigin="anonymous"></script>
+        <script>
+            // For Demo Purpose [Changing input group text on focus]
+            $(function () {
+                $('input, select').on('focus', function () {
+                    $(this).parent().find('.input-group-text').css('border-color', '#80bdff');
+                });
+                $('input, select').on('blur', function () {
+                    $(this).parent().find('.input-group-text').css('border-color', '#ced4da');
+                });
+            });
+
+        </script>
+        <script>
 
     const selCity = document.querySelector("#selCity");
 
@@ -298,57 +327,75 @@
         })
     }
     loadCity();
-    </script>
-    <script>
-        $("#File").on("change", function () {
+        </script>
+        <script>
+            $("#File").on("change", function () {
 
-            readURL(this);
-        })
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("#memberPicture").attr("src", e.target.result);
-                    //div.append(`<img src="${e.target.result}" style="width:150px"/>`);
-                    //$("#preview_progressbarTW_img").attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
-    <script>
-        let flag = false;
-
-        $(function () {
-            $("#seePwd").click(function () {
-                if (flag == true)
-                    flag = false;
-                else
-                    flag = true;
-
-                if (flag == true) {
-                    $("#password").attr("type", "text");
-                    $("#passwordConfirmation").attr("type", "text");
-                } else {
-                    $("#password").attr("type", "password");
-                    $("#passwordConfirmation").attr("type", "password");
-                }
+                readURL(this);
             })
-        });
-    </script>
-    <script>
-        $("#editMem").click(function () {
-            confirm("修改完成");
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#memberPicture").attr("src", e.target.result);
+                        //div.append(`<img src="${e.target.result}" style="width:150px"/>`);
+                        //$("#preview_progressbarTW_img").attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+        <script>
+            let flag = false;
+
+            $(function () {
+                $("#seePwd").click(function () {
+                    if (flag == true)
+                        flag = false;
+                    else
+                        flag = true;
+
+                    if (flag == true) {
+                        $("#password").attr("type", "text");
+                        $("#passwordConfirmation").attr("type", "text");
+                    } else {
+                        $("#password").attr("type", "password");
+                        $("#passwordConfirmation").attr("type", "password");
+                    }
+                })
+            });
+        </script>
+        <script>
+            $("#editMem").click(function () {
+                confirm("修改完成");
+
+            })
+
+
+        </script>
+        @*<script>
+
+        $("#sub").click(() => {
+            $.post("@Url.Content("~/Home/checkPsw")", {
+                pwd: $("#opws1").val(),
+              email: $("#email").val()
+            }, (result) => {
+                if (result == "") {
+                    alert("密碼有誤")
+                } else {
+                    $("#test").trigger('click');
+                    $(function () {
+            document.location.href = "@(Url.Content("~/Home/setPwd"))"
+})
+                }
+            });
+
 
         })
+            //todo
+        </script>*@
 
-
-    </script>
-<script>
-  
-.
-</script>
-}
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 

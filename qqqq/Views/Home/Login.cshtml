@@ -61,8 +61,8 @@
                                         <span class="caption" style="font-size:90%">  @Html.ActionLink("創建帳號", "Register") </span>
 
 
-
-                                        <span class="ml-auto"><a href="#" id="forget" class="forgot-pass">@Html.ActionLink("忘記密碼", "forgetPwd")</a></span>
+                                        @*@Html.ActionLink("忘記密碼", "forgetPwd")*@
+                                        <span class="ml-auto"><a href="#" id="forget" class="forgot-pass" data-toggle="modal" data-target="#exampleModal">忘記密碼</a></span>
                                     </div>
 
                                     <input type="submit" value="登入" class="btn btn-pill text-white btn-block btn-primary">
@@ -91,7 +91,7 @@
                                             <span class="icon-google mr-3"></span>
                                         </a>-->
                                     </div>
-                                    <button id="chal"class="btn btn-light">查爾斯</button>
+                                    <button id="chal" class="btn btn-light">查爾斯</button>
                                     <button id="52" class="btn btn-light">陳坤佐</button>
                                     <button id="login" class="btn btn-light">demo</button>
                                 </form>
@@ -105,7 +105,27 @@
         </div>
     </div>
 
-   
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">請輸入您已註冊過的電子郵件</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                電子郵件 : <input type="email" id="fMail"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="test" hidden>Close</button>
+                    <button type="button" class="btn btn-primary" id="sub">送出驗證</button>
+                    <button type="button" id="demoMail"  class="btn btn-secondary">Demo</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -117,6 +137,7 @@
 </html>
 @section Scripts{
     <script>
+        $("#demoMail").click((e) => { $("#fMail").val("billsagi0001@gmail.com")})
         $("#chal").click((e) => {
             e.preventDefault();
             $("#txtAccount").val("billsagi0001@gmail.com");
@@ -135,8 +156,16 @@
             $("#txtPassword").val("azBnt123");
 
         })
-   
 
+        $("#sub").click(() => {
+            $.post('@Url.Content("~/Home/sendMail")', { email: $("#fMail").val() }, (result) => {
+                if (result == "") {
+                    alert("用戶不存在。")
+                } else {
+                    $("#test").trigger('click')
+                }
+            });
+        })
 
     </script>
 

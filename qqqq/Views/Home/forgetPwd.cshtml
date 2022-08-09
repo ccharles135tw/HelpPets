@@ -1,1 +1,94 @@
-﻿
+﻿@{
+    Layout = "_Layout";
+
+}
+
+<link rel="stylesheet" href="~css_Q/fonts/icomoon/style.css">
+<link rel="stylesheet" href="~/css_Q/css/owl.carousel.min.css">
+<link rel="stylesheet" href="~/css_Q/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css_Q/css/style.css">
+
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-5.jpg) center center no-repeat; background-size: cover;">
+    <div class="container text-center pt-5 pb-3">
+     
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- <div class="col-md-6 order-md-2">
+              <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+            </div> -->
+            <div class="col-md-6 contents">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="form-block">
+                            <div class="mb-4">
+                                <h3>重新設定 <strong>新密碼</strong></h3>
+                                <p class="mb-4">重設密碼成功後即可使用</p>
+                            </div>
+                            <form class="setPws">
+
+                                <div class="form-group first ">
+                                    <label for="mail"></label>
+                                    <input class="form-control" value="@ViewBag.mail " id="mail" disabled />
+                                </div>
+
+                                <div class="form-group last mb-2">
+                                    <label for="newpwd1">新密碼 :</label>
+                                    <input class="form-control" value="" id="newpwd1" type="password" />
+                                </div>
+
+                                <div class="form-group last mb-4 ">
+                                    <label for="newpwd2">確認新密碼 :</label>
+                                    <input class="form-control" value="" id="newpwd2" type="password" />
+                                </div>
+
+                                <input class="btn btn-light" type="button" id="sub" value="送出" />
+
+
+
+                                <button id="demo" class="btn btn-light">demo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/css_Q/js/jquery-3.3.1.min.js"></script>
+    <script src="~/css_Q/js/popper.min.js"></script>
+    <script src="~/css_Q/js/bootstrap.min.js"></script>
+    <script src="~/css_Q/js/main.js"></script>
+    <script>
+   $("#sub").click(() => {
+       $.post("@(Url.Content("~/Home/setPwd"))",
+           {
+               email: $("#mail").val(),
+               pwd: $("#newpwd1").val()
+           })
+    $(function () {
+            document.location.href = "@(Url.Content("~/Home/Login"))"
+})
+        })
+
+        $("#demo").click((e) => {
+
+            e.preventDefault();
+            $("#newpwd1").val("12345678");
+            $("#newpwd2").val("12345678");
+
+        })
+    </script>
+    
+}
+
+
+  
+

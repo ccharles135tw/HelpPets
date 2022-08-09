@@ -132,8 +132,18 @@ namespace Pet.Controllers
             try
             {
                 var q = db.Products.FirstOrDefault(p => p.ProductId == id);
+                var q2 = db.Photos.Where(ph => ph.ProductId == id).ToList();
+                db.Photos.RemoveRange(q2);
                 db.Products.Remove(q);
                 db.SaveChanges();
+                foreach(var p in q2)
+                {
+                    System.IO.FileInfo file = new FileInfo(_enviroment.WebRootPath + "/Images/" + p.PictureName);  //參數為圖片路徑
+                    if (file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
               //  Debug.WriteLine($"ProductID:{id}刪除成功");
                 return true;
             }
