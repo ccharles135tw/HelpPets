@@ -11,19 +11,25 @@
 @using System.Net.Mail;
 @using System.Text.Json;
 @model qqqq.Models.Product
-
 @{
-    ViewData["Title"] = "petsDetial";
+    ViewData["Title"] = "petsDetialone";
+    Layout = "_Layout";
     CLoginViewModel memberview = null;
+    int a = 1;
     if (Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
     {
         var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
         memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+        a = memberview.MemberID;
     }
     我救浪Context db = new 我救浪Context();
-    int a = ViewBag.memberid;
+    //int a = ViewBag.memberid;
+    //var memberWish = db.MemberWishes.Where(mw => mw.MemberId == a).FirstOrDefault();
+    //int a = memberview.MemberID;
     var memberWish = db.MemberWishes.Where(mw => mw.MemberId == a).FirstOrDefault();
+
 }
+
 @section Styles{
     <style>
         .magnify {
@@ -64,6 +70,7 @@
             margin-top: -100px !important;
             z-index: 90;
         }
+
         td {
             vertical-align: middle;
             text-align: center;
@@ -97,15 +104,15 @@
                         <td>
                             <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.Category.CategoryName</span>
                         </td>
-                        <!--<!--<td>
+                        @*<td>
                             @{
-                                if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)-->
-                                @*{
+                                if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)
+                                {
                                     <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
-                                }*@
+                                }
 
-                            <!--}
-                        </td>-->
+                            }
+                        </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -116,14 +123,14 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.SubCategoryName</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.SubCategory.SubCategoryName == Model.SubCategory.SubCategoryName)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
-                                }
+                                @{
+                                    if (memberWish.SubCategory.SubCategoryName == Model.SubCategory.SubCategoryName)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
 
-                            }
-                        </td>*@
+                                }
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -134,13 +141,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Gender.GenderType</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.GenderId == Model.PetDetail.GenderId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.GenderId == Model.PetDetail.GenderId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -151,13 +158,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Color.ColorName</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.ColorId == Model.PetDetail.ColorId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.ColorId == Model.PetDetail.ColorId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -167,13 +174,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Ligation.LigationType</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.LigationId == Model.PetDetail.LigationId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.LigationId == Model.PetDetail.LigationId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -184,13 +191,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Size.SizeType</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.SizeId == Model.PetDetail.SizeId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.SizeId == Model.PetDetail.SizeId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -201,13 +208,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Age.AgeType</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.AgeId == Model.PetDetail.AgeId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.AgeId == Model.PetDetail.AgeId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td>
@@ -218,13 +225,13 @@
                             <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.City.CityName</span>
                         </td>
                         @*<td>
-                            @{
-                                if (memberWish.CityId == Model.PetDetail.CityId)
-                                {
-                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                @{
+                                    if (memberWish.CityId == Model.PetDetail.CityId)
+                                    {
+                                        <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
+                                    }
                                 }
-                            }
-                        </td>*@
+                            </td>*@
                     </tr>
                     <tr>
                         <td colspan="2">
@@ -274,17 +281,17 @@
                 @{
                     if (memberview != null)
                     {
-                        if(db.OrderDetails.Where(od=>od.ProductId==Model.ProductId&&od.Order.MemberId==memberview.MemberID).ToList().Count>0)
+                        if (db.OrderDetails.Where(od => od.ProductId == Model.ProductId && od.Order.MemberId == memberview.MemberID).ToList().Count > 0)
                         {
-                        <button type="button" class="btn btn-primary m-1">
-                            您已經申請領養了
-                        </button>
+                            <button type="button" class="btn btn-primary m-1">
+                                您已經申請領養了
+                            </button>
                         }
                         else
                         {
-                         <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
-                            我要評估領養
-                        </button>
+                            <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
+                                我要評估領養
+                            </button>
                         }
 
                     }
@@ -384,3 +391,4 @@
         })
     </script>
 }
+

@@ -81,7 +81,7 @@ namespace qqqq.Controllers
             }
             
         }
-        public IActionResult petsDetial(int id)
+        public IActionResult petsDetialone(int id)
         {
           
             var a = db.Products.Where(x => x.ProductId == id).FirstOrDefault();

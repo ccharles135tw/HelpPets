@@ -26,8 +26,8 @@
                         </div>
                         <div class="card-body">
                             <p>品種:@p.SubCategoryName</p>
-                            <h4 class="card-product__title"><a href="@Url.Content("/pets/petsDetialone")">@p.ProductName</a></h4>
-
+                            @*<h4 class="card-product__title"><a href="@Url.Content("/pets/petsDetialone")">@p.ProductName</a></h4>*@
+                        <h4 class="card-product__title">@Html.ActionLink(p.ProductName, "petsDetialone", "pets", new { id = p.ProductId })</h4>
                         </div>
                     </div>
                 </div>

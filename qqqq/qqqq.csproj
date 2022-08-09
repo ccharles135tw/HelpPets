@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\pets\petsDetialone.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\about\about.cshtml" />
     <None Include="Views\BackIndex\Index.cshtml" />
     <None Include="Views\BK_Comment\CommentView.cshtml" />
@@ -72,7 +68,6 @@
     <None Include="Views\Order\Edit.cshtml" />
     <None Include="Views\Order\List.cshtml" />
     <None Include="Views\pets\petsAdopt.cshtml" />
-    <None Include="Views\pets\petsDetialone.cshtml" />
     <None Include="Views\pets\petsDetial.cshtml" />
     <None Include="Views\pets\petsList.cshtml" />
     <None Include="Views\pets\petsMatch.cshtml" />
