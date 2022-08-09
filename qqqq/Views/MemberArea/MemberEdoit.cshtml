@@ -283,9 +283,12 @@
                 </div>
 
                 <div class="form-group last mb-2">
-                    再次輸入舊密碼 : <input type="password" id="opws2" />
+                    再次輸入舊密碼 : <input type="password" id="opws2" /><label id="info"></label>
                 </div>
 
+                <div class="form-group last mb-2">
+                    新密碼 : <input type="password" id="newpwd" disabled />
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="test" hidden>Close</button>
@@ -348,6 +351,7 @@
         <script>
             let flag = false;
 
+
             $(function () {
                 $("#seePwd").click(function () {
                     if (flag == true)
@@ -372,29 +376,86 @@
             })
 
 
-        </script>
-        @*<script>
+  
 
-        $("#sub").click(() => {
+        </script>
+        <script>
+
+        @*$("#sub").click(() => {
             $.post("@Url.Content("~/Home/checkPsw")", {
-                pwd: $("#opws1").val(),
+                pwd1: $("#opws1").val(),
+                pwd2: $("#opws2").val(),
               email: $("#email").val()
             }, (result) => {
                 if (result == "") {
                     alert("密碼有誤")
                 } else {
-                    $("#test").trigger('click');
-                    $(function () {
-            document.location.href = "@(Url.Content("~/Home/setPwd"))"
-})
+                            // document.location.href = `@(Url.Content("~/Home/forgetPwdlogined"))`
+                    @(Url.Action("~/Home/forgetPwdlogined",new { id  =Model.Email }))
+                   /* $("#test").trigger('click');*/
+//                    $(function () {
+
+//})
                 }
             });
 
 
-        })
-            //todo
-        </script>*@
+        })*@
 
+            $("#opws1").keyup(() => {
+                console.log("test")
+                $.post("@Url.Content("~/Home/checkPsw")", { email: $("#email").val(),pwd1: $("#opws1").val(),pwd2: $("#opws2").val()}, (result) => {
+                        console.log("test")
+                        if (result == "n") {
+                            $("#info").text("密碼不一致。");
+                            $("#newpwd").attr("disable");
+                        } else if (result == "") {
+                            $("#info").text("密碼錯誤。")
+                            $("#newpwd").attr("disable");
+                        } else {
+                            $("#newpwd").removeAttr("disable");
+                        }
+                })
+            })
+                $("#opws2").keyup(() => {
+                $.post("@Url.Content("~/Home/checkPsw")", {
+                    email: $("#email").val(),pwd1: $("#opws1").val(),
+                    pwd2: $("#opws2").val()
+
+                }, (result) => {
+                        if (result == "n") {
+                            $("#info").text("密碼不一致。")
+                            $("#newpwd").prop("disabled", true);
+                        } else if (result == "") {
+                            $("#info").text("密碼錯誤。")
+                            $("#newpwd").prop("disabled", true);
+                        } else {
+                            $("#info").text("驗證成功。")
+                            //$("#opws1").prop("disabled",true);
+                            //$("#opws2").prop("disabled",true);
+                            $("#newpwd").prop("disabled", false);
+                    }
+                })
+                })
+
+
+        </script>
+        <script>
+            $("#demoMail").click(function () {
+                $("#opws1").val("Zxc12345678");
+                $("#opws2").val("Zxc12345678");
+            })
+            $("#sub").click(function () {
+                console.log($("#newpwd").val());
+                $.post("@Url.Content("~/Home/setPwd")", { email: $("#email").val(), pwd: $("#newpwd").val() },
+                    function () { location.replace("@(Url.Content("~/MemberArea/MemberEdoit"))") })
+
+          
+            })
+
+      
+
+        </script>
     }
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
