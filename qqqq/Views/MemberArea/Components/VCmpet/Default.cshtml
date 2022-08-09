@@ -8,12 +8,15 @@
                 <th>序號</th>
                 <th>照片</th>
                 <th>寵物名</th>
-           
+
                 <th>性別</th>
                 <th>結紮</th>
                 <th>認養狀態</th>
                 <th>日期</th>
-                <th></th>
+                @{ int counting = 0;
+                    foreach (var i in Model)
+                    { counting++; } }
+                <th width="15%">@($"共有{counting}筆資料")</th>
             </tr>
         </thead>
         <tbody>

@@ -5,15 +5,19 @@
 <div class="table-wrap">
     <table class="table">
         <thead class="thead-primary">
-            <tr>
-                <th>序</th>
-                <th>產品照片</th>
-                <th>商品名稱</th>
+            <tr  >
+                <th >序</th>
+                <th  >產品照片</th>
+                <th >商品名稱</th>
 
-                <th>單價</th>
-                <th>庫存</th>
-                <th>評價</th>
-                <th>&nbsp;</th>
+                <th  >單價</th>
+                <th  >庫存</th>
+                <th width="15%" >評價</th>
+               
+                @{ int counting = 0;
+                    foreach (var i in Model)
+                    { counting++; } }
+                <th  width="15%">@($"共有{counting}筆資料")</th>
 
             </tr>
         </thead>
@@ -37,61 +41,61 @@
                     foreach (var item in Model)
                     {
                         count++;
-                        <tr class="alert" role="alert">
+        <tr class="alert" role="alert">
 
-                            <td>
-                                @count
-                            </td>
+            <td>
+                @count
+            </td>
 
-                            <td>
-                                <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
+            <td>
+                <img src="@Url.Content($"~/Images/{item.PictureName}")" style="width:60px;height:60px;" />
 
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>@item.ProductName </span>
-                                    <span>描述:@item.describe</span>
-                                </div>
-                            </td>
+            </td>
+            <td>
+                <div class="email">
+                    <span>@item.ProductName </span>
+                    <span>描述:@item.describe</span>
+                </div>
+            </td>
 
-                            <td>@String.Format("{0:C2}", item.Unprice)</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    @item.Unstock
-                                </div>
-                            </td>
+            <td>@String.Format("{0:C2}", item.Unprice)</td>
+            <td class="quantity">
+                <div class="input-group">
+                    @item.Unstock
+                </div>
+            </td>
 
-                            <td>
+            <td>
 
-                                @{
-                                    for (int i = 0; i < Math.Floor(item.Rate); i++)
-                                    {
-                                        <span> <img width="20" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
-                                    }
-                                } <span>(@item.RateS)</span>
-
-
-
-                            </td>
-
-                            <td>
-                                <div>
-                                    <button class="close bbb" type="button" style="color:gray" data-toggle="modal" data-target="#myModal" addtocart="@item.ProductID">
-                                        <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
-                                        <span>查看商品</span>
-                                    </button>
-                                    <div>
-                                        <button type="button" class="close aaa" data-dismiss="alert" aria-label="Close" remove="@item.MyfavID">
-                                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                            <span>移除我的最愛</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
+                @{
+                    for (int i = 0; i < Math.Floor(item.Rate); i++)
+                    {
+                        <span> <img width="20" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
+                    }
+                } <span>(@item.RateS)</span>
 
 
 
-                        </tr>
+            </td>
+
+            <td >
+                <div>
+                    <button class="close bbb" type="button" style="color:gray" data-toggle="modal" data-target="#myModal" addtocart="@item.ProductID">
+                        <span aria-hidden="true"><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span>查看商品</span>
+                    </button>
+                    <div>
+                        <button type="button" class="close aaa" data-dismiss="alert" aria-label="Close" remove="@item.MyfavID">
+                            <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                            <span>移除我的最愛</span>
+                        </button>
+                    </div>
+                </div>
+            </td>
+
+
+           
+        </tr>
                         <!--=========================================================================================-->
                     }
                 }

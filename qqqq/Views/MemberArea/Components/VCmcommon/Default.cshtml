@@ -15,8 +15,10 @@
                 <th>單價</th>
                 <th>評論</th>
                 <th>星等</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
+                @{ int counting = 0;
+                    foreach (var i in Model)
+                    { counting++; } }
+                <th width="15%">@($"共有{counting}筆資料")</th>
 
 
             </tr>
