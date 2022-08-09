@@ -1,0 +1,333 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.EntityFrameworkCore;
+@using prjMVCDemo.vModel;
+@using qqqq.Models;
+@using qqqq.ViewModels;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Net;
+@using System.Net.Mail;
+@using System.Text.Json;
+@model qqqq.Models.Product
+@{
+    ViewData["Title"] = "petsDetialone";
+    Layout = "_Layout";
+    CLoginViewModel memberview = null;
+    int a = 1;
+    if (Context.Session.Keys.Contains(CDictionary.SK_LOGIN_USER))
+    {
+        var b = Context.Session.GetString((CDictionary.SK_LOGIN_USER));
+        memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
+        a = memberview.MemberID;
+    }
+    我救浪Context db = new 我救浪Context();
+    //int a = ViewBag.memberid;
+    //var memberWish = db.MemberWishes.Where(mw => mw.MemberId == a).FirstOrDefault();
+    //int a = memberview.MemberID;
+    var memberWish = db.MemberWishes.Where(mw => mw.MemberId == a).FirstOrDefault();
+
+}
+
+@section Styles{
+    <style>
+        .magnify {
+            /*            flex: none;
+            position: absolute;*/
+            top: 50%;
+            left: 50%;
+            transform: translate(0%,0%);
+            display: inline-block;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .magnified {
+            width: 400px;
+            height: 400px;
+            border: 5px solid #694127;
+            display: block;
+            margin: auto;
+            z-index: 80;
+        }
+
+            .magnified img {
+                width: 100%;
+                height: 100%;
+            }
+
+        .magnifier {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border: 4px solid #694127;
+            background-size: 500%;
+            border-radius: 10px;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            margin-left: -50px !important;
+            margin-top: -50px !important;
+            z-index: 90;
+        }
+
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .divde{
+            margin-top:50px;
+            justify-content:center;
+        }
+    </style>
+}
+<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style="  background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-1.jpg) center center no-repeat; background-size: cover;">
+    <div class="container text-center pt-5 pb-3">
+        <h1 class="display-4 text-white animated slideInDown mb-3">詳細資料</h1>
+    </div>
+</div>
+<div class="row divde">
+    <div class="magnify col-3">
+        <div class="magnifier" style="background-image:url(/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName);"></div>
+        <div class="magnified">
+            <img id="prodImg" src="~/Images/@Model.Photos.Where(ph=>ph.IsDefault ==true).FirstOrDefault().PictureName" />
+        </div>
+    </div>
+    <div class="col-3">
+        <div style=" text-align: left; margin-left: 10px;  " class="divp">
+            <table class="table table-hover" style="table-layout: fixed;">
+                <tr>
+                    <td>
+                        <label class="control-label" style="text-align:center;">名字:</label>
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.ProductName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">種類:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.Category.CategoryName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">品種:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.SubCategoryName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">性別:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Gender.GenderType</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">毛色:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Color.ColorName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">結紮:</label>
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Ligation.LigationType</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">體型:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Size.SizeType</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">年齡層:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Age.AgeType</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">區域:</label>
+
+                    </td>
+                    <td>
+                        <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.City.CityName</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h2>生活基本條件</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">最低活動空間:</label>
+                    </td>
+
+                    <td>
+                        <span>@Model.PetDetail.Space</span>坪
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">基本開銷費用約:</label>
+                    </td>
+                    <td>
+                        <span>@(((decimal)Model.PetDetail.YearCost).ToString("#"))</span> 元/月
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">每周陪伴時間:</label>
+
+                    </td>
+                    <td>
+                        <span>@Model.PetDetail.AccompanyTimeWeek</span> 小時/週
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        @*</form>*@
+        <div style="text-align:left ;height:150px;">
+            <label class="control-label">簡介:</label>
+            <span>@Model.Description</span>
+        </div>
+        <div class="m-2">
+            <div class="form-group">
+                @{
+                    if (memberview != null)
+                    {
+                        if (db.OrderDetails.Where(od => od.ProductId == Model.ProductId && od.Order.MemberId == memberview.MemberID).ToList().Count > 0)
+                        {
+                            <button type="button" class="btn btn-primary m-1">
+                                您已經申請領養了
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-primary m-1" data-toggle="modal" data-target="#exampleModalLong">
+                                我要評估領養
+                            </button>
+                        }
+
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary m-1" id="login">
+                            請登入或註冊會員
+                        </button>
+                    }
+                }
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">領養須知</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="text-align:left">
+                                <p>本人願遵守以下約定：</p>
+                                <p> 1. 認養人需年滿 20 歲，未滿 20 歲者需經法定代理人同意並出示同意書。</p>
+                                <p>
+                                    2. 依法辦理犬隻寵物登記、晶片植入及絕育等事項（貓咪無強制需入晶片，但需於母貓 6 個月公貓 8
+                                    個月大時施予結紮手術）。
+                                </p>
+                                <p>
+                                    3. 無論何時都以人道方式對待認養之動物，並提供認養動物適當之食物、乾淨之飲水、適當之運動空
+                                    間、不可長期將動物關在籠中或栓綁在狹小之空間飼養，否則視為虐待動物。
+                                </p>
+                                <p>
+                                    4. 定期幫牠進行預防注射、狂犬病疫苗、驅蟲及健康檢查。
+                                </p>
+                                <p>
+                                    5. 當牠受傷或罹病時，必請獸醫師給予醫療。
+                                </p>
+                                <p>
+                                    6. 妥善照管牠，防止其無故侵害他人之生命、身體、自由、財產或安寧。
+                                </p>
+                                <p>
+                                    7. 不隨便放縱牠於戶外，出入公共場所或公眾得出入之場所時必由 14 歲以上之人伴同，並採取適當
+                                    之防衛措施，如繫鍊、提籃等，始得攜出戶外。
+                                </p>
+                                <p>
+                                    8. 若因任何原因無法續養，本人需為牠找到新的認養家庭，絕不棄養認養的動物。
+                                </p>
+                                <p>
+                                    9. 當牠轉讓、遺失或死亡時，依法辦理。
+                                </p>
+                                <p>
+                                    10. 本人遵守動物保護法及有關單位對家畜衛生管理之相關規定。
+                                </p>
+                                <p>
+                                    11. 認養人如有違反以上認養規定者，依動物保護法及相關規定辦理，如有訴訟問題時可以此切結書以
+                                    適當的法律途徑解決,。
+                                </p>
+                                <p>12. 本愛心認養切結書一式影本執於認養人，正本執於校犬管理單位。</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">我再想想</button>
+                                <button type="button" class="btn btn-primary">@Html.ActionLink("我可以做到", "petsAdopt", "pets", new { id = Model.ProductId })</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(".magnified").hover(function (e) {
+            var imgPosition = $(".magnify").position(),
+                imgHeight = $(".magnified").height(),
+                imgWidth = $(".magnified").width();
+            $(".magnifier").show();
+            $(this).mousemove(function (e) {
+                var posX = e.pageX - imgPosition.left;
+                posY = e.pageY - imgPosition.top;
+                percX = (posX / imgWidth) * 100,
+                    percY = (posY / imgHeight) * 100,
+                    perc = percX + "%" + percY + "%";
+                $(".magnifier").css({
+                    top: posY,
+                    left: posX,
+                    backgroundPosition: perc
+                });
+            });
+        }, function () {
+            $(".magnifier").hide();
+        });
+
+
+        $("#login").click(() => {
+            document.location.href = "@Url.Content("~/home/login/")"
+        })
+    </script>
+}
+

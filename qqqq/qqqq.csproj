@@ -143,4 +143,10 @@
     <Folder Include="wwwroot\doc\assets\img\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AllPay.Payment.Integration">
+      <HintPath>Dll\AllPay.Payment.Integration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

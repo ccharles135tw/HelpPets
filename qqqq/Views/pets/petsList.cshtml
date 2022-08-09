@@ -332,6 +332,8 @@
                     opt.text = item.SubCategoryName;
                     select.append(opt);
                 })
+                $("option[value=1]").attr("selected", "selected")
+                $("option[value=0]").remove();
             })
         })
         $("#btnSearch").click(() => {

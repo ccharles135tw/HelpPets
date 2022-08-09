@@ -9,6 +9,14 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using prjMVCDemo.vModel;
 using Pet.ViewModels;
+using System.Collections;
+using AllPay.Payment.Integration;
+using System.Net.Http;
+using System.Net;
+using System.Collections.Specialized;
+using System.Text;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace qqqq.Controllers
 {
@@ -507,7 +515,7 @@ namespace qqqq.Controllers
                 if (p.CartPay == true)
                 {
                     OrderDetail od = new OrderDetail();
-                    od.OrderId =int.Parse( orderId);
+                    od.OrderId = int.Parse(orderId);
                     od.ProductId = p.CartId;
                     od.Quantity = p.CartCount;
                     od.UnitPrice = db.Products.First(c => c.ProductId == p.CartId).Price;
@@ -524,17 +532,17 @@ namespace qqqq.Controllers
                     od.IsDonate = true;
                     db.OrderDetails.Add(od);
                 }
-               
-            } 
+
+            }
             db.SaveChanges();
-                return Content("訂單已成立");
+            return Content("訂單已成立");
         }
 
         public IActionResult CartCount()
         {
             if (HttpContext.Session.Keys.Contains(CDictionary.SK_購物車商品列表))
             {
-               var jsonCart= HttpContext.Session.GetString(CDictionary.SK_購物車商品列表);
+                var jsonCart = HttpContext.Session.GetString(CDictionary.SK_購物車商品列表);
                 var cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
                 return Content(cart.Count().ToString());
             }
@@ -543,14 +551,129 @@ namespace qqqq.Controllers
                 return Content("0");
             }
         }
-        public IActionResult getMember() {
-           var jsonUser= HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
+        public IActionResult getMember()
+        {
+            var jsonUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
             var user = JsonSerializer.Deserialize<CLoginViewModel>(jsonUser);
-          var member=  db.Members.First(p => p.MemberId == user.MemberID && p.Email == user.Email);
+            var member = db.Members.First(p => p.MemberId == user.MemberID && p.Email == user.Email);
             CMemberView cMember = new CMemberView();
             cMember.Member = member;
-          var data=  JsonSerializer.Serialize(cMember);
+            var data = JsonSerializer.Serialize(cMember);
             return Json(data);
         }
+
+        public ActionResult AllPay()
+        {
+            return View();
+        }
+        //public ActionResult AllPayConfirm()
+        //{
+        //    var result = RequestLinePayAsync(1);
+
+        //    if (result.returnCode == "0000")
+        //    {
+        //        return Redirect(result.info.paymentUrl.web);
+        //    }
+        //    else
+        //    {
+        //        return Content(result.returnMessage);
+        //    }
+
+        //}
+
+
+        //public async Task RequestLinePayAsync(int amount)
+        //{
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        var channelId = "1657365624";
+        //        var channelSecret = "f40f1a66398283c11759b9f66f4b3f18";
+        //        var baseUri = @"https://sandbox-api-pay.line.me";
+        //        var apiUrl = @"/v3/payments/request";
+        //        string nonce = Guid.NewGuid().ToString();
+        //        var requestBody = new LinePayRequest()
+        //        {
+        //            amount = amount,
+        //            currency = "TWD",
+        //            orderId = Guid.NewGuid().ToString(),
+        //            redirectUrls = new Redirecturls()
+        //            {
+        //                confirmUrl = "https://6ddcf789.ngrok.io/confitmUrl",
+        //                //cancelUrl = "https://6ddcf789.ngrok.io/cancelUrl"
+        //            },
+        //            packages = new List<Package>()
+        //            {
+        //                new Package()
+        //                {
+        //                    id = "package-1",
+        //                    name = "DOG",
+        //                    amount = amount,
+        //                    products = new List<ViewModels.LineProduct>()
+        //                    {
+        //                        new ViewModels.LineProduct()
+        //                        {
+        //                            id = "prod-1",
+        //                            name = "Dog",
+        //                            quantity = 1,
+        //                            price = amount
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        };
+        //        var body = JsonSerializer.Serialize(requestBody);
+
+        //        string Signature = HashLinePayRequest(channelSecret, apiUrl, body, nonce, channelSecret);
+        
+        //        //var request = (HttpWebRequest)WebRequest.Create(baseUri + apiUrl);
+        //        //request.Method = "POST";
+        //        //request.ContentType = "application/json";
+        //        httpClient.DefaultRequestHeaders.Add("X-LINE-ChannelId", channelId);
+        //        httpClient.DefaultRequestHeaders.Add("X-LINE-ChannelSecret", channelSecret);
+        //        httpClient.DefaultRequestHeaders.Add("X-LINE-Authorization-Nonce", nonce);
+        //        httpClient.DefaultRequestHeaders.Add("X-LINE-Authorization", Signature);
+
+        //        var content = new StringContent(body, Encoding.UTF8, "application/json");
+        //        var response = await httpClient.PostAsync(baseUri + apiUrl, content);
+        //        var result = await response.Content.ReadAsStringAsync();
+        //        //var response = (HttpWebResponse)request.GetResponse();
+        //        //var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+        //      JsonSerializer.Deserialize<LinePayResponse>(result);
+        //    }
+        //}
+        //public async Task<IActionResult> OnPostSubmitAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+        //    var result=await RequestLinePayAsync(this.am)
+        //}
+
+
+        //private static string HashLinePayRequest(string channelSecret, string apiUrl, string body, string orderId, string key)
+
+        //{
+
+        //    var request = channelSecret + apiUrl + body + orderId;
+
+        //    key = key ?? "";
+
+        //    var encoding = new System.Text.UTF8Encoding();
+
+        //    byte[] keyByte = encoding.GetBytes(key);
+
+        //    byte[] messageBytes = encoding.GetBytes(request);
+
+        //    using (var hmacsha256 = new HMACSHA256(keyByte))
+
+        //    {
+
+        //        byte[] hashmessage = hmacsha256.ComputeHash(messageBytes);
+
+        //        return Convert.ToBase64String(hashmessage);
+        //    }
+        //}
     }
 }
+

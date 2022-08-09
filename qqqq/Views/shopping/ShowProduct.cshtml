@@ -156,11 +156,27 @@
             {
                 foreach (var c in Model.product.MemberComments)
                 {
-                    <div>
-                        <div class="text-left row">
-                            <img src="~/Images/@c.Member.Photo" width="40" height="50" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
-                            <img src="~/Images/@(c.Grade)s.jpg" width="110" height="25" class="col-3 " /> @c.CommentDate
-                        </div>
+
+
+<div>
+            <div class="text-left row">
+                @{ if (c.Member.Photo != null)
+                    {
+                        <img src="~/Images/@c.Member.Photo" width="40" height="50" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
+                    }
+                    else
+                    {
+                        <img src="~/Images/001.png" width="40" height="50" class="col-md-1 col-auto " /><h5 class="col-md-2 col-auto">@c.Member.Name[0]XX</h5>
+                    }
+                }
+                @*<img src="~/Images/@(c.Grade)s.jpg" width="110" height="25" class="col-3 " />*@
+                <div class="col-3">
+                    @for (int i = 0; i < c.Grade; i++)
+                    {
+                        <img src="~/Images/6092_bookmark_favorite_rate_star_icon.png" width="30" height="40" class="col-1 " />
+                    }
+                </div>@c.CommentDate
+            </div>
                         <div class="text-left row"><p><h4 class="text">@c.Description</h4></p></div>
                         <div></div>
                     </div>
