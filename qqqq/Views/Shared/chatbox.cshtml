@@ -9,11 +9,11 @@
 
                 <img src="~/img/cat.png" alt="logo" />
                 <div class="client-info">
-                    <h5 id="clientName">Hello!! @(Model==null ? "訪客":Model.Name)</h5>
+                    <p id="clientName" >Hello!! @(Model==null ? "訪客":Model.Name)</p>
                     @{
                         if (Model == null)
                         {
-                            <h5>請先登入才能確保我們可以看到妳的訊息喔</h5>
+                            <p>請先登入才能確保我們可以看到妳的訊息喔</p>
                         }
                     }
                     <ul class="ul-client">
@@ -65,7 +65,7 @@
 
         </div>
         <!-- button -->
-        <div class="chat-btn @(isMessage==true?"breath":null)" clientID="">
+        <div class="chat-btn @(isMessage==true?"breath":null)" clientID="" >
             <img src="~/img/home/Circle-icons-chat.svg.png" alt="chat box icon btn" />
         </div>
     </div>

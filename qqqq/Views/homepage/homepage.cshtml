@@ -2,6 +2,7 @@
 <link href="~/css/chatboxStyle.css" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/css/docs.theme.min.css">
 <link rel="stylesheet" href="../assets/owlcarousel/assets/owl.carousel.min.css">
+<link href="~/css_Q/css/owl.carousel.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/owlcarousel/assets/owl.theme.default.min.css">
 <!-- javascript -->
 <script src="../assets/vendors/jquery.min.js"></script>
@@ -11,11 +12,11 @@
 @{
     ViewData["Title"] = "petsMatch";
     qqqq.Models.我救浪Context db = new 我救浪Context();
-    
+
 
 }
 <style>
-        html,
+        /*html,
         body {
             position: relative;
             height: 100%;
@@ -27,9 +28,10 @@
             font-size: 14px;
             color: #000;
             margin: 0;
-            padding: 0;
-/*            user-select: none;
-*/        }
+            padding: 0;*/
+            /*            user-select: none;
+    */
+        /*}
 
         .swiper {
             width: 100%;
@@ -47,7 +49,7 @@
             .swiper-slide img {
                 display: block;
                 width: 100%;
-            }
+            }*/
 
 </style>
 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -56,26 +58,26 @@
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="carousel-inner" style="width:100vw;" >
+    <div class="carousel-inner" style="width:100vw;">
         <div class="carousel-item  active" data-bs-interval="2000">
-            <a href="~/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
+            <a href="~/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" id="homepic" class="d-block vw-100" style="height:60%;"></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
-                <p>Some representative placeholder content for the first slide.</p>*@
+                    <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <a href="~/shopping/shopping"><img src="~/img/p首頁/product.jpg" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
+            <a href="~/shopping/shopping"><img src="~/img/p首頁/product.jpg" id="homepic" class="d-block vw-100" style="height:60%;"></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
-                <p>Some representative placeholder content for the first slide.</p>*@
+                    <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <a     href="~/pets/petsList"><img src="~/img/p首頁/pet.png" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
+            <a href="~/pets/petsList"><img src="~/img/p首頁/pet.png" id="homepic" class="d-block vw-100" style="height:60%;"></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
-                <p>Some representative placeholder content for the first slide.</p>*@
+                    <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -87,43 +89,36 @@
             <span class="visually-hidden ">Next</span>
         </button>
     </div>
-   
+
 </div>
 
 
 <div class="container-xxl py-6">
     <div class="container">
         <div class="row g-5">
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                <div class="fact-item bg-light rounded text-center h-100 p-5">
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s" >
+                <div class="fact-item bg-light rounded text-center h-100 p-5" style="border: 2px solid #1E1916;">
                     <i class="fa fa-solid fa-dog fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在找家的狗</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true && p.Continued == true && p.SubCategory.CategoryId == 2).Count()</h1>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
-                <div class="fact-item bg-light rounded text-center h-100 p-5">
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s" >
+                <div class="fact-item bg-light rounded text-center h-100 p-5"style="border: 2px solid #1E1916;">
                     <i class="fa fa-solid fa-cat fa-4x text-primary mb-4"></i>
                     <p class="mb-2">正在找家的貓</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Products.Where(p => p.IsPet == true && p.Continued == true && p.SubCategory.CategoryId == 3).Count()</h1>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
-                <div class="fact-item bg-light rounded text-center h-100 p-5">
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s" >
+                <div class="fact-item bg-light rounded text-center h-100 p-5"style="border: 2px solid #1E1916;">
                     <i class="fa fa-users fa-4x text-primary mb-4"></i>
                     <p class="mb-2">合作的供應商</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">@(db.Suppliers.Count() -1)</h1>
                 </div>
             </div>
-            @*<div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
-                <div class="fact-item bg-light rounded text-center h-100 p-5">
-                    <i class="fa fa-users fa-4x text-primary mb-4"></i>
-                    <p class="mb-2">正在配對的會員</p>
-                    <h1 class="display-5 mb-0" data-toggle="counter-up">@db.Members.Count()</h1>
-                </div>
-            </div>*@
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
-                <div class="fact-item bg-light rounded text-center h-100 p-5">
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s" >
+                <div class="fact-item bg-light rounded text-center h-100 p-5"style="border: 2px solid #1E1916;">
                     <i class="fa fa-solid fa-house fa-4x text-primary mb-4"></i>
                     <p class="mb-2">每年平均配對</p>
                     <h1 class="display-5 mb-0" data-toggle="counter-up">135</h1><i class=""></i>
@@ -132,44 +127,67 @@
         </div>
     </div>
 </div>
-<section id="demos">
-    <div class="row">
-        <div class="large-12 columns pl-3">
-            @*<marquee><h1>正在找家的毛孩們</h1></marquee>*@
-            <div class="owl-carousel  col-12">
-                @foreach (var item in Model)
-                {
-                    <div class="swiper-slide col-3" >
-
-                        <div id="addToList" style="background-color: #734226;text-align:center " class="col-12">
-
-                            @{ if (item.Photos.Count == 0)
-                                {
-                                    <img src="~/Images/notfound.jpg"    class="col-12" />
-                                }
-                                else
-                                {
-                                    <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" class="col-12"  />
-                                }
-                            }
-                            <h5 style="color:#fff;">@item.ProductName</h5>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
+<div class="slider">
+    <div class="slide-track">
+        @foreach (var item in Model)
+        {
+    <div class="slide mr-3 ">
+        @{ if (item.Photos.Count == 0)
+            {
+                <img src="~/Images/notfound.jpg" style="height:300px;width:300px;" />
+            }
+            else
+            {
+                <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" style="height:300px;width:300px;" />
+            }
+        } 
+    <h5 style="color: #fff;text-align:center;  background-color: #1E1916">@item.ProductName</h5>
     </div>
-</section>
+        }
+    </div>
+</div>
+@*<section id="demos">*@
+@*<div class="row">*@
+@*<div class="large-12 columns pl-3">*@
+<!--<div class="container">-->
+
+
+    @*<marquee><h1>正在找家的毛孩們</h1></marquee>*@
+    <!--<div class="owl-carousel  row">
+        @foreach (var item in Model)
+        {
+            <div class="swiper-slide col-12">
+
+                <div id="addToList" style="background-color: #734226;text-align:center ">
+
+                    @{ if (item.Photos.Count == 0)
+                        {
+                            <img src="~/Images/notfound.jpg" style="max-height:100%;max-width:100%;" />
+                        }
+                        else
+                        {
+                            <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" style="max-height:100%;max-width:100%;" />
+                        }
+                    }
+                    <h5 style="color:#fff;">@item.ProductName</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>-->
+@*</div>*@
+@*</div>*@
+@*</section>*@
 <!-- About Start -->
 <div class="container-xxl py-4">
-    <div >
-        <div class="row g-5">
+    <div>
+        <div class="row mt-3 g-5">
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="row img-twice position-relative h-100">
-                    <div class="col-6" >
+                    <div class="col-6">
                         <img class="img-fluid rounded" src="~/img/family1.jpg" alt="" data-wow-delay="0.3s">
                     </div>
-                    <div class="col-6 align-self-end" >
+                    <div class="col-6 align-self-end">
                         <img class="img-fluid rounded" src="~/img/family2.jpg" alt="" data-wow-delay="0.5s">
                     </div>
                 </div>
@@ -190,9 +208,9 @@
 </div>
 <!-- About End -->
 <!-- Product Start -->
-<div class="container-xxl bg-light my-6 pt-4 pt-0">
+<div class="container-xxl bg-light my-6 py-4">
     <div class="container">
-        <div class="bg-primary text-light rounded-bottom p-5 my-3 mt-0 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="bg-primary text-light rounded p-5 my-3 mt-0 wow fadeInUp" data-wow-delay="0.1s" style="border: 2px solid #1E1916;">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-4 text-light mb-0" href="shopping.html">我救浪嚴選商品</h1>
@@ -213,8 +231,8 @@
                     delay += 0.3f;
                     Random r = new Random(DateTime.Now.Millisecond);
                     int index = r.Next(0, totalCount);
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="@(delay)s">
-                        <div class="product-item flex-column bg-white rounded overflow-hidden h-80 d-flex" >
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="@(delay)s" >
+                        <div class="product-item flex-column bg-white rounded overflow-hidden h-80 d-flex" style="border: 2px solid #1E1916;">
                             <div class="text-center p-4">
                                 <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">$@(((decimal)list[index].Price).ToString("#"))元</div>
                                 <p style="height:30px;" class="mb-1">@(list[index].ProductName)</p>
@@ -312,7 +330,7 @@
                 //margin: 10,
                 autoplay: true,
                 autoplayTimeout: 2000,
-         /*       autoplayHoverPause: true*/
+                /*       autoplayHoverPause: true*/
             });
             //$('.play').on('click', function () {
             //    owl.trigger('play.owl.autoplay', [1000])
@@ -322,23 +340,23 @@
             //})
         })
 
-      
-        //var swiper = new Swiper(".mySwiper", {
-        //    effect: "coverflow",
-        //    grabCursor: true,
-        //    centeredSlides: true,
-        //    slidesPerView: "auto",
-        //    coverflowEffect: {
-        //        rotate: 50,
-        //        stretch: 0,
-        //        depth: 100,
-        //        modifier: 1,
-        //        slideShadows: true,
-        //    },
-        //    pagination: {
-        //        el: ".swiper-pagination",
-        //    },
-        //});
+
+            //var swiper = new Swiper(".mySwiper", {
+            //    effect: "coverflow",
+            //    grabCursor: true,
+            //    centeredSlides: true,
+            //    slidesPerView: "auto",
+            //    coverflowEffect: {
+            //        rotate: 50,
+            //        stretch: 0,
+            //        depth: 100,
+            //        modifier: 1,
+            //        slideShadows: true,
+            //    },
+            //    pagination: {
+            //        el: ".swiper-pagination",
+            //    },
+            //});
     </script>
 
 }

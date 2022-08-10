@@ -96,7 +96,7 @@
 
         <div style="flex:none;width:25%" justify-content: flex-start; align-items: center;>
             <form method="post" id="formKeyword">
-                <label>關鍵字:</label><input type="text" name="keyword" class="m-2" />
+                <label>關鍵字:</label><input type="text" name="keyword" class="m-2" id="keyword"/>
                 <button type="button" class="btn btn-primary" id="btnKeyword" style="background-color: #D2691E">搜尋</button>
             </form>
         </div>
@@ -349,6 +349,12 @@
                 $("#divAlert").empty();
                 $("#divAlert").append(result);
             })
+        })
+        $("#keyword").keypress(function (e) {
+            if (e.which == 13) {
+                console.log(e)
+                $("#btnKeyword").click();
+            }
         })
     </script>
 

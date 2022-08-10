@@ -1,4 +1,4 @@
-﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style=" margin-bottom: 6rem; background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-6.jpg) center center no-repeat; background-size: cover;">
+﻿<div class="container-fluid  py-6 wow fadeIn" data-wow-delay="0.1s" style="background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .3)),url(../img/head-6.jpg) center center no-repeat; background-size: cover;">
     <div class="container text-center pt-5 pb-3">
         <h1 class="display-4 text-white animated slideInDown mb-3">最新消息</h1>
     </div>
@@ -22,10 +22,22 @@
             font-size: 30px;
             text-align:center;
         }
+        .imgdiv {
+            transition: transform .2s;
+            margin: 0 auto;
+            flex: none;
+            background-color: transparent;
+            overflow: hidden;
+        }
+
+            .imgdiv:hover {
+                transform: scale(2);
+                background-color: transparent;
+            }
     </style>
 }
 
-<div class="container-xxl py-6">
+<div class="container-xxl py-3">
     <div>資料來源<a href="https://www.tcapo.gov.taipei/Default.aspx" style="color:blue;" target="_blank" rel="noreferrer">台北市動物保護處</a></div>
     <table class="table col-md-12">
         <thead>
@@ -121,7 +133,7 @@
         
         $.post('@Url.Content("~/service/getNews")', {}, (result) => {
             result.forEach(item => {
-                str += `<tr><td><img src="${item.picture}" height="200" width="160" style="display:block; margin:auto;" /></td><td style="text-align:center;">${item.date}</td><td><a href="${item.source}" target="_blank" rel="noreferrer">${item.title}</a></td></tr>`;
+                str += `<tr><td><img src="${item.picture}" height="200" width="160" style="display:block; margin:auto;" class="imgdiv" /></td><td style="text-align:center;">${item.date}</td><td><a href="${item.source}" target="_blank" rel="noreferrer">${item.title}</a></td></tr>`;
             })
             $("load").fadeOut();
             $("#tbody").html(str);
