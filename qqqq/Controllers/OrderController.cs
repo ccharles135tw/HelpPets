@@ -43,27 +43,40 @@ namespace Pet.Controllers
         [HttpPost]
         public bool Edit(OrderDetail[] details, DateTime OrderDate, string SendAddress,int  OrderStatusId,int id)
         {
-            try
-            {
-                var q = db.Orders.Where(o => o.OrderId == id).FirstOrDefault();
-                q.OrderStatusId = OrderStatusId;
-                q.OrderDate = OrderDate;
-                q.SendAddress = SendAddress;
+            //try
+            //{
+            //    var q = db.Orders.Where(o => o.OrderId == id).FirstOrDefault();
+            //    q.OrderStatusId = OrderStatusId;
+            //    q.OrderDate = OrderDate;
+            //    q.SendAddress = SendAddress;
 
-                var q2 = db.OrderDetails.Where(od => od.OrderId == id).ToList();
-                db.OrderDetails.RemoveRange(q2);
+            //    var q2 = db.OrderDetails.Where(od => od.OrderId == id).ToList();
+            //    db.OrderDetails.RemoveRange(q2);
 
-                db.SaveChanges();
-                foreach (var d in details)
-                {
-                    db.OrderDetails.Add(d);
-                }
-                db.SaveChanges();
+            //    foreach (var d in details)
+            //    {
+            //        db.OrderDetails.Add(d);
+            //    }
+            //    db.SaveChanges();
                 
 
-                return true;
+
+            //    return true;
+            //}
+            //catch { return false;}
+            var q = db.Orders.Where(o => o.OrderId == id).FirstOrDefault();
+            q.OrderStatusId = OrderStatusId;
+            q.OrderDate = OrderDate;
+            q.SendAddress = SendAddress;
+
+            var q2 = db.OrderDetails.Where(od => od.OrderId == id).ToList();
+            db.OrderDetails.RemoveRange(q2);
+            foreach (var d in details)
+            {
+                db.OrderDetails.Add(d);
             }
-            catch { return false;}
+            db.SaveChanges();
+            return true;
         }
         public string SearchFindName(int id)
         {
