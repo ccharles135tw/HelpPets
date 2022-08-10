@@ -567,7 +567,8 @@ namespace qqqq.Controllers
 
         public ActionResult AllPay()
         {
-
+            ViewBag.Scheme = Request.Scheme;
+            ViewBag.Host = Request.Host;
             string jsonCart = HttpContext.Session.GetString(CDictionary.SK_結帳商品);
             List<CShoppingCart> cart = JsonSerializer.Deserialize<List<CShoppingCart>>(jsonCart);
 
@@ -600,7 +601,7 @@ namespace qqqq.Controllers
                         set0.Donate = 0;
                         set0.DonatePay = false;
                     }
-                    if (!set0.CartPay && !set0.DonatePay)
+                    if (set0.CartCount==0 && set0.Donate==0)
                     {
                         cart.Remove(set0);
                     }
