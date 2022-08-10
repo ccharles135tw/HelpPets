@@ -223,8 +223,8 @@ namespace prjHomeLess_R.Controllers
                 mail.BodyEncoding = System.Text.Encoding.UTF8;
                 mail.Subject = "我就浪忘記密碼密碼";
                 //內文
-                mail.Body = $"<html><h1>忘記密碼</h1><h4>請點擊以下連結以重新設定密碼</h4><body><a href='https://localhost:44318/home/forgetPwd?id={email}'>https://localhost:44318/home/forgetPwd</a></body></html>";
-               // mail.Body = $"<html><h1>忘記密碼</h1><h4>請點擊以下連結以重新設定密碼</h4><body><a href='http://192.168.21.37/home/forgetPwd?id={email}'>http://192.168.21.37/home/forgetPwd</a></body></html>";
+                //mail.Body = $"<html><h1>忘記密碼</h1><h4>請點擊以下連結以重新設定密碼</h4><body><a href='https://localhost:44318/home/forgetPwd?id={email}'>https://localhost:44318/home/forgetPwd</a></body></html>";
+               mail.Body = $"<html><h1>忘記密碼</h1><h4>請點擊以下連結以重新設定密碼</h4><body><a href='http://192.168.21.37/home/forgetPwd?id={email}'>http://192.168.21.37/home/forgetPwd</a></body></html>";
 
                 //內文是否為html
                 mail.IsBodyHtml = true;

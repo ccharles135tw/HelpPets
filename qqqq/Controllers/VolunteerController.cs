@@ -269,6 +269,7 @@ namespace final_test.Controllers
             v.Phone = Phone;
             v.Email = Email;
             v.CheckEmail = false;
+            v.VstatusId = 2;
             if (Status == "候補")
             {
                 v.Waiting = true;

@@ -181,10 +181,10 @@
              })
         $("#memVolunteer").click((e) => {
             e.preventDefault();
-
+            console.log("1")
             $("#viewChange").empty();
             $.post("@Url.Content("~/MemberArea/mVolunteer")", {}, function (datas)  { $("#viewChange").html(datas);})
-
+            console.log("2")
         })
 
         //charles

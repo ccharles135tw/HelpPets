@@ -88,7 +88,7 @@
             }
             <tr>
                 <td colspan="7" class="text-right ">
-                    累計時數:@(Model[0]._vou.Member.Volunteers.Where(v=>v.VstatusId==1).Sum(v=>v.AllowTime.Hour))hr
+                    累計時數:@(Model.Count==0?0:Model[0]._vou.Member.Volunteers.Where(v=>v.VstatusId==1).Sum(v=>v.AllowTime.Hour))hr
                 </td>
             </tr>
         </tbody>
