@@ -56,23 +56,23 @@
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="carousel-inner">
+    <div class="carousel-inner" style="width:100vw;" >
         <div class="carousel-item  active" data-bs-interval="2000">
-            <a style="height:100%" href="~/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" id="homepic" class="d-block vw-100"></a>
+            <a href="~/Volunteer/Index"><img src="~/img/p首頁/volunteer.jpg" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
                 <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <a style="height:100%" href="~/shopping/shopping"><img src="~/img/p首頁/product.jpg" id="homepic" class="d-block vw-100"></a>
+            <a href="~/shopping/shopping"><img src="~/img/p首頁/product.jpg" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
                 <p>Some representative placeholder content for the first slide.</p>*@
             </div>
         </div>
         <div class="carousel-item" data-bs-interval="2000">
-            <a style="height:100%" href="~/pets/petsList"><img src="~/img/p首頁/pet.png" id="homepic" class="d-block vw-100"></a>
+            <a     href="~/pets/petsList"><img src="~/img/p首頁/pet.png" id="homepic" class="d-block vw-100" style="height:60%;" ></a>
             <div class="carousel-caption d-md-block">
                 @*<h1 id="titleh1">First slide label</h1>
                 <p>Some representative placeholder content for the first slide.</p>*@
@@ -136,20 +136,20 @@
     <div class="row">
         <div class="large-12 columns pl-3">
             @*<marquee><h1>正在找家的毛孩們</h1></marquee>*@
-            <div class="owl-carousel">
+            <div class="owl-carousel  col-12">
                 @foreach (var item in Model)
                 {
-                    <div class="swiper-slide" style="width:300px;height:350px;">
+                    <div class="swiper-slide col-3" >
 
-                        <div id="addToList" style="background-color: #734226;text-align:center " >
+                        <div id="addToList" style="background-color: #734226;text-align:center " class="col-12">
 
                             @{ if (item.Photos.Count == 0)
                                 {
-                                    <img src="~/Images/notfound.jpg" width="300" height="300" zoom />
+                                    <img src="~/Images/notfound.jpg"    class="col-12" />
                                 }
                                 else
                                 {
-                                    <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
+                                    <img src="~/Images/@item.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" class="col-12"  />
                                 }
                             }
                             <h5 style="color:#fff;">@item.ProductName</h5>
@@ -161,8 +161,8 @@
     </div>
 </section>
 <!-- About Start -->
-<div class="container-xxl py-6">
-    <div class="container">
+<div class="container-xxl py-4">
+    <div >
         <div class="row g-5">
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="row img-twice position-relative h-100">
@@ -190,27 +190,18 @@
 </div>
 <!-- About End -->
 <!-- Product Start -->
-<div class="container-xxl bg-light my-6 py-6 pt-0">
+<div class="container-xxl bg-light my-6 pt-4 pt-0">
     <div class="container">
-        <div class="bg-primary text-light rounded-bottom p-5 my-6 mt-0 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="bg-primary text-light rounded-bottom p-5 my-3 mt-0 wow fadeInUp" data-wow-delay="0.1s">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 text-light mb-0" href="shopping.html">我救浪<br />嚴選商品</h1>
-                </div>
-                <div class="col-lg-6 text-lg-end">
-                    <div class="d-inline-flex align-items-center text-start">
-                        <i class="fa fa-phone-alt fa-4x flex-shrink-0"></i>
-                        <div class="ms-4">
-                            <p class="fs-5 fw-bold mb-0">連絡電話:</p>
-                            <p class="fs-1 fw-bold mb-0">+012 345 6789</p>
-                        </div>
-                    </div>
+                    <h1 class="display-4 text-light mb-0" href="shopping.html">我救浪嚴選商品</h1>
                 </div>
             </div>
         </div>
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;align-items:center">
             <h3 class="text-primary text-uppercase mb-2">//關於產品</h3>
-            <h1 class="display-6 mb-4">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</h1>
+            <p style="font-size:15px;font-weight:700;">從源頭把關食品用品安全，滿足毛孩也保毛孩健康</p>
         </div>
         <div class="row g-4">
             @{
@@ -223,13 +214,13 @@
                     Random r = new Random(DateTime.Now.Millisecond);
                     int index = r.Next(0, totalCount);
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="@(delay)s">
-                        <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                        <div class="product-item flex-column bg-white rounded overflow-hidden h-80 d-flex" >
                             <div class="text-center p-4">
                                 <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">$@(((decimal)list[index].Price).ToString("#"))元</div>
-                                <h3 class="mb-3">@(list[index].ProductName)</h3>
+                                <p style="height:30px;" class="mb-1">@(list[index].ProductName)</p>
                             </div>
                             <div class="position-relative mt-auto">
-                                <img class="img-fluid" src="~/Images/@(list[index].Photos.Count==0?null:list[index].Photos.Where(ph=>ph.IsDefault==true).FirstOrDefault().PictureName)" alt="">
+                                <img style="width:100%;height:200px;" src="~/Images/@(list[index].Photos.Count==0?null:list[index].Photos.Where(ph=>ph.IsDefault==true).FirstOrDefault().PictureName)" alt="">
                                 <div class="product-overlay">
                                     <a class="btn btn-lg-square btn-outline-light rounded-circle" href="~/shopping/showproduct/@(list[index].ProductId)"><i class="fa fa-eye text-primary"></i></a>
                                 </div>
@@ -250,7 +241,7 @@
     <div class="container">
         <div class="row g-5">
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                <h3 class="text-primary text-uppercase mb-2">// 熱心志工團隊</h3>
+                <h3 class="text-primary text-uppercase mb-2">熱心志工團隊</h3>
                 <h1 class="display-6 mb-4">我們提供的協助</h1>
                 <p class="mb-5">
                     強化動物保護教育及法令觀念，同時擴增動物照護人力、提升收容動物福利，與精進為民服務品
