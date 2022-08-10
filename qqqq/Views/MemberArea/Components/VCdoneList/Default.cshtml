@@ -126,11 +126,12 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
+    let target = "";
     $(".creatcommon").click(function (eve) {
 
          let creatcommon = $(this).attr("creatcommon");
         console.log(creatcommon);
-
+        target = $(this).attr("creatcommon");
         eve.preventDefault();
 
 
@@ -158,7 +159,7 @@
 <script>
     $("#send").click(function () {
 
-        let creatcommon = $(".creatcommon").attr("creatcommon");
+        let creatcommon = target;
         let ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
         let Description = $("textarea[name='Description']").val();
 
