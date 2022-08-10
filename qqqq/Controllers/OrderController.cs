@@ -53,14 +53,13 @@ namespace Pet.Controllers
                 var q2 = db.OrderDetails.Where(od => od.OrderId == id).ToList();
                 db.OrderDetails.RemoveRange(q2);
 
+                db.SaveChanges();
                 foreach (var d in details)
                 {
                     db.OrderDetails.Add(d);
                 }
                 db.SaveChanges();
                 
-
-                db.SaveChanges();
 
                 return true;
             }

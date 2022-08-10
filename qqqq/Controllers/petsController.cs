@@ -44,7 +44,7 @@ namespace qqqq.Controllers
         }
         public IActionResult petsPhoto()
         {
-            var a = db.Products.Where(x => x.IsPet == true).ToList();
+            var a = db.Products.Where(x => x.IsPet == true&&x.Continued==true).ToList();
 
             ////a.FirstOrDefault().SubCategory.SubCategoryName;
             var list = CAdoptView.CAdoptViews(a);
