@@ -299,22 +299,24 @@
                 }
             })
             $("input[id=morning]").click(() => {
-                Swal.fire({
-                    title: '選擇時段無名額，報名候補人員?',
-                    showDenyButton: true,
-                    /*showCancelButton: true,*/
-                    confirmButtonText: '確認',
-                    denyButtonText: `取消`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $("#AllowTime").text('可參與時段(候補):')
-                        $("#MemberStatus").text('候補')
-                    } else if (result.isDenied) {
-                        $("input[name=time]").prop('checked', false)
-                        $("#AllowTime").text('可參與時段 :')
-                        $("#MemberStatus").text('正取')
-                    }
-                })
+                if (`${morningA}` == 0) {
+                    Swal.fire({
+                        title: '選擇時段無名額，報名候補人員?',
+                        showDenyButton: true,
+                        /*showCancelButton: true,*/
+                        confirmButtonText: '確認',
+                        denyButtonText: `取消`,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $("#AllowTime").text('可參與時段(候補):')
+                            $("#MemberStatus").text('候補')
+                        } else if (result.isDenied) {
+                            $("input[name=time]").prop('checked', false)
+                            $("#AllowTime").text('可參與時段 :')
+                            $("#MemberStatus").text('正取')
+                        }
+                    })
+                }
                 //if (`${morningA}` == 0) {
                 //    let boo = confirm("選擇時段無名額，報名候補人員?")
                 //    if (boo) {
@@ -329,22 +331,24 @@
                 //}
             })
             $("input[id=afternoon]").click(() => {
-                Swal.fire({
-                    title: '選擇時段無名額，報名候補人員?',
-                    showDenyButton: true,
-                    /*showCancelButton: true,*/
-                    confirmButtonText: '確認',
-                    denyButtonText: `取消`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $("#AllowTime").text('可參與時段(候補):')
-                        $("#MemberStatus").text('候補')
-                    } else if (result.isDenied) {
-                        $("input[name=time]").prop('checked', false)
-                        $("#AllowTime").text('可參與時段 :')
-                        $("#MemberStatus").text('正取')
-                    }
-                })
+                if (`${afternoonA}` == 0) {
+                    Swal.fire({
+                        title: '選擇時段無名額，報名候補人員?',
+                        showDenyButton: true,
+                        /*showCancelButton: true,*/
+                        confirmButtonText: '確認',
+                        denyButtonText: `取消`,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $("#AllowTime").text('可參與時段(候補):')
+                            $("#MemberStatus").text('候補')
+                        } else if (result.isDenied) {
+                            $("input[name=time]").prop('checked', false)
+                            $("#AllowTime").text('可參與時段 :')
+                            $("#MemberStatus").text('正取')
+                        }
+                    })
+                }
                 //if (`${afternoonA}` == 0) {
                 //    let boo = confirm("選擇時段無名額，報名候補人員?")
                 //    if (boo) {
