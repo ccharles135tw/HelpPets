@@ -276,8 +276,10 @@
                     OrderId: orderid,
                     ProductId: $(element).children().eq(0).text(),
                     UnitPrice: $(element).children().eq(2).children(0).val(),
-                    Quantity: $(element).children().eq(3).children(0).val()
+                    Quantity: $(element).children().eq(3).children(0).val(),
+                    IsDonate: $(element).children().eq(4).children(0).prop("checked") == true ? true : false
                 }
+              
                 details.push(o);
             })
 
