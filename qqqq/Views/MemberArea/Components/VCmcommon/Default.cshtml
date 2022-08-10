@@ -107,6 +107,7 @@
                 @*Modal footer*@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee" @*CommonId="@.CommonId"*@>送出</button>
+         
                 </div>
 
             </div>
@@ -173,11 +174,7 @@
         }, function () {
             $.post("@Url.Content("~/MemberArea/mCommon")", {}, function (datas)  { $("#viewChange").html(datas);})
         })
-
-
-
-
-
     })
 
+   
 </script>
