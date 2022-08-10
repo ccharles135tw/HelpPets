@@ -163,14 +163,14 @@ namespace qqqq.Controllers
             if (db.Volunteers.Where(y => y.VerificationCode==ver && y.VstatusId == 1).Count() != 0)
             {
                 var a = db.Volunteers.Where(x => x.VerificationCode == ver).Select(y => y.Name).FirstOrDefault();
-                return Content($"{a}，報到已完成，如有疑問請詢問現場工作人員。");
+                return Content($"<h2>{a}，報到已完成，如有疑問請詢問現場工作人員。</h2>", "text/html", System.Text.Encoding.UTF8);
             }
             if (db.Volunteers.Select(y=>y.VerificationCode).Contains(ver))
             {
                 var a = db.Volunteers.Where(x => x.VerificationCode == ver).Select(y => y).FirstOrDefault();
                 a.VstatusId = 1;
                 db.SaveChanges();
-                return Content($"{a.Name}，報到成功。");
+                return Content($"<h2>{a.Name}，報到成功。</h2>", "text/html", System.Text.Encoding.UTF8);
             }
             return Content("失敗??");
         }

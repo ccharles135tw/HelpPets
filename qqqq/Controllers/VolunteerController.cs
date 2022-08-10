@@ -285,8 +285,8 @@ namespace final_test.Controllers
        public IActionResult EmailTest(string random)
         {
             MailMessage mail = new MailMessage();
-            //mail.From = new MailAddress("helppetqqq@gmail.com");
-            mail.From = new MailAddress("billsagi0002@gmail.com");
+            mail.From = new MailAddress("helppetqqq@gmail.com");
+            //mail.From = new MailAddress("billsagi0002@gmail.com");
             Debug.WriteLine(random);
             var b = HttpContext.Session.GetString((CDictionary.SK_LOGIN_USER));
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(b);
@@ -352,7 +352,7 @@ namespace final_test.Controllers
                 var time = DateTime.Parse(a.Select(x => x.OrderDate).FirstOrDefault());
                 if (time.AddMinutes(20) < DateTime.Now)
                 {
-                    return Content("驗證失敗，超過時間。");
+                    return Content("<h2>驗證失敗，超過時間。</h2>", "text/html",System.Text.Encoding.UTF8);
                 }
                 foreach (var i in a)
                 {
@@ -360,11 +360,11 @@ namespace final_test.Controllers
                     i.VstatusId = 2;
                 }
                 db.SaveChanges();
-                return Content("信箱驗證成功，你已完成報名。");
+                return Content("<h2>信箱驗證成功，你已完成報名。</h2>", "text/html", System.Text.Encoding.UTF8);
             }
             else
             {
-                return Content("查無此預約。");
+                return Content("<h2>查無此預約。</h2>", "text/html", System.Text.Encoding.UTF8);
             }
         }
         public IActionResult successPage(string id) {
