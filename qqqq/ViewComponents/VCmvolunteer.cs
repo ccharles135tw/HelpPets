@@ -23,6 +23,7 @@ namespace qqqq.ViewComponents
 
             var list = CMemvoltView.CMemvoltViews(q);
             return View(list);
+
         }
     }
 }

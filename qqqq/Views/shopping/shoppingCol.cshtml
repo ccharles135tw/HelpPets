@@ -10,16 +10,16 @@
             
             @foreach (var p in Model)
             {
-                <div class="col-md-10 col-lg-4">
+                <div class="col-md-10 col-lg-3">
                     <div class="card text-center card-product">
-                        <div class="card-product__img">
+                        <div class="card-product__img ">
                             @{ if (p.Photos.Count == 0)
                                 {
-                                    <img src="/Images/notfound.jpg" width="300" height="300" />
+                                    <img src="/Images/notfound.jpg" width="250" height="250" />
                                 }
                                 else
                                 {
-                                    <img src="/Images/@p.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="300" height="300" />
+                                    <img src="/Images/@p.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="250" height="250" />
                                 }
                             }
                             <div>

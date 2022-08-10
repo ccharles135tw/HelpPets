@@ -17,7 +17,7 @@
     <div class="text-center ">
 
         <select class="sorting mr-auto" style="margin-left: 10px; margin-right: 10px;" name="Category" id="selectCate">
-            <option value="0">全部</option>
+            <option value="0"id="start">全部</option>
             @foreach (Category cator in Model)
             {
                 <option value="@cator.CategoryId">@cator.CategoryName</option>
@@ -160,23 +160,25 @@
         })
         $(".filter").on("change", (event) => {
             if (search == false) {
-                SubCategory = []
-               
+                SubCategory = []           
             }
-            $("#keyword").text=""
+            $("#keyword").val("")
+            Keyword=""
             search = true;
             if (event.target.checked) {
                 ParentCategory = 0;
                 Category = 0
                 SubCategory.push(event.target.value)
-              
+                var cate = document.querySelector("#selectCate")
+                var subcate = document.querySelector("#selectSub")
+                cate.value = 0
+                subcate.value=0
                 filter()
             }
             else {
                 SubCategory = SubCategory.filter(function (item) {
                     return item != event.target.value
-                })
-       
+                })   
                 filter();
             }
 

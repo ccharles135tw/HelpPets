@@ -129,6 +129,10 @@
                 'success'
             )/*, setTimeout(function () { location.href = "/pets/petsList" }, 1000)*/
             $.post("@Url.Content("~/pets/EmailTest")", {})
+            $(".swal2-confirm").click(function () {
+                 window.location = "@Url.Content("~/pets/petsList")" 
+            })
+          
         }
         function alertlist1() {
             document.location.href="@Url.Content("~/MemberArea/MemberEdoit/")"
