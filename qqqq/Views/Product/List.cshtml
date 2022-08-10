@@ -73,18 +73,7 @@
 
 <h1 style="text-align:center; font-weight:900">商品管理系統</h1>
 <br />
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="~/css/BK_style.css" rel="stylesheet" />
-</head>
-<body>
+<div>
 
     <form method="post" action="~/Product/EasySearch" style="font-size:18px;" id="searchForm">
         關鍵字 <input type="text" name="Keyword" style="width:100px;border-radius:15px;border:2px solid #EAA636" class="text-center" value="@ViewBag.keyword" />
@@ -112,7 +101,7 @@
         <button class="fa-solid fa-user-plus" type="button" style="float:right;padding-top:10px; font-size:20px;color:chocolate;border:none;background-color:transparent;" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="$('#staticBackdrop').modal('show')"> 新增商品</button>
     </form>
     <br />
-    <div>
+    <div style="zoom:0.75;">
         <div class="row mb-5">
             <table class="table">
                 <thead id="thead" style="text-align:center;">
@@ -377,8 +366,7 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
 
 @section Scripts{
 

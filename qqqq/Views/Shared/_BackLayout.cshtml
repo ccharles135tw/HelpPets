@@ -2,7 +2,7 @@
 @using qqqq.ViewModels
 @using qqqq.Models
 <!DOCTYPE html>
-<html>
+<html >
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
@@ -28,11 +28,16 @@
 
     <link href="~/css/jquery-ui-1.13.1.custom/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/css/chatboxStyleForBK.css" rel="stylesheet" />
-@*        <link href="~/css/style1.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">*@
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/BK_style.css" rel="stylesheet" />
+    @*        <link href="~/css/style1.css" rel="stylesheet">
+        <link href="~/css/style.css" rel="stylesheet">*@
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
+<body   >
     @{
         我救浪Context db = new 我救浪Context();
         CEmp employee = null;
