@@ -157,15 +157,44 @@
         })
 
         $("#sub").click(() => {
-            $.post('@Url.Content("~/Home/sendMail")', { email: $("#fMail").val() }, (result) => {
+            $.post('@Url.Content("~/Home/sendMail")', { email: $("#fMail").val() },
+
+              
+
+
+
+                (result) => {
                 if (result == "") {
-                    alert("用戶不存在。")
+                    sendnon()
                 } else {
                     $("#test").trigger('click')
+                    sendmail();
                 }
             });
         })
 
+    
+        function sendmail() {
+            Swal.fire({
+                title:'請至您的信箱取得驗證',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        }
+
+        function sendnon() {
+            Swal.fire({
+                icon: 'error',
+                title: '用戶不存在',
+                text: '請確認信箱帳號是否正確',
+                footer: '<a href="">Why do I have this issue?</a>'
+            })
+        }
+   
     </script>
 
 
