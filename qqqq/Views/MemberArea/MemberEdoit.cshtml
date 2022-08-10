@@ -279,15 +279,16 @@
             </div>
             <div class="modal-body">
                 <div class="form-group first ">
-                    舊密碼 :                <input type="password" id="opws1" />
+                    輸入舊密碼 :<input type="password" id="opws1" /><label ><i class="fa-solid fa-eye" id="seeoPwd"></i></label>
                 </div>
 
                 <div class="form-group last mb-2">
-                    再次輸入舊密碼 : <input type="password" id="opws2" /><label id="info"></label>
+                  確認舊密碼 : <input type="password" id="opws2" /><label id="info"></label>
                 </div>
+            
 
                 <div class="form-group last mb-2">
-                    新密碼 : <input type="password" id="newpwd" disabled />
+                    輸入新密碼 : <input type="password" id="newpwd" disabled />
                 </div>
 
                 <div class="modal-footer">
@@ -375,6 +376,26 @@
 
             })
 
+            let oflag = false;
+            $(function () {
+                $("#seeoPwd").click(function () {
+                    if (oflag == true)
+                        oflag = false;
+                    else
+                        oflag = true;
+
+                    if (oflag == true) {
+                        $("#opws1").attr("type", "text");
+                        $("#opws2").attr("type", "text");
+                        $("#newpwd").attr("type", "text");
+                    } else {
+                        $("#opws1").attr("type", "password");
+                        $("#opws2").attr("type", "password");
+                        $("#newpwd").attr("type", "password");
+                    }
+                })
+            });
+
 
   
 
@@ -452,7 +473,7 @@
 
           
             })
-
+            
       
 
         </script>
