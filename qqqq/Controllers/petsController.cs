@@ -59,6 +59,7 @@ namespace qqqq.Controllers
         public IActionResult SearchForPet(PetDetail petDetail,Product product,int categoryid)
         {
             var a = db.Products.Where(p => (product.SubCategoryId == 1 ? true : p.SubCategoryId == product.SubCategoryId) &&
+                                    (p.Continued==true)&&
                                     (p.IsPet==true)&&
                                     (categoryid==1?true:p.SubCategory.CategoryId==categoryid)&&
                                     (petDetail.GenderId == 1 ? true : p.PetDetail.GenderId == petDetail.GenderId) &&
@@ -74,7 +75,7 @@ namespace qqqq.Controllers
             }
             else
             {
-                var a = db.Products.Where(p => p.IsPet == true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword))).ToList();
+                var a = db.Products.Where(p => p.IsPet == true&&p.Continued==true && (p.ProductName.Contains(keyword) || p.SubCategory.SubCategoryName.Contains(keyword) || p.SubCategory.Category.CategoryName.Contains(keyword))).ToList();
                 var list = CAdoptView.CAdoptViews(a);
                //Debug.WriteLine(list[0].GenderType);
                 return PartialView("petsPhoto", list);
