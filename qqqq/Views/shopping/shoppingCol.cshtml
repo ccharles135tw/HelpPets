@@ -7,46 +7,61 @@
     <section class="lattest-product-area pb-40 category-list">
         <h4>共 @Model.Count() 筆</h4>
         <div class="row">
-            
-            @foreach (var p in Model)
-            {
-                <div class="col-md-10 col-lg-3">
-                    <div class="card text-center card-product">
-                        <div class="card-product__img ">
-                            @{ if (p.Photos.Count == 0)
-                                {
-                                    <img src="/Images/notfound.jpg" width="250" height="250" />
-                                }
-                                else
-                                {
-                                    <img src="/Images/@p.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="250" height="250" />
-                                }
-                            }
-                            <div>
-                                <img src="~/Images/6092_bookmark_favorite_rate_star_icon.png" width="25"height="25"/> <b class="fs-20"> @{string s = "0"; if (p.product.MemberComments.Count() != 0)
-                                    {
-                                      s= ((double) p.product.MemberComments.Average(p => p.Grade)).ToString("0.0");
+
+            @{
+                if (Model.Count() == 0)
+                {
+                  
+                        <div>
+                            <h2>找不到符合條件之商品</h2>
+                        </div>
+          
+
+                }
+                else
+                {
+                    foreach (var p in Model)
+                    {
+                        <div class="col-md-10 col-lg-3">
+                            <div class="card text-center card-product">
+                                <div class="card-product__img ">
+                                    @{ if (p.Photos.Count == 0)
+                                        {
+                                            <img src="/Images/notfound.jpg" width="250" height="250" />
+                                        }
+                                        else
+                                        {
+                                            <img src="/Images/@p.Photos.FirstOrDefault(p=>p.IsDefault==true).PictureName" width="250" height="250" />
+                                        }
                                     }
-                                }
-                                @s</b>
+                                    <div>
+                                        <img src="~/Images/6092_bookmark_favorite_rate_star_icon.png" width="25" height="25" /> <b class="fs-20">
+                                            @{string s = "0"; if (p.product.MemberComments.Count() != 0)
+                                                {
+                                                    s = ((double)p.product.MemberComments.Average(p => p.Grade)).ToString("0.0");
+                                                }
+                                            }
+                                            @s
+                                        </b>
+                                    </div>
+                                    <ul class="card-product__imgOverlay">
+                                        <li><button id="favorite" value="@p.ProductId" onclick="addFavorite(@p.ProductId)"><i class="fa-solid fa-star">收藏</i></button></li>
+                                        <li>
+                                            <button id="addToCart" value="@p.ProductId">
+                                                <i class="ti-heart fa-solid fa-cart-shopping">@Html.ActionLink("查看產品", "showproduct", new { id = p.ProductId })</i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <p>庫存:@p.UnitsInStock</p>
+                                    <h4 class="card-product__title"><a href="#">@p.ProductName</a></h4>
+                                    <p class="card-product__price ">@(((decimal)p.Price).ToString("0.00"))</p>
+                                </div>
                             </div>
-                            <ul class="card-product__imgOverlay">
-                                <li><button id="favorite" value="@p.ProductId" onclick="addFavorite(@p.ProductId)"><i class="fa-solid fa-star">收藏</i></button></li>
-                                <li>
-                                    <button id="addToCart" value="@p.ProductId">
-                                        <i class="ti-heart fa-solid fa-cart-shopping">@Html.ActionLink("查看產品", "showproduct", new { id = p.ProductId })</i>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <p>庫存:@p.UnitsInStock</p>
-                            <h4 class="card-product__title"><a href="#">@p.ProductName</a></h4>
-                            <p class="card-product__price ">@(((decimal)p.Price).ToString("0.00"))</p>
-                        </div>
-                    </div>
-                </div>}
-            } }
+                        </div>}
+                } }
+            
 
 
         </div>
