@@ -205,13 +205,13 @@ namespace Pet.Controllers
                 var q = db.Photos.AsEnumerable().FirstOrDefault(ph => ph.PictureId == int.Parse(d));
                 string photoName = q.PictureName;
                 db.Photos.Remove(q);
-                db.SaveChanges();
                 System.IO.FileInfo file = new FileInfo(_enviroment.WebRootPath + "/Images/" +photoName);
                 if (file.Exists)
                 {
                     file.Delete();
                 }
             }
+            db.SaveChanges();
             return RedirectToAction("Edit", new { id=ProductId});
         }
 
