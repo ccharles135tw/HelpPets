@@ -169,6 +169,7 @@ namespace prjHomeLess_R.Controllers
         }
         public IActionResult mCommondetail(int id)
         {
+            Debug.WriteLine(id);
             return ViewComponent("VCcommonmodal", id);
         }
         public void EdiotmCommondetail(int id, int Rate, string Description)

@@ -17,12 +17,11 @@ namespace qqqq.ViewComponents
         我救浪Context _context = new 我救浪Context();
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-            var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
-            CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-
-            var q = await _context.Products.Where(p => p.IsPet == false && p.MemberComments.FirstOrDefault().MemberId == memberview.MemberID).Where(p => p.MemberComments.FirstOrDefault().CommentId == id).ToListAsync();
-
-            var list = CMemfavortView.CMemfavortViewS(q);
+           
+            System.Diagnostics.Debug.WriteLine("VC" + id);
+            //var q = await _context.Products.Where(p => p.IsPet == false && p.MemberComments.FirstOrDefault().MemberId == memberview.MemberID).Where(p => p.MemberComments.FirstOrDefault().CommentId == id).ToListAsync();
+            var q = await _context.MemberComments.Where(x=> x.CommentId == id).ToListAsync();
+            var list = CCommentView.CCommentViews(q);
             return View(list);
         }
     }

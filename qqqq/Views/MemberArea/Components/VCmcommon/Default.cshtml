@@ -58,7 +58,7 @@
                         <td>
 
                             @{
-                                for (int i = 0; i < Math.Floor(item.Rate); i++)
+                                for (int i = 0; i <item.Rate; i++)
                                 {
                                     <span> <img width="10" src="~/Images/6092_bookmark_favorite_rate_star_icon.png" /></span>
                                 }
@@ -155,7 +155,7 @@
     $(".commoning").click(function (eve) {
 
         let common = $(this).attr("common");
-        //console.log(common);
+        console.log("log" + common);
 
         eve.preventDefault();
 

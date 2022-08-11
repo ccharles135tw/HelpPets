@@ -1,4 +1,4 @@
-﻿@model List<qqqq.ViewModels.CMemfavortView>
+﻿@model List<qqqq.ViewModels.CCommentView>
 
 <style>
 
@@ -25,7 +25,7 @@
         {
         <header class='header text-center'>
             <h4>@com.ProductName</h4>
-            <p>@com.describe</p>
+            <p>@com.pDescription</p>
             <img src="@Url.Content($"~/Images/{com.PictureName}")" width="100px" height="100px" />
             <input hidden name="Grad" id="ratingstar" />
             <input  hidden name="CommentID" CommonId="@com.CommonId" prorate="@com.Rate"/>
@@ -57,7 +57,7 @@
                             <div class='text-message'></div>
                             <div class='clearfix'></div>
                         </div>
-                        <textarea name="Description" style="width:600px; height:200px " value="@com.describe">@com.MemberCommon</textarea>
+                        <textarea name="Description" style="width:600px; height:200px " >@com.Description</textarea>
                     </div>
   
 
