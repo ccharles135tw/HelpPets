@@ -1,4 +1,4 @@
-﻿@model List<qqqq.ViewModels.CMemfavortView>
+﻿@model List<qqqq.ViewModels.CCommentView>
 
 
 
@@ -14,7 +14,7 @@
                 @*<th>&nbsp;</th>*@
                 <th>單價</th>
                 <th>評論</th>
-                <th>星等</th>
+                <th width="15%">星等</th>
                 @{ int counting = 0;
                     foreach (var i in Model)
                     { counting++; } }
@@ -32,7 +32,7 @@
                     <tr class="alert" role="alert">
 
                         <td>
-                            @count;
+                            @count
                         </td>
 
                         <td>
@@ -42,7 +42,7 @@
                         <td>
                             <div class="email">
                                 <span>@item.ProductName </span>
-                                <span>描述:@item.describe</span>
+                                <span>描述:@item.pDescription</span>
                             </div>
                         </td>
 
@@ -50,7 +50,7 @@
 
                         <td>
                             <div>
-                                @item.MemberCommon
+                                @item.Description
 
                             </div>
                         </td>
@@ -107,7 +107,7 @@
                 @*Modal footer*@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="sendee" @*CommonId="@.CommonId"*@>送出</button>
-         
+
                 </div>
 
             </div>
@@ -199,6 +199,6 @@
     })
 
 
-    
-   
+
+
 </script>

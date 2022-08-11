@@ -18,9 +18,10 @@ namespace qqqq.ViewComponents
         {
             var sUser = HttpContext.Session.GetString(CDictionary.SK_LOGIN_USER);
             CLoginViewModel memberview = JsonSerializer.Deserialize<CLoginViewModel>(sUser);
-            var q = await _context.Products.Where(m => m.MemberComments.FirstOrDefault().MemberId == memberview.MemberID).ToListAsync();
-
-            var list = CMemfavortView.CMemfavortViewS(q);
+            //var q = await _context.Products.Where(m => m.MemberComments.FirstOrDefault().MemberId == memberview.MemberID).ToListAsync();
+           var q = await _context.MemberComments.Where(c => c.MemberId == memberview.MemberID).ToListAsync();
+            var list = CCommentView.CCommentViews(q);
+            //var list = CMemfavortView.CMemfavortViewS(q);
             return View(list);
 
          

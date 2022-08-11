@@ -22,7 +22,7 @@
                     } }
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
-                <th>@($"共有{counting}筆資料")</th>
+                <th width="15%">@($"共有{counting}筆資料")</th>
 
             </tr>
         </thead>
@@ -32,66 +32,70 @@
                 foreach (var item in Model)
                 {
                     count++;
-                    <tr class="alert" role="alert">
+                        <tr class="alert" role="alert">
 
-                        <td>
-                            @count
+                            <td>
+                                @count
 
-                        </td>
-                        @{var photo = db.Photos.Where(p => p.ProductId == item.ProductId).Select(p => p.PictureName).FirstOrDefault();}
-                        <td>
+                            </td>
+                            @{var photo = db.Photos.Where(p => p.ProductId == item.ProductId).Select(p => p.PictureName).FirstOrDefault();}
+                            <td>
 
-                            <img src="@Url.Content($"~/Images/{photo}")" style="width:60px;height:60px;" />
+                                <img src="@Url.Content($"~/Images/{photo}")" style="width:60px;height:60px;" />
 
-                        </td>
-                        <td>
-                            <div class="email">
-                                <span>@item.Product.ProductName </span>
-                                <span>@item.Product.Description</span>
-                            </div>
-                        </td>
-                        @*<td>星等</td>*@
-                        <td>   @(String.Format("{0:$#,0}", item.UnitPrice))</td>
-                        <td class="quantity">
-                            <div class="input-group">
-                                @item.Quantity
-                                @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
-                            </div>
-                        </td>
-                        @{
-                            decimal totalPrice = 0;
-                            var totalList = db.OrderDetails.Where(x => x.ProductId == item.ProductId && x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
-                            foreach (var i in totalList)
-                            {
-                                totalPrice += (decimal)i.total;
+                            </td>
+                        
+                            <td>
+                                <div class="email">
+                                    <span>@item.Product.ProductName </span> @{if (item.IsDonate == true) { 
+                                            <label class="alert-danger"><i class="fa-solid fa-hand-holding-heart">捐贈</i></label>
+                                        }
+                                    }
+                                    <span>@item.Product.Description</span>
+                                </div>
+                            </td>
+                            @*<td>星等</td>*@
+                            <td>   @(String.Format("{0:$#,0}", item.UnitPrice))</td>
+                            <td class="quantity">
+                                <div class="input-group">
+                                    @item.Quantity
+                                    @*<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">*@
+                                </div>
+                            </td>
+                            @{
+                                decimal totalPrice = 0;
+                                var totalList = db.OrderDetails.Where(x => x.ProductId == item.ProductId && x.OrderId == item.OrderId).Select(y => new { total = y.UnitPrice * y.Quantity }).ToList();
+                                foreach (var i in totalList)
+                                {
+                                    totalPrice += (decimal)i.total;
+                                }
                             }
-                        }
-                        <td> @(String.Format("{0:$#,0}", totalPrice))</td>
-                        <td></td>
-                        <td></td>
-                        @{ if (item.Order.OrderStatusId == 2)
-                            {
-                                <td>
-                                    <div>
-                                        <button hidden class="close commoning" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal" common="@item.ProductId">
-                                            <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                                            <span>產品評論</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            }
-                            else
-                            {
-                                <td >
-                                    <div>
-                                        <button class="close creatcommon" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal" creatcommon="@item.ProductId">
-                                            <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
-                                            <span>產品評論</span>
-                                        </button>
-                                    </div>
-                                </td>
-                            } }
-                    </tr>
+                            <td> @(String.Format("{0:$#,0}", totalPrice))</td>
+                            <td></td>
+                            <td></td>
+                            @{ if (item.Order.OrderStatusId == 2)
+                                {
+                                    <td>
+                                        <div>
+                                            <button hidden class="close commoning" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal" common="@item.ProductId">
+                                                <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                                <span>產品評論</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div>
+                                            <button class="close creatcommon" type="button" style="color:gray" id="list" data-toggle="modal" data-target="#myModal" creatcommon="@item.ProductId">
+                                                <span aria-hidden="true"><i class="fa-solid fa-list"></i></span>
+                                                <span>產品評論</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                } }
+                        </tr>
                 } }
             <!--=========================================================================================-->
 
@@ -192,5 +196,7 @@
             timer: 1500
         })
     }
+
+
 
 </script>
