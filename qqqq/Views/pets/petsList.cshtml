@@ -52,7 +52,7 @@
     <div class="text-center" style="display: flex;flex:none; justify-content: flex-start; align-items: center;padding-top:10px"
          style="text-align:right; margin-right:10px; text-decoration:none">
         @*style="flex:none;font-size:20px;text-align:center;display:flex;justify-content:center;align-content:center"*@
-        <form style="flex: none; width: 50%; align-items: center;padding-left:0;" id="formSearch">
+        <form style="flex: none; width: 60%; align-items: center;padding-left:0;" id="formSearch">
             <label>種類:</label>
             <select id="petCate" class="btn btn-primary" aria-label=".form-select example" name="categoryid">
                 <option value="none">請選擇選項</option>
@@ -94,14 +94,14 @@
             <button type="button" id="btnSearch" class="btn btn-primary pl-3" style="background-color: #D2691E">查詢</button>
         </form>
 
-        <div style="flex:none;width:25%" justify-content: flex-start; align-items: center;>
+        <div style="flex:none; justify-content: flex-start; align-items: center;">
             <form method="post" id="formKeyword">
                 <label>關鍵字:</label><input type="text" name="keyword" class="m-2" id="keyword"/>
                 <button type="button" class="btn btn-primary" id="btnKeyword" style="background-color: #D2691E">搜尋</button>
             </form>
         </div>
 
-        <div style="flex: none; width: 25%;justify-content: flex-end; align-items: center;">
+        <div style="flex: none; width: 18%;justify-content: flex-end; align-items: center;">
             <div class="sorting mr-auto" style="text-align:right; margin-right:10px; text-decoration:none">
                 @{ if (memberview.MemberID != 1)
                     {
