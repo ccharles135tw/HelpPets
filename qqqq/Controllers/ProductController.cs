@@ -210,6 +210,7 @@ namespace Pet.Controllers
                 {
                     file.Delete();
                 }
+                
             }
             db.SaveChanges();
             return RedirectToAction("Edit", new { id=ProductId});
@@ -226,7 +227,10 @@ namespace Pet.Controllers
                 {
                     Photo photo = new Photo();
                     string photoName = Guid.NewGuid().ToString() + ".jpg";
-                    f.CopyTo(new FileStream(_enviroment.WebRootPath + "/Images/" + photoName, FileMode.Create));
+                    using (FileStream fs = new FileStream(_enviroment.WebRootPath + "/Images/" + photoName, FileMode.Create))
+                    {
+                        f.CopyTo(fs);
+                    }
                     photo.ProductId = ProductID;
                     photo.PictureName = photoName;
                     db.Photos.Add(photo);
