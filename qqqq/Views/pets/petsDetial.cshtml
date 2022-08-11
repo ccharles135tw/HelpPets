@@ -86,7 +86,7 @@
                             <label class="control-label" style="text-align:center;">名字:</label>
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.ProductName</span>
+                            <span style="font-size: 20px; font-weight: 700; color: #EAA636 ">@Model.ProductName</span>
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +95,17 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.Category.CategoryName</span>
+                            @{
+                                if (memberWish.Category.CategoryName == Model.SubCategory.Category.CategoryName)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;color:forestgreen">@Model.SubCategory.Category.CategoryName</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.Category.CategoryName</span>
+
+                                }
+                            }
                         </td>
                         <td>
                             @{
@@ -116,19 +126,20 @@
                             @{
                                 if (memberWish.SubCategory.SubCategoryName == Model.SubCategory.SubCategoryName)
                                 {
-                                  <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.SubCategory.SubCategoryName</span>
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.SubCategory.SubCategoryName</span>
                                 }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.SubCategoryName</span>
 
+                                }
                             }
                         </td>
-                        @*<td>
-            <span style="font-size: 20px; font-weight: 700;">@Model.SubCategory.SubCategoryName</span>
-        </td>*@
                         <td>
                             @{
                                 if (memberWish.SubCategory.SubCategoryName == Model.SubCategory.SubCategoryName)
                                 {
-                                    <i class="fa-solid fa-circle-check" style="color:yellow;font-size:40px;text-align:right;"></i>
+                                    <i class="fa-solid fa-circle-check" style="color: forestgreen; font-size: 20px; text-align: right;"></i>
                                 }
 
                             }
@@ -140,13 +151,23 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Gender.GenderType</span>
+                            @{
+                                if (memberWish.GenderId == Model.PetDetail.GenderId)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.PetDetail.Gender.GenderType</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Gender.GenderType</span>
+
+                                }
+                            }
                         </td>
                         <td>
                             @{
                                 if (memberWish.GenderId == Model.PetDetail.GenderId)
                                 {
-                                    <i class="fa-solid fa-circle-check" style="color:gold;font-size:30px;text-align:right;"></i>
+                                    <i class="fa-solid fa-circle-check" style="color: forestgreen; font-size: 20px; text-align: right;"></i>
                                 }
                             }
                         </td>
@@ -157,7 +178,18 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Color.ColorName</span>
+                            @{
+                                if (memberWish.ColorId == Model.PetDetail.ColorId)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen;">@Model.PetDetail.Color.ColorName</span>
+
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Color.ColorName</span>
+
+                                }
+                            }
                         </td>
                         <td>
                             @{
@@ -173,13 +205,21 @@
                             <label class="control-label">結紮:</label>
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Ligation.LigationType</span>
+                            @if (memberWish.LigationId == Model.PetDetail.LigationId)
+                            {
+                                <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.PetDetail.Ligation.LigationType</span>
+                            }
+                            else
+                            {
+                                <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Ligation.LigationType</span>
+
+                            }
                         </td>
                         <td>
                             @{
                                 if (memberWish.LigationId == Model.PetDetail.LigationId)
                                 {
-                                    <i class="fa-solid fa-circle-check" style="color:goldenrod;font-size:25px;text-align:right;"></i>
+                                    <i class="fa-solid fa-circle-check" style="color:forestgreen;font-size:20px;text-align:right;"></i>
                                 }
                             }
                         </td>
@@ -190,7 +230,17 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Size.SizeType</span>
+                            @{
+                                if (memberWish.SizeId == Model.PetDetail.SizeId)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.PetDetail.Size.SizeType</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Size.SizeType</span>
+                                }
+                            }
+
                         </td>
                         <td>
                             @{
@@ -207,7 +257,18 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Age.AgeType</span>
+                            @{
+                                if (memberWish.AgeId == Model.PetDetail.AgeId)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.PetDetail.Age.AgeType</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.Age.AgeType</span>
+
+                                }
+                            }
+
                         </td>
                         <td>
                             @{
@@ -224,7 +285,17 @@
 
                         </td>
                         <td>
-                            <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.City.CityName</span>
+                            @{
+                                if (memberWish.CityId == Model.PetDetail.CityId)
+                                {
+                                    <span style="font-size: 20px; font-weight: 700; color: forestgreen">@Model.PetDetail.City.CityName</span>
+                                }
+                                else
+                                {
+                                    <span style="font-size: 20px; font-weight: 700;">@Model.PetDetail.City.CityName</span>
+
+                                }
+                            }
                         </td>
                         <td>
                             @{

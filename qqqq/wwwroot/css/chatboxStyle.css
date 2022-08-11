@@ -1,7 +1,7 @@
 .divbody {
     position: fixed;
     right: 20px;
-    top: 34%;
+    top: 40%;
     z-index: 999;
 }
 
@@ -15,7 +15,7 @@
 .chat-box {
     border: 2px solid #1E1916;
     width: 350px;
-    height: 400px;
+    height: 500px;
 /*    overflow-y: scroll;
 */    background-color: #fff;
     overflow: hidden;
